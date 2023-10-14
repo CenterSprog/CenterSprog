@@ -1,0 +1,65 @@
+﻿@page "/Heartbeat"
+@using HttpClients.ClientInterfaces
+@using Domain.DTOs.HeartbeatDTO
+@inject IHeartbeatService heartbeatService
+
+<div class="card">
+    <h3>Create User</h3>
+    <div class="form-group field">
+        <label>Sound of Heartbeat:</label>
+        <input type="text" @bind="pulse" @bind:event="oninput"/>
+        @if (!string.IsNullOrEmpty(resultMsg))
+        {
+            <label style="color: @color">@resultMsg</label>
+        }
+    </div>
+    <div class="button-row">
+        <button @onclick="Create, Get" disabled="@(string.IsNullOrEmpty(pulse))" class="acceptbtn">Create</button>
+    </div>
+    @if (amountOfPulses != 0)
+    {
+        <div class="button-row">
+            <p>The Amount of Pulses Created: @amountOfPulses</p>
+        </div>
+    }
+
+</div>
+
+@code {
+    private string pulse = "";
+    private int amountOfPulses = 0;
+    private string resultMsg = "";
+    private string color = "";
+
+    private async Task Create()
+    {
+        resultMsg = "";
+
+        try
+        {
+            await heartbeatService.Create(new PulseCreationDTO(pulse));
+            pulse = "";
+            resultMsg = "Pulse successfully created";
+            color = "green";
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            resultMsg = e.Message;
+            color = "red";
+        }
+    }
+
+    private async Task Get()
+    {
+
+        try
+        {
+            await heartbeatService.Get();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+}

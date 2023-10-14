@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "gRPCClient";
+
+service HeartbeatService{
+  rpc GetHeartbeat(HeartbeatPulse) returns(ResponseGetHeartbeats);
+}
+
+message HeartbeatData {
+  string pulse = 1;
+}
+message HeartbeatPulse{
+}
+
+message ResponseGetHeartbeats {
+  repeated HeartbeatData pulses = 1;
+}
