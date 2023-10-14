@@ -14,17 +14,17 @@ public class HeartbeatLogic:IHeartbeatLogic
         this.heartbeatDao = heartbeatDao;
     }
     
-    public async Task<Heartbeat> CreateAsync(PulseCreationDTO pulseToCreate)
+    public async Task<String> CreateAsync(PulseCreationDTO pulseToCreate)
     {
         Heartbeat toCreate = new Heartbeat
         {
             Pulse = pulseToCreate.Pulse
         };
-        Heartbeat created = await heartbeatDao.CreateAsync(toCreate);
+        String created = await heartbeatDao.CreateAsync(toCreate);
         return created;
     }
 
-    public Task<IEnumerable<Heartbeat>> GetAsync()
+    public Task<int> GetAsync()
     {
         return heartbeatDao.GetAsync();
     }

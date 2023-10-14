@@ -5,7 +5,7 @@ namespace Application.LogicInterfaces;
 
 public interface IHeartbeatLogic
 {
-    Task<Heartbeat> CreateAsync(PulseCreationDTO pulseToCreate);
-    Task<IEnumerable<Heartbeat>> GetAsync();
+    Task<String> CreateAsync(PulseCreationDTO pulseToCreate);
+    Task<int> GetAsync();
 
 }

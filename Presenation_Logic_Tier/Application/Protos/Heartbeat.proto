@@ -1,17 +1,26 @@
 syntax = "proto3";
+import "google/protobuf/empty.proto";
+package google.protobuf;
 
 option csharp_namespace = "gRPCClient";
 
 service HeartbeatService{
-  rpc GetHeartbeat(HeartbeatPulse) returns(ResponseGetHeartbeats);
+  rpc createHeartbeat(RequestCreateHeartbeat) returns(ResponseCreateHeartbeat);
+  rpc getHeartbeat(google.protobuf.Empty) returns(ResponseGetHeartbeats);
 }
 
 message HeartbeatData {
   string pulse = 1;
 }
-message HeartbeatPulse{
+
+message RequestCreateHeartbeat{
+  string pulse = 1;
+}
+
+message ResponseCreateHeartbeat{
+  string pulse = 1;
 }
 
 message ResponseGetHeartbeats {
-  repeated HeartbeatData pulses = 1;
+  int32 pulses = 1;
 }

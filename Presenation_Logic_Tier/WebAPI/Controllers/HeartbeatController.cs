@@ -19,12 +19,12 @@ public class HeartbeatController:ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Heartbeat>> CreateAsync(PulseCreationDTO pulseCreation)
+    public async Task<ActionResult<String>> CreateAsync(PulseCreationDTO pulseCreation)
     {
         try
         {
-            Heartbeat heartbeat = await heartbeatLogic.CreateAsync(pulseCreation);
-            return Ok(heartbeat);
+            String pulse = await heartbeatLogic.CreateAsync(pulseCreation);
+            return Ok(pulse);
         }
         catch (Exception e)
         {
@@ -34,12 +34,12 @@ public class HeartbeatController:ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<Heartbeat>> GetAsync()
+    public async Task<ActionResult<int>> GetAsync()
     {
         try
         {
-            IEnumerable<Heartbeat> heartbeats = await heartbeatLogic.GetAsync();
-            return Ok(heartbeats);
+            int heartbeats = await heartbeatLogic.GetAsync();
+            return Ok(heartbeats.ToString());
         }
         catch (Exception e)
         {

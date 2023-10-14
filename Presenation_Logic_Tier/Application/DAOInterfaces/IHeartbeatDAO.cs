@@ -4,6 +4,6 @@ namespace Application.DAOInterfaces;
 
 public interface IHeartbeatDAO
 {
-    Task<Heartbeat> CreateAsync(Heartbeat heartbeat);
-    Task<IEnumerable<Heartbeat>> GetAsync();
+    Task<String> CreateAsync(Heartbeat heartbeat);
+    Task<int> GetAsync();
 }

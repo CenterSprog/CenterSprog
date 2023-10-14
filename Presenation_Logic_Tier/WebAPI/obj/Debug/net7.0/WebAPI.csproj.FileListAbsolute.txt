@@ -31,3 +31,14 @@ C:\Users\kubac\OneDrive\Plocha\School\VIA_University\IT-SEP3\CenterSprog\CenterS
 C:\Users\kubac\OneDrive\Plocha\School\VIA_University\IT-SEP3\CenterSprog\CenterSprog\Presenation_Logic_Tier\WebAPI\obj\Debug\net7.0\WebAPI.pdb
 C:\Users\kubac\OneDrive\Plocha\School\VIA_University\IT-SEP3\CenterSprog\CenterSprog\Presenation_Logic_Tier\WebAPI\obj\Debug\net7.0\WebAPI.genruntimeconfig.cache
 C:\Users\kubac\OneDrive\Plocha\School\VIA_University\IT-SEP3\CenterSprog\CenterSprog\Presenation_Logic_Tier\WebAPI\obj\Debug\net7.0\ref\WebAPI.dll
+C:\Users\kubac\OneDrive\Plocha\School\VIA_University\IT-SEP3\CenterSprog\CenterSprog\Presenation_Logic_Tier\WebAPI\bin\Debug\net7.0\Application.dll
+C:\Users\kubac\OneDrive\Plocha\School\VIA_University\IT-SEP3\CenterSprog\CenterSprog\Presenation_Logic_Tier\WebAPI\bin\Debug\net7.0\Domain.dll
+C:\Users\kubac\OneDrive\Plocha\School\VIA_University\IT-SEP3\CenterSprog\CenterSprog\Presenation_Logic_Tier\WebAPI\bin\Debug\net7.0\Application.pdb
+C:\Users\kubac\OneDrive\Plocha\School\VIA_University\IT-SEP3\CenterSprog\CenterSprog\Presenation_Logic_Tier\WebAPI\bin\Debug\net7.0\Domain.pdb
+C:\Users\kubac\OneDrive\Plocha\School\VIA_University\IT-SEP3\CenterSprog\CenterSprog\Presenation_Logic_Tier\WebAPI\bin\Debug\net7.0\Google.Protobuf.dll
+C:\Users\kubac\OneDrive\Plocha\School\VIA_University\IT-SEP3\CenterSprog\CenterSprog\Presenation_Logic_Tier\WebAPI\bin\Debug\net7.0\Grpc.AspNetCore.Server.dll
+C:\Users\kubac\OneDrive\Plocha\School\VIA_University\IT-SEP3\CenterSprog\CenterSprog\Presenation_Logic_Tier\WebAPI\bin\Debug\net7.0\Grpc.AspNetCore.Server.ClientFactory.dll
+C:\Users\kubac\OneDrive\Plocha\School\VIA_University\IT-SEP3\CenterSprog\CenterSprog\Presenation_Logic_Tier\WebAPI\bin\Debug\net7.0\Grpc.Core.Api.dll
+C:\Users\kubac\OneDrive\Plocha\School\VIA_University\IT-SEP3\CenterSprog\CenterSprog\Presenation_Logic_Tier\WebAPI\bin\Debug\net7.0\Grpc.Net.Client.dll
+C:\Users\kubac\OneDrive\Plocha\School\VIA_University\IT-SEP3\CenterSprog\CenterSprog\Presenation_Logic_Tier\WebAPI\bin\Debug\net7.0\Grpc.Net.ClientFactory.dll
+C:\Users\kubac\OneDrive\Plocha\School\VIA_University\IT-SEP3\CenterSprog\CenterSprog\Presenation_Logic_Tier\WebAPI\bin\Debug\net7.0\Grpc.Net.Common.dll

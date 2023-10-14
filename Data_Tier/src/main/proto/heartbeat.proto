@@ -16,13 +16,13 @@ message HeartbeatData {
 }
 
 message RequestCreateHeartbeat{
-  HeartbeatData data = 1;
+  string pulse = 1;
 }
 
 message ResponseCreateHeartbeat{
-  HeartbeatData data = 1;
+  string pulse = 1;
 }
 
 message ResponseGetHeartbeats {
-  repeated HeartbeatData pulses = 1;
+  int32 pulses = 1;
 }
