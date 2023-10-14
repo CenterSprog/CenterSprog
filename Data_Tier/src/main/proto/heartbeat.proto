@@ -1,0 +1,28 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+
+option java_multiple_files = true;
+option java_package = "sep3.project.protobuf";
+option java_outer_classname = "HeartbeatsProto";
+
+service HeartbeatService{
+  rpc createHeartbeat(RequestCreateHeartbeat) returns(ResponseCreateHeartbeat);
+  rpc getHeartbeat(google.protobuf.Empty) returns(ResponseGetHeartbeats);
+}
+
+message HeartbeatData {
+  string pulse = 1;
+}
+
+message RequestCreateHeartbeat{
+  HeartbeatData data = 1;
+}
+
+message ResponseCreateHeartbeat{
+  HeartbeatData data = 1;
+}
+
+message ResponseGetHeartbeats {
+  repeated HeartbeatData pulses = 1;
+}
