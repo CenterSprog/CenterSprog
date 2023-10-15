@@ -15,7 +15,7 @@ public class HeartbeatHttpClient:IHeartbeatService
         this.client = client;
     }
 
-    public async Task<Heartbeat> Create(PulseCreationDTO pulseCreation)
+    public async Task<String> CreateAsync(PulseCreationDTO pulseCreation)
     {
         HttpResponseMessage response = await client.PostAsJsonAsync("/heartbeat", pulseCreation);
         string result = await response.Content.ReadAsStringAsync();
@@ -24,15 +24,10 @@ public class HeartbeatHttpClient:IHeartbeatService
             throw new Exception(result);
         }
 
-        Heartbeat heartbeat = JsonSerializer.Deserialize<Heartbeat>(result, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true,
-            WriteIndented = true
-        })!;
-        return heartbeat;
+        return result;
     }
 
-    public async Task<IEnumerable<Heartbeat>> Get()
+    public async Task<int> GetAsync()
     {
         HttpResponseMessage response = await client.GetAsync("/heartbeat");
 
@@ -42,12 +37,6 @@ public class HeartbeatHttpClient:IHeartbeatService
             throw new Exception(content);
         }
 
-        IEnumerable<Heartbeat> heartbeats = JsonSerializer.Deserialize<IEnumerable<Heartbeat>>(content, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true,
-            WriteIndented = true
-        })!;
-
-        return heartbeats;
+        return Int32.Parse(content);
     }
 }

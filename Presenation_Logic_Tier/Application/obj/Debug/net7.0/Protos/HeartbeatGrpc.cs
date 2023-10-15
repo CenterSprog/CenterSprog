@@ -10,7 +10,7 @@ using grpc = global::Grpc.Core;
 namespace gRPCClient {
   public static partial class HeartbeatService
   {
-    static readonly string __ServiceName = "google.protobuf.HeartbeatService";
+    static readonly string __ServiceName = "HeartbeatService";
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static void __Helper_SerializeMessage(global::Google.Protobuf.IMessage message, grpc::SerializationContext context)
@@ -46,29 +46,29 @@ namespace gRPCClient {
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::gRPCClient.RequestCreateHeartbeat> __Marshaller_google_protobuf_RequestCreateHeartbeat = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::gRPCClient.RequestCreateHeartbeat.Parser));
+    static readonly grpc::Marshaller<global::gRPCClient.RequestCreateHeartbeat> __Marshaller_RequestCreateHeartbeat = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::gRPCClient.RequestCreateHeartbeat.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::gRPCClient.ResponseCreateHeartbeat> __Marshaller_google_protobuf_ResponseCreateHeartbeat = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::gRPCClient.ResponseCreateHeartbeat.Parser));
+    static readonly grpc::Marshaller<global::gRPCClient.ResponseCreateHeartbeat> __Marshaller_ResponseCreateHeartbeat = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::gRPCClient.ResponseCreateHeartbeat.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Google.Protobuf.WellKnownTypes.Empty> __Marshaller_google_protobuf_Empty = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Google.Protobuf.WellKnownTypes.Empty.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::gRPCClient.ResponseGetHeartbeats> __Marshaller_google_protobuf_ResponseGetHeartbeats = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::gRPCClient.ResponseGetHeartbeats.Parser));
+    static readonly grpc::Marshaller<global::gRPCClient.ResponseGetHeartbeats> __Marshaller_ResponseGetHeartbeats = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::gRPCClient.ResponseGetHeartbeats.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::gRPCClient.RequestCreateHeartbeat, global::gRPCClient.ResponseCreateHeartbeat> __Method_createHeartbeat = new grpc::Method<global::gRPCClient.RequestCreateHeartbeat, global::gRPCClient.ResponseCreateHeartbeat>(
+    static readonly grpc::Method<global::gRPCClient.RequestCreateHeartbeat, global::gRPCClient.ResponseCreateHeartbeat> __Method_CreateHeartbeat = new grpc::Method<global::gRPCClient.RequestCreateHeartbeat, global::gRPCClient.ResponseCreateHeartbeat>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "createHeartbeat",
-        __Marshaller_google_protobuf_RequestCreateHeartbeat,
-        __Marshaller_google_protobuf_ResponseCreateHeartbeat);
+        "CreateHeartbeat",
+        __Marshaller_RequestCreateHeartbeat,
+        __Marshaller_ResponseCreateHeartbeat);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::gRPCClient.ResponseGetHeartbeats> __Method_getHeartbeat = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::gRPCClient.ResponseGetHeartbeats>(
+    static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::gRPCClient.ResponseGetHeartbeats> __Method_GetHeartbeat = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::gRPCClient.ResponseGetHeartbeats>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "getHeartbeat",
+        "GetHeartbeat",
         __Marshaller_google_protobuf_Empty,
-        __Marshaller_google_protobuf_ResponseGetHeartbeats);
+        __Marshaller_ResponseGetHeartbeats);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -104,44 +104,44 @@ namespace gRPCClient {
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::gRPCClient.ResponseCreateHeartbeat createHeartbeat(global::gRPCClient.RequestCreateHeartbeat request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::gRPCClient.ResponseCreateHeartbeat CreateHeartbeat(global::gRPCClient.RequestCreateHeartbeat request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return createHeartbeat(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return CreateHeartbeat(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::gRPCClient.ResponseCreateHeartbeat createHeartbeat(global::gRPCClient.RequestCreateHeartbeat request, grpc::CallOptions options)
+      public virtual global::gRPCClient.ResponseCreateHeartbeat CreateHeartbeat(global::gRPCClient.RequestCreateHeartbeat request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_createHeartbeat, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_CreateHeartbeat, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::gRPCClient.ResponseCreateHeartbeat> createHeartbeatAsync(global::gRPCClient.RequestCreateHeartbeat request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::gRPCClient.ResponseCreateHeartbeat> CreateHeartbeatAsync(global::gRPCClient.RequestCreateHeartbeat request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return createHeartbeatAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return CreateHeartbeatAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::gRPCClient.ResponseCreateHeartbeat> createHeartbeatAsync(global::gRPCClient.RequestCreateHeartbeat request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::gRPCClient.ResponseCreateHeartbeat> CreateHeartbeatAsync(global::gRPCClient.RequestCreateHeartbeat request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncUnaryCall(__Method_createHeartbeat, null, options, request);
+        return CallInvoker.AsyncUnaryCall(__Method_CreateHeartbeat, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::gRPCClient.ResponseGetHeartbeats getHeartbeat(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::gRPCClient.ResponseGetHeartbeats GetHeartbeat(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return getHeartbeat(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return GetHeartbeat(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::gRPCClient.ResponseGetHeartbeats getHeartbeat(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::CallOptions options)
+      public virtual global::gRPCClient.ResponseGetHeartbeats GetHeartbeat(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_getHeartbeat, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_GetHeartbeat, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::gRPCClient.ResponseGetHeartbeats> getHeartbeatAsync(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::gRPCClient.ResponseGetHeartbeats> GetHeartbeatAsync(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return getHeartbeatAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return GetHeartbeatAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::gRPCClient.ResponseGetHeartbeats> getHeartbeatAsync(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::gRPCClient.ResponseGetHeartbeats> GetHeartbeatAsync(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncUnaryCall(__Method_getHeartbeat, null, options, request);
+        return CallInvoker.AsyncUnaryCall(__Method_GetHeartbeat, null, options, request);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]

@@ -14,12 +14,12 @@
         }
     </div>
     <div class="button-row">
-        <button @onclick="Create, Get" disabled="@(string.IsNullOrEmpty(pulse))" class="acceptbtn">Create</button>
+        <button @onclick="Create" disabled="@(string.IsNullOrEmpty(pulse))" class="acceptbtn">Create</button>
     </div>
     @if (amountOfPulses != 0)
     {
         <div class="button-row">
-            <p>The Amount of Pulses Created: @amountOfPulses</p>
+            <p>The Amount of Pulses Created: @amountOfPulses.ToString()</p>
         </div>
     }
 
@@ -37,7 +37,8 @@
 
         try
         {
-            await heartbeatService.Create(new PulseCreationDTO(pulse));
+            PulseCreationDTO pulseCreationDto = new PulseCreationDTO(pulse);
+            await heartbeatService.CreateAsync(pulseCreationDto);
             pulse = "";
             resultMsg = "Pulse successfully created";
             color = "green";
@@ -55,7 +56,7 @@
 
         try
         {
-            await heartbeatService.Get();
+            await heartbeatService.GetAsync();
         }
         catch (Exception e)
         {

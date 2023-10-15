@@ -13,14 +13,22 @@ public class HeartbeatClient:IHeartbeatDAO
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new HeartbeatService.HeartbeatServiceClient(channel);
         
-        var request = new RequestCreateHeartbeat()
+        var request = new RequestCreateHeartbeat
         {
             Pulse = heartbeat.Pulse,
         };
+        var reply = new ResponseCreateHeartbeat();
+        Console.WriteLine("Going to call Java");
+        try
+        {
+             reply = await client.CreateHeartbeatAsync(request);
 
-
-        var reply = await client.createHeartbeatAsync(request);
-
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
         return await Task.FromResult(reply.Pulse);
     }
 
@@ -28,7 +36,7 @@ public class HeartbeatClient:IHeartbeatDAO
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new HeartbeatService.HeartbeatServiceClient(channel);
-        var reply = await client.getHeartbeatAsync(null);
+        var reply = await client.GetHeartbeatAsync(null);
 
         return await Task.FromResult(reply.Pulses);
     }

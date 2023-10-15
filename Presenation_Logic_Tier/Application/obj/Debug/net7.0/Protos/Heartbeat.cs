@@ -24,17 +24,15 @@ namespace gRPCClient {
     static HeartbeatReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChZQcm90b3MvSGVhcnRiZWF0LnByb3RvEg9nb29nbGUucHJvdG9idWYaG2dv",
-            "b2dsZS9wcm90b2J1Zi9lbXB0eS5wcm90byIeCg1IZWFydGJlYXREYXRhEg0K",
-            "BXB1bHNlGAEgASgJIicKFlJlcXVlc3RDcmVhdGVIZWFydGJlYXQSDQoFcHVs",
-            "c2UYASABKAkiKAoXUmVzcG9uc2VDcmVhdGVIZWFydGJlYXQSDQoFcHVsc2UY",
-            "ASABKAkiJwoVUmVzcG9uc2VHZXRIZWFydGJlYXRzEg4KBnB1bHNlcxgBIAEo",
-            "BTLIAQoQSGVhcnRiZWF0U2VydmljZRJkCg9jcmVhdGVIZWFydGJlYXQSJy5n",
-            "b29nbGUucHJvdG9idWYuUmVxdWVzdENyZWF0ZUhlYXJ0YmVhdBooLmdvb2ds",
-            "ZS5wcm90b2J1Zi5SZXNwb25zZUNyZWF0ZUhlYXJ0YmVhdBJOCgxnZXRIZWFy",
-            "dGJlYXQSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaJi5nb29nbGUucHJvdG9i",
-            "dWYuUmVzcG9uc2VHZXRIZWFydGJlYXRzQg2qAgpnUlBDQ2xpZW50YgZwcm90",
-            "bzM="));
+            "ChZQcm90b3MvSGVhcnRiZWF0LnByb3RvGhtnb29nbGUvcHJvdG9idWYvZW1w",
+            "dHkucHJvdG8iHgoNSGVhcnRiZWF0RGF0YRINCgVwdWxzZRgBIAEoCSInChZS",
+            "ZXF1ZXN0Q3JlYXRlSGVhcnRiZWF0Eg0KBXB1bHNlGAEgASgJIigKF1Jlc3Bv",
+            "bnNlQ3JlYXRlSGVhcnRiZWF0Eg0KBXB1bHNlGAEgASgJIicKFVJlc3BvbnNl",
+            "R2V0SGVhcnRiZWF0cxIOCgZwdWxzZXMYASABKAUymAEKEEhlYXJ0YmVhdFNl",
+            "cnZpY2USRAoPQ3JlYXRlSGVhcnRiZWF0EhcuUmVxdWVzdENyZWF0ZUhlYXJ0",
+            "YmVhdBoYLlJlc3BvbnNlQ3JlYXRlSGVhcnRiZWF0Ej4KDEdldEhlYXJ0YmVh",
+            "dBIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoWLlJlc3BvbnNlR2V0SGVhcnRi",
+            "ZWF0c0INqgIKZ1JQQ0NsaWVudGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {

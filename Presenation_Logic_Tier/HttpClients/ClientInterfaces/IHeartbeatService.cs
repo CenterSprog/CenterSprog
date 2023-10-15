@@ -5,6 +5,6 @@ namespace HttpClients.ClientInterfaces;
 
 public interface IHeartbeatService
 {
-    Task<Heartbeat> Create(PulseCreationDTO pulseCreation);
-    Task<IEnumerable<Heartbeat>> Get();
+    Task<String> CreateAsync(PulseCreationDTO pulseCreation);
+    Task<int> GetAsync();
 }
