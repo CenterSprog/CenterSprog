@@ -3,18 +3,20 @@
 @using Domain.DTOs.HeartbeatDTO
 @inject IHeartbeatService heartbeatService
 
-<div class="card">
-    <h3>Create User</h3>
-    <div class="form-group field">
+<PageTitle>Heartbeat</PageTitle>
+
+<div>
+    <h3>Create Heartbeat</h3>
+    <div class="form-group field mt-3">
         <label>Sound of Heartbeat:</label>
-        <input type="text" @bind="pulse" @bind:event="oninput"/>
+        <input class="mx-2" type="text" @bind="pulse" @bind:event="oninput"/>
         @if (!string.IsNullOrEmpty(resultMsg))
         {
             <label style="color: @color">@resultMsg</label>
         }
     </div>
-    <div class="button-row">
-        <button @onclick="Create" disabled="@(string.IsNullOrEmpty(pulse))" class="acceptbtn">Create</button>
+    <div class="button-row my-2">
+        <button @onclick="async ()=>{await Create();await Get();}" disabled="@(string.IsNullOrEmpty(pulse))" class="acceptbtn">Create</button>
     </div>
     @if (amountOfPulses != 0)
     {
@@ -40,7 +42,7 @@
             PulseCreationDTO pulseCreationDto = new PulseCreationDTO(pulse);
             await heartbeatService.CreateAsync(pulseCreationDto);
             pulse = "";
-            resultMsg = "Pulse successfully created";
+            resultMsg = "Pulse successfully created!";
             color = "green";
         }
         catch (Exception e)
@@ -53,10 +55,10 @@
 
     private async Task Get()
     {
-
+        amountOfPulses = 0;
         try
         {
-            await heartbeatService.GetAsync();
+            amountOfPulses=await heartbeatService.GetAsync();
         }
         catch (Exception e)
         {

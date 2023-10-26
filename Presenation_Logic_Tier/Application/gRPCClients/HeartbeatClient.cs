@@ -1,5 +1,6 @@
 ﻿using Application.DAOInterfaces;
 using Domain.Models;
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Net.Client;
 using gRPCClient;
 
@@ -36,7 +37,7 @@ public class HeartbeatClient:IHeartbeatDAO
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new HeartbeatService.HeartbeatServiceClient(channel);
-        var reply = await client.GetHeartbeatAsync(null);
+        var reply = await client.GetHeartbeatAsync(new Empty());
 
         return await Task.FromResult(reply.Pulses);
     }
