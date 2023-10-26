@@ -1,4 +1,12 @@
 ﻿/Presenation_Logic_Tier/BlazorServer/bin/
 /Presenation_Logic_Tier/BlazorServer/obj/
+/Presenation_Logic_Tier/Application/bin/
+/Presenation_Logic_Tier/Application/obj/
+/Presenation_Logic_Tier/Domain/bin/
+/Presenation_Logic_Tier/Domain/obj/
+/Presenation_Logic_Tier/HttpClients/bin/
+/Presenation_Logic_Tier/HttpClients/obj/
+/Presenation_Logic_Tier/WebAPI/bin/
+/Presenation_Logic_Tier/WebAPI/obj/
 /Presenation_Logic_Tier/.idea/
 
