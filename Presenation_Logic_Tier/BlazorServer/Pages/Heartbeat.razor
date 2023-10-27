@@ -41,8 +41,8 @@
         {
             PulseCreationDTO pulseCreationDto = new PulseCreationDTO(pulse);
             await heartbeatService.CreateAsync(pulseCreationDto);
+            resultMsg = $"Pulse '{pulse}' was successfully created!";
             pulse = "";
-            resultMsg = "Pulse successfully created!";
             color = "green";
         }
         catch (Exception e)
