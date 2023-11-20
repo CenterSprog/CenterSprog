@@ -1,0 +1,37 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+
+option java_multiple_files = true;
+option java_package = "sep3.project.protobuf";
+option java_outer_classname = "HomeworkProto";
+
+message Homework{
+  optional string id = 1;
+  int32 deadline = 2;
+  string title = 3;
+  string description = 4;
+}
+
+message RequestAddHomework{
+  string lessonId = 1;
+  Homework homework = 2;
+}
+message ResponseAddHomework{
+  Homework homework = 1;
+}
+message RequestGetHomeworkById{
+  string homeworkId = 1;
+}
+message ResponseGetHomework{
+  Homework homework = 1;
+}
+message RequestGetHomeworkByLessonId{
+  string lessonId = 1;
+}
+
+service HomeworkService{
+  rpc addHomework(RequestAddHomework) returns (ResponseAddHomework);
+  rpc getHomeworkById(RequestGetHomeworkById) returns (ResponseGetHomework);
+  rpc getHomeworkByLessonId(RequestGetHomeworkByLessonId) returns (ResponseGetHomework);
+}
