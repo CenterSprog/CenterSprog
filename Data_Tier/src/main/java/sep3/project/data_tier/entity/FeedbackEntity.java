@@ -59,6 +59,4 @@ public class FeedbackEntity {
 				", comment='" + comment + '\'' +
 				'}';
 	}
-
-	//test
 }
