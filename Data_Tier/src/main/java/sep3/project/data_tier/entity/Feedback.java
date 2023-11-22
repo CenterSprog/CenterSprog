@@ -59,6 +59,4 @@ public class Feedback {
 				", comment='" + comment + '\'' +
 				'}';
 	}
-
-	//test
 }
