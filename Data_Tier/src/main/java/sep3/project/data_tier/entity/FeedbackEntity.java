@@ -8,7 +8,7 @@ import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Table
-public class Feedback {
+public class FeedbackEntity {
 	@Id
 	@Column
 	@UuidGenerator
@@ -18,10 +18,10 @@ public class Feedback {
 	@Column
 	private String comment;
 
-	public Feedback() {
+	public FeedbackEntity() {
 	}
 
-	public Feedback(String id, int grade, String comment) {
+	public FeedbackEntity(String id, int grade, String comment) {
 		this.id = id;
 		this.grade = grade;
 		this.comment = comment;

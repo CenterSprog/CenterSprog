@@ -1,0 +1,16 @@
+﻿@page "/Lessons/{id}"  
+@using BlazorServer.Shared.Components
+
+<h3>LessonDetails</h3>
+
+<section> 
+    <h3>Homework</h3>
+    <AssignHomeworkComponent LessonId=@Id/>
+    
+</section>
+
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+}

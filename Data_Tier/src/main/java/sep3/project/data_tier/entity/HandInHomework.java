@@ -21,14 +21,14 @@ public class HandInHomework {
 		(
 				name = "homeworkId"
 		)
-	private Homework homework;
+	private HomeworkEntity homework;
 
 	@OneToOne
 	@JoinColumn
 			(
 					name = "feedbackId"
 			)
-	private Feedback feedback;
+	private FeedbackEntity feedback;
 
 	@Column
 	private String answer;
@@ -36,14 +36,14 @@ public class HandInHomework {
 	public HandInHomework() {
 	}
 
-	public HandInHomework(String id, UserEntity user, Homework homework, String answer) {
+	public HandInHomework(String id, UserEntity user, HomeworkEntity homework, String answer) {
 		this.id = id;
 		this.user = user;
 		this.homework = homework;
 		this.answer = answer;
 	}
 
-	public HandInHomework(String id, UserEntity user, Homework homework, Feedback feedback, String answer) {
+	public HandInHomework(String id, UserEntity user, HomeworkEntity homework, FeedbackEntity feedback, String answer) {
 		this.id = id;
 		this.user = user;
 		this.homework = homework;
@@ -67,19 +67,19 @@ public class HandInHomework {
 		this.user = user;
 	}
 
-	public Homework getHomework() {
+	public HomeworkEntity getHomework() {
 		return homework;
 	}
 
-	public void setHomework(Homework homework) {
+	public void setHomework(HomeworkEntity homework) {
 		this.homework = homework;
 	}
 
-	public Feedback getFeedback() {
+	public FeedbackEntity getFeedback() {
 		return feedback;
 	}
 
-	public void setFeedback(Feedback feedback) {
+	public void setFeedback(FeedbackEntity feedback) {
 		this.feedback = feedback;
 	}
 

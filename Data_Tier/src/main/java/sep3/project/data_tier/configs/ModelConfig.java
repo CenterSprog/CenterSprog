@@ -1,9 +1,11 @@
-package sep3.project.data_tier.entity;
+package sep3.project.data_tier.configs;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import sep3.project.data_tier.entity.ClassEntity;
+import sep3.project.data_tier.entity.LessonEntity;
+import sep3.project.data_tier.entity.UserEntity;
 import sep3.project.data_tier.repository.*;
 
 @Configuration
@@ -22,8 +24,8 @@ public class ModelConfig {
             UserEntity s1 = new UserEntity("damian","damian","Damian","Trafialek","damian.trafialek@gmail.com","student");
             UserEntity t1 = new UserEntity("steffan","steffan","Steffan","Visenberg","sva@via.dk","teacher");
 
-            Lesson l1 = new Lesson(12312312,"grpc","awesome lesson");
-            Lesson l2 = new Lesson(12312313,"rabit-mq","what da hell is going on");
+            LessonEntity l1 = new LessonEntity(12312312,"grpc","awesome lesson");
+            LessonEntity l2 = new LessonEntity(12312313,"rabit-mq","what da hell is going on");
 
             ClassEntity c1 = new ClassEntity("sdj3","c05.16b");
 

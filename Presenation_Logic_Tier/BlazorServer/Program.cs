@@ -19,6 +19,7 @@ builder.Services.AddScoped(
 );
 
 builder.Services.AddScoped<IHeartbeatService, HeartbeatHttpClient>();
+builder.Services.AddScoped<IHomeworkService, HomeworkHttpClient>();
 
 var app = builder.Build();
 
