@@ -1,8 +1,6 @@
 ﻿using Application.ClientInterfaces;
 using Domain.DTOs.HomeworkDTO;
-using Domain.Models;
 using Grpc.Net.Client;
-using Microsoft.AspNetCore.Mvc;
 using gRPCClient;
 using Homework = Domain.Models.Homework;
 

@@ -30,7 +30,7 @@ public class HeartbeatClient:IHeartbeatDAO
         {
             Console.WriteLine(e);
             throw;
-        }
+        }   
         return await Task.FromResult(reply.Pulse);
     }
 

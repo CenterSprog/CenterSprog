@@ -1,16 +1,45 @@
 ﻿@page "/Lessons/{id}"  
 @using BlazorServer.Shared.Components
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject ILessonService lessonService
 
-<h3>LessonDetails</h3>
+<h3>@lesson.Topic</h3>
+<h5>@lesson.Date</h5>
+<p>@lesson.Description</p>
 
 <section> 
     <h3>Homework</h3>
-    <AssignHomeworkComponent LessonId=@Id/>
-    
+    @if (lesson.Homework == null)
+    {
+        <AssignHomeworkComponent LessonId=@Id />
+    }
+    else
+    {
+        <p>@lesson.Homework.Description</p>
+    }
+
 </section>
 
 
 @code {
     [Parameter]
     public string Id { get; set; }
+    
+    Lesson lesson;
+    private string errorLabel;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        errorLabel = "";
+        try
+        {
+            lesson = await lessonService.GetByIdAsync(Id);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorLabel = $"{e.Message}";
+        }
+    }
 }

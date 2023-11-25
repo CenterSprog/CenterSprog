@@ -3,8 +3,6 @@ using Application.DAOInterfaces;
 using Application.gRPCClients;
 using Application.Logic;
 using Application.LogicInterfaces;
-using HttpClients.ClientInterfaces;
-using HttpClients.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +19,8 @@ builder.Services.AddScoped<IHeartbeatDAO, HeartbeatClient>();
 builder.Services.AddScoped<IHomeworkLogic, HomeworkLogic>();
 builder.Services.AddScoped<IHomeworkClient, HomeworkClient>();
 
+builder.Services.AddScoped<ILessonLogic, LessonLogic>();
+builder.Services.AddScoped<ILessonClient, LessonClient>();
 
 var app = builder.Build();
 
