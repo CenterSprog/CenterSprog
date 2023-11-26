@@ -3,8 +3,6 @@ using Application.DAOInterfaces;
 using Application.gRPCClients;
 using Application.Logic;
 using Application.LogicInterfaces;
-using HttpClients.ClientInterfaces;
-using HttpClients.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
