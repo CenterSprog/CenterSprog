@@ -3,12 +3,16 @@ package sep3.project.data_tier.service;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import sep3.project.data_tier.entity.ClassEntity;
 import sep3.project.data_tier.entity.HomeworkEntity;
 import sep3.project.data_tier.entity.LessonEntity;
+import sep3.project.data_tier.repository.IClassRepository;
 import sep3.project.data_tier.repository.IHomeworkRepository;
 import sep3.project.data_tier.repository.ILessonRepository;
 import sep3.project.protobuf.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @GrpcService
@@ -16,11 +20,13 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
 
     private ILessonRepository lessonRepository;
     private IHomeworkRepository homeworkRepository;
+    private IClassRepository classRepository;
 
     @Autowired
-    public LessonServiceImpl(IHomeworkRepository homeworkRepository, ILessonRepository lessonRepository) {
+    public LessonServiceImpl(IHomeworkRepository homeworkRepository, ILessonRepository lessonRepository, IClassRepository classRepository) {
         this.homeworkRepository = homeworkRepository;
         this.lessonRepository = lessonRepository;
+        this.classRepository = classRepository;
     }
 
     @Override
@@ -63,4 +69,33 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
         }
 
     }
+//    @Override
+//    public void getLessonsByClassId(RequestGetLessonsByClassId request, StreamObserver<ResponseGetLessonsByClassId> response) {
+//        try {
+//            String classId = request.getClassId();
+//
+//            List<LessonEntity> lessons = lessonRepository.findByClassId(classId);
+//            List<Lesson> grpcLessons = new ArrayList<>();
+//
+//            for (LessonEntity lessonEntity : lessons)
+//            {
+//                Lesson lesson = Lesson.newBuilder()
+//                    .setDate(lessonEntity.getDate())
+//                    .setTopic(lessonEntity.getTopic())
+//                    .setDescription(lessonEntity.getDescription()).buildPartial();
+//
+//                if (lessonEntity.getHomework() != null)
+//                {
+//                    Lesson.Builder Lesson = lesson.toBuilder().setHomework(
+//                        Homework.newBuilder().setTitle(
+//                                lessonEntity.getHomework().getTitle())
+//                            .setDeadline(
+//                                lessonEntity.getHomework().getDeadline())
+//                            .setId(lessonEntity.getHomework().getId())
+//                            .setDescription(lessonEntity.getHomework()
+//                                .getDescription()).build());
+//                }
+//                return lesson.bui
+//            }
+//        }
 }

@@ -23,6 +23,7 @@
     <ItemGroup>
         <Protobuf Include="Protos\Heartbeat.proto" GrpcServices="Client" />
         <Protobuf Include="Protos\Homework.proto" GrpcServices="Client" />
+        <Protobuf Include="Protos\ClassEntity.proto" GrpcServices="Client" />
     </ItemGroup>
     
 </Project>

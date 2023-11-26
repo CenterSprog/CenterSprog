@@ -1,6 +1,56 @@
 ﻿@page "/"
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject IClassService classService
+@inject NavigationManager navMgr
 
-<h1>Welcome to our Proof of Concept!</h1>
+@if (classes == null)
+{
+    <span>Loading classes...</span>
+}
+else if (!classes.Any())
+{
+    <p>No classes to display</p>
+}
+else
+{
 
-Test our Heartbeat fuction to verify that object created here, is stored behind the scene! 
+    <div class="classes-container">
+        @foreach (ClassEntity _class in classes)
+        {
+            <div class="class-card" @onclick="() => ViewClass(_class)">
+                <h4>@_class.Title @_class.Room</h4>
+            </div>
+        }
+    </div>
 
+}
+
+@code
+{
+    private IEnumerable<ClassEntity>? classes;
+    private string msg = "";
+    
+        
+    protected override async Task OnInitializedAsync()
+    {
+        msg = "";
+        try
+        {
+            classes = await classService.GetByUsernameAsync("joseph");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+
+    private void ViewClass(ClassEntity classEntity)
+    {
+        var classId = classEntity.Id;
+        navMgr.NavigateTo($"/classDetails/{classId}");
+    }
+}
+
+        

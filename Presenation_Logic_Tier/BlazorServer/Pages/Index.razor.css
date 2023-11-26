@@ -1,0 +1,19 @@
+﻿.class-card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    margin: 25px;
+    padding: 15px;
+    border-radius: 10px;
+    width: 200px;
+    height: 80px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.classes-container {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    width: 100%;
+    
+    
+}

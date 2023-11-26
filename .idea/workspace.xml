@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="cbecce9e-7f7d-4c07-9ecb-5484121f1f74" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/mappers/ClassMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/ClassServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/ClientInterfaces/IClassClient.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Logic/ClassLogic.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/LogicInterfaces/IClassLogic.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Protos/ClassEntity.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/ClassClient.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/ClassEntity.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/ClientInterfaces/IClassService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/ClassHttpClient.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/ClassController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/configs/ModelConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/configs/ModelConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/ClassEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/ClassEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IClassRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IClassRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/ILessonRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/ILessonRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/LessonServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/LessonServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Application.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Program.cs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feature/assign-homework" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2YfmIGLD2ex0Sq4zAZuypFdZRDp" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/view-class&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/Java&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;79548d7d87d920c30a56612adb0880bc&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="DataTierApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="Data_Tier" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="sep3.project.data_tier.DataTierApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cbecce9e-7f7d-4c07-9ecb-5484121f1f74" name="Changes" comment="" />
+      <created>1700924928504</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1700924928504</updated>
+      <workItem from="1700924930196" duration="6289000" />
+      <workItem from="1700933103824" duration="15044000" />
+      <workItem from="1701011249046" duration="7489000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
