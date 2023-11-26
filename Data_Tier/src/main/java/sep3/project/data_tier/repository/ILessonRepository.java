@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface ILessonRepository extends JpaRepository<LessonEntity, String>
 {
-//  List<LessonEntity> findByClassId(String classId);
+  @Query("SELECT l FROM LessonEntity l JOIN l.classes c WHERE c.id = :classId")
+  List<LessonEntity> findByClassId(@Param("classId") String classId);
 }

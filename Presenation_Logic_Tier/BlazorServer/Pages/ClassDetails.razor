@@ -1,0 +1,51 @@
+﻿@page "/classDetails/{classId}"
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject ILessonService lessonService
+@inject IClassService classService
+@inject NavigationManager navMgr
+<h3>ClassDetails</h3>
+
+@if (lessons == null)
+{
+    <span>Loading lessons...</span>
+}
+else if (!lessons.Any())
+{
+    <p>No lessons available for this class</p>
+}
+else
+{
+    <h2>@selectedClass.Title - Lessons</h2>
+    <div class="lessons-container">
+        @foreach (Lesson lesson in lessons)
+        {
+            <div class="lesson-card">
+                <h4>@lesson.Topic</h4>
+                <p>@lesson.Description</p>
+                <!-- Display other details of the lesson -->
+            </div>
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string ClassId { get; set; }
+
+    private ClassEntity selectedClass;
+    private IEnumerable<Lesson> lessons;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            selectedClass = await classService.GetByIdAsync(ClassId);
+            lessons = await lessonService.GetLessonsByClassIdAsync(ClassId);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+}

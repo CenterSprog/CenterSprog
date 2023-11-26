@@ -30,6 +30,8 @@ public class ModelConfig {
 
             LessonEntity l1 = new LessonEntity(12312312,"grpc","awesome lesson");
             LessonEntity l2 = new LessonEntity(12312313,"rabit-mq","what da hell is going on");
+            LessonEntity l3 = new LessonEntity(12312314,"peer-to-peer","i wanna go home");
+            LessonEntity l4 = new LessonEntity(12312315,"english grammar suka","do you speak london?");
 
             ClassEntity c1 = new ClassEntity("sdj1","c05.16b");
             ClassEntity c2 = new ClassEntity("sep3","c05.14b");
@@ -57,6 +59,8 @@ public class ModelConfig {
 
             lessonRepository.save(l1);
             lessonRepository.save(l2);
+            lessonRepository.save(l3);
+            lessonRepository.save(l4);
 
             classRepository.save(c1);
             classRepository.save(c2);

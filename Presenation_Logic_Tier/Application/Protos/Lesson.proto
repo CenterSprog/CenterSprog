@@ -1,4 +1,4 @@
-syntax = "proto3";
+﻿syntax = "proto3";
 import "google/protobuf/empty.proto";
 import "Protos/Homework.proto";
 
@@ -21,12 +21,14 @@ message RequestGetLessonById{
 message ResponseGetLessonById{
   Lesson lesson = 1;
 }
+message RequestGetLessonsByClassId{
+  string classId = 1;
+}
+message ResponseGetLessonsByClassId{
+  repeated Lesson lessons = 1;
+}
 
 service LessonService{
   rpc getLessonById(RequestGetLessonById) returns (ResponseGetLessonById);
+  rpc getLessonsByClassId(RequestGetLessonsByClassId) returns (ResponseGetLessonsByClassId);
 }
-
-
-
-
-

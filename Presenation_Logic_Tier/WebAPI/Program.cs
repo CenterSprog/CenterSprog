@@ -6,6 +6,7 @@ using Application.LogicInterfaces;
 using HttpClients.ClientInterfaces;
 using HttpClients.Implementations;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -25,6 +26,11 @@ builder.Services.AddScoped<ILessonLogic, LessonLogic>();
 builder.Services.AddScoped<ILessonClient, LessonClient>();
 builder.Services.AddScoped<IClassLogic, ClassLogic>();
 builder.Services.AddScoped<IClassClient, ClassClient>();
+
+builder.Services.AddHttpClient<ILessonService, LessonHttpClient>();
+builder.Services.AddLogging(builder => builder
+    .AddConsole()
+);
 
 
 var app = builder.Build();

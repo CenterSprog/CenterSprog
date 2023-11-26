@@ -1,6 +1,5 @@
 ﻿using Application.LogicInterfaces;
 using Domain.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -17,7 +16,7 @@ public class ClassController : ControllerBase
         _classLogic = classLogic;
     }
 
-    [HttpGet("{id}", Name = "GetByIdAsync")]
+    [HttpGet("{id}", Name = "GetClassByIdAsync")]
     public async Task<ActionResult<ClassEntity>> GetByIdAsync([FromRoute] string id)
     {
         try

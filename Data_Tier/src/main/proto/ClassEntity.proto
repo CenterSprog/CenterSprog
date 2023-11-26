@@ -37,4 +37,5 @@ service ClassEntityService{
   rpc createClassEntity(RequestCreateClassEntity) returns (ResponseCreateClassEntity);
   rpc getClassEntityById(RequestGetClassEntity) returns (ResponseGetClassEntity);
   rpc getClassEntitiesByUsername(RequestGetClassEntitiesByUsername) returns (ResponseGetClassEntitiesByUsername);
+
 }

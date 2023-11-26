@@ -41,4 +41,61 @@ public class LessonClient : ILessonClient
                 
         return await Task.FromResult(foundLesson);
     }
+
+    public async Task<IEnumerable<Lesson>> GetLessonsByClassIdAsync(string classId)
+    {
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new LessonService.LessonServiceClient(channel);
+        
+        var request = new RequestGetLessonsByClassId()
+        {
+            ClassId = classId
+        };
+        
+        var reply = new ResponseGetLessonsByClassId();
+        try
+        {
+            reply = client.getLessonsByClassId(request);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        
+        var lessons = new List<Lesson>();
+        foreach (var grpcLesson in reply.Lessons)
+        {
+            if (grpcLesson.Homework != null)
+            {
+                var homework = new Homework(
+                    grpcLesson.Homework.Id,
+                    grpcLesson.Homework.Deadline,
+                    grpcLesson.Homework.Title,
+                    grpcLesson.Homework.Description
+                );
+
+                var lesson = new Lesson(
+                    grpcLesson.Date,
+                    grpcLesson.Description,
+                    grpcLesson.Topic,
+                    homework
+                );
+
+                lessons.Add(lesson);
+            }
+            else
+            {
+                var lesson = new Lesson(
+                    grpcLesson.Date,
+                    grpcLesson.Description,
+                    grpcLesson.Topic
+                );
+
+                lessons.Add(lesson);
+            }
+        }
+
+        return await Task.FromResult(lessons);
+        
+    }
 }

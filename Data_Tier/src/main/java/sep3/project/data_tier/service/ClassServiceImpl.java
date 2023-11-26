@@ -21,7 +21,7 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
 {
   private IClassRepository classRepository;
 
-  private final static Logger LOG = LoggerFactory.getLogger(HeartbeatServiceImpl.class);
+  private final static Logger LOG = LoggerFactory.getLogger(ClassServiceImpl.class);
 
   @Autowired
   public ClassServiceImpl(IClassRepository classRepository)
@@ -42,6 +42,7 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
       }
 
       sep3.project.protobuf.ClassEntity grpcClass = sep3.project.protobuf.ClassEntity.newBuilder()
+          .setId(existingClass.get().getId())
           .setTitle(existingClass.get().getTitle())
           .setRoom(existingClass.get().getRoom())
           .build();
@@ -71,6 +72,7 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
       for (ClassEntity entity : classes)
       {
         sep3.project.protobuf.ClassEntity grpcClass = sep3.project.protobuf.ClassEntity.newBuilder()
+            .setId(entity.getId())
             .setTitle(entity.getTitle())
             .setRoom(entity.getRoom())
             .build();

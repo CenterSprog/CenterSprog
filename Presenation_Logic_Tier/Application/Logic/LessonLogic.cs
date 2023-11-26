@@ -17,4 +17,9 @@ public class LessonLogic : ILessonLogic
     {
         return await _lessonClient.GetByIdAsync(id);
     }
+
+    public async Task<IEnumerable<Lesson>> GetLessonsByClassIdAsync(string classId)
+    {
+        return await _lessonClient.GetLessonsByClassIdAsync(classId);
+    }
 }
