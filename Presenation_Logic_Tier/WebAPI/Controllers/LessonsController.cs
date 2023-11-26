@@ -6,11 +6,11 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class LessonController
+public class LessonsController : ControllerBase
 {
     private readonly ILessonLogic _lessonLogic;
 
-    public LessonController(ILessonLogic lessonLogic)
+    public LessonsController(ILessonLogic lessonLogic)
     {
         _lessonLogic = lessonLogic;
     }
@@ -21,7 +21,7 @@ public class LessonController
         try
         {
             Lesson lesson = await _lessonLogic.GetByIdAsync(id);
-            return new OkObjectResult(lesson);
+            return Ok(lesson);
         }
         catch (Exception e)
         {

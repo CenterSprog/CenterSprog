@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
 using Domain.Models;
 using HttpClients.ClientInterfaces;
 
@@ -16,12 +17,15 @@ public class LessonHttpClient : ILessonService
     public async Task<Lesson> GetByIdAsync(string id)
     {
         HttpResponseMessage response = await client.GetAsync($"/lessons/{id}");
-        
-        Lesson? foundLesson = await response.Content.ReadFromJsonAsync<Lesson>();
-        if (!response.IsSuccessStatusCode || foundLesson is null)
+        string result = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
         {
-            throw new Exception("Failed to find a lesson with ID#" + id);
+            throw new Exception(result);
         }
+        Lesson foundLesson = JsonSerializer.Deserialize<Lesson>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
         
         return foundLesson;
     }
