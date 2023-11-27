@@ -19,6 +19,8 @@ builder.Services.AddScoped<IHeartbeatDAO, HeartbeatClient>();
 builder.Services.AddScoped<IHomeworkLogic, HomeworkLogic>();
 builder.Services.AddScoped<IHomeworkClient, HomeworkClient>();
 
+builder.Services.AddScoped<ILessonLogic, LessonLogic>();
+builder.Services.AddScoped<ILessonClient, LessonClient>();
 
 var app = builder.Build();
 
