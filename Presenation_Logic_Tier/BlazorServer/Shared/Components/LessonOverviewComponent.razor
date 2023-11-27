@@ -1,0 +1,11 @@
+﻿@inject NavigationManager navMgr
+
+        <div class="w-100 flex-column p-5 bg-light border border-danger border-1 postcard" @onclick="RedirectToPostDetails">
+            <h2 class="fst-italic">Lesson Overview</h2>
+        </div>
+@code {
+    private void RedirectToPostDetails()
+    {
+        navMgr.NavigateTo($"/Lessons/3a8f5355-ae6f-43b9-bf26-af86e8e165a6");
+    }
+}

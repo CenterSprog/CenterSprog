@@ -1,3 +1,4 @@
+using Application.ClientInterfaces;
 using Application.DAOInterfaces;
 using Application.gRPCClients;
 using Application.Logic;
@@ -14,6 +15,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IHeartbeatLogic, HeartbeatLogic>();
 builder.Services.AddScoped<IHeartbeatDAO, HeartbeatClient>();
+
+builder.Services.AddScoped<IHomeworkLogic, HomeworkLogic>();
+builder.Services.AddScoped<IHomeworkClient, HomeworkClient>();
+
+builder.Services.AddScoped<ILessonLogic, LessonLogic>();
+builder.Services.AddScoped<ILessonClient, LessonClient>();
 
 var app = builder.Build();
 

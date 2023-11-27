@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table
-public class Lesson {
+public class LessonEntity {
 	@Id
 	@Column
 	@UuidGenerator
@@ -28,7 +28,7 @@ public class Lesson {
 			nullable = true,
 			updatable = true
 	)
-	private Homework homework;
+	private HomeworkEntity homework;
 
 	@ManyToMany
 	@JoinTable(
@@ -38,10 +38,10 @@ public class Lesson {
 	)
 	private Set<UserEntity> attendance = new HashSet<>();
 
-	public Lesson() {
+	public LessonEntity() {
 	}
 
-	public Lesson(int date, String topic, String description) {
+	public LessonEntity(int date, String topic, String description) {
 		this.date = date;
 		this.topic = topic;
 		this.description = description;
@@ -77,6 +77,14 @@ public class Lesson {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public HomeworkEntity getHomework() {
+		return homework;
+	}
+
+	public void setHomework(HomeworkEntity homework) {
+		this.homework = homework;
 	}
 
 	@Override

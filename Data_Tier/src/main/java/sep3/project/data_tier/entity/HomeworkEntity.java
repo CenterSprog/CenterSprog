@@ -8,26 +8,30 @@ import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Table
-public class Homework {
+public class HomeworkEntity {
 	@Id
 	@Column
 	@UuidGenerator
 	private String id;
 	@Column
-	private int deadline;
+	private long deadline;
 	@Column
 	private String title;
 	@Column
 	private String description;
 
-	public Homework() {
+	public HomeworkEntity() {
 	}
 
-	public Homework(String id, int deadline, String title, String description) {
-		this.id = id;
+	public HomeworkEntity(long deadline, String title, String description) {
 		this.deadline = deadline;
 		this.title = title;
 		this.description = description;
+	}
+
+	public HomeworkEntity(String id, long deadline, String title, String description) {
+		this(deadline,title,description);
+		this.id = id;
 	}
 
 	public String getId() {
@@ -38,11 +42,11 @@ public class Homework {
 		this.id = id;
 	}
 
-	public int getDeadline() {
+	public long getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadline(int deadline) {
+	public void setDeadline(long deadline) {
 		this.deadline = deadline;
 	}
 
@@ -61,6 +65,7 @@ public class Homework {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 
 	@Override
 	public String toString() {
