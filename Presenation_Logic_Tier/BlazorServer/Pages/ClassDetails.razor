@@ -4,7 +4,6 @@
 @inject ILessonService lessonService
 @inject IClassService classService
 @inject NavigationManager navMgr
-<h3>ClassDetails</h3>
 
 @if (lessons == null)
 {
@@ -16,13 +15,23 @@ else if (!lessons.Any())
 }
 else
 {
-    <h2>@selectedClass.Title - Lessons</h2>
+    <div class="class-container">
+        <div class="class-card">
+            <h2>@selectedClass.Title @selectedClass.Room</h2>
+            <h5></h5>
+        </div>
+    </div>
+    
     <div class="lessons-container">
         @foreach (Lesson lesson in lessons)
         {
             <div class="lesson-card">
-                <h4>@lesson.Topic</h4>
-                <p>@lesson.Description</p>
+                <div class="icon-container">
+                                <img src="/notebook.png" alt="Lesson Icon" />
+                            </div>
+                <div class="lesson-content">
+                    <h4>@lesson.Topic @lesson.Date @lesson.Description </h4>
+                </div>
             </div>
         }
     </div>

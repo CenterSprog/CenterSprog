@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbecce9e-7f7d-4c07-9ecb-5484121f1f74" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/wwwroot/notebook.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/Lesson.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/Lesson.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/LessonHttpClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/LessonHttpClient.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +102,7 @@
       <workItem from="1700924930196" duration="6289000" />
       <workItem from="1700933103824" duration="15044000" />
       <workItem from="1701011249046" duration="9066000" />
-      <workItem from="1701074456309" duration="1608000" />
+      <workItem from="1701074456309" duration="7145000" />
     </task>
     <servers />
   </component>

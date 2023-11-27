@@ -1,0 +1,46 @@
+﻿.lesson-card {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin: 10px;
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+    height: 80px;
+    display:flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+}
+.lessons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 40px;
+    width: 100%;
+    
+}
+.class-container
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 40px;
+    width: 100%;
+}
+.class-card
+{
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin: 10px;
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+    height: 200px;
+    display:flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+.lesson-card img {
+    width: 50px;
+    height: 50px; 
+    margin-right: 10px; 
+
+}

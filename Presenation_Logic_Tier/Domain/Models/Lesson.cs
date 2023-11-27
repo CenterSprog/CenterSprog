@@ -1,4 +1,6 @@
-﻿namespace Domain.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace Domain.Models;
 
 public class Lesson
 {
@@ -21,4 +23,7 @@ public class Lesson
         Description = description;
         Topic = topic;
     }
+    
+    [JsonConstructor]
+    public Lesson() {}
 }
