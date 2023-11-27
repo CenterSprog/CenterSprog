@@ -2,7 +2,7 @@
 
 namespace Application.ClientInterfaces;
 
-public interface IAuthClient
+public interface IUserClient
 {
     Task<User> AuthenticateUser(string username, string password);
 }

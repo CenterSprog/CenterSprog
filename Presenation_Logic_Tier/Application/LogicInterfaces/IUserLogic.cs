@@ -2,7 +2,7 @@
 
 namespace Application.LogicInterfaces;
 
-public interface IAuthLogic
+public interface IUserLogic
 {
     Task<User> AuthenticateUser(string username, string password);
 }

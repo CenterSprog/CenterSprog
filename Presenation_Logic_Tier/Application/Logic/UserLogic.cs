@@ -4,18 +4,18 @@ using Domain.Models;
 
 namespace Application.Logic;
 
-public class AuthLogic : IAuthLogic
+public class UserLogic : IUserLogic
 {
-    private AuthClient _authClient;
+    private readonly UserClient _userClient;
 
-    public AuthLogic(AuthClient authClient)
+    public UserLogic(UserClient userClient)
     {
-        _authClient = authClient;
+        _userClient = userClient;
     }
 
     public async Task<User> AuthenticateUser(string username, string password)
     {
-        User? authenticatedUser = await _authClient.AuthenticateUser(username, password);
+        User? authenticatedUser = await _userClient.AuthenticateUser(username, password);
 
         if (authenticatedUser == null)
         {

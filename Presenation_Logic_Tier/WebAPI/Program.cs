@@ -19,7 +19,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IHeartbeatLogic, HeartbeatLogic>();
 builder.Services.AddScoped<IHeartbeatDAO, HeartbeatClient>();
-builder.Services.AddScoped<IAuthClient,AuthClient>();
+builder.Services.AddScoped<IUserLogic,UserLogic>();
+builder.Services.AddScoped<IUserClient,UserClient>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.RequireHttpsMetadata = false;
