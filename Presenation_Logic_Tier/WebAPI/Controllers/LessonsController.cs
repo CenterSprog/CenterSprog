@@ -22,7 +22,7 @@ public class LessonController : ControllerBase
         try
         {
             Lesson lesson = await _lessonLogic.GetByIdAsync(id);
-            return new OkObjectResult(lesson);
+            return Ok(lesson);
         }
         catch (Exception e)
         {

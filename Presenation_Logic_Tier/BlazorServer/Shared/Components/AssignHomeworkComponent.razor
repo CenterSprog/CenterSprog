@@ -4,7 +4,7 @@
 
 
 
-<div class="d-flex flex-column w-50 bg-warning">
+<div class="d-flex flex-column bg-warning">
     <h3 class="text-sm-center">AssignHomeworkComponent</h3>
         
     <h5 class="text-sm-center">If you are a teacher add here for @LessonId</h5>
@@ -34,6 +34,9 @@
 @code {
     [Parameter]
     public string LessonId { get; set; }
+    [Parameter]
+    public long LessonDate { get; set; }
+    
     public string Msg { get; set; }
     public HomeworkCreationDTO Dto { get; set; }
     public DateTime Date { get; set; }
@@ -51,6 +54,7 @@
         try
         {
             Dto.Deadline = Date.ToFileTimeUtc();
+            ValidateHomework();
             await HomeworkService.CreateAsync(Dto);
             Msg = "Assigned homework successfully!";
         }
@@ -59,5 +63,15 @@
             Console.WriteLine(e);
             Msg = e.Message;
         }
+    }
+
+    private void ValidateHomework()
+    {
+        if (Dto.Title == "")
+            throw new Exception("Title is required");
+        if(Dto.Description == "")
+            throw new Exception("Description is required");
+        if (Dto.Deadline < LessonDate)
+            throw new Exception("The deadline of the homework cannot be before the lesson's date");
     }
 }

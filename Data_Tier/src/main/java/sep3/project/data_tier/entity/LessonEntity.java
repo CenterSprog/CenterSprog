@@ -15,7 +15,7 @@ public class LessonEntity {
 	@UuidGenerator
 	private String id;
 	@Column
-	private int date;
+	private long date;
 	@Column
 	private String topic;
 	@Column
@@ -48,7 +48,7 @@ public class LessonEntity {
 	public LessonEntity() {
 	}
 
-	public LessonEntity(int date, String topic, String description) {
+	public LessonEntity(long date, String topic, String description) {
 		this.date = date;
 		this.topic = topic;
 		this.description = description;
@@ -62,11 +62,11 @@ public class LessonEntity {
 		this.id = id;
 	}
 
-	public int getDate() {
+	public long getDate() {
 		return date;
 	}
 
-	public void setDate(int date) {
+	public void setDate(long date) {
 		this.date = date;
 	}
 
