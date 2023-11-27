@@ -64,9 +64,10 @@ public class AuthController : ControllerBase
     [HttpPost, Route("login")]
     public async Task<ActionResult> Login([FromBody] UserLoginDto userLoginDto)
     {
+        
         try
         {
-            User user = await _userLogic.AuthenticateUser(userLoginDto.Username, userLoginDto.Password);
+            User user = await _userLogic.AuthenticateUserAsync(userLoginDto.Username, userLoginDto.Password);
             string token = GenerateJwt(user);
     
             return Ok(token);

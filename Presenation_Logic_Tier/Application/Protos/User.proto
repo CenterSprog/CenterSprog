@@ -1,11 +1,13 @@
-syntax = "proto3";
+﻿syntax = "proto3";
 import "google/protobuf/empty.proto";
+
+option csharp_namespace = "gRPCClient";
 
 option java_multiple_files = true;
 option java_package = "sep3.project.protobuf";
-option java_outer_classname = "UserEntityProto";
+option java_outer_classname = "UserProto";
 
-message UserEntity{
+message UserData{
   string username = 1;
   string password = 2;
   string firstName = 3;
@@ -14,10 +16,10 @@ message UserEntity{
   string role = 6;
 }
 message RequestCreateUser{
-  UserEntity user = 1;
+  UserData user = 1;
 }
 message ResponseCreateUser{
-  UserEntity user = 2;
+  UserData user = 2;
 }
 
 message RequestDeleteUser{
@@ -27,13 +29,13 @@ message ResponseDeleteUser{
   string result = 1;
 }
 message ResponseUserGetAllUsers{
-  repeated UserEntity users = 1;
+  repeated UserData users = 1;
 }
 message RequestUserGetByUsername{
   string username = 1;
 }
 message ResponseUserGetByUsername{
-  UserEntity user = 1;
+  UserData user = 1;
 }
 service UserService{
   rpc createUser(RequestCreateUser) returns (ResponseCreateUser);

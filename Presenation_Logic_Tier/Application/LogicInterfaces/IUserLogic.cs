@@ -4,5 +4,5 @@ namespace Application.LogicInterfaces;
 
 public interface IUserLogic
 {
-    Task<User> AuthenticateUser(string username, string password);
+    Task<User> AuthenticateUserAsync(string username, string password);
 }

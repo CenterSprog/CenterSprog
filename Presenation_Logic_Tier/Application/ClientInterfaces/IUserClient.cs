@@ -4,5 +4,5 @@ namespace Application.ClientInterfaces;
 
 public interface IUserClient
 {
-    Task<User> AuthenticateUser(string username, string password);
+    Task<User> GetUserByUsernameAsync(string username);
 }

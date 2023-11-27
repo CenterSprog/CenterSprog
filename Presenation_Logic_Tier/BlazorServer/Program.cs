@@ -1,8 +1,11 @@
+using BlazorServer.Auth;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using BlazorServer.Data;
+using Domain.Auth;
 using HttpClients.ClientInterfaces;
 using HttpClients.Implementations;
+using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped(
     sp => 
@@ -19,7 +23,8 @@ builder.Services.AddScoped(
 );
 
 builder.Services.AddScoped<IHeartbeatService, HeartbeatHttpClient>();
-
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
+AuthorizationPolicies.AddPolicies(builder.Services);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
