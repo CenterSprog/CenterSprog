@@ -23,7 +23,6 @@ else
             <div class="lesson-card">
                 <h4>@lesson.Topic</h4>
                 <p>@lesson.Description</p>
-                <!-- Display other details of the lesson -->
             </div>
         }
     </div>
@@ -41,6 +40,7 @@ else
         try
         {
             selectedClass = await classService.GetByIdAsync(ClassId);
+            Console.WriteLine(selectedClass);
             lessons = await lessonService.GetLessonsByClassIdAsync(ClassId);
         }
         catch (Exception e)

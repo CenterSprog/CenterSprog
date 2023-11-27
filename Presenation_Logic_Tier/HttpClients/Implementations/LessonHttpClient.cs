@@ -31,7 +31,7 @@ public class LessonHttpClient : ILessonService
 
     public async Task<IEnumerable<Lesson>> GetLessonsByClassIdAsync(string classId)
     {
-        HttpResponseMessage response = await client.GetAsync($"/lessons/Class/{classId}");
+        HttpResponseMessage response = await client.GetAsync($"/Class/{classId}");
         if (!response.IsSuccessStatusCode)
         {
             logger.LogError($"Failed to retrieve lessons for class ID: {classId}. Status code: {response.StatusCode}");
