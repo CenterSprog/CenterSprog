@@ -36,7 +36,7 @@ public class LessonHttpClient : ILessonService
 
     public async Task<IEnumerable<Lesson>> GetLessonsByClassIdAsync(string classId)
     {
-        HttpResponseMessage response = await client.GetAsync($"lesson/Class/{classId}");
+        HttpResponseMessage response = await client.GetAsync($"lessons/Class/{classId}");
         var result = await response.Content.ReadAsStringAsync();
         Console.WriteLine(result);
         

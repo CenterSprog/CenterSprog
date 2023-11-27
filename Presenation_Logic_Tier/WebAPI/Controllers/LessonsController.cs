@@ -7,11 +7,11 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class LessonController : ControllerBase
+public class LessonsController : ControllerBase
 {
     private readonly ILessonLogic _lessonLogic;
 
-    public LessonController(ILessonLogic lessonLogic)
+    public LessonsController(ILessonLogic lessonLogic)
     {
         _lessonLogic = lessonLogic;
     }

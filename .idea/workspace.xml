@@ -5,14 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbecce9e-7f7d-4c07-9ecb-5484121f1f74" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/wwwroot/notebook.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/LessonServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/LessonServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/LessonClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/LessonClient.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LessonOverviewComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LessonOverviewComponent.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/Lesson.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/Lesson.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/LessonHttpClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/LessonHttpClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/LessonsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/LessonsController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,35 +56,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/view-class-with-lessons&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/Java&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;79548d7d87d920c30a56612adb0880bc&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "feature/view-class-and-lesson-details",
+    "last_opened_file_path": "C:/Program Files/Java",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "spring.configuration.checksum": "79548d7d87d920c30a56612adb0880bc",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="DataTierApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="Data_Tier" />
@@ -102,7 +105,7 @@
       <workItem from="1700924930196" duration="6289000" />
       <workItem from="1700933103824" duration="15044000" />
       <workItem from="1701011249046" duration="9066000" />
-      <workItem from="1701074456309" duration="7145000" />
+      <workItem from="1701074456309" duration="13216000" />
     </task>
     <servers />
   </component>

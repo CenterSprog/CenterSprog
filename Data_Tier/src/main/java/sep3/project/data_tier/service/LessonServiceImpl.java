@@ -38,6 +38,7 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
                 throw new IllegalStateException("No exisitng lesson with id of: " + id);
 
             Lesson grpcLesson = Lesson.newBuilder()
+                    .setId(existingLesson.get().getId())
                     .setDate(existingLesson.get().getDate())
                     .setDescription(existingLesson.get().getDescription())
                     .setTopic(existingLesson.get().getTopic()).buildPartial();
@@ -82,6 +83,7 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
             for (LessonEntity lessonEntity : lessons)
             {
                 Lesson lesson = Lesson.newBuilder()
+                    .setId(lessonEntity.getId())
                     .setDate(lessonEntity.getDate())
                     .setTopic(lessonEntity.getTopic())
                     .setDescription(lessonEntity.getDescription()).buildPartial();
@@ -90,6 +92,7 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
                 {
                     Lesson.Builder Lesson = lesson.toBuilder().setHomework(
                         Homework.newBuilder()
+                            .setId(lessonEntity.getHomework().getId())
                             .setTitle(lessonEntity.getHomework().getTitle())
                             .setDeadline(lessonEntity.getHomework().getDeadline())
                             .setId(lessonEntity.getHomework().getId())

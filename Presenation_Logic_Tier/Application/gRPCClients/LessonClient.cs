@@ -31,12 +31,12 @@ public class LessonClient : ILessonClient
         Lesson foundLesson;
         if (reply.Lesson.Homework!=null)
         {
-            foundLesson = new(reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic,
+            foundLesson = new(reply.Lesson.Id,reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic,
                 new Homework(reply.Lesson.Homework.Id, reply.Lesson.Homework.Deadline,
                     reply.Lesson.Homework.Title, reply.Lesson.Homework.Description));
         }
         else{
-            foundLesson = new(reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic);
+            foundLesson = new(reply.Lesson.Id, reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic);
         }
                 
         return await Task.FromResult(foundLesson);
@@ -75,6 +75,7 @@ public class LessonClient : ILessonClient
                 );
 
                 var lesson = new Lesson(
+                    grpcLesson.Id,
                     grpcLesson.Date,
                     grpcLesson.Description,
                     grpcLesson.Topic,
@@ -86,6 +87,7 @@ public class LessonClient : ILessonClient
             else
             {
                 var lesson = new Lesson(
+                    grpcLesson.Id,
                     grpcLesson.Date,
                     grpcLesson.Description,
                     grpcLesson.Topic
