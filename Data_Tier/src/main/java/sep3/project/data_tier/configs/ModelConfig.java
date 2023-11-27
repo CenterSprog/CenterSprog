@@ -24,8 +24,8 @@ public class ModelConfig {
             UserEntity s1 = new UserEntity("damian","damian","Damian","Trafialek","damian.trafialek@gmail.com","student");
             UserEntity t1 = new UserEntity("steffan","steffan","Steffan","Visenberg","sva@via.dk","teacher");
 
-            LessonEntity l1 = new LessonEntity(12312312,"grpc","awesome lesson");
-            LessonEntity l2 = new LessonEntity(12312313,"rabit-mq","what da hell is going on");
+            LessonEntity l1 = new LessonEntity(133454545665594012l,"grpc","awesome lesson");
+            LessonEntity l2 = new LessonEntity(133454545665594012l,"rabit-mq","what da hell is going on");
 
             ClassEntity c1 = new ClassEntity("sdj3","c05.16b");
 
