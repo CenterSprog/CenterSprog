@@ -1,4 +1,4 @@
-﻿@page "/Lessons/{id}"  
+﻿@page "/Lessons/{lessonId}"  
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @inject ILessonService lessonService
@@ -6,40 +6,64 @@
 
 @if (lesson != null)
 {
-    <div class="container">
-        <div class="row justify-content-between">
-            <div class="col-4 rounded border border-dark border-1 p-0 pb-5">
-                <div class="color-box"/>
-                <div class="d-flex flex-column ps-5 my-4">
-                    <h6 class="label-text">Title</h6>
-                    <h3>@lesson.Topic</h3>
-                </div>
-                <div class="d-flex flex-column ps-5">
-                    <h6 class="label-text">Date</h6>
-                    <h5>@lesson.Date</h5>
-                </div>
+    <div class="lesson-container">
+    <div class="lesson-card">
+        <div class="lesson-header">
+            <div class="icon-container">
+                <img src="/notebook.png" alt="Lesson Icon"/>
             </div>
-            <div class="col-7 rounded border border-dark border-1 p-5">
-                <div class="d-flex flex-column">
-                    <h6 class="label-text">Description</h6>
-                    <p class="description-text">@lesson.Description</p>
-                </div>
-                <div class="d-flex flex-column mt-4">
-                    <h6 class="label-text">Homework</h6>
-                    @if (lesson.Homework == null)
-                    {
-                        <AssignHomeworkComponent LessonId=@Id LessonDate=@lesson.Date/>
-                    }
-                    else
-                    {
-                        <p class="description-text">@lesson.Homework.Description</p>
-                    }
-
-
-                </div>
+            <div class="lesson-header-content">
+                <h3>@lesson.Topic @lesson.Date</h3>
             </div>
         </div>
+        <div class="lesson-description">
+            <h4>@lesson.Description</h4>
+        </div>
     </div>
+    </div>
+       
+
+    @* *@
+    @*     <div class="row justify-content-between"> *@
+    @* *@
+    @*         <div class="col-4 rounded border border-dark border-1 p-0 pb-5"> *@
+    @*             <div class="color-box"/> *@
+    @*             <div class="d-flex flex-column ps-5 my-4"> *@
+    @*                 <h6 class="label-text">Title</h6> *@
+    @*                 <h3>@lesson.Topic</h3> *@
+    @*             </div> *@
+    @*             <div class="d-flex flex-column ps-5"> *@
+    @*                 <h6 class="label-text">Date</h6> *@
+    @*                 <h5>@lesson.Date</h5> *@
+    @*             </div> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </div> *@
+        
+        
+    <div class="homework-container">
+        <div class="homework-card">
+            <div class="col-7 rounded border border-dark border-1 p-5">
+            
+                        <div class="d-flex flex-column mt-4">
+                            <h6 class="label-text">Homework</h6>
+                            @if (lesson.Homework == null)
+                            {
+                                <AssignHomeworkComponent LessonId=@lessonId LessonDate=@lesson.Date/>
+                            }
+                            else
+                            {
+                                <p class="description-text">@lesson.Homework.Description</p>
+                            }
+            
+            
+                        </div>
+                    </div>
+        </div>
+        
+    </div>
+        
+
 }
 @if (!string.IsNullOrEmpty(errorLabel))
 {
@@ -49,7 +73,7 @@
 @code {
 
     [Parameter]
-    public string Id { get; set; }
+    public string lessonId { get; set; }
 
     Lesson lesson;
     private string errorLabel;
@@ -59,7 +83,7 @@
         errorLabel = "";
         try
         {
-            lesson = await lessonService.GetByIdAsync(Id);
+            lesson = await lessonService.GetByIdAsync(lessonId);
         }
         catch (Exception e)
         {

@@ -37,6 +37,13 @@ public class LessonEntity {
 			inverseJoinColumns = @JoinColumn(name = "lessonId")
 	)
 	private Set<UserEntity> attendance = new HashSet<>();
+	@ManyToMany
+	@JoinTable(
+			name = "class_lesson", // Name of the existing join table defined in ClassEntity
+			joinColumns = @JoinColumn(name = "lesson_id"), // Foreign key column in class_lesson referring to LessonEntity
+			inverseJoinColumns = @JoinColumn(name = "class_id") // Foreign key column in class_lesson referring to ClassEntity
+	)
+	private Set<ClassEntity> classes = new HashSet<>(); // Represents the many-to-many relationship with ClassEntity
 
 	public LessonEntity() {
 	}

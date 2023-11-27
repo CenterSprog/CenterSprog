@@ -3,7 +3,9 @@ package sep3.project.data_tier.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,7 +20,6 @@ public class ClassEntity {
 	private String title;
 	@Column
 	private String room;
-
 	@ManyToMany
 	@JoinTable(
 			name = "user_class",
@@ -81,4 +82,5 @@ public class ClassEntity {
 				", room='" + room + '\'' +
 				'}';
 	}
+
 }

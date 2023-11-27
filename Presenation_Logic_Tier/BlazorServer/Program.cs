@@ -26,6 +26,7 @@ builder.Services.AddScoped<IHeartbeatService, HeartbeatHttpClient>();
 builder.Services.AddScoped<IUserService, UserHttpClient>();
 AuthorizationPolicies.AddPolicies(builder.Services);
 builder.Services.AddScoped<IHomeworkService, HomeworkHttpClient>();
+builder.Services.AddScoped<IClassService, ClassHttpClient>();
 builder.Services.AddScoped<ILessonService, LessonHttpClient>();
 
 var app = builder.Build();

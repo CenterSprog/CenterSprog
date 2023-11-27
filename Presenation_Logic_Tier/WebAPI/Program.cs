@@ -7,6 +7,9 @@ using Application.LogicInterfaces;
 using Domain.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using HttpClients.ClientInterfaces;
+using HttpClients.Implementations;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +44,14 @@ builder.Services.AddScoped<IHomeworkClient, HomeworkClient>();
 
 builder.Services.AddScoped<ILessonLogic, LessonLogic>();
 builder.Services.AddScoped<ILessonClient, LessonClient>();
+builder.Services.AddScoped<IClassLogic, ClassLogic>();
+builder.Services.AddScoped<IClassClient, ClassClient>();
+
+builder.Services.AddHttpClient<ILessonService, LessonHttpClient>();
+builder.Services.AddLogging(builder => builder
+    .AddConsole()
+);
+
 
 var app = builder.Build();
 

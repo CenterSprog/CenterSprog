@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/CenterSprog.iml" filepath="$PROJECT_DIR$/.idea/CenterSprog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Data_Tier/Data_Tier.iml" filepath="$PROJECT_DIR$/Data_Tier/Data_Tier.iml" />
     </modules>
   </component>
 </project>

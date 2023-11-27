@@ -1,0 +1,69 @@
+﻿@page "/classDetails/{classId}"
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject ILessonService lessonService
+@inject IClassService classService
+@inject NavigationManager navMgr
+
+@if (lessons == null)
+{
+    <span>Loading lessons...</span>
+}
+else if (!lessons.Any())
+{
+    <p>No lessons available for this class</p>
+}
+else
+{
+    <div class="class-container">
+        <div class="class-card">
+            <h2>@selectedClass.Title @selectedClass.Room</h2>
+            <h5></h5>
+        </div>
+    </div>
+    
+    <div class="lessons-container">
+        @foreach (Lesson lesson in lessons)
+        {
+            Console.WriteLine($"Lesson ID: {lesson.Id}");
+            <div class="lesson-card" @onclick="() => ViewLesson(lesson)">
+                <div class="icon-container">
+                                <img src="/notebook.png" alt="Lesson Icon" />
+                            </div>
+                <div class="lesson-content">
+                    <h4>@lesson.Topic. @lesson.Date </h4>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string ClassId { get; set; }
+
+    private ClassEntity selectedClass;
+    private IEnumerable<Lesson> lessons;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            selectedClass = await classService.GetByIdAsync(ClassId);
+            Console.WriteLine(selectedClass);
+            lessons = await lessonService.GetLessonsByClassIdAsync(ClassId);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+    
+    private void ViewLesson(Lesson lesson)
+    {
+        var lessonId = lesson.Id;
+        Console.WriteLine($"Getting lesson overview for the lesson with id: {lessonId}");
+        navMgr.NavigateTo($"/Lessons/{lessonId}");
+        Console.WriteLine($"Navigating to the lesson overview page with the id: {lessonId}");
+    }
+}
