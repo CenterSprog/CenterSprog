@@ -1,3 +1,5 @@
+using System.Text;
+using Application.ClientInterfaces;
 using Application.DAOInterfaces;
 using Application.gRPCClients;
 using Application.Logic;
@@ -14,6 +16,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IHeartbeatLogic, HeartbeatLogic>();
 builder.Services.AddScoped<IHeartbeatDAO, HeartbeatClient>();
+builder.Services.AddScoped<IAuthClient,AuthClient>();
 
 var app = builder.Build();
 
@@ -32,6 +35,8 @@ app.UseCors(x => x
 
 app.UseHttpsRedirection();
 
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
