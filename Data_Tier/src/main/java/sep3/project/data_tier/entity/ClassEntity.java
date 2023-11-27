@@ -33,7 +33,7 @@ public class ClassEntity {
 			joinColumns = @JoinColumn(name = "class_id"),
 			inverseJoinColumns = @JoinColumn(name = "lesson_id")
 	)
-	private Set<Lesson> lessons = new HashSet<>();
+	private Set<LessonEntity> lessons = new HashSet<>();
 
 	public ClassEntity() {
 	}
@@ -45,7 +45,7 @@ public class ClassEntity {
 	public void addUser(UserEntity user){
 		users.add(user);
 	}
-	public void addLesson(Lesson lesson){lessons.add(lesson);}
+	public void addLesson(LessonEntity lesson){lessons.add(lesson);}
 
 	public void removeLesson(String id){lessons.removeIf(lesson -> lesson.getId().equals(id));}
 	public void removeUser(String username){users.removeIf(user -> user.getUsername().equals(username));}

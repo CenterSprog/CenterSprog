@@ -30,7 +30,7 @@ message ResponseCreateUser{
 }
 
 message RequestDeleteUser{
-  string username = 1;
+  string usernameS = 1;
 }
 message ResponseDeleteUser{
   string result = 1;
@@ -45,7 +45,7 @@ message ResponseUserGetByUsername{
   UserData user = 1;
 }
 service UserService{
-  rpc createUser(RequestCreateUser) returns (ResponseCreateUser);
+  rpc CreateUser(RequestCreateUser) returns (ResponseCreateUser);
   rpc getAllUsers(google.protobuf.Empty) returns (ResponseUserGetAllUsers);
   rpc getUserByUsername(RequestUserGetByUsername) returns (ResponseUserGetByUsername);
   rpc deleteUser(RequestDeleteUser) returns (ResponseDeleteUser);

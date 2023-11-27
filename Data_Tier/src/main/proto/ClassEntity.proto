@@ -9,7 +9,7 @@ option java_outer_classname = "ClassEntityProto";
 message ClassEntity {
   optional string id = 1;
   string title = 2;
-  string room = 23;
+  string room = 3;
 }
 
 message RequestCreateClassEntity{

@@ -1,8 +1,8 @@
 package sep3.project.data_tier.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import sep3.project.data_tier.entity.Feedback;
+import sep3.project.data_tier.entity.FeedbackEntity;
 
-public interface IFeedbackRepository extends JpaRepository<Feedback, String>
+public interface IFeedbackRepository extends JpaRepository<FeedbackEntity, String>
 {
 }

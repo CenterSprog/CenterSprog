@@ -1,0 +1,71 @@
+﻿@page "/Lessons/{id}"  
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject ILessonService lessonService
+
+
+@if (lesson != null)
+{
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-4 rounded border border-dark border-1 p-0 pb-5">
+                <div class="color-box"/>
+                <div class="d-flex flex-column ps-5 my-4">
+                    <h6 class="label-text">Title</h6>
+                    <h3>@lesson.Topic</h3>
+                </div>
+                <div class="d-flex flex-column ps-5">
+                    <h6 class="label-text">Date</h6>
+                    <h5>@lesson.Date</h5>
+                </div>
+            </div>
+            <div class="col-7 rounded border border-dark border-1 p-5">
+                <div class="d-flex flex-column">
+                    <h6 class="label-text">Description</h6>
+                    <p class="description-text">@lesson.Description</p>
+                </div>
+                <div class="d-flex flex-column mt-4">
+                    <h6 class="label-text">Homework</h6>
+                    @if (lesson.Homework == null)
+                    {
+                        <AssignHomeworkComponent LessonId=@Id LessonDate=@lesson.Date/>
+                    }
+                    else
+                    {
+                        <p class="description-text">@lesson.Homework.Description</p>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@if (!string.IsNullOrEmpty(errorLabel))
+{
+    <label style="color: red">@errorLabel</label>
+}
+
+@code {
+
+    [Parameter]
+    public string Id { get; set; }
+
+    Lesson lesson;
+    private string errorLabel;
+
+    protected override async Task OnInitializedAsync()
+    {
+        errorLabel = "";
+        try
+        {
+            lesson = await lessonService.GetByIdAsync(Id);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorLabel = $"{e.Message}";
+        }
+    }
+
+}

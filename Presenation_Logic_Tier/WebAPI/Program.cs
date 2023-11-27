@@ -36,6 +36,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 AuthorizationPolicies.AddPolicies(builder.Services);
+builder.Services.AddScoped<IHomeworkLogic, HomeworkLogic>();
+builder.Services.AddScoped<IHomeworkClient, HomeworkClient>();
+
+builder.Services.AddScoped<ILessonLogic, LessonLogic>();
+builder.Services.AddScoped<ILessonClient, LessonClient>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -9,13 +9,13 @@ import java.util.Set;
 
 @Entity
 @Table
-public class Lesson {
+public class LessonEntity {
 	@Id
 	@Column
 	@UuidGenerator
 	private String id;
 	@Column
-	private int date;
+	private long date;
 	@Column
 	private String topic;
 	@Column
@@ -28,7 +28,7 @@ public class Lesson {
 			nullable = true,
 			updatable = true
 	)
-	private Homework homework;
+	private HomeworkEntity homework;
 
 	@ManyToMany
 	@JoinTable(
@@ -38,10 +38,10 @@ public class Lesson {
 	)
 	private Set<UserEntity> attendance = new HashSet<>();
 
-	public Lesson() {
+	public LessonEntity() {
 	}
 
-	public Lesson(int date, String topic, String description) {
+	public LessonEntity(long date, String topic, String description) {
 		this.date = date;
 		this.topic = topic;
 		this.description = description;
@@ -55,11 +55,11 @@ public class Lesson {
 		this.id = id;
 	}
 
-	public int getDate() {
+	public long getDate() {
 		return date;
 	}
 
-	public void setDate(int date) {
+	public void setDate(long date) {
 		this.date = date;
 	}
 
@@ -77,6 +77,14 @@ public class Lesson {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public HomeworkEntity getHomework() {
+		return homework;
+	}
+
+	public void setHomework(HomeworkEntity homework) {
+		this.homework = homework;
 	}
 
 	@Override
