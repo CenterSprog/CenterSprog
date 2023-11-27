@@ -28,7 +28,7 @@
                     <h6 class="label-text">Homework</h6>
                     @if (lesson.Homework == null)
                     {
-                        <AssignHomeworkComponent LessonId=@Id/>
+                        <AssignHomeworkComponent LessonId=@Id LessonDate=@lesson.Date/>
                     }
                     else
                     {
