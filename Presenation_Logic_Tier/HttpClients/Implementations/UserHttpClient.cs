@@ -6,14 +6,16 @@ using HttpClients.ClientInterfaces;
 
 namespace HttpClients.Implementations;
 
-public class UserService : IUserService
+public class UserHttpClient : IUserService
 {
     private readonly HttpClient client = new ();
     public static string? Jwt { get; private set; } = "";
     public Task<ClaimsPrincipal> GetAuthAsync()
     {
-        throw new NotImplementedException();
+        ClaimsPrincipal principal = CreateClaimsPrincipal();
+        return Task.FromResult(principal);
     }
+
 
     public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
     
@@ -85,6 +87,9 @@ public class UserService : IUserService
 
     public Task LogoutAsync()
     {
-        throw new NotImplementedException();
+        Jwt = null;
+        ClaimsPrincipal principal = new();
+        OnAuthStateChanged.Invoke(principal);
+        return Task.CompletedTask;
     }
 }

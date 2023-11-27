@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@using BlazorServer.Shared.Components
 
 <PageTitle>CenterSprog</PageTitle>
 
@@ -8,6 +9,9 @@
     </div>
 
     <main>
+        <div class="top-row px-4">
+            <LoginButtons/>
+        </div>
         <article class="content p-5">
             @Body
         </article>

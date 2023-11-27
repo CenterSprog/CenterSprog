@@ -13,7 +13,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
-builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped(
     sp => 
@@ -22,8 +21,9 @@ builder.Services.AddScoped(
         }
 );
 
-builder.Services.AddScoped<IHeartbeatService, HeartbeatHttpClient>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
+builder.Services.AddScoped<IHeartbeatService, HeartbeatHttpClient>();
+builder.Services.AddScoped<IUserService, UserHttpClient>();
 AuthorizationPolicies.AddPolicies(builder.Services);
 var app = builder.Build();
 
