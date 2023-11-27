@@ -8,6 +8,9 @@ import sep3.project.data_tier.repository.IUserRepository;
 import sep3.project.protobuf.*;
 
 import java.util.Optional;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @GrpcService
 public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
@@ -18,11 +21,24 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         this.userRepository = userRepository;
     }
 
+    public static String generateRandomPassword(int len) {
+        String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi"
+                +"jklmnopqrstuvwxyz!@#$%&";
+        Random rnd = new Random();
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++)
+            sb.append(chars.charAt(rnd.nextInt(chars.length())));
+        return sb.toString();
+    }
+
     @Override
     public void createUser(RequestCreateUser request, StreamObserver<ResponseCreateUser> response){
+        String username = request.getUser().getFirstName() + generateRandomPassword(2);
+        String password = generateRandomPassword(8);
+
         UserEntity newUser = new UserEntity(
-                request.getUser().getUsername(),
-                request.getUser().getPassword(),
+                username,
+                password,
                 request.getUser().getFirstName(),
                 request.getUser().getLastName(),
                 request.getUser().getEmail(),

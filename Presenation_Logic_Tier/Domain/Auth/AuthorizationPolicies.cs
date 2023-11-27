@@ -26,14 +26,17 @@ public static class AuthorizationPolicies
             //         return int.Parse(levelClaim.Value) >= 2;
             //     }));
             
-            options.AddPolicy("MyBeStudent", a=>
-                a.RequireAuthenticatedUser().RequireClaim("Role","student"));
+            options.AddPolicy("MustBeStudent", a=>
+                a.RequireAuthenticatedUser().RequireAssertion(context => context.User.IsInRole("student")
+            ));
             
-            options.AddPolicy("MyBeTeacher", a=>
-                a.RequireAuthenticatedUser().RequireClaim("Role","teacher"));
+            options.AddPolicy("MustBeTeacher", a=>
+                a.RequireAuthenticatedUser().RequireAssertion(context =>context.User.IsInRole("teacher")
+            ));
             
-            options.AddPolicy("MyBeAdmin", a=>
-                a.RequireAuthenticatedUser().RequireClaim("Role","admin"));
+            options.AddPolicy("MustBeAdmin", a=>
+                a.RequireAuthenticatedUser().RequireAssertion(context =>context.User.IsInRole("admin")
+            ));
         });
     }
 }

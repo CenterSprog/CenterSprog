@@ -1,4 +1,6 @@
 ﻿using System.Security.Claims;
+using Domain.DTOs.UserDTO;
+using Domain.Models;
 
 namespace HttpClients.ClientInterfaces;
 
@@ -9,4 +11,8 @@ public interface IUserService
     public Task<ClaimsPrincipal> GetAuthAsync();
 
     public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; }
+
+    public Task<User> CreateUserAsync(UserCreationDto dto);
+
+    public Task<User> GetAsync(string username);
 }

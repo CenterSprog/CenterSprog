@@ -1,6 +1,7 @@
 ﻿using Application.ClientInterfaces;
 using Application.gRPCClients;
 using Application.LogicInterfaces;
+using Domain.DTOs.UserDTO;
 using Domain.Models;
 
 namespace Application.Logic;
@@ -31,6 +32,16 @@ public class UserLogic : IUserLogic
         
         return await Task.FromResult(authenticatedUser);
     }
-    
-    
+
+    public async Task<User> CreateUserAsync(UserCreationDto dto)
+    {
+        User? createdUser = await _userClient.CreateUserAsync(dto);
+        return await Task.FromResult(createdUser);
+    }
+
+    public async Task<User> GetUserByUsernameAsync(string username)
+    {
+        User existingUser = await _userClient.GetUserByUsernameAsync(username);
+        return await Task.FromResult(existingUser);
+    }
 }

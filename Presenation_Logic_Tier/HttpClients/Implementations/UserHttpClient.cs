@@ -1,18 +1,21 @@
-﻿using System.Security.Claims;
+﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using Domain.DTOs.UserDTO;
+using Domain.Models;
 using HttpClients.ClientInterfaces;
 
 namespace HttpClients.Implementations;
 
 public class UserHttpClient : IUserService
 {
-    private readonly HttpClient client;
+    private readonly HttpClient _client;
 
     public UserHttpClient(HttpClient client)
     {
-        this.client = client;
+        _client = client;
     }
 
     public static string? Jwt { get; private set; } = "";
@@ -21,10 +24,9 @@ public class UserHttpClient : IUserService
         ClaimsPrincipal principal = CreateClaimsPrincipal();
         return Task.FromResult(principal);
     }
-
-
-    public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
     
+    public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
+
     // Below methods stolen from https://github.com/SteveSandersonMS/presentation-2019-06-NDCOslo/blob/master/demos/MissionControl/MissionControl.Client/Util/ServiceExtensions.cs
     private static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
     {
@@ -75,7 +77,7 @@ public class UserHttpClient : IUserService
         string userAsJson = JsonSerializer.Serialize(userLoginDto);
         StringContent content = new(userAsJson, Encoding.UTF8, "application/json");
 
-        HttpResponseMessage response = await client.PostAsync("/auth/login", content);
+        HttpResponseMessage response = await _client.PostAsync("/auth/login", content);
         string responseContent = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -85,9 +87,9 @@ public class UserHttpClient : IUserService
 
         string token = responseContent;
         Jwt = token;
+        
 
         ClaimsPrincipal principal = CreateClaimsPrincipal();
-
         OnAuthStateChanged.Invoke(principal);
     }
 
@@ -97,5 +99,32 @@ public class UserHttpClient : IUserService
         ClaimsPrincipal principal = new();
         OnAuthStateChanged.Invoke(principal);
         return Task.CompletedTask;
+    }
+    
+    public async Task<User> CreateUserAsync(UserCreationDto dto)
+    {
+
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Jwt);
+        HttpResponseMessage response = await _client.PostAsJsonAsync("/users", dto);
+        User? createdUser = await response.Content.ReadFromJsonAsync<User>();
+        if (!response.IsSuccessStatusCode || createdUser is null)
+        {
+            throw new Exception("Failed to create a new user from blazer");
+        }
+        
+        return createdUser;
+    }
+
+    public async Task<User> GetAsync(string username)
+    {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Jwt);
+        HttpResponseMessage response = await _client.GetAsync($"/users/{username}");
+        User? existingUser = await response.Content.ReadFromJsonAsync<User>();
+        if (!response.IsSuccessStatusCode || existingUser==null)
+        {
+            throw new Exception("Failed to get the user details");
+        }
+
+        return existingUser;
     }
 }
