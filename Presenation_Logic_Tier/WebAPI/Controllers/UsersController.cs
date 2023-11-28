@@ -35,7 +35,7 @@ public class UsersController : ControllerBase
         }
     }
 
-    [HttpGet("{username}", Name = "GetByUsernameAsync")]
+    [HttpGet("{username}")]
     [Authorize("MustBeAdmin")]
     public async Task<ActionResult<User>> GetByUsernameAsync([FromRoute] string username)
     {   
