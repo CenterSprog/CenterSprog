@@ -21,6 +21,7 @@ public class ModelConfig {
     ){
         return args -> {
 //            set up model here
+            UserEntity a1 = new UserEntity("admin","admin","Bob","Builder","bob.builder@gmail.com","admin");
             UserEntity s1 = new UserEntity("damian","damian","Damian","Trafialek","damian.trafialek@gmail.com","student");
             UserEntity t1 = new UserEntity("steffan","steffan","Steffan","Visenberg","sva@via.dk","teacher");
             UserEntity s2 = new UserEntity("julija","julija","Julija","Gramovica","julijagr@gmail.com","student");
@@ -28,8 +29,10 @@ public class ModelConfig {
             UserEntity t3 = new UserEntity("jakob","jakob","Jakob","Lalassen","jakob@via.dk","teacher");
 
 
+
             LessonEntity l1 = new LessonEntity(133454545665594012l,"grpc","awesome lesson");
             LessonEntity l2 = new LessonEntity(133454545665594012l,"rabit-mq","what da hell is going on");
+
 
             ClassEntity c1 = new ClassEntity("sdj1","c05.16b");
             ClassEntity c2 = new ClassEntity("sep3","c05.14b");
@@ -46,6 +49,7 @@ public class ModelConfig {
             c1.addLesson(l1);
             c1.addLesson(l2);
 
+            userRepository.save(a1);
 
             userRepository.save(s1);
             userRepository.save(t1);

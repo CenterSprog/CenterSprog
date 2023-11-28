@@ -7,6 +7,11 @@ import sep3.project.data_tier.entity.UserEntity;
 import sep3.project.data_tier.repository.IUserRepository;
 import sep3.project.protobuf.*;
 
+import java.util.Optional;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @GrpcService
 public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
     private IUserRepository userRepository;
@@ -16,15 +21,24 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         this.userRepository = userRepository;
     }
 
-//    NOT YET IMPLEMENTED
-//    rpc GetAllUsers(google.protobuf.Empty) returns (ResponseUserGetAllUsers);
-//    rpc DeleteUser(RequestDeleteUser) returns (ResponseDeleteUser);
+    public static String generateRandomPassword(int len) {
+        String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi"
+                +"jklmnopqrstuvwxyz!@#$%&";
+        Random rnd = new Random();
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++)
+            sb.append(chars.charAt(rnd.nextInt(chars.length())));
+        return sb.toString();
+    }
 
     @Override
     public void createUser(RequestCreateUser request, StreamObserver<ResponseCreateUser> response){
+        String username = request.getUser().getFirstName() + generateRandomPassword(2);
+        String password = generateRandomPassword(8);
+
         UserEntity newUser = new UserEntity(
-                request.getUser().getUsername(),
-                request.getUser().getPassword(),
+                username,
+                password,
                 request.getUser().getFirstName(),
                 request.getUser().getLastName(),
                 request.getUser().getEmail(),
@@ -34,7 +48,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         userRepository.save(newUser);
         response.onNext(
               ResponseCreateUser.newBuilder().setUser(
-                      sep3.project.protobuf.UserEntity.newBuilder()
+                      UserData.newBuilder()
                               .setUsername(newUser.getUsername())
                               .setPassword(newUser.getPassword())
                               .setEmail(newUser.getEmail())
@@ -49,19 +63,31 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void getUserByUsername(RequestUserGetByUsername request, StreamObserver<ResponseUserGetByUsername> response){
         String username = request.getUsername();
-        UserEntity existingUser = userRepository.getReferenceById(username);
 
-        response.onNext(
-                ResponseUserGetByUsername.newBuilder().setUser(
-                        sep3.project.protobuf.UserEntity.newBuilder()
-                                .setUsername(existingUser.getUsername())
-                                .setPassword(existingUser.getPassword())
-                                .setEmail(existingUser.getEmail())
-                                .setFirstName(existingUser.getFirstName())
-                                .setLastName(existingUser.getLastName())
-                                .setRole(existingUser.getRole()).build()
-                )  .build()
-        );
+
+        System.out.println(username);
+        Optional<UserEntity> existingUser = userRepository.getByUsername(username);
+
+        if(existingUser.isEmpty())
+            response.onNext(
+                    ResponseUserGetByUsername.newBuilder()
+                            .setUser(
+                                UserData.newBuilder().getDefaultInstanceForType().toBuilder().build()
+                            )
+                            .build()
+            );
+        else
+            response.onNext(
+                    ResponseUserGetByUsername.newBuilder().setUser(
+                            UserData.newBuilder()
+                                    .setUsername(existingUser.get().getUsername())
+                                    .setPassword(existingUser.get().getPassword())
+                                    .setEmail(existingUser.get().getEmail())
+                                    .setFirstName(existingUser.get().getFirstName())
+                                    .setLastName(existingUser.get().getLastName())
+                                    .setRole(existingUser.get().getRole()).build()
+                    )  .build()
+            );
         response.onCompleted();
     }
 

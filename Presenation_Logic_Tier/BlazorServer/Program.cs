@@ -1,8 +1,11 @@
+using BlazorServer.Auth;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using BlazorServer.Data;
+using Domain.Auth;
 using HttpClients.ClientInterfaces;
 using HttpClients.Implementations;
+using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +21,10 @@ builder.Services.AddScoped(
         }
 );
 
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
 builder.Services.AddScoped<IHeartbeatService, HeartbeatHttpClient>();
+builder.Services.AddScoped<IUserService, UserHttpClient>();
+AuthorizationPolicies.AddPolicies(builder.Services);
 builder.Services.AddScoped<IHomeworkService, HomeworkHttpClient>();
 builder.Services.AddScoped<IClassService, ClassHttpClient>();
 builder.Services.AddScoped<ILessonService, LessonHttpClient>();
