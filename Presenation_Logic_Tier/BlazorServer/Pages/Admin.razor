@@ -1,0 +1,11 @@
+﻿@page "/Admin"
+@attribute [Authorize("MustBeAdmin")]
+@using BlazorServer.Shared.Components
+
+<h3>Admin Page</h3>
+
+<RegisterUserComponent/>
+
+@code {
+    
+}

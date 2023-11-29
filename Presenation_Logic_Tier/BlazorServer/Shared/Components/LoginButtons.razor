@@ -1,0 +1,34 @@
+﻿@using HttpClients.ClientInterfaces
+@using HttpClients.ClientInterfaces
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager navMgr
+@inject IUserService userService
+ 
+
+<AuthorizeView>
+    <Authorized>
+        Hello @context.User.Identity.Name
+        <img class="icon" src="img/Logout.png" @onclick="Logout" alt=""/>
+    </Authorized>
+    <NotAuthorized>
+        Not Authorised @counter
+        <img class="icon" src="img/Login.png" @onclick="Login" alt=""/>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private int counter = 0;
+    private void Login()
+    {
+        counter += 1;
+        navMgr.NavigateTo("/login");
+    }
+
+    private async Task Logout()
+    {
+        await userService.LogoutAsync();
+        navMgr.NavigateTo("/");
+    }
+
+}
