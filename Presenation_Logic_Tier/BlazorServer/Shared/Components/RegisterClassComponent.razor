@@ -1,30 +1,24 @@
 ﻿@using Domain.DTOs.UserDTO
 @using Domain.Models
 @using HttpClients.ClientInterfaces
+@using Domain.DTOs.ClassDTO
 @inject NavigationManager NavManager
-@inject IUserService UserService
+@inject IClassService ClassService
 
 <section class="d-flex flex-column w-25">
     
-    <p>Register user</p>
+    <p>Register class</p>
     <div class="mb-3">
-        <label for="firstNameInput" class="form-label">First name</label>
-        <input type="text" class="form-control" id="firstNameInput" @bind="_dto.FirstName">
+        <label for="titleInput" class="form-label">Title</label>
+        <input type="text" class="form-control" id="titleInput" @bind="_dto.Title">
     </div>
     <div class="mb-3">
-        <label for="lastNameInput" class="form-label">Last name</label>
-        <input type="text" class="form-control" id="lastNameInput" @bind="_dto.LastName">
+        <label for="roomInput" class="form-label">Room</label>
+        <input type="text" class="form-control" id="roomInput" @bind="_dto.Room">
     </div>
-    <div class="mb-3">
-        <label for="emailInput" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="emailInput" placeholder="name@example.com" @bind="_dto.Email">
-    </div>
-    <select @bind="_dto.Role" class="form-select" aria-label="Role selection">
-        <option value="student">Student</option> 
-        <option value="teacher">Teacher</option> 
-    </select>
+     
 
-    <button class="mt-5 btn btn-outline-primary" type="submit" @onclick="RegisterUserAsync" >Register</button>
+    <button class="mt-5 btn btn-outline-primary" type="submit" @onclick="RegisterClassAsync" >Register</button>
 
     @if (_msg is not null && _msg != "")
     {
@@ -36,22 +30,21 @@
 
 @code {
     private string _msg;
-    private UserCreationDto _dto;
-
+    private ClassCreationDTO _dto;
+    
     protected override async Task OnInitializedAsync()
     {
         _msg = null;
-        _dto = new UserCreationDto();
-        _dto.Role = "student";
+        _dto = new ClassCreationDTO(); 
     }
 
-    public async Task RegisterUserAsync()
+    public async Task RegisterClassAsync()
     {
         try
         {
-            ValidateUser();
-            User createdUser = await UserService.CreateUserAsync(_dto);
-            NavManager.NavigateTo($"/users/{createdUser.Username}");
+            ValidateClass();
+            ClassEntity createdClass = await ClassService.CreateAsync(_dto);
+            NavManager.NavigateTo($"/classes/{createdClass.Id}");
         }
         catch (Exception e)
         {
@@ -60,27 +53,15 @@
         }
     }
 
-    private void ValidateUser()
+    private void ValidateClass()
     {
-        if (_dto.FirstName.Trim() == "")
-            throw new Exception("First name is required");
-        if( _dto.LastName.Trim() == "")
-            throw new Exception("Last name is required");
-        if (!IsValidEmail(_dto.Email))
-            throw new Exception("Invalid email address");
-        if(_dto.Role.Trim() == "")
-            throw new Exception("Role need to be selected");
-
+        if (_dto.Title.Trim() == "")
+            throw new Exception("Title is required");
+        if (_dto.Room.Trim() == "")
+            throw new Exception("Room is required");
     }
 
-    private bool IsValidEmail(string email)
-    {
-        try {
-            var addr = new System.Net.Mail.MailAddress(email);
-            return addr.Address == email;
-        }
-        catch {
-            return false;
-        }
-    }
+
+
+
 }

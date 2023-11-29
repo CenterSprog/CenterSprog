@@ -1,4 +1,5 @@
 ﻿using Application.LogicInterfaces;
+using Domain.DTOs.ClassDTO;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +12,7 @@ public class ClassesController : ControllerBase
 {
     private readonly IClassLogic _classLogic;
 
-    public ClassController(IClassLogic classLogic)
+    public ClassesController(IClassLogic classLogic)
     {
         _classLogic = classLogic;
     }
@@ -49,6 +50,23 @@ public class ClassesController : ControllerBase
         {
             Console.WriteLine(e);
             return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<ClassEntity>> CreateAsync(ClassCreationDTO dto)
+    {
+        try
+        {
+            ClassEntity? createdClass = await _classLogic.CreateAsync(dto);
+            if (createdClass == null)
+                throw new Exception("Failed to create new class in class controller");
+            return Created($"classes/{createdClass.Id}", createdClass);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Failed create class controller : {e.Message}");
+            return StatusCode(500,e.Message);
         }
     }
 }
