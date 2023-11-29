@@ -6,7 +6,7 @@ option java_multiple_files = true;
 option java_package = "sep3.project.protobuf";
 option java_outer_classname = "LessonProto";
 
-message Lesson{
+message LessonData{
   optional string id = 1;
   int64 date = 2;
   string topic = 3;
@@ -16,10 +16,10 @@ message Lesson{
 
 message RequestAddLesson{
   string classId = 1;
-  Lesson lesson = 2;
+  LessonData lesson = 2;
 }
 message ResponseAddLesson{
-  Lesson lesson = 1;
+  LessonData lesson = 1;
 }
 message RequestAddAttendance{
   string lessonId = 1;
@@ -38,13 +38,13 @@ message RequestGetLessonsByClassId{
   string classId = 1;
 }
 message ResponseGetLessonsByClassId{
-  repeated Lesson lessons = 1;
+  repeated LessonData lessons = 1;
 }
 message RequestGetLessonById{
   string lessonId = 1;
 }
 message ResponseGetLessonById{
-  Lesson lesson = 1;
+  LessonData lesson = 1;
 }
 
 message RequestGetLessonExtendedByHomeworkHandInFeedback{

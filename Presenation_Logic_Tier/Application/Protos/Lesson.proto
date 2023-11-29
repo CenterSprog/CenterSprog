@@ -1,4 +1,4 @@
-﻿syntax = "proto3";
+syntax = "proto3";
 import "google/protobuf/empty.proto";
 import "Protos/Homework.proto";
 
@@ -7,7 +7,7 @@ option java_multiple_files = true;
 option java_package = "sep3.project.protobuf";
 option java_outer_classname = "LessonProto";
 
-message Lesson{
+message LessonData{
   optional string id = 1;
   int64 date = 2;
   string topic = 3;
@@ -15,20 +15,74 @@ message Lesson{
   optional Homework homework = 5;
 }
 
-message RequestGetLessonById{
+message RequestAddLesson{
+  string classId = 1;
+  LessonData lesson = 2;
+}
+message ResponseAddLesson{
+  LessonData lesson = 1;
+}
+message RequestAddAttendance{
+  string lessonId = 1;
+  repeated string usernames = 2;
+}
+message ResponseAddAttendance{
+  string result = 1;
+}
+message RequestGetAttendance{
   string lessonId = 1;
 }
-message ResponseGetLessonById{
-  Lesson lesson = 1;
+message ResponseGetAttendance{
+  repeated string usernames = 1;
 }
 message RequestGetLessonsByClassId{
   string classId = 1;
 }
 message ResponseGetLessonsByClassId{
-  repeated Lesson lessons = 1;
+  repeated LessonData lessons = 1;
+}
+message RequestGetLessonById{
+  string lessonId = 1;
+}
+message ResponseGetLessonById{
+  LessonData lesson = 1;
+}
+message RequestGetLessonExtendedByHomeworkHandInFeedback{
+  string lessonId = 1;
+  string username = 2;
 }
 
+
+message RequestGetAllLessons{
+  string lessonId = 1;
+  int64 date = 2;
+  string topic = 3;
+  string description = 4;
+}
+message ResponseGetAllLessons{
+  LessonData lesson = 1;
+}
+message RequestDeleteLesson{
+  string lessonId = 1;
+}
+message ResponseDeleteLesson{
+  LessonData lesson = 1;
+}
+
+
+
+//message ResponseGetLessonExtendedByHomeworkHandInFeedback{
+//  Lesson lesson = 1;
+//  optional HomeworkHelper homework = 2;
+//  optional FeedbackHelper feedback = 3;
+//}
 service LessonService{
+  rpc addLesson(RequestAddLesson) returns (ResponseAddLesson);
+  rpc addAttendance(RequestAddAttendance) returns (ResponseAddAttendance);
+  rpc getAttendance(RequestGetAttendance) returns (ResponseGetAttendance);
   rpc getLessonById(RequestGetLessonById) returns (ResponseGetLessonById);
   rpc getLessonsByClassId(RequestGetLessonsByClassId) returns (ResponseGetLessonsByClassId);
+  rpc getAllLessons(RequestGetAllLessons) returns (stream ResponseGetAllLessons);
+  rpc deleteLesson(RequestGetAllLessons) returns (stream ResponseDeleteLesson);
+  //  rpc GetLessonExtendedByHomeworkHandInFeedback(RequestGetLessonExtendedByHomeworkHandInFeedback) returns (ResponseGetLessonExtendedByHomeworkHandInFeedback);
 }

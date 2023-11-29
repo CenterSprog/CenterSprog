@@ -37,7 +37,7 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
             if(existingLesson.isEmpty())
                 throw new IllegalStateException("No exisitng lesson with id of: " + id);
 
-            Lesson grpcLesson = Lesson.newBuilder()
+            LessonData grpcLesson = LessonData.newBuilder()
                     .setId(existingLesson.get().getId())
                     .setDate(existingLesson.get().getDate())
                     .setDescription(existingLesson.get().getDescription())
@@ -78,11 +78,12 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
             String classId = request.getClassId();
 
             List<LessonEntity> lessons = lessonRepository.findByClassId(classId);
-            List<Lesson> grpcLessons = new ArrayList<>();
+            List<LessonData> grpcLessons = new ArrayList<>();
+
 
             for (LessonEntity lessonEntity : lessons)
             {
-                Lesson lesson = Lesson.newBuilder()
+                LessonData lesson = LessonData.newBuilder()
                     .setId(lessonEntity.getId())
                     .setDate(lessonEntity.getDate())
                     .setTopic(lessonEntity.getTopic())
@@ -90,7 +91,7 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
 
                 if (lessonEntity.getHomework() != null)
                 {
-                    Lesson.Builder Lesson = lesson.toBuilder().setHomework(
+                    LessonData.Builder Lesson = lesson.toBuilder().setHomework(
                         Homework.newBuilder()
                             .setId(lessonEntity.getHomework().getId())
                             .setTitle(lessonEntity.getHomework().getTitle())
