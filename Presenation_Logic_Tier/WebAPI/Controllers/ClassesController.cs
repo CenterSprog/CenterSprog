@@ -7,7 +7,7 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ClassController : ControllerBase
+public class ClassesController : ControllerBase
 {
     private readonly IClassLogic _classLogic;
 

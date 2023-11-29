@@ -19,7 +19,8 @@ public class HandInHomework {
 	@OneToOne
 	@JoinColumn
 		(
-				name = "homeworkId"
+				name = "homeworkId",
+				unique = false
 		)
 	private HomeworkEntity homework;
 
