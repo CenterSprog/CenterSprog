@@ -12,7 +12,7 @@ public class LessonClient : ILessonClient
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new LessonService.LessonServiceClient(channel);
-                
+
         var request = new RequestGetLessonById()
         {
             LessonId = id
