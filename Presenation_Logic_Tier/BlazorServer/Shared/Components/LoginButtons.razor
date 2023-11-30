@@ -8,11 +8,15 @@
 
 <AuthorizeView>
     <Authorized>
-        Hello @context.User.Identity.Name
+        <div class="greeting-container">
+             Hello @context.User.Identity.Name
+        </div>
         <img class="icon" src="img/Logout.png" @onclick="Logout" alt=""/>
     </Authorized>
     <NotAuthorized>
+        <div class="greeting-container">
         Not Authorised @counter
+        </div>
         <img class="icon" src="img/Login.png" @onclick="Login" alt=""/>
     </NotAuthorized>
 </AuthorizeView>

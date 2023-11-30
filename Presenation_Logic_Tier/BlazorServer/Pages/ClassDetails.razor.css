@@ -9,6 +9,7 @@
     align-items: center;
     justify-content: flex-start;
     cursor: pointer;
+    position: relative;
 }
 .lessons-container {
     display: flex;
@@ -16,6 +17,7 @@
     align-items: center;
     padding: 10px 40px;
     width: 100%;
+    position: relative;
     
 }
 .class-container
@@ -25,6 +27,7 @@
     align-items: center;
     padding: 10px 40px;
     width: 100%;
+    position: relative;
 }
 .class-card
 {
@@ -43,4 +46,24 @@
     height: 50px; 
     margin-right: 10px; 
 
+}
+.class-container img {
+    width: 30px;
+    height: 30px;
+}
+.add-icon-container{
+    position: absolute;
+    bottom: 45px;
+    right: 75px;
+    cursor: pointer;
+}
+.remove-icon-container img {
+    width: 35px;
+    height: 35px;
+}
+.remove-icon-container{
+    position: absolute;
+    bottom: 25px;
+    right: 20px;
+    cursor: pointer;
 }

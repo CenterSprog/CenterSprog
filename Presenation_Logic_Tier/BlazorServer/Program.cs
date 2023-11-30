@@ -28,6 +28,8 @@ AuthorizationPolicies.AddPolicies(builder.Services);
 builder.Services.AddScoped<IHomeworkService, HomeworkHttpClient>();
 builder.Services.AddScoped<IClassService, ClassHttpClient>();
 builder.Services.AddScoped<ILessonService, LessonHttpClient>();
+builder.Services.AddScoped<IHandInHomeworkService, HandInHomeworkHttpClient>();
+
 
 var app = builder.Build();
 
