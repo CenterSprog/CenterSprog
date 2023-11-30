@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using HttpClients.ClientInterfaces;
 using HttpClients.Implementations;
+using HandInHomeworkClient = Application.gRPCClients.HandInHomeworkClient;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,8 +47,14 @@ builder.Services.AddScoped<ILessonLogic, LessonLogic>();
 builder.Services.AddScoped<ILessonClient, LessonClient>();
 builder.Services.AddScoped<IClassLogic, ClassLogic>();
 builder.Services.AddScoped<IClassClient, ClassClient>();
+builder.Services.AddScoped<IHandInHomeworkLogic, HandInHomeworkLogic>();
+builder.Services.AddScoped<HandInHomeworkClient>();
+
+builder.Services.AddScoped<IHandInHomeworkService, HandInHomeworkHttpClient>();
 
 builder.Services.AddHttpClient<ILessonService, LessonHttpClient>();
+builder.Services.AddHttpClient<IHandInHomeworkService, HandInHomeworkHttpClient>();
+
 builder.Services.AddLogging(builder => builder
     .AddConsole()
 );

@@ -67,4 +67,12 @@ main {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
     }
+    
+
+    .top-button {
+        border: none;
+        background-color: transparent;
+        padding: 8px 12px;
+        margin-right: 10px; 
+    }
 }

@@ -12,7 +12,7 @@ public class HomeworkClient : IHomeworkClient
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new HomeworkService.HomeworkServiceClient(channel);
-
+        
         var request = new RequestAddHomework
         {
             LessonId = dto.LessonId,

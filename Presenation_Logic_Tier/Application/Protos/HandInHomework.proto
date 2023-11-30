@@ -1,0 +1,34 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+
+option csharp_namespace = "gRPCClient";
+option java_multiple_files = true;
+option java_package = "sep3.project.protobuf";
+option java_outer_classname = "HandInHomeworkProto";
+
+message HandInHomework{
+  optional string id = 1;
+  string answer = 2;
+
+}
+message RequestCreateHandInHomework{
+  string homeworkId = 1;
+  string studentUsername = 2;
+  HandInHomework handInHomework = 3;
+}
+message ResponseGetHandInHomework{
+  HandInHomework handInHomework = 1;
+}
+message RequestGetHandInHomework{
+  string handInHomeworkId = 1;
+}
+message RequestGetHandInByHomeworkIdAndStudentUsername{
+  string homeworkId = 1;
+  string studentUsername = 2;
+}
+service HandInHomeworkService{
+  rpc handInHomework( RequestCreateHandInHomework ) returns (ResponseGetHandInHomework);
+  rpc getHandInById(RequestGetHandInHomework) returns (ResponseGetHandInHomework);
+  rpc getHandInByHomeworkIdAndStudentUsername (RequestGetHandInByHomeworkIdAndStudentUsername) returns (ResponseGetHandInHomework);
+}
