@@ -53,15 +53,7 @@ message RequestGetLessonExtendedByHomeworkHandInFeedback{
 }
 
 
-message RequestGetAllLessons{
-  string lessonId = 1;
-  int64 date = 2;
-  string topic = 3;
-  string description = 4;
-}
-message ResponseGetAllLessons{
-  LessonData lesson = 1;
-}
+
 message RequestDeleteLesson{
   string lessonId = 1;
 }
@@ -82,7 +74,7 @@ service LessonService{
   rpc getAttendance(RequestGetAttendance) returns (ResponseGetAttendance);
   rpc getLessonById(RequestGetLessonById) returns (ResponseGetLessonById);
   rpc getLessonsByClassId(RequestGetLessonsByClassId) returns (ResponseGetLessonsByClassId);
-  rpc getAllLessons(RequestGetAllLessons) returns (stream ResponseGetAllLessons);
-  rpc deleteLesson(RequestGetAllLessons) returns (stream ResponseDeleteLesson);
+ 
+  rpc deleteLesson(RequestDeleteLesson) returns (ResponseDeleteLesson);
   //  rpc GetLessonExtendedByHomeworkHandInFeedback(RequestGetLessonExtendedByHomeworkHandInFeedback) returns (ResponseGetLessonExtendedByHomeworkHandInFeedback);
 }

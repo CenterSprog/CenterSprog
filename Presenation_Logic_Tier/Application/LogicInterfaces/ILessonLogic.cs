@@ -8,10 +8,10 @@ public interface ILessonLogic
     Task<Lesson> GetByIdAsync(string id);
     Task<IEnumerable<Lesson>> GetLessonsByClassIdAsync(string classId);
     
-    Task<Lesson> CreateAsync( LessonCreationDTO lessonCreationDto);
-    Task<IEnumerable<Lesson>> GetAsync(SearchLessonParametersDTO searchParameters);
+   // Task<Lesson> CreateAsync( LessonCreationDTO lessonCreationDto);
     
-    Task UpdateAsync(Lesson updateDto);
+    
+    //Task UpdateAsync(LessonUpdateDTO updateDto);
     
     Task <bool> DeleteAsync(string lessonId);
     

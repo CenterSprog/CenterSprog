@@ -7,9 +7,9 @@ public interface ILessonClient
 {
     Task<Lesson> GetByIdAsync(string id);
     Task<IEnumerable<Lesson>> GetLessonsByClassIdAsync(string classId);
-    Task<Lesson> CreateAsync(Lesson lesson);
-    Task<IEnumerable<Lesson>> GetAsync(SearchLessonParametersDTO searchParameters);
+    //Task<Lesson> CreateAsync(Lesson lesson);
     
-    Task UpdateAsync(Lesson updateDto);
+    
+    //Task UpdateAsync(LessonUpdateDTO updateDto);
     Task DeleteAsync(string lessonId);
 }

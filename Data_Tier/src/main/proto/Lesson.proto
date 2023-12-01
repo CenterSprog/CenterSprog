@@ -52,6 +52,20 @@ message RequestGetLessonExtendedByHomeworkHandInFeedback{
   string username = 2;
 }
 
+
+message RequestDeleteLesson{
+  string lessonId = 1;
+}
+message ResponseDeleteLesson {
+    enum Status {
+    OK = 0;
+    FAILED = 1;
+   }
+
+  Status status = 1;
+  string message = 2;
+}
+
 //message ResponseGetLessonExtendedByHomeworkHandInFeedback{
 //  Lesson lesson = 1;
 //  optional HomeworkHelper homework = 2;
@@ -62,8 +76,10 @@ service LessonService{
   rpc addAttendance(RequestAddAttendance) returns (ResponseAddAttendance);
   rpc getAttendance(RequestGetAttendance) returns (ResponseGetAttendance);
   rpc getLessonById(RequestGetLessonById) returns (ResponseGetLessonById);
+
   rpc getLessonsByClassId(RequestGetLessonsByClassId) returns (ResponseGetLessonsByClassId);
-//  rpc GetLessonExtendedByHomeworkHandInFeedback(RequestGetLessonExtendedByHomeworkHandInFeedback) returns (ResponseGetLessonExtendedByHomeworkHandInFeedback);
+  rpc deleteLesson(RequestDeleteLesson) returns ( ResponseDeleteLesson);
+  //  rpc GetLessonExtendedByHomeworkHandInFeedback(RequestGetLessonExtendedByHomeworkHandInFeedback) returns (ResponseGetLessonExtendedByHomeworkHandInFeedback);
 }
 
 

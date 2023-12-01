@@ -5,6 +5,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import sep3.project.data_tier.entity.HomeworkEntity;
 import sep3.project.data_tier.entity.LessonEntity;
+import sep3.project.data_tier.mappers.HomeworkMapper;
 import sep3.project.data_tier.repository.IHomeworkRepository;
 import sep3.project.data_tier.repository.ILessonRepository;
 import sep3.project.protobuf.*;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @GrpcService
 public class HomeworkServiceImpl extends HomeworkServiceGrpc.HomeworkServiceImplBase {
 
+    private HomeworkMapper homeworkMapper = HomeworkMapper.INSTANCE;
     private ILessonRepository lessonRepository;
     private IHomeworkRepository homeworkRepository;
 
@@ -44,12 +46,7 @@ public class HomeworkServiceImpl extends HomeworkServiceGrpc.HomeworkServiceImpl
 
 
             response.onNext(
-                    Homework.newBuilder()
-                            .setDeadline(savedHomework.getDeadline())
-                            .setDescription(savedHomework.getDescription())
-                            .setId(savedHomework.getId())
-                            .setTitle(savedHomework.getTitle())
-                            .build()
+                    homeworkMapper.toProto(homework).toBuilder().build()
             );
             response.onCompleted();
 

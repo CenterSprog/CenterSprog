@@ -69,13 +69,13 @@ public class LessonClient : ILessonClient
         var lessons = new List<Lesson>();
         foreach (var grpcLesson in reply.Lessons)
         {
-            if (grpcLesson.Lesson != null)
+            if (grpcLesson.Homework != null)
             {
-                var homework = new Lesson(
-                    grpcLesson.Lesson.Id,
-                    grpcLesson.Lesson.Deadline,
-                    grpcLesson.Lesson.Title,
-                    grpcLesson.Lesson.Description
+                var homework = new Domain.Models.Homework(
+                    grpcLesson.Homework.Id,
+                    grpcLesson.Homework.Deadline,
+                    grpcLesson.Homework.Title,
+                    grpcLesson.Homework.Description
                 );
 
                 var lesson = new Lesson(
@@ -105,6 +105,9 @@ public class LessonClient : ILessonClient
 
     }
 
+    
+   
+    /*
     public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
     {
 
@@ -138,47 +141,8 @@ public class LessonClient : ILessonClient
         return await Task.FromResult(createdLesson);
     }
 
+    */
     
-       
-
-    public async Task<IEnumerable<Lesson>> GetAsync(SearchLessonParametersDTO searchParameters)
-    {
-        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
-        var client = new LessonService.LessonServiceClient(channel);
-
-        var request = new RequestGetAllLessons()
-        {
-           
-            Lesson = new LessonData
-            {
-                Id = searchParameters.LessonId,
-                Topic = searchParameters.Topic,
-                Date = searchParameters.Date,
-                Description = searchParameters.Description
-                
-            }
-        };
-
-        var reply = new ResponseGetAllLessons();
-       
-        try
-        {
-            reply = await  client.getAllLessons(request);//not awaitable
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
-
-        Lesson getAllLessons =
-            new Lesson(reply.Lesson.Id, reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic);
-        return await Task.FromResult(getAllLessons);
-        
-        
-    }
-
-
-
 
     public async Task DeleteAsync(string lessonId)
     {
@@ -193,7 +157,7 @@ public class LessonClient : ILessonClient
 
         try
         {
-            var response = await client.deleteLesson(request);
+            var response = client.deleteLesson(request);
 
             if (lessonId == null)
             {
@@ -211,11 +175,11 @@ public class LessonClient : ILessonClient
     }
 
 
-
+/*
     public async Task UpdateAsync(Lesson updateDto)
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new LessonService.LessonServiceClient(channel);
     }
-    
+    */
 }

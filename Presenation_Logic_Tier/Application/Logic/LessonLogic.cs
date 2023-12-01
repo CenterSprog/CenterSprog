@@ -24,7 +24,7 @@ public class LessonLogic : ILessonLogic
     {
         return await _lessonClient.GetLessonsByClassIdAsync(classId);
     }
-    
+    /*
     public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
     {
         var newLesson = new Lesson
@@ -39,12 +39,11 @@ public class LessonLogic : ILessonLogic
 
         return createdLesson;
     }
-    
-    public Task<IEnumerable<Lesson>> GetAsync(SearchLessonParametersDTO searchParameters)
-    {
-        return _lessonClient.GetAsync(searchParameters);
-    }
-    
+*/
+  
+
+
+   
     public async Task<bool> DeleteAsync(string lessonId)
     {
         Lesson? lesson = await _lessonClient.GetByIdAsync(lessonId);
@@ -57,10 +56,10 @@ public class LessonLogic : ILessonLogic
         return true;
     }
      
-    
+   
 
-
-    public async Task UpdateAsync(Lesson updateDto)
+/*
+    public async Task UpdateAsync(LessonUpdateDTO updateDto)
     {
         Lesson? existingLesson = await _lessonClient.GetByIdAsync(updateDto.Id);
 
@@ -69,6 +68,6 @@ public class LessonLogic : ILessonLogic
             existingLesson.Id = updateDto.Id;
         }
         throw new Exception("Cannot update Lesson");
-    }
+    }*/
     
 }

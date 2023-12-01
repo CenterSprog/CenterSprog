@@ -1,6 +1,7 @@
 ﻿@page "/classDetails/{classId}"
 @using Domain.Models
 @using HttpClients.ClientInterfaces
+@using Domain.DTOs.LessonDTO
 @inject ILessonService lessonService
 @inject IClassService classService
 @inject NavigationManager navMgr
@@ -28,10 +29,17 @@ else
             Console.WriteLine($"Lesson ID: {lesson.Id}");
             <div class="lesson-card" @onclick="() => ViewLesson(lesson)">
                 <div class="icon-container">
-                                <img src="/notebook.png" alt="Lesson Icon" />
-                            </div>
+                    <img src="/notebook.png" alt="Lesson Icon" />
+                </div>
+                
                 <div class="lesson-content">
                     <h4>@lesson.Topic. @lesson.Date </h4>
+                    
+                    <button @onclick:stopPropagation="true" @onclick:preventDefault="true" 
+                            @onclick="@(()=>DeleteLessonById(lesson.Id))" type="button" class="btn btn-danger">Delete</button>
+                  
+                   
+                                      
                 </div>
             </div>
         }
@@ -41,6 +49,9 @@ else
 @code {
     [Parameter]
     public string ClassId { get; set; }
+    
+   
+    private readonly LessonUpdateDTO updatedto = null!;
 
     private ClassEntity selectedClass;
     private IEnumerable<Lesson> lessons;
@@ -52,6 +63,7 @@ else
             selectedClass = await classService.GetByIdAsync(ClassId);
             Console.WriteLine(selectedClass);
             lessons = await lessonService.GetLessonsByClassIdAsync(ClassId);
+            
         }
         catch (Exception e)
         {
@@ -66,4 +78,38 @@ else
         navMgr.NavigateTo($"/Lessons/{lessonId}");
         Console.WriteLine($"Navigating to the lesson overview page with the id: {lessonId}");
     }
+    
+
+    private async Task DeleteLessonById(string lessonId)
+    {
+       try
+        {
+            await lessonService.DeleteAsync(lessonId);
+            
+            var list = new List<Lesson>(lessons!);
+            list.RemoveAll(lesson => lesson.Id == lessonId);
+            lessons = list.AsEnumerable();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            
+        }
+        
+    }
+    /*
+    private async Task UpdateAsync()
+    {
+        try
+        {
+            await lessonService.UpdateAsync(updatedto);
+            navMgr.NavigateTo("/ViewUpdateLesson");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+           
+        }
+    }*/
+    
 }

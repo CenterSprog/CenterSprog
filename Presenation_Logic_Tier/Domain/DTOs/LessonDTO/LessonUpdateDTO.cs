@@ -2,7 +2,7 @@ namespace Domain.DTOs.LessonDTO;
 
 public class LessonUpdateDTO
 {
-    public string LessonId { get;  }
+    public string Id { get;  }
     
     public long Date{ get; }
    
@@ -11,12 +11,13 @@ public class LessonUpdateDTO
     public string Description{ get; }
    
 
-    public LessonUpdateDTO(string lessonId, long date, string topic, string description)
+    public LessonUpdateDTO(string id, long date, string topic, string description)
     {
-        LessonId = lessonId;
+       Id = id;
         Date = date;
         Topic = topic;
         Description = description;
     }
+    public LessonUpdateDTO(){}
 
 }

@@ -48,7 +48,7 @@ public class LessonsController : ControllerBase
         }
     }
     
-    
+  /*  
     
     [HttpGet("lessons", Name = "GetAsync")]
     public async Task<IActionResult> GetAsync([FromQuery] SearchLessonParametersDTO searchParameters)
@@ -81,9 +81,9 @@ public class LessonsController : ControllerBase
         }
     }
 
+   */ 
     
-    
-
+/*
     [HttpPost("lessons", Name = "CreateAsync")]
     public async Task<IActionResult> CreateAsync([FromBody] LessonCreationDTO lessonCreationDto)
     {
@@ -106,12 +106,12 @@ public class LessonsController : ControllerBase
             
             return StatusCode(500, "An error occurred while processing the request.");
         }
-    }
+    }*/
 
-
+/*
    
-    [HttpPut("lessons/{lessonId}", Name = "UpdateAsync")]
-    public async Task<ActionResult> UpdateAsync(string lessonId, [FromBody] LessonUpdateDTO lessonUpdateDto)//lessonUpdatedto
+    [HttpPut("lessons", Name = "UpdateAsync")]//{lessonId}
+    public async Task<ActionResult> UpdateAsync( [FromBody] LessonUpdateDTO lessonUpdateDto)
     {
         try
         {
@@ -122,7 +122,7 @@ public class LessonsController : ControllerBase
             }
 
            
-            await _lessonLogic.UpdateAsync(lessonId, lessonUpdateDto);
+            await _lessonLogic.UpdateAsync(lessonUpdateDto);
 
            
             return NoContent();
@@ -133,9 +133,9 @@ public class LessonsController : ControllerBase
             return StatusCode(500, "An error occurred while processing the request.");
         }
     }
-
+*/
    
-    [HttpDelete("lessons/{lessonId}")]
+    [HttpDelete("{lessonId}")]
     public async Task<ActionResult> DeleteAsync([FromRoute] string lessonId)
     {
         try
@@ -146,7 +146,6 @@ public class LessonsController : ControllerBase
             {
                 return NotFound();
             }
-
             
             return Ok();
         }
