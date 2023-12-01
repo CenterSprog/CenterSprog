@@ -42,7 +42,7 @@
                 
                 
                     <label class="ms-2 form-check-label" for="userCheck-@Users[index].Username">
-                        @Users[index].FirstName @Users[index].LastName
+                        <span class="text-muted">@Users[index].Role.ToUpper()</span> | @Users[index].FirstName @Users[index].LastName 
                     </label>
                 </div>
             }
@@ -56,7 +56,8 @@
         <button class="btn btn-outline-success" @onclick="HandleSubmit">Reassign classes</button>
 
         <a class="btn btn-link btn-outline-primary mt-2" href="/admin">Admin Stuff</a>
-        
+
+
         @if (Success is not null)
         {
             <div class="alert-success alert mt-5">
@@ -85,7 +86,7 @@
     protected override async Task OnInitializedAsync()
     {
         Msg = null;
-        Success = "";
+        Success = null;
         SelectedClassId = null;
         MyClasses = new List<ClassEntity>();
         CheckList = new List<Boolean>();
