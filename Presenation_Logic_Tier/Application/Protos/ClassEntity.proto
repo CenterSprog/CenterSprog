@@ -11,7 +11,7 @@ message ClassData {
   optional string id = 1;
   string title = 2;
   string room = 3;
-  optional Lesson lessons = 4;
+  optional LessonData lessons = 4;
 }
 
 message ClassEntityCreation{

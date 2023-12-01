@@ -4,7 +4,7 @@ namespace Domain.Models;
 
 public class Lesson
 {
-    public String Id { get; set; }
+    public string Id { get; set; }
     public long Date { get; set; }
     public string Description { get; set; }
     public Homework Homework { get; set; }

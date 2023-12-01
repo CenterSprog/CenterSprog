@@ -11,4 +11,5 @@ public interface ILessonRepository extends JpaRepository<LessonEntity, String>
 {
   @Query("SELECT l FROM LessonEntity l JOIN l.classes c WHERE c.id = :classId")
   List<LessonEntity> findByClassId(@Param("classId") String classId);
+  void deleteById(String lessonId);
 }
