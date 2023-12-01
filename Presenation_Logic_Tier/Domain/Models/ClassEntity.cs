@@ -5,17 +5,21 @@ public class ClassEntity
     public String Id { get; set; }
     public String Title { get; set; }
     public String Room { get; set; }
-    public Lesson lesson { get; set; }
-    
+
+    public List<User> Participants { get; set; }
+
     public List<Lesson> lessons { get; set; } = new List<Lesson>();
     
+
     public ClassEntity(string id, string title, string room)
     {
+        Participants = new List<User>();
         Id = id;
         Title = title;
         Room = room;
     }
     
+
     public ClassEntity()
     {
     }

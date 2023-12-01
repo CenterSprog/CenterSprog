@@ -1,7 +1,9 @@
 package sep3.project.data_tier.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.UuidGenerator;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,7 +22,7 @@ public class ClassEntity {
 	private String title;
 	@Column
 	private String room;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "user_class",
 			joinColumns = @JoinColumn(name = "class_id"),
@@ -28,7 +30,7 @@ public class ClassEntity {
 	)
 	private Set<UserEntity> users = new HashSet<>();
 
-	@OneToMany
+	@OneToMany()
 	@JoinTable(
 			name = "class_lesson",
 			joinColumns = @JoinColumn(name = "class_id"),
@@ -50,6 +52,13 @@ public class ClassEntity {
 
 	public void removeLesson(String id){lessons.removeIf(lesson -> lesson.getId().equals(id));}
 	public void removeUser(String username){users.removeIf(user -> user.getUsername().equals(username));}
+
+	public void setUsers(ArrayList<UserEntity> users){
+		this.users = new HashSet<>();
+		for(UserEntity user : users){
+			this.users.add(user);
+		}
+	}
 	public String getId() {
 		return id;
 	}
@@ -83,4 +92,9 @@ public class ClassEntity {
 				'}';
 	}
 
+
+
+	public Set<UserEntity> getUsers() {
+		return users;
+	}
 }

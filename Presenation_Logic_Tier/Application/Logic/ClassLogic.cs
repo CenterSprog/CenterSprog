@@ -20,9 +20,9 @@ public class ClassLogic : IClassLogic
         return await _classClient.GetByIdAsync(id);
     }
 
-    public async Task<IEnumerable<ClassEntity>> GetByUsernameAsync(string username)
+    public async Task<IEnumerable<ClassEntity>> GetAllAsync(SearchClassDTO dto)
     {
-        return await _classClient.GetByUsernameAsync(username);
+        return await _classClient.GetAllAsync(dto);
     }
 
     public async Task<ClassEntity> CreateAsync(ClassCreationDTO dto)
@@ -37,6 +37,21 @@ public class ClassLogic : IClassLogic
             Console.WriteLine($"Failed to create class entity {e.Message}");
             // SOME ERROR HANDLING ???      
             return await Task.FromException<ClassEntity>(null);
+        }
+    }
+
+    public async Task<bool> UpdateAsync(ClassUpdateDTO dto)
+    {   
+        //here in the logic in the future you may want to update the class based on other params like id, title, room or participants
+        if (dto.Participants != null)
+        {
+            bool result = await _classClient.UpdateParticipants(dto);
+            return await Task.FromResult(result);
+
+        }
+        else
+        {
+            throw new Exception("It's me Damian:) .Endpoint doesnt server path with given requests data");
         }
     }
 }

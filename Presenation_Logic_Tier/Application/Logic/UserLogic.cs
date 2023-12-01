@@ -44,4 +44,10 @@ public class UserLogic : IUserLogic
         User existingUser = await _userClient.GetUserByUsernameAsync(username);
         return await Task.FromResult(existingUser);
     }
+
+    public async Task<IEnumerable<User>> GetAllAsync()
+    {
+        IEnumerable<User> users = await _userClient.GetAllAsync();
+        return await Task.FromResult(users);
+    }
 }

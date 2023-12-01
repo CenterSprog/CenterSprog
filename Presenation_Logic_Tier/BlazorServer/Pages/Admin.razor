@@ -4,10 +4,27 @@
 
 <h3>Admin Page</h3>
 
-<section class="d-flex flex-column flex-md-row justify-content-around">
-    <RegisterUserComponent/>
+<section class="container d-flex flex-column flex-md-row w-100">
+        
+        <span>
+                
+        <RegisterUserComponent/>
+        </span>
+         
     <hr/>
-    <RegisterClassComponent/>
+        
+    <span class="mt-3 mt-md-0 ms-md-3">
+        
+        <RegisterClassComponent/>
+    </span>
+        
+
+        
+</section>
+ 
+<section class="d-flex flex-column mt-5">
+        
+        <a class="btn-link btn btn-outline-primary" href="admin/assign">Assign users to classes</a>
 </section>
 
 @code {

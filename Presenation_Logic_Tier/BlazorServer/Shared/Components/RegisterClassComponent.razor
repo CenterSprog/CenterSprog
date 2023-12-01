@@ -5,7 +5,7 @@
 @inject NavigationManager NavManager
 @inject IClassService ClassService
 
-<section class="d-flex flex-column w-25">
+<section class="d-flex flex-column">
     
     <p>Register class</p>
     <div class="mb-3">
@@ -18,7 +18,7 @@
     </div>
      
 
-    <button class="mt-5 btn btn-outline-primary" type="submit" @onclick="RegisterClassAsync" >Register</button>
+    <button class="mt-5 btn btn-outline-success" type="submit" @onclick="RegisterClassAsync" >Register</button>
 
     @if (_msg is not null && _msg != "")
     {

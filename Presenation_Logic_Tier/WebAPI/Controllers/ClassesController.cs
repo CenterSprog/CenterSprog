@@ -1,6 +1,7 @@
 ﻿using Application.LogicInterfaces;
 using Domain.DTOs.ClassDTO;
 using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -32,12 +33,13 @@ public class ClassesController : ControllerBase
         }
     }
 
-    [HttpGet("byUsername/{username}", Name = "GetByUsernameAsync")]
-    public async Task<ActionResult<IEnumerable<ClassEntity>>> GetByUsernameAsync([FromRoute] string username)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<ClassEntity>>> GetAllAsync([FromQuery] string? username)
     {
         try
-        {
-            IEnumerable<ClassEntity> classes = await _classLogic.GetByUsernameAsync(username);
+        {   
+            SearchClassDTO dto = new SearchClassDTO(username);
+            IEnumerable<ClassEntity> classes = await _classLogic.GetAllAsync(dto);
 
             if (classes == null || !classes.Any())
             {
@@ -67,6 +69,25 @@ public class ClassesController : ControllerBase
         {
             Console.WriteLine($"Failed create class controller : {e.Message}");
             return StatusCode(500,e.Message);
+        }
+    }
+
+    [HttpPatch]
+    // [Authorize("MustBeAdmin")]
+    public async Task<ActionResult<Boolean>> UpdateAsync(ClassUpdateDTO dto)
+    {
+        try
+        {
+            Boolean result = await _classLogic.UpdateAsync(dto);
+            if (result == false)
+                throw new Exception("Failed to update from webapi");
+            return Ok(result);
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Failed updaing class controller : {e.Message} {e.StackTrace}");
+            return StatusCode(500,e.Message + e.StackTrace);
         }
     }
 }

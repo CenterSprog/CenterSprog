@@ -1,6 +1,7 @@
 ﻿using Application.ClientInterfaces;
 using Domain.DTOs.ClassDTO;
 using Domain.Models;
+using Google.Protobuf.Collections;
 using Grpc.Net.Client;
 using gRPCClient;
 using ClassEntity = Domain.Models.ClassEntity;
@@ -36,22 +37,29 @@ public class ClassClient : IClassClient
         return await Task.FromResult(retrievedClassEntity);
     }
 
-    public async Task<IEnumerable<ClassEntity>> GetByUsernameAsync(string username)
+    public async Task<IEnumerable<ClassEntity>> GetAllAsync(SearchClassDTO dto)
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new ClassEntityService.ClassEntityServiceClient(channel);
+        var request = new RequestGetClassEntities();;
+        if (dto.Username != null)
+            request.Username = dto.Username;
         
-        var request = new RequestGetClassEntitiesByUsername
-        {
-            Username = username
-        };
-        var reply = await client.getClassEntitiesByUsernameAsync(request);
+        
+        var reply = await client.getClassEntitiesAsync(request);
 
         var classes = new List<ClassEntity>();
         
-        foreach (var classEntity in reply.ClassEntities)
+        foreach (var classData in reply.ClassEntities)
         {
-            classes.Add(new ClassEntity(classEntity.Id, classEntity.Title, classEntity.Room));
+            ClassEntity newClass = new ClassEntity(classData.Id, classData.Title, classData.Room);
+
+            foreach (var userParticipant in classData.Participants)
+            {
+                newClass.Participants.Add( new User(userParticipant.Username,userParticipant.FirstName,userParticipant.LastName,userParticipant.Role));
+            }
+            
+            classes.Add(newClass);
         }
 
         return await Task.FromResult(classes);
@@ -81,5 +89,35 @@ public class ClassClient : IClassClient
 
         ClassEntity createdClass = new ClassEntity(reply.ClassEntity.Id, reply.ClassEntity.Title, reply.ClassEntity.Room);
         return await Task.FromResult(createdClass);
+    }
+
+    public async Task<bool> UpdateParticipants(ClassUpdateDTO dto)
+    {
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new ClassEntityService.ClassEntityServiceClient(channel);
+        var participantsData = new RepeatedField<string>();
+        foreach (string username in dto.Participants)
+        {
+            participantsData.Add( username );
+        }
+
+        var request = new RequestUpdateClassParticipants
+        {
+            Id = dto.Id,
+            ParticipantsUsernames = {  participantsData }
+        };
+        var reply = new ResponseUpdateClassParticipants();
+
+        try
+        {
+            reply = await client.updateParticipantsAsync(request);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message + e.StackTrace);
+            return await Task.FromResult(false);
+        }
+
+        return await Task.FromResult(reply.Result);
     }
 }

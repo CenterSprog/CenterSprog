@@ -37,6 +37,7 @@ public class ModelConfig {
 
             ClassEntity c1 = new ClassEntity("sdj1","c05.16b");
             ClassEntity c2 = new ClassEntity("sep3","c05.14b");
+            ClassEntity c3 = new ClassEntity("gym","kamtjatka");
 
 
             c1.addUser(s1);
@@ -46,6 +47,9 @@ public class ModelConfig {
             c2.addUser(s2);
             c2.addUser(t2);
             c2.addUser(t3);
+
+            c1.addUser(s1);
+            c2.addUser(s1);
 
             c1.addLesson(l1);
             c1.addLesson(l2);
@@ -65,6 +69,7 @@ public class ModelConfig {
 
             classRepository.save(c1);
             classRepository.save(c2);
+            classRepository.save(c3);
 
 
 

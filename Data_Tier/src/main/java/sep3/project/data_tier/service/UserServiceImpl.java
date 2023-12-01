@@ -4,9 +4,12 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import sep3.project.data_tier.entity.UserEntity;
+import sep3.project.data_tier.mappers.UserMapper;
 import sep3.project.data_tier.repository.IUserRepository;
 import sep3.project.protobuf.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -14,6 +17,7 @@ import java.util.stream.Stream;
 
 @GrpcService
 public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
+    private UserMapper userMapper = UserMapper.INSTANCE;
     private IUserRepository userRepository;
 
     @Autowired
@@ -91,5 +95,20 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         response.onCompleted();
     }
 
+    @Override
+    public void getAllUsers(com.google.protobuf.Empty request, StreamObserver<ResponseUserGetAllUsers> response){
+        List<UserEntity> users = userRepository.findAll();
 
+        System.out.println("Number of users: " + users.size());
+        ResponseUserGetAllUsers responseData = ResponseUserGetAllUsers.newBuilder().buildPartial();
+        for(UserEntity user : users){
+            if(!user.getRole().equals("admin"))
+                responseData = responseData.toBuilder().addUsers(
+                        userMapper.toProto(user)
+                ).buildPartial();
+        }
+
+        response.onNext( responseData.toBuilder().build() );
+        response.onCompleted();
+    }
 }
