@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import sep3.project.data_tier.entity.ClassEntity;
+import sep3.project.data_tier.entity.UserEntity;
 import sep3.project.data_tier.mappers.ClassMapper;
+import sep3.project.data_tier.mappers.ParticipantMapper;
 import sep3.project.data_tier.repository.IClassRepository;
 import sep3.project.data_tier.repository.ILessonRepository;
 import sep3.project.data_tier.repository.IUserRepository;
@@ -21,14 +23,17 @@ import java.util.Optional;
 public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceImplBase
 {
   private IClassRepository classRepository;
+  private IUserRepository userRepository;
   private ClassMapper classMapper = ClassMapper.INSTANCE;
+  private ParticipantMapper participantMapper = ParticipantMapper.INSTANCE;
 
   private final static Logger LOG = LoggerFactory.getLogger(ClassServiceImpl.class);
 
   @Autowired
-  public ClassServiceImpl(IClassRepository classRepository)
+  public ClassServiceImpl(IClassRepository classRepository, IUserRepository userRepository)
   {
     this.classRepository = classRepository;
+    this.userRepository = userRepository;
   }
 
   @Override
@@ -64,11 +69,20 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
   }
 
   @Override
-  public void getClassEntitiesByUsername(RequestGetClassEntitiesByUsername request, StreamObserver<ResponseGetClassEntitiesByUsername> response)
+  public void getClassEntities(RequestGetClassEntities request, StreamObserver<ResponseGetClassEntities> response)
   {
     try {
       String username = request.getUsername();
-      List<ClassEntity> classes = classRepository.findByUsers_Username(username);
+      List<ClassEntity> classes = new ArrayList<>();
+      System.out.println("Get all classes for : " + username + ", is null " + (username == null ) );
+      if(username.equals("") )
+        classes = classRepository.findAll();
+      else
+        classes = classRepository.findByUsers_Username(username);
+
+      for (ClassEntity klasa: classes) {
+        System.out.println(klasa.getTitle());
+      }
 
       List<ClassData> grpcsClasses = new ArrayList<>();
       for (ClassEntity entity : classes)
@@ -76,11 +90,18 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
         ClassData grpcClass = ClassData.newBuilder()
             .setId(entity.getId())
             .setTitle(entity.getTitle())
-            .setRoom(entity.getRoom())
-            .build();
+            .setRoom(entity.getRoom()).buildPartial();
+
+
+        for(UserEntity userEntity : entity.getUsers())
+          grpcClass.toBuilder().addParticipants(
+              participantMapper.toProto(userEntity)
+          );
+
+
         grpcsClasses.add(grpcClass);
       }
-      ResponseGetClassEntitiesByUsername responseMessage = ResponseGetClassEntitiesByUsername.newBuilder()
+      ResponseGetClassEntities responseMessage = ResponseGetClassEntities.newBuilder()
           .addAllClassEntities(grpcsClasses)
           .build();
 

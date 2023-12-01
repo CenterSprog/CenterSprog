@@ -127,4 +127,18 @@ public class UserHttpClient : IUserService
 
         return existingUser;
     }
+
+    public async Task<IEnumerable<User>> GetAllAsync()
+    {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Jwt);
+        HttpResponseMessage response = await _client.GetAsync($"/users");
+        IEnumerable<User> users = await response.Content.ReadFromJsonAsync<IEnumerable<User>>();
+        if (!response.IsSuccessStatusCode || users==null)
+        {
+            throw new Exception("Failed to get the user details");
+        }
+
+        return users;
+
+    }
 }

@@ -32,12 +32,14 @@ public class ClassesController : ControllerBase
         }
     }
 
-    [HttpGet("byUsername/{username}", Name = "GetByUsernameAsync")]
-    public async Task<ActionResult<IEnumerable<ClassEntity>>> GetByUsernameAsync([FromRoute] string username)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<ClassEntity>>> GetAllAsync([FromQuery] string? username)
     {
         try
-        {
-            IEnumerable<ClassEntity> classes = await _classLogic.GetByUsernameAsync(username);
+        {   
+            Console.WriteLine($"Classes for : {username}");
+            SearchClassDTO dto = new SearchClassDTO(username);
+            IEnumerable<ClassEntity> classes = await _classLogic.GetAllAsync(dto);
 
             if (classes == null || !classes.Any())
             {

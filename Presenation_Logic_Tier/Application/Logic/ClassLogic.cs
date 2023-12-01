@@ -20,9 +20,9 @@ public class ClassLogic : IClassLogic
         return await _classClient.GetByIdAsync(id);
     }
 
-    public async Task<IEnumerable<ClassEntity>> GetByUsernameAsync(string username)
+    public async Task<IEnumerable<ClassEntity>> GetAllAsync(SearchClassDTO dto)
     {
-        return await _classClient.GetByUsernameAsync(username);
+        return await _classClient.GetAllAsync(dto);
     }
 
     public async Task<ClassEntity> CreateAsync(ClassCreationDTO dto)

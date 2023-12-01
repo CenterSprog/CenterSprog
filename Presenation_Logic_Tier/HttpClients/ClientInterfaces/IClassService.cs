@@ -6,7 +6,8 @@ namespace HttpClients.ClientInterfaces;
 public interface IClassService
 {
     Task<ClassEntity> GetByIdAsync(string id);
-    Task<IEnumerable<ClassEntity>> GetByUsernameAsync(string username);
+    Task<IEnumerable<ClassEntity>> GetAllAsync(SearchClassDTO dto);
     Task<ClassEntity> CreateAsync(ClassCreationDTO dto);
+ 
 
 }

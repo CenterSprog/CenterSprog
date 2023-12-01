@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using Domain.Models
 @using HttpClients.ClientInterfaces
+@using Domain.DTOs.ClassDTO
 @inject IClassService classService
 @inject NavigationManager navMgr
 
@@ -39,7 +40,7 @@ else
         msg = "";
         try
         {
-            classes = await classService.GetByUsernameAsync("joseph");
+            classes = await classService.GetAllAsync(new SearchClassDTO("joseph"));
         }
         catch (Exception e)
         {

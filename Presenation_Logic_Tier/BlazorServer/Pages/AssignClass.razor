@@ -1,0 +1,105 @@
+﻿@page "/admin/assign"
+@using HttpClients.ClientInterfaces
+@using Domain.Models
+@using Domain.DTOs.UserDTO
+@using Domain.DTOs.ClassDTO
+@inject IClassService ClassService
+@inject IUserService UserService
+
+<h3>AssignClass</h3>
+
+<section class="d-flex" >
+    <select class="form-select" aria-label="Class selection" @bind="_selectedClassEntity">
+        @* @if (!Classes.Any()) *@
+        @* { *@
+        @*     <option selected value=@null>No classes exists. Please add them first!</option> *@
+        @* } *@
+        @* else *@
+        @* { *@
+        @*     @foreach (ClassEntity classEntity in Classes) *@
+        @*     { *@
+        @*         <option value=@classEntity.Id>@classEntity.Title</option> *@
+        @*     } *@
+        @* } *@
+    </select>
+    
+    <div class="d-flex flex-column input-group">
+        
+        @* @foreach (User user in Users) *@
+        @* { *@
+        @*     <div class="d-flex flex-row"> *@
+        @*         <input class="form-check-input" type="checkbox" bind="@_checkList[checkIndex++]" id="userCheck-@user.Username"/> *@
+        @*         <label class="form-check-label" for="userCheck-@user.Username"> *@
+        @*             @user.FirstName @user.LastName *@
+        @*         </label> *@
+        @*     </div> *@
+        @* } *@
+    </div>
+    
+    <button class="btn btn-outline-success" @onclick="HandleSubmit">Reassign classes</button>
+
+
+    <a class="link-secondary" href="/admin">Admin Stuff</a>
+    <div class="alert-danger alert">
+        @_msg
+    </div>
+</section>
+
+@code {
+    private string _msg;
+    public List<ClassEntity> Classes = new List<ClassEntity>();
+    public List<User> Users = new List<User>();
+    private SearchUsersDto _searchUsersDto = new SearchUsersDto();
+    private List<bool> _checkList = new List<bool>();
+    private int checkIndex = 0;
+    private ClassEntity _selectedClassEntity = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _msg = null;
+        FetchClasses();
+        await base.OnInitializedAsync();
+    }
+
+    private async void FetchClasses()
+    {
+        try
+        {
+            Classes = (List<ClassEntity>) await ClassService.GetAllAsync(new SearchClassDTO(null));
+        }
+        catch (Exception e)
+        {
+            _msg = e.Message;
+        }
+    }
+
+    private async void FetchUsers()
+    {
+        // try
+        // {
+        //     Users = (List<User>)await UserService.GetAllAsync();
+        // }
+        // catch (Exception e)
+        // {
+        //     _msg = $"Failed to fetch users: {e.Message}";
+        // }
+    }
+
+    private void UpdateCheckList()
+    {
+        // FetchUsers();
+        // _checkList = new List<bool>();
+        // for (int i = 0; i < Users.Count; ++i)
+        // {
+        //     User currentUser = Users[i];
+        //     bool isParticipant = _selectedClassEntity.Participants.Exists(u=>u.Username==currentUser.Username);
+        //     _checkList.Add(isParticipant);
+        //     
+        // }
+    }
+
+    private void HandleSubmit()
+    {
+        // Console.WriteLine(_selectedClassEntity.Title);
+    }
+}

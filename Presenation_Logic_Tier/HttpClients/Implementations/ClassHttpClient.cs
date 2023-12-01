@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text.Json;
 using Domain.DTOs.ClassDTO;
 using Domain.Models;
@@ -30,27 +31,37 @@ public class ClassHttpClient : IClassService
 
     }
 
-    public async Task<IEnumerable<ClassEntity>> GetByUsernameAsync(string username)
+    public async Task<IEnumerable<ClassEntity>> GetAllAsync(SearchClassDTO dto)
     {
-        HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/byUsername/{username}" );
-        
+        String username = dto.Username;
+        String url = "/classes";
+        if (username != null)
+        {
+            url += $"?username={username}";
+        }
+        HttpResponseMessage responseMessage = await _client.GetAsync(url);
+
         if (!responseMessage.IsSuccessStatusCode)
         {
-            throw new Exception($"Failed to fetch classes for username '{username}'. Status code: {responseMessage.StatusCode}");
+            throw new Exception(
+                $"Failed to fetch classes for username '{username}'. Status code: {responseMessage.StatusCode}");
         }
+
         string responseBody = await responseMessage.Content.ReadAsStringAsync();
         if (string.IsNullOrEmpty(responseBody))
         {
             throw new Exception("Empty response received while fetching classes.");
         }
-        ICollection<ClassEntity> classes = JsonSerializer.Deserialize<ICollection<ClassEntity>>(responseBody, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        })!;
-    
+
+        ICollection<ClassEntity> classes = JsonSerializer.Deserialize<ICollection<ClassEntity>>(responseBody,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+
         return classes;
- 
-        
+
+
     }
 
     public async Task<ClassEntity> CreateAsync(ClassCreationDTO dto)
@@ -61,7 +72,9 @@ public class ClassHttpClient : IClassService
         {
             throw new Exception("Failed to create a new class from blazer");
         }
-        
+
         return createdClassEntity;
     }
+
+ 
 }

@@ -1,7 +1,9 @@
 package sep3.project.data_tier.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.UuidGenerator;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -34,6 +36,7 @@ public class ClassEntity {
 			joinColumns = @JoinColumn(name = "class_id"),
 			inverseJoinColumns = @JoinColumn(name = "lesson_id")
 	)
+
 	private Set<LessonEntity> lessons = new HashSet<>();
 
 	public ClassEntity() {
@@ -83,4 +86,7 @@ public class ClassEntity {
 				'}';
 	}
 
+	public Set<UserEntity> getUsers() {
+		return users;
+	}
 }

@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface IClassRepository extends JpaRepository<ClassEntity, String>
 {
   List<ClassEntity> findByUsers_Username(String username);
+
+
 }

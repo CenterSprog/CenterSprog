@@ -1,6 +1,7 @@
 syntax = "proto3";
 import "google/protobuf/empty.proto";
 import "Lesson.proto";
+import "User.proto";
 
 option java_multiple_files = true;
 option java_package = "sep3.project.protobuf";
@@ -11,6 +12,8 @@ message ClassData {
   string title = 2;
   string room = 3;
   optional Lesson lessons = 4;
+//  inheritly repeated is optional
+  repeated UserParticipant participants = 5;
 }
 
 message ClassEntityCreation{
@@ -33,14 +36,15 @@ message ResponseGetClassEntity{
 message RequestGetClassEntityByStudentUsername{
   string studentUsername = 1;
 }
-message RequestGetClassEntitiesByUsername{
-  string username = 1;
+message RequestGetClassEntities{
+  optional string username = 1;
 }
-message ResponseGetClassEntitiesByUsername{
+message ResponseGetClassEntities{
   repeated ClassData classEntities = 1;
 }
+
 service ClassEntityService{
   rpc createClassEntity(RequestCreateClassEntity) returns (ResponseCreateClassEntity);
   rpc getClassEntityById(RequestGetClassEntity) returns (ResponseGetClassEntity);
-  rpc getClassEntitiesByUsername(RequestGetClassEntitiesByUsername) returns (ResponseGetClassEntitiesByUsername);
+  rpc getClassEntities(RequestGetClassEntities) returns (ResponseGetClassEntities);
 }
