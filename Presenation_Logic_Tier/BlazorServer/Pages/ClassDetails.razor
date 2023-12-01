@@ -38,7 +38,7 @@ else
                 
                 <div class="lesson-content">
 
-                    <h4>@lesson.Topic. @lesson.Date </h4>
+                    <h4 @onclick="() => ViewLesson(lesson)">@lesson.Topic. @lesson.Date </h4>
 
                       <AuthorizeView Policy="MustBeTeacher">
 
@@ -50,7 +50,7 @@ else
                                    </AuthorizeView>
                                       
 
-                    <h4 @onclick="() => ViewLesson(lesson)">@lesson.Topic. @lesson.Date </h4>
+                  
 
                 </div>
 
