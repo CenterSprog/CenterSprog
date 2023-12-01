@@ -1,4 +1,5 @@
 ﻿using Application.ClientInterfaces;
+using Domain.DTOs.ClassDTO;
 using Domain.Models;
 using Grpc.Net.Client;
 using gRPCClient;
@@ -54,5 +55,31 @@ public class ClassClient : IClassClient
         }
 
         return await Task.FromResult(classes);
+    }
+
+    public async Task<ClassEntity> CreateAsync(ClassCreationDTO dto)
+    {
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new ClassEntityService.ClassEntityServiceClient(channel);
+        var request = new RequestCreateClassEntity
+        {
+            ClassEntityCreation = new ClassEntityCreation
+            {
+                Room = dto.Room,
+                Title = dto.Room
+            }
+        };
+        var reply = new ResponseCreateClassEntity();
+        try
+        {
+            reply = await client.createClassEntityAsync(request);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        ClassEntity createdClass = new ClassEntity(reply.ClassEntity.Id, reply.ClassEntity.Title, reply.ClassEntity.Room);
+        return await Task.FromResult(createdClass);
     }
 }

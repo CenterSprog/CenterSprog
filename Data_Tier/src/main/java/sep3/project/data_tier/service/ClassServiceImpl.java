@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import sep3.project.data_tier.entity.ClassEntity;
+import sep3.project.data_tier.mappers.ClassMapper;
 import sep3.project.data_tier.repository.IClassRepository;
 import sep3.project.data_tier.repository.ILessonRepository;
 import sep3.project.data_tier.repository.IUserRepository;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceImplBase
 {
   private IClassRepository classRepository;
+  private ClassMapper classMapper = ClassMapper.INSTANCE;
 
   private final static Logger LOG = LoggerFactory.getLogger(ClassServiceImpl.class);
 
@@ -41,7 +43,7 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
         throw new IllegalStateException("No existing class with id " + id);
       }
 
-      sep3.project.protobuf.ClassEntity grpcClass = sep3.project.protobuf.ClassEntity.newBuilder()
+      ClassData grpcClass = ClassData.newBuilder()
           .setId(existingClass.get().getId())
           .setTitle(existingClass.get().getTitle())
           .setRoom(existingClass.get().getRoom())
@@ -68,10 +70,10 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
       String username = request.getUsername();
       List<ClassEntity> classes = classRepository.findByUsers_Username(username);
 
-      List<sep3.project.protobuf.ClassEntity> grpcsClasses = new ArrayList<>();
+      List<ClassData> grpcsClasses = new ArrayList<>();
       for (ClassEntity entity : classes)
       {
-        sep3.project.protobuf.ClassEntity grpcClass = sep3.project.protobuf.ClassEntity.newBuilder()
+        ClassData grpcClass = ClassData.newBuilder()
             .setId(entity.getId())
             .setTitle(entity.getTitle())
             .setRoom(entity.getRoom())
@@ -92,4 +94,30 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
     }
   }
 
+
+  @Override
+  public void createClassEntity(RequestCreateClassEntity request, StreamObserver<ResponseCreateClassEntity> response){
+    String title = request.getClassEntityCreation().getTitle();
+    String room = request.getClassEntityCreation().getRoom();
+
+    try{
+
+      ClassEntity createdClass = new ClassEntity(title,room);
+      classRepository.save(createdClass);
+
+      response.onNext(
+              ResponseCreateClassEntity.newBuilder()
+                      .setClassEntity(
+                              classMapper.toProto(createdClass)
+                      ).build()
+      );
+
+      response.onCompleted();
+
+    }catch(Exception e){
+      response.onError(
+              Status.INTERNAL.withDescription("Error creating class : " + e.getMessage()).asRuntimeException()
+      );
+    }
+  }
 }

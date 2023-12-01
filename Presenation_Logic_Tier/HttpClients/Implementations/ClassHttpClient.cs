@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
+using Domain.DTOs.ClassDTO;
 using Domain.Models;
 using HttpClients.ClientInterfaces;
 
@@ -17,7 +18,7 @@ public class ClassHttpClient : IClassService
 
     public async Task<ClassEntity> GetByIdAsync(string id)
     {
-        HttpResponseMessage responseMessage = await _client.GetAsync($"/class/{id}");
+        HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/{id}");
 
         ClassEntity? foundClass = await responseMessage.Content.ReadFromJsonAsync<ClassEntity>();
         if (!responseMessage.IsSuccessStatusCode || foundClass is null)
@@ -31,7 +32,7 @@ public class ClassHttpClient : IClassService
 
     public async Task<IEnumerable<ClassEntity>> GetByUsernameAsync(string username)
     {
-        HttpResponseMessage responseMessage = await _client.GetAsync($"/class/byUsername/{username}" );
+        HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/byUsername/{username}" );
         
         if (!responseMessage.IsSuccessStatusCode)
         {
@@ -50,5 +51,17 @@ public class ClassHttpClient : IClassService
         return classes;
  
         
+    }
+
+    public async Task<ClassEntity> CreateAsync(ClassCreationDTO dto)
+    {
+        HttpResponseMessage response = await _client.PostAsJsonAsync("/classes/", dto);
+        ClassEntity? createdClassEntity = await response.Content.ReadFromJsonAsync<ClassEntity>();
+        if (!response.IsSuccessStatusCode || createdClassEntity is null)
+        {
+            throw new Exception("Failed to create a new class from blazer");
+        }
+        
+        return createdClassEntity;
     }
 }

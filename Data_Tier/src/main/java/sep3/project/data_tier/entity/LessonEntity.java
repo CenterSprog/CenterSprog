@@ -54,6 +54,10 @@ public class LessonEntity {
 		this.description = description;
 	}
 
+	public void addHomework (HomeworkEntity homework)
+	{
+
+	}
 	public String getId() {
 		return id;
 	}

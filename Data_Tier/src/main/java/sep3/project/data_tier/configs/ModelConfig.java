@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import sep3.project.data_tier.entity.ClassEntity;
+import sep3.project.data_tier.entity.HomeworkEntity;
 import sep3.project.data_tier.entity.LessonEntity;
 import sep3.project.data_tier.entity.UserEntity;
 import sep3.project.data_tier.repository.*;
@@ -30,8 +31,8 @@ public class ModelConfig {
 
 
 
-            LessonEntity l1 = new LessonEntity(133454545665594012l,"grpc","awesome lesson");
-            LessonEntity l2 = new LessonEntity(133454545665594012l,"rabit-mq","what da hell is going on");
+            LessonEntity l1 = new LessonEntity(133454545665594012l,"Grpc","Grpc lesson");
+            LessonEntity l2 = new LessonEntity(133454545665594012l,"Rabbit-mq","What da hell is going on");
 
 
             ClassEntity c1 = new ClassEntity("sdj1","c05.16b");
@@ -61,7 +62,6 @@ public class ModelConfig {
 
             lessonRepository.save(l1);
             lessonRepository.save(l2);
-  
 
             classRepository.save(c1);
             classRepository.save(c2);

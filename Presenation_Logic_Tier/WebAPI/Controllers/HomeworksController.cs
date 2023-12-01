@@ -29,6 +29,5 @@ public class HomeworksController : ControllerBase
             Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
-        return null;
     }
 }

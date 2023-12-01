@@ -25,7 +25,8 @@
         <Protobuf Include="Protos\User.proto" GrpcServices="Client" />
         <Protobuf Include="Protos\Homework.proto" GrpcServices="Client" />
         <Protobuf Include="Protos\ClassEntity.proto" GrpcServices="Client" />
-        <Protobuf Include="Protos\Lesson.proto" GrpcServices="Client" />
+        <Protobuf Include="Protos\HandInHomework.proto" GrpcServices="Client" />
+        <Protobuf Include="Protos\Lesson.proto" GrpcServices="Client"/>
     </ItemGroup>
     
 </Project>

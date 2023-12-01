@@ -1,4 +1,4 @@
-﻿@page "/classDetails/{classId}"
+﻿@page "/classes/{classId}"
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.LessonDTO
@@ -19,7 +19,11 @@ else
     <div class="class-container">
         <div class="class-card">
             <h2>@selectedClass.Title @selectedClass.Room</h2>
-            <h5></h5>
+              <AuthorizeView Policy="MustBeTeacher">
+              <div class="add-icon-container" @onclick="AddLesson">
+                  <img src="/add.png" alt="Add Icon" />
+              </div>
+               </AuthorizeView>
         </div>
     </div>
     
@@ -27,26 +31,37 @@ else
         @foreach (Lesson lesson in lessons)
         {
             Console.WriteLine($"Lesson ID: {lesson.Id}");
-            <div class="lesson-card" @onclick="() => ViewLesson(lesson)">
+            <div class="lesson-card" >
                 <div class="icon-container">
                     <img src="/notebook.png" alt="Lesson Icon" />
                 </div>
                 
                 <div class="lesson-content">
+
                     <h4>@lesson.Topic. @lesson.Date </h4>
-                    
+
+                      <AuthorizeView Policy="MustBeTeacher">
+
+
                     <button @onclick:stopPropagation="true" @onclick:preventDefault="true" 
                             @onclick="@(()=>DeleteLessonById(lesson.Id))" type="button" class="btn btn-danger">Delete</button>
                   
-                   
+
+                                   </AuthorizeView>
                                       
+
+                    <h4 @onclick="() => ViewLesson(lesson)">@lesson.Topic. @lesson.Date </h4>
+
                 </div>
+
+
             </div>
         }
     </div>
 }
 
 @code {
+
     [Parameter]
     public string ClassId { get; set; }
     
@@ -70,7 +85,7 @@ else
             Console.WriteLine(e);
         }
     }
-    
+
     private void ViewLesson(Lesson lesson)
     {
         var lessonId = lesson.Id;
@@ -78,6 +93,7 @@ else
         navMgr.NavigateTo($"/Lessons/{lessonId}");
         Console.WriteLine($"Navigating to the lesson overview page with the id: {lessonId}");
     }
+
     
 
     private async Task DeleteLessonById(string lessonId)
@@ -111,5 +127,12 @@ else
            
         }
     }*/
-    
+     private void AddLesson()
+        {
+
+        }
+
 }
+
+
+
