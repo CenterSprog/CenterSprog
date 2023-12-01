@@ -1,8 +1,11 @@
 ﻿using Application.ClientInterfaces;
+using Domain.DTOs.LessonDTO;
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Net.Client;
 using gRPCClient;
-using Homework = Domain.Models.Homework;
-using Lesson = Domain.Models.Lesson;
+using Domain.Models;
+using Grpc.Core;
+
 
 namespace Application.gRPCClients;
 
@@ -17,7 +20,7 @@ public class LessonClient : ILessonClient
         {
             LessonId = id
         };
-                
+
         var reply = new ResponseGetLessonById();
         try
         {
@@ -29,16 +32,17 @@ public class LessonClient : ILessonClient
         }
 
         Lesson foundLesson;
-        if (reply.Lesson.Homework!=null)
+        if (reply.Lesson != null)
         {
-            foundLesson = new(reply.Lesson.Id,reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic,
-                new Homework(reply.Lesson.Homework.Id, reply.Lesson.Homework.Deadline,
-                    reply.Lesson.Homework.Title, reply.Lesson.Homework.Description));
+            foundLesson =
+                new Lesson(reply.Lesson.Id, reply.Lesson.Date,
+                    reply.Lesson.Topic, reply.Lesson.Description);
         }
-        else{
+        else
+        {
             foundLesson = new(reply.Lesson.Id, reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic);
         }
-                
+
         return await Task.FromResult(foundLesson);
     }
 
@@ -46,12 +50,12 @@ public class LessonClient : ILessonClient
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new LessonService.LessonServiceClient(channel);
-        
+
         var request = new RequestGetLessonsByClassId()
         {
             ClassId = classId
         };
-        
+
         var reply = new ResponseGetLessonsByClassId();
         try
         {
@@ -61,13 +65,13 @@ public class LessonClient : ILessonClient
         {
             Console.WriteLine(e);
         }
-        
+
         var lessons = new List<Lesson>();
         foreach (var grpcLesson in reply.Lessons)
         {
             if (grpcLesson.Homework != null)
             {
-                var homework = new Homework(
+                var homework = new Domain.Models.Homework(
                     grpcLesson.Homework.Id,
                     grpcLesson.Homework.Deadline,
                     grpcLesson.Homework.Title,
@@ -98,6 +102,84 @@ public class LessonClient : ILessonClient
         }
 
         return await Task.FromResult(lessons);
+
+    }
+
+    
+   
+    /*
+    public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
+    {
+
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new LessonService.LessonServiceClient(channel);
+
+        var request = new RequestAddLesson
+
+        {
+            ClassId = lessonCreationDto.classId,
+            Lesson = new LessonData
+            {
+                Topic = lessonCreationDto.Topic,
+                Date = lessonCreationDto.Date,
+                Description = lessonCreationDto.Description
+            }
+        };
+
+        var reply = new ResponseAddLesson();
+        try
+        {
+            reply = await client.addLessonAsync(request);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        Lesson createdLesson =
+            new Lesson(reply.Lesson.Id, reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic);
+        return await Task.FromResult(createdLesson);
+    }
+
+    */
+    
+
+    public async Task DeleteAsync(string lessonId)
+    {
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new LessonService.LessonServiceClient(channel);
+        //create methods in proto file create response methods and create body 
+
+        var request = new RequestDeleteLesson
+        {
+            LessonId = lessonId
+        };
+
+        try
+        {
+            var response = client.deleteLesson(request);
+
+            if (lessonId == null)
+            {
+                throw new Exception($"Lesson with ID {lessonId} was not found!");
+            }
+
+           
+        } catch (RpcException e)
+        {
+
+            Console.WriteLine($" gRPC call failed: {e.Status}");
+            throw;
+        }
         
     }
+
+
+/*
+    public async Task UpdateAsync(Lesson updateDto)
+    {
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new LessonService.LessonServiceClient(channel);
+    }
+    */
 }
