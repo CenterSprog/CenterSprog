@@ -51,7 +51,7 @@
         {
             ValidateUser();
             User createdUser = await UserService.CreateUserAsync(_dto);
-            NavManager.NavigateTo($"/users/{createdUser.Username}");
+            NavManager.NavigateTo($"admin/users/{createdUser.Username}");
         }
         catch (Exception e)
         {
