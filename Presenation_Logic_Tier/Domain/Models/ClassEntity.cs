@@ -10,6 +10,7 @@ public class ClassEntity
 
     public ClassEntity(string id, string title, string room)
     {
+        Participants = new List<User>();
         Id = id;
         Title = title;
         Room = room;

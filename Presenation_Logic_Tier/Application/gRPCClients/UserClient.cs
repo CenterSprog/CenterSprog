@@ -76,4 +76,30 @@ public class UserClient : IUserClient
         );
         return await Task.FromResult(createdUser);
     }
+
+    public async Task<IEnumerable<User>> GetAllAsync()
+    {
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new UserService.UserServiceClient(channel);
+        var request = new Google.Protobuf.WellKnownTypes.Empty();
+        var reply = new ResponseUserGetAllUsers();
+
+        try
+        {
+            reply = await client.getAllUsersAsync(request);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+        List<User> retrivedUsers = new List<User>();
+        foreach (var userData in reply.Users)
+        {
+            retrivedUsers.Add(new User(
+                userData.Username,userData.Password,userData.FirstName,userData.LastName,userData.Email,userData.Role));
+        }
+        return await Task.FromResult(retrivedUsers);
+    }
 }

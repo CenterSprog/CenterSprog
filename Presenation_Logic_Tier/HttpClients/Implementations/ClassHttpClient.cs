@@ -76,5 +76,16 @@ public class ClassHttpClient : IClassService
         return createdClassEntity;
     }
 
- 
+    public async Task<bool> UpdateClass(ClassUpdateDTO dto)
+    {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", dto.JWT);
+        HttpResponseMessage response = await _client.PatchAsJsonAsync($"/classes", dto);
+        Boolean result = await response.Content.ReadFromJsonAsync<Boolean>();
+        if (!response.IsSuccessStatusCode || result == false)
+        {
+            throw new Exception("Failed to updated a class, http blazor client");
+        }
+
+        return result;
+    }
 }

@@ -39,4 +39,19 @@ public class ClassLogic : IClassLogic
             return await Task.FromException<ClassEntity>(null);
         }
     }
+
+    public async Task<bool> UpdateAsync(ClassUpdateDTO dto)
+    {   
+        //here in the logic in the future you may want to update the class based on other params like id, title, room or participants
+        if (dto.Participants != null)
+        {
+            bool result = await _classClient.UpdateParticipants(dto);
+            return await Task.FromResult(result);
+
+        }
+        else
+        {
+            throw new Exception("It's me Damian:) .Endpoint doesnt server path with given requests data");
+        }
+    }
 }

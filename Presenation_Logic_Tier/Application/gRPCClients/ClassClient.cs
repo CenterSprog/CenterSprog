@@ -1,6 +1,7 @@
 ﻿using Application.ClientInterfaces;
 using Domain.DTOs.ClassDTO;
 using Domain.Models;
+using Google.Protobuf.Collections;
 using Grpc.Net.Client;
 using gRPCClient;
 using ClassEntity = Domain.Models.ClassEntity;
@@ -90,5 +91,33 @@ public class ClassClient : IClassClient
         return await Task.FromResult(createdClass);
     }
 
- 
+    public async Task<bool> UpdateParticipants(ClassUpdateDTO dto)
+    {
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new ClassEntityService.ClassEntityServiceClient(channel);
+        var participantsData = new RepeatedField<string>();
+        foreach (string username in dto.Participants)
+        {
+            participantsData.Add( username );
+        }
+
+        var request = new RequestUpdateClassParticipants
+        {
+            Id = dto.Id,
+            ParticipantsUsernames = {  participantsData }
+        };
+        var reply = new ResponseUpdateClassParticipants();
+
+        try
+        {
+            reply = await client.updateParticipantsAsync(request);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message + e.StackTrace);
+            return await Task.FromResult(false);
+        }
+
+        return await Task.FromResult(reply.Result);
+    }
 }

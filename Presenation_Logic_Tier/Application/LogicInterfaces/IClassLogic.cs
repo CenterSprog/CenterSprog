@@ -9,4 +9,5 @@ public interface IClassLogic
     Task<IEnumerable<ClassEntity>> GetAllAsync(SearchClassDTO dto);
 
     Task<ClassEntity> CreateAsync(ClassCreationDTO dto);
+    Task<bool> UpdateAsync(ClassUpdateDTO dto);
 }

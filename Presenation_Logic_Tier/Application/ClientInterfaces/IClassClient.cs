@@ -11,4 +11,5 @@ public interface IClassClient
 
     Task<ClassEntity> CreateAsync(ClassCreationDTO dto);
 
+    Task<bool> UpdateParticipants(ClassUpdateDTO dto);
 }

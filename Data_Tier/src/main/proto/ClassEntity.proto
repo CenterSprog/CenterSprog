@@ -42,9 +42,18 @@ message RequestGetClassEntities{
 message ResponseGetClassEntities{
   repeated ClassData classEntities = 1;
 }
+message RequestUpdateClassParticipants{
+  string Id = 1;
+  repeated string participantsUsernames = 2;
+}
+
+message ResponseUpdateClassParticipants{
+  bool result = 1;
+}
 
 service ClassEntityService{
   rpc createClassEntity(RequestCreateClassEntity) returns (ResponseCreateClassEntity);
   rpc getClassEntityById(RequestGetClassEntity) returns (ResponseGetClassEntity);
   rpc getClassEntities(RequestGetClassEntities) returns (ResponseGetClassEntities);
+  rpc updateParticipants(RequestUpdateClassParticipants) returns (ResponseUpdateClassParticipants);
 }

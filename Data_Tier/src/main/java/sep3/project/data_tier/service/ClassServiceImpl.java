@@ -10,6 +10,7 @@ import sep3.project.data_tier.entity.ClassEntity;
 import sep3.project.data_tier.entity.UserEntity;
 import sep3.project.data_tier.mappers.ClassMapper;
 import sep3.project.data_tier.mappers.ParticipantMapper;
+import sep3.project.data_tier.mappers.UserMapper;
 import sep3.project.data_tier.repository.IClassRepository;
 import sep3.project.data_tier.repository.ILessonRepository;
 import sep3.project.data_tier.repository.IUserRepository;
@@ -25,6 +26,7 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
   private IClassRepository classRepository;
   private IUserRepository userRepository;
   private ClassMapper classMapper = ClassMapper.INSTANCE;
+  private UserMapper userMapper = UserMapper.INSTANCE;
   private ParticipantMapper participantMapper = ParticipantMapper.INSTANCE;
 
   private final static Logger LOG = LoggerFactory.getLogger(ClassServiceImpl.class);
@@ -92,13 +94,14 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
             .setTitle(entity.getTitle())
             .setRoom(entity.getRoom()).buildPartial();
 
+        System.out.println(entity.getUsers().size());
 
         for(UserEntity userEntity : entity.getUsers())
-          grpcClass.toBuilder().addParticipants(
+          grpcClass = grpcClass.toBuilder().addParticipants(
               participantMapper.toProto(userEntity)
-          );
+          ).buildPartial();
 
-
+        grpcClass.toBuilder().build();
         grpcsClasses.add(grpcClass);
       }
       ResponseGetClassEntities responseMessage = ResponseGetClassEntities.newBuilder()
@@ -141,4 +144,62 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
       );
     }
   }
+
+  @Override
+  public void updateParticipants(RequestUpdateClassParticipants request, StreamObserver<ResponseUpdateClassParticipants> response){
+    String classId = request.getId();
+    List<String> participantsUsernames = request.getParticipantsUsernamesList();
+
+    try{
+
+      handleAssigningUsersToClass(classId,participantsUsernames);
+
+      response.onNext(
+              ResponseUpdateClassParticipants.newBuilder().setResult(true).build()
+      );
+      response.onCompleted();
+
+    }catch (Exception e){
+      response.onError(
+              new Throwable(e.getMessage()+ " : " + e.getStackTrace())
+      );
+    }
+
+  }
+
+  private void handleAssigningUsersToClass(String classId, List<String> participantsUsernames){
+    ArrayList<UserEntity> newParticipants = new ArrayList<>();
+    Optional<ClassEntity> existingClass = classRepository.findById(classId);
+    if(existingClass.isEmpty())
+      throw new IllegalStateException("Class with given id doesnt exist, cannot update.");
+    ClassEntity updatableClass = existingClass.get();
+
+
+    for(String username : participantsUsernames){
+      Optional<UserEntity> existingUser = userRepository.getByUsername(username);
+      if(existingUser.isPresent()){
+
+        // --- Makes sure that the student will always be the part of only one class
+        if(existingUser.get().getRole().equals("student"))
+          removeUserFromAllClasses(existingUser.get());
+
+        newParticipants.add(existingUser.get());
+      }
+    }
+
+    updatableClass.setUsers(newParticipants);
+    classRepository.save(updatableClass);
+
+
+  }
+
+  private void removeUserFromAllClasses(UserEntity userEntity){
+    List<ClassEntity> classEntities = classRepository.findByUsersContains(userEntity);
+    for(ClassEntity course : classEntities){
+      course.removeUser(userEntity.getUsername());
+      classRepository.save(course);
+    }
+  }
 }
+
+
