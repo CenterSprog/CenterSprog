@@ -76,9 +76,9 @@ public class ClassHttpClient : IClassService
         return createdClassEntity;
     }
 
-    public async Task<bool> UpdateClass(ClassUpdateDTO dto)
+    public async Task<bool> UpdateClass(string jwt, ClassUpdateDTO dto)
     {
-        // _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", dto.JWT);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _client.PatchAsJsonAsync($"/classes", dto);
         Boolean result = await response.Content.ReadFromJsonAsync<Boolean>();
         if (!response.IsSuccessStatusCode || result == false)

@@ -73,7 +73,7 @@ public class ClassesController : ControllerBase
     }
 
     [HttpPatch]
-    // [Authorize("MustBeAdmin")]
+    [Authorize("MustBeAdmin")]
     public async Task<ActionResult<Boolean>> UpdateAsync(ClassUpdateDTO dto)
     {
         try

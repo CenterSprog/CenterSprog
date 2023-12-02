@@ -2,6 +2,7 @@
 @using Domain.Models
 @using Domain.DTOs.ClassDTO
 @using HttpClients.ClientInterfaces
+@using HttpClients.Implementations
 @inject IClassService ClassService
 @inject IUserService UserService
 @attribute [Authorize("MustBeAdmin")]
@@ -172,7 +173,7 @@
 
         try
         {
-            bool updatedWithSuccess = await ClassService.UpdateClass(dto);
+            bool updatedWithSuccess = await ClassService.UpdateClass(UserHttpClient.Jwt, dto);
             Console.WriteLine($"Succeeded in updating : {updatedWithSuccess}");
             
             if (updatedWithSuccess == false) 

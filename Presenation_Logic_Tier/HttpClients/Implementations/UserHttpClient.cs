@@ -103,7 +103,6 @@ public class UserHttpClient : IUserService
     
     public async Task<User> CreateUserAsync(UserCreationDto dto)
     {
-
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Jwt);
         HttpResponseMessage response = await _client.PostAsJsonAsync("/users", dto);
         User? createdUser = await response.Content.ReadFromJsonAsync<User>();
