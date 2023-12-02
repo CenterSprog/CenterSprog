@@ -8,5 +8,5 @@ public interface IClassService
     Task<ClassEntity> GetByIdAsync(string id);
     Task<IEnumerable<ClassEntity>> GetAllAsync(SearchClassDTO dto);
     Task<ClassEntity> CreateAsync(ClassCreationDTO dto);
-    Task<Boolean> UpdateClass(ClassUpdateDTO dto);
+    Task<Boolean> UpdateClass(string jwt, ClassUpdateDTO dto);
 }
