@@ -25,8 +25,8 @@ public class LessonClient : ILessonClient
         var reply = new ResponseGetLessonById();
 
         reply = await client.getLessonByIdAsync(request);
-        
-        Lesson foundLesson = new(reply.Lesson.Id,reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic);
+
+        Lesson foundLesson = new(reply.Lesson.Id, reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic);
 
         if (reply.Lesson.Homework != null)
             foundLesson.Homework = new Homework(reply.Lesson.Homework.Id, reply.Lesson.Homework.Deadline,
@@ -39,18 +39,18 @@ public class LessonClient : ILessonClient
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new LessonService.LessonServiceClient(channel);
-        //create methods in proto file create response methods and create body 
 
         var request = new RequestMarkAttendance()
         {
             LessonId = markAttendanceDto.LessonId,
-            Usernames = {markAttendanceDto.StudentUsernames}
+            Usernames = { markAttendanceDto.StudentUsernames }
         };
         var reply = new ResponseMarkAttendance();
         try
         {
             reply = await client.markAttendanceAsync(request);
-        } catch (RpcException e)
+        }
+        catch (RpcException e)
         {
 
             Console.WriteLine($" gRPC call failed: {e.Status}");
@@ -73,9 +73,9 @@ public class LessonClient : ILessonClient
         var reply = new ResponseGetAttendance();
 
         reply = await client.getAttendanceAsync(request);
-        
+
         var participants = new List<User>();
-        
+
         foreach (var participant in reply.Participants)
         {
             participants.Add(new User
@@ -88,9 +88,6 @@ public class LessonClient : ILessonClient
 
         return await Task.FromResult(participants);
     }
-
-
-    /*
     public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
     {
 
@@ -124,8 +121,8 @@ public class LessonClient : ILessonClient
         return await Task.FromResult(createdLesson);
     }
 
-    */
-    
+
+
 
     public async Task DeleteAsync(string lessonId)
     {
@@ -147,20 +144,23 @@ public class LessonClient : ILessonClient
                 throw new Exception($"Lesson with ID {lessonId} was not found!");
             }
 
-           
-        } catch (RpcException e)
+
+        }
+        catch (RpcException e)
         {
 
             Console.WriteLine($" gRPC call failed: {e.Status}");
             throw;
         }
-        
+
     }
-/*
-    public async Task UpdateAsync(Lesson updateDto)
-    {
-        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
-        var client = new LessonService.LessonServiceClient(channel);
-    }
-    */
+
+
+    /*
+        public async Task UpdateAsync(Lesson updateDto)
+        {
+            using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+            var client = new LessonService.LessonServiceClient(channel);
+        }
+        */
 }

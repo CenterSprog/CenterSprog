@@ -80,7 +80,6 @@ message ResponseDeleteLesson {
     OK = 0;
     FAILED = 1;
    }
-
   Status status = 1;
   string message = 2;
 }

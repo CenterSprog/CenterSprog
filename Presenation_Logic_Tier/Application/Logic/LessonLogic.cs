@@ -29,7 +29,7 @@ public class LessonLogic : ILessonLogic
     {
         return await _lessonClient.GetAttendanceAsync(id);
     }
-    /*
+    
     public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
     {
         var newLesson = new Lesson
@@ -40,11 +40,11 @@ public class LessonLogic : ILessonLogic
             Description = lessonCreationDto.Description
         };
 
-        var createdLesson = await _lessonClient.CreateAsync(newLesson);
+        var createdLesson = await _lessonClient.CreateAsync(lessonCreationDto);
 
         return createdLesson;
     }
-*/
+
   
 
 

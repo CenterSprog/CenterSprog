@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sep3.project.data_tier.entity.LessonEntity;
 import sep3.project.data_tier.entity.UserEntity;
 import sep3.project.data_tier.mappers.HomeworkMapper;
+import sep3.project.data_tier.mappers.LessonMapper;
 import sep3.project.data_tier.repository.IClassRepository;
 import sep3.project.data_tier.repository.IHomeworkRepository;
 import sep3.project.data_tier.repository.ILessonRepository;
@@ -22,29 +23,30 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@GrpcService public class LessonServiceImpl
-    extends LessonServiceGrpc.LessonServiceImplBase
-{
+@GrpcService
+public class LessonServiceImpl
+    extends LessonServiceGrpc.LessonServiceImplBase {
 
   private ILessonRepository lessonRepository;
   private IUserRepository userRepository;
 
   private HomeworkMapper homeworkMapper = HomeworkMapper.INSTANCE;
+  private LessonMapper lessonMapper = LessonMapper.INSTANCE;
 
-  @Autowired public LessonServiceImpl(ILessonRepository lessonRepository,
-      IUserRepository userRepository)
-  {
+  @Autowired
+  public LessonServiceImpl(ILessonRepository lessonRepository,
+      IUserRepository userRepository) {
 
     this.lessonRepository = lessonRepository;
     this.userRepository = userRepository;
   }
 
-  @Override @Transactional public void getLessonById(
+  @Override
+  @Transactional
+  public void getLessonById(
       RequestGetLessonById request,
-      StreamObserver<ResponseGetLessonById> response)
-  {
-    try
-    {
+      StreamObserver<ResponseGetLessonById> response) {
+    try {
       String id = request.getLessonId();
       Optional<LessonEntity> existingLesson = lessonRepository.findById(id);
       if (existingLesson.isEmpty())
@@ -60,7 +62,7 @@ import java.util.stream.Collectors;
 
       if (existingLesson.get().getHomework() != null)
         grpcLesson = grpcLesson.toBuilder().setHomework(
-                homeworkMapper.toProto(existingLesson.get().getHomework()))
+            homeworkMapper.toProto(existingLesson.get().getHomework()))
             .buildPartial();
 
       grpcLesson.toBuilder().build();
@@ -70,21 +72,19 @@ import java.util.stream.Collectors;
 
       response.onCompleted();
 
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       response.onError(new Throwable(e.getMessage()));
       response.onCompleted();
     }
 
   }
 
-  @Override @Transactional public void getAttendance(
+  @Override
+  @Transactional
+  public void getAttendance(
       RequestGetAttendance request,
-      StreamObserver<ResponseGetAttendance> response)
-  {
-    try
-    {
+      StreamObserver<ResponseGetAttendance> response) {
+    try {
       String id = request.getLessonId();
       Optional<LessonEntity> existingLesson = lessonRepository.findById(id);
       if (existingLesson.isEmpty())
@@ -93,8 +93,7 @@ import java.util.stream.Collectors;
       Hibernate.initialize(existingLesson.get());
       List<UserParticipant> grpcUsers = new ArrayList<>();
       if (!existingLesson.get().getAttendance().isEmpty())
-        for (UserEntity userEntity : existingLesson.get().getAttendance())
-        {
+        for (UserEntity userEntity : existingLesson.get().getAttendance()) {
           UserParticipant grpcUser = UserParticipant.newBuilder()
               .setUsername(userEntity.getUsername())
               .setFirstName(userEntity.getFirstName())
@@ -106,25 +105,21 @@ import java.util.stream.Collectors;
           ResponseGetAttendance.newBuilder().addAllParticipants(grpcUsers)
               .build());
       response.onCompleted();
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       response.onError(new Throwable(e.getMessage()));
       response.onCompleted();
     }
 
   }
 
-  @Override public void markAttendance(RequestMarkAttendance request,
-      StreamObserver<ResponseMarkAttendance> response)
-  {
+  @Override
+  public void markAttendance(RequestMarkAttendance request,
+      StreamObserver<ResponseMarkAttendance> response) {
     String id = request.getLessonId();
-    try
-    {
+    try {
       Optional<LessonEntity> existingLesson = lessonRepository.findById(id);
 
-      if (existingLesson.isEmpty())
-      {
+      if (existingLesson.isEmpty()) {
         throw new IllegalStateException("No existing lesson with id of: " + id);
       }
 
@@ -140,19 +135,16 @@ import java.util.stream.Collectors;
           .setAmountOfParticipants(students.size()).build());
       response.onCompleted();
 
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       response.onError(new Throwable("An error occurred: " + e.getMessage()));
 
     }
   }
 
+  @Override
   public void deleteLesson(RequestDeleteLesson request,
-      StreamObserver<ResponseDeleteLesson> response)
-  {
-    try
-    {
+      StreamObserver<ResponseDeleteLesson> response) {
+    try {
       String lessonId = request.getLessonId();
       Optional<LessonEntity> lesson = lessonRepository.findById(lessonId);
       if (lesson.isEmpty())
@@ -161,20 +153,41 @@ import java.util.stream.Collectors;
 
       lessonRepository.deleteById(lessonId);
 
-      response.onNext(ResponseDeleteLesson.newBuilder()
-          .setStatus(ResponseDeleteLesson.Status.OK)
-          .setMessage("Lesson deleted successfully").build());
+      response.onNext(
+          ResponseDeleteLesson.newBuilder()
+              .setStatus(ResponseDeleteLesson.Status.OK)
+              .setMessage("Lesson deleted successfully")
+              .build());
       response.onCompleted();
-    }
-    catch (Exception e)
-    {
-      response.onError(new StatusRuntimeException(
-          Status.INTERNAL.withDescription(
-              "Error deleting lesson: " + e.getMessage())));
+    } catch (Exception e) {
+      response.onError(
+          new StatusRuntimeException(Status.INTERNAL.withDescription("Error deleting lesson: " + e.getMessage())));
       response.onCompleted();
     }
   }
 
+  public void addLesson(RequestAddLesson request, StreamObserver<ResponseAddLesson> response) {
+
+    String topic = request.getLesson().getTopic();
+    long date = request.getLesson().getDate();
+    String description = request.getLesson().getDescription();
+
+    try {
+
+      LessonEntity createdLesson = new LessonEntity(date, topic, description);
+      lessonRepository.save(createdLesson);
+
+      response.onNext(
+          ResponseAddLesson.newBuilder()
+              .setLesson(
+                  lessonMapper.toProto(createdLesson))
+              .build());
+
+      response.onCompleted();
+
+    } catch (Exception e) {
+      response.onError(
+          Status.INTERNAL.withDescription("Error creating class : " + e.getMessage()).asRuntimeException());
+    }
+  }
 }
-
-

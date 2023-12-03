@@ -10,6 +10,11 @@ public class LessonCreationDTO
     
     public string Description{ get; set; }
 
+    public LessonCreationDTO(string classId)
+    {
+        this.classId = classId;
+    }
+
     public LessonCreationDTO( long date, string topic, 
         string description)
     {
