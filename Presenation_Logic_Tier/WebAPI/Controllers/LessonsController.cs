@@ -48,6 +48,21 @@ public class LessonsController : ControllerBase
         }
     }
     
+    [HttpPost("{id}/Attendance", Name = "AddAttendanceAsync")]
+    public async Task<ActionResult<IEnumerable<Lesson>>> GetLessonsByClassIdAsync([FromRoute] string id, List<String> studentUsernames)
+    {
+        try
+        {
+            AddAttendanceDTO addAttendanceDto = new(id, studentUsernames);
+            int amountOfParticipants = await _lessonLogic.AddAttendance(addAttendanceDto);
+            return Ok(amountOfParticipants.ToString());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
   /*  
     
     [HttpGet("lessons", Name = "GetAsync")]
