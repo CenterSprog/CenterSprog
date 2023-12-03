@@ -27,7 +27,7 @@ message RequestAddAttendance{
   repeated string usernames = 2;
 }
 message ResponseAddAttendance{
-  string result = 1;
+  int32 amountOfParticipants = 1;
 }
 message RequestGetAttendance{
   string lessonId = 1;

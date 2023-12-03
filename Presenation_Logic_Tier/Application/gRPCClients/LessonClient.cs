@@ -105,8 +105,32 @@ public class LessonClient : ILessonClient
 
     }
 
-    
-   
+    public Task<int> AddAttendance(AddAttendanceDTO addAttendanceDto)
+    {
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new LessonService.LessonServiceClient(channel);
+        //create methods in proto file create response methods and create body 
+
+        var request = new RequestAddAttendance()
+        {
+            LessonId = addAttendanceDto.LessonId,
+            Usernames = {addAttendanceDto.StudentUsernames}
+        };
+        var reply = new ResponseAddAttendance();
+        try
+        {
+            reply = client.addAttendance(request);
+        } catch (RpcException e)
+        {
+
+            Console.WriteLine($" gRPC call failed: {e.Status}");
+            throw;
+        }
+
+        return Task.FromResult(reply.AmountOfParticipants);
+    }
+
+
     /*
     public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
     {
@@ -174,7 +198,7 @@ public class LessonClient : ILessonClient
         
     }
 
-
+    
 /*
     public async Task UpdateAsync(Lesson updateDto)
     {

@@ -8,28 +8,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import sep3.project.data_tier.entity.ClassEntity;
 import sep3.project.data_tier.entity.HomeworkEntity;
 import sep3.project.data_tier.entity.LessonEntity;
+import sep3.project.data_tier.entity.UserEntity;
 import sep3.project.data_tier.repository.IClassRepository;
 import sep3.project.data_tier.repository.IHomeworkRepository;
 import sep3.project.data_tier.repository.ILessonRepository;
+import sep3.project.data_tier.repository.IUserRepository;
 import sep3.project.protobuf.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @GrpcService
 public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
 
     private ILessonRepository lessonRepository;
+    private IUserRepository userRepository;
     private IHomeworkRepository homeworkRepository;
     private IClassRepository classRepository;
 
 
     @Autowired
-    public LessonServiceImpl(IHomeworkRepository homeworkRepository, ILessonRepository lessonRepository, IClassRepository classRepository) {
+    public LessonServiceImpl(IHomeworkRepository homeworkRepository, ILessonRepository lessonRepository, IClassRepository classRepository, IUserRepository userRepository) {
         this.homeworkRepository = homeworkRepository;
         this.lessonRepository = lessonRepository;
         this.classRepository = classRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -74,6 +80,37 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
 
     }
 
+    @Override
+    public void addAttendance(RequestAddAttendance request, StreamObserver<ResponseAddAttendance> response) {
+        String id = request.getLessonId();
+        try {
+            Optional<LessonEntity> existingLesson = lessonRepository.findById(id);
+
+            if (existingLesson.isEmpty()) {
+                throw new IllegalStateException("No existing lesson with id of: " + id);
+            }
+
+            List<String> studentUsernames = request.getUsernamesList();
+            Set<UserEntity> students = userRepository.findAll().stream()
+                .filter(user -> studentUsernames.contains(user.getUsername()))
+                .collect(Collectors.toSet());
+
+            if (students.isEmpty()) {
+                throw new IllegalStateException("No user matches given usernames");
+            }
+
+            existingLesson.get().setAttendance(students);
+            lessonRepository.save(existingLesson.get());
+
+            response.onNext(ResponseAddAttendance.newBuilder().setAmountOfParticipants(students.size()).build());
+            response.onCompleted();
+
+        } catch (Exception e) {
+            response.onError(new Throwable("An error occurred: " + e.getMessage()));
+            response.onCompleted();
+
+        }
+    }
     @Override
     public void getLessonsByClassId(RequestGetLessonsByClassId request, StreamObserver<ResponseGetLessonsByClassId> response) {
         try {

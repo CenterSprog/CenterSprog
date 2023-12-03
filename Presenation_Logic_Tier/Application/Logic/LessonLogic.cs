@@ -24,6 +24,14 @@ public class LessonLogic : ILessonLogic
     {
         return await _lessonClient.GetLessonsByClassIdAsync(classId);
     }
+
+    public async Task<int> AddAttendance(AddAttendanceDTO addAttendanceDto)
+    {
+        if (!addAttendanceDto.StudentUsernames.Any())
+            throw new ArgumentException("At least one participant has to be selected.");
+        
+        return await _lessonClient.AddAttendance(addAttendanceDto);
+    }
     /*
     public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
     {

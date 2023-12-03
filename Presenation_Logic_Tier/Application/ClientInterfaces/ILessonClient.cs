@@ -5,8 +5,9 @@ namespace Application.ClientInterfaces;
 
 public interface ILessonClient
 {
-    Task<Lesson> GetByIdAsync(string id);
+    Task<Lesson?> GetByIdAsync(string id);
     Task<IEnumerable<Lesson>> GetLessonsByClassIdAsync(string classId);
+    Task<int> AddAttendance(AddAttendanceDTO addAttendanceDto);
     //Task<Lesson> CreateAsync(Lesson lesson);
     
     
