@@ -4,50 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbecce9e-7f7d-4c07-9ecb-5484121f1f74" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/protoeditor.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/mappers/HandInHomeworkMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/HandInHomeworkServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/ClientInterfaces/IHandInHomeworkClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Logic/HandInHomeworkLogic.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/LogicInterfaces/IHandInHomeworkLogic.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Protos/HandInHomework.proto" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/HandInHomeworkClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/wwwroot/add.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/wwwroot/bin.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/wwwroot/homework.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/DTOs/HomeworkDTO/HomeworkHandInDTO.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/HandInHomework.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/ClientInterfaces/IHandInHomeworkService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/HandInHomeworkHttpClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/HandInHomeworkController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/801b3766-2aa9-4b00-ae14-725172734b31.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/801b3766-2aa9-4b00-ae14-725172734b31/storage_v2/_src_/database/CenterSprog.2Ipoxg/schema/public.abK9xQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c926018e-153c-4b39-8db8-808a33194b29.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c926018e-153c-4b39-8db8-808a33194b29.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c926018e-153c-4b39-8db8-808a33194b29/storage_v2/_src_/database/CenterSprog.2Ipoxg/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c926018e-153c-4b39-8db8-808a33194b29/storage_v2/_src_/database/CenterSprog.2Ipoxg/schema/public.abK9xQ.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/configs/ModelConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/configs/ModelConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/HandInHomework.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/HandInHomeworkEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/HomeworkEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/HomeworkEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/LessonEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/LessonEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IHandInHomeworkRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IHandInHomeworkRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/proto/HandInHomework.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/proto/HandInHomework.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Application.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Logic/HomeworkLogic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Logic/HomeworkLogic.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/HomeworkClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/HomeworkClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LoginButtons.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LoginButtons.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LoginButtons.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LoginButtons.razor.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/MainLayout.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/MainLayout.razor.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/NavMenu.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/HomeworksController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/HomeworksController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Program.cs" afterDir="false" />
-    </list>
+    <list default="true" id="cbecce9e-7f7d-4c07-9ecb-5484121f1f74" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,7 +21,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/view-class" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -87,36 +44,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/hand-in-homework&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/Java&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;79548d7d87d920c30a56612adb0880bc&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "feature/hand-in-homework",
+    "last_opened_file_path": "C:/Program Files/Java",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "spring.configuration.checksum": "79548d7d87d920c30a56612adb0880bc",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="DataTierApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="Data_Tier" />
@@ -141,6 +98,7 @@
       <workItem from="1701105074381" duration="271000" />
       <workItem from="1701161812928" duration="33308000" />
       <workItem from="1701347431349" duration="1422000" />
+      <workItem from="1701552408616" duration="5622000" />
     </task>
     <servers />
   </component>
