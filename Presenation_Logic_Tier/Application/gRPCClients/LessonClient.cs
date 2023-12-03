@@ -5,6 +5,7 @@ using Grpc.Net.Client;
 using gRPCClient;
 using Domain.Models;
 using Grpc.Core;
+using Homework = Domain.Models.Homework;
 
 
 namespace Application.gRPCClients;
@@ -32,12 +33,12 @@ public class LessonClient : ILessonClient
         }
 
         Lesson foundLesson;
-        if (reply.Lesson != null)
+        if (reply.Lesson.Homework!=null)
         {
-            foundLesson =
-                new Lesson(reply.Lesson.Id, reply.Lesson.Date,
-                    reply.Lesson.Topic, reply.Lesson.Description);
-        }
+            foundLesson = new(reply.Lesson.Id,reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic,
+                new Homework(reply.Lesson.Homework.Id, reply.Lesson.Homework.Deadline,
+                    reply.Lesson.Homework.Title, reply.Lesson.Homework.Description));
+        }   
         else
         {
             foundLesson = new(reply.Lesson.Id, reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic);
@@ -197,8 +198,6 @@ public class LessonClient : ILessonClient
         }
         
     }
-
-    
 /*
     public async Task UpdateAsync(Lesson updateDto)
     {

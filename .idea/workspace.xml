@@ -5,48 +5,62 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbecce9e-7f7d-4c07-9ecb-5484121f1f74" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/protoeditor.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/mappers/HandInHomeworkMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/HandInHomeworkServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/ClientInterfaces/IHandInHomeworkClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Logic/HandInHomeworkLogic.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/LogicInterfaces/IHandInHomeworkLogic.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Protos/HandInHomework.proto" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/HandInHomeworkClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/wwwroot/add.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/wwwroot/bin.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/wwwroot/homework.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/DTOs/HomeworkDTO/HomeworkHandInDTO.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/HandInHomework.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/ClientInterfaces/IHandInHomeworkService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/HandInHomeworkHttpClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/HandInHomeworkController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/801b3766-2aa9-4b00-ae14-725172734b31.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/801b3766-2aa9-4b00-ae14-725172734b31/storage_v2/_src_/database/CenterSprog.2Ipoxg/schema/public.abK9xQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c926018e-153c-4b39-8db8-808a33194b29.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c926018e-153c-4b39-8db8-808a33194b29.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c926018e-153c-4b39-8db8-808a33194b29/storage_v2/_src_/database/CenterSprog.2Ipoxg/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c926018e-153c-4b39-8db8-808a33194b29/storage_v2/_src_/database/CenterSprog.2Ipoxg/schema/public.abK9xQ.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/configs/ModelConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/configs/ModelConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/HandInHomework.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/HandInHomeworkEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/HomeworkEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/HomeworkEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/ClassEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/ClassEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/HandInHomeworkEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/HandInHomeworkEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/LessonEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/LessonEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IHandInHomeworkRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IHandInHomeworkRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/proto/HandInHomework.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/proto/HandInHomework.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/mappers/ClassMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/mappers/ClassMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/mappers/LessonMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/mappers/LessonMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IClassRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IClassRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/ILessonRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/ILessonRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/ClassServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/ClassServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/HomeworkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/HomeworkServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/LessonServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/LessonServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/proto/ClassEntity.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/proto/ClassEntity.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/proto/Lesson.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/proto/Lesson.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/proto/User.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/proto/User.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Application.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Logic/HomeworkLogic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Logic/HomeworkLogic.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/HomeworkClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/HomeworkClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/ClientInterfaces/IClassClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/ClientInterfaces/IClassClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/ClientInterfaces/ILessonClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/ClientInterfaces/ILessonClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/ClientInterfaces/IUserClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/ClientInterfaces/IUserClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Logic/ClassLogic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Logic/ClassLogic.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Logic/LessonLogic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Logic/LessonLogic.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Logic/UserLogic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Logic/UserLogic.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/LogicInterfaces/IClassLogic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/LogicInterfaces/IClassLogic.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/LogicInterfaces/ILessonLogic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/LogicInterfaces/ILessonLogic.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/LogicInterfaces/IUserLogic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/LogicInterfaces/IUserLogic.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Protos/ClassEntity.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Protos/ClassEntity.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Protos/Lesson.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Protos/Lesson.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Protos/User.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Protos/User.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/ClassClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/ClassClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/LessonClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/LessonClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/UserClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/UserClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Admin.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Admin.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/UserDetails.razor" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LoginButtons.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LoginButtons.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LoginButtons.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LoginButtons.razor.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/MainLayout.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/MainLayout.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/RegisterUserComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/RegisterUserComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/MainLayout.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/NavMenu.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/HomeworksController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/HomeworksController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/wwwroot/css/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/wwwroot/css/site.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/ClassEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/ClassEntity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/Lesson.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/Lesson.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/ClientInterfaces/IClassService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/ClientInterfaces/IClassService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/ClientInterfaces/ILessonService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/ClientInterfaces/ILessonService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/ClientInterfaces/IUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/ClientInterfaces/IUserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/ClassHttpClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/ClassHttpClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/LessonHttpClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/LessonHttpClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/UserHttpClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/UserHttpClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/ClassController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/LessonsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/LessonsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/UsersController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Properties/launchSettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +78,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/view-class" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -87,36 +101,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/hand-in-homework&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/Java&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;79548d7d87d920c30a56612adb0880bc&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "feature/hand-in-homework",
+    "last_opened_file_path": "C:/Program Files/Java",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "spring.configuration.checksum": "79548d7d87d920c30a56612adb0880bc",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="DataTierApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="Data_Tier" />
@@ -141,6 +156,7 @@
       <workItem from="1701105074381" duration="271000" />
       <workItem from="1701161812928" duration="33308000" />
       <workItem from="1701347431349" duration="1422000" />
+      <workItem from="1701552408616" duration="6756000" />
     </task>
     <servers />
   </component>
