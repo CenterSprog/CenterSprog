@@ -62,6 +62,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
@@ -98,7 +99,7 @@
       <workItem from="1701105074381" duration="271000" />
       <workItem from="1701161812928" duration="33308000" />
       <workItem from="1701347431349" duration="1422000" />
-      <workItem from="1701552408616" duration="5622000" />
+      <workItem from="1701552408616" duration="6262000" />
     </task>
     <servers />
   </component>
