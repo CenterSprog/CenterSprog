@@ -33,8 +33,8 @@ public class LessonEntity {
 	@ManyToMany
 	@JoinTable(
 			name = "attendance",
-			joinColumns = @JoinColumn(name = "studentUsername"),
-			inverseJoinColumns = @JoinColumn(name = "lessonId")
+			joinColumns = @JoinColumn(name = "lessonId"),
+			inverseJoinColumns = @JoinColumn(name = "studentUsername")
 	)
 	private Set<UserEntity> attendance = new HashSet<>();
 	@ManyToMany
@@ -106,5 +106,15 @@ public class LessonEntity {
 				", topic='" + topic + '\'' +
 				", description='" + description + '\'' +
 				'}';
+	}
+
+	public Set<UserEntity> getAttendance()
+	{
+		return attendance;
+	}
+
+	public void setAttendance(Set<UserEntity> attendance)
+	{
+		this.attendance = attendance;
 	}
 }
