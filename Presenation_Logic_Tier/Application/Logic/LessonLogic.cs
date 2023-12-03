@@ -1,5 +1,7 @@
-﻿using Application.ClientInterfaces;
+﻿using System.Data.SqlTypes;
+using Application.ClientInterfaces;
 using Application.LogicInterfaces;
+using Domain.DTOs.LessonDTO;
 using Domain.Models;
 
 namespace Application.Logic;
@@ -22,4 +24,58 @@ public class LessonLogic : ILessonLogic
     {
         return await _lessonClient.GetLessonsByClassIdAsync(classId);
     }
+
+    public async Task<int> AddAttendance(AddAttendanceDTO addAttendanceDto)
+    {
+        if (!addAttendanceDto.StudentUsernames.Any())
+            throw new ArgumentException("At least one participant has to be selected.");
+        
+        return await _lessonClient.AddAttendance(addAttendanceDto);
+    }
+    /*
+    public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
+    {
+        var newLesson = new Lesson
+        {
+
+            Topic = lessonCreationDto.Topic,
+            Date = lessonCreationDto.Date,
+            Description = lessonCreationDto.Description
+        };
+
+        var createdLesson = await _lessonClient.CreateAsync(newLesson);
+
+        return createdLesson;
+    }
+*/
+  
+
+
+   
+    public async Task<bool> DeleteAsync(string lessonId)
+    {
+        Lesson? lesson = await _lessonClient.GetByIdAsync(lessonId);
+        if (lesson == null)
+        {
+            throw new Exception($"Lesson with ID {lessonId} was not found!");
+            
+        }
+        await _lessonClient.DeleteAsync(lessonId);
+        return true;
+    }
+     
+   
+
+/*
+    public async Task UpdateAsync(LessonUpdateDTO updateDto)
+    {
+        Lesson? existingLesson = await _lessonClient.GetByIdAsync(updateDto.Id);
+
+        if (existingLesson != null)
+        {
+            existingLesson.Id = updateDto.Id;
+        }
+        throw new Exception("Cannot update Lesson");
+    }*/
+    
 }

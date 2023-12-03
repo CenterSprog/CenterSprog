@@ -50,5 +50,19 @@ public class UsersController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-    
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<User>>> GetAllAsync()
+    {
+        try
+        {
+            IEnumerable<User> users = await _userLogic.GetAllAsync();
+            return Ok(users);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message + e.StackTrace);
+        }
+    }
+
 }

@@ -15,4 +15,6 @@ public interface IUserService
     public Task<User> CreateUserAsync(UserCreationDto dto);
 
     public Task<User> GetAsync(string username);
+
+    public Task<IEnumerable<User>> GetAllAsync();
 }

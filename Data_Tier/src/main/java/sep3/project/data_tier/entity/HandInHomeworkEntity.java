@@ -20,7 +20,6 @@ public class HandInHomeworkEntity {
 	@JoinColumn
 		(
 				name = "homeworkId"
-
 		)
 	private HomeworkEntity homework;
 

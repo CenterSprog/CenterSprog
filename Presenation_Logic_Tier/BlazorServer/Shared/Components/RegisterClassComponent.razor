@@ -1,0 +1,67 @@
+﻿@using Domain.DTOs.UserDTO
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@using Domain.DTOs.ClassDTO
+@inject NavigationManager NavManager
+@inject IClassService ClassService
+
+<section class="d-flex flex-column">
+    
+    <p>Register class</p>
+    <div class="mb-3">
+        <label for="titleInput" class="form-label">Title</label>
+        <input type="text" class="form-control" id="titleInput" @bind="_dto.Title">
+    </div>
+    <div class="mb-3">
+        <label for="roomInput" class="form-label">Room</label>
+        <input type="text" class="form-control" id="roomInput" @bind="_dto.Room">
+    </div>
+     
+
+    <button class="mt-5 btn btn-outline-success" type="submit" @onclick="RegisterClassAsync" >Register</button>
+
+    @if (_msg is not null && _msg != "")
+    {
+        <div class="mt-4 alert-danger alert">
+            @_msg
+        </div>
+    }
+</section>
+
+@code {
+    private string _msg;
+    private ClassCreationDTO _dto;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _msg = null;
+        _dto = new ClassCreationDTO(); 
+    }
+
+    public async Task RegisterClassAsync()
+    {
+        try
+        {
+            ValidateClass();
+            ClassEntity createdClass = await ClassService.CreateAsync(_dto);
+            NavManager.NavigateTo($"/classes/{createdClass.Id}");
+        }
+        catch (Exception e)
+        {
+            
+            _msg = e.Message;
+        }
+    }
+
+    private void ValidateClass()
+    {
+        if (_dto.Title.Trim() == "")
+            throw new Exception("Title is required");
+        if (_dto.Room.Trim() == "")
+            throw new Exception("Room is required");
+    }
+
+
+
+
+}

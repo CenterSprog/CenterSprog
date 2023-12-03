@@ -4,7 +4,7 @@
 @inject NavigationManager NavManager
 @inject IUserService UserService
 
-<section class="d-flex flex-column w-25">
+<section class="d-flex flex-column">
     
     <p>Register user</p>
     <div class="mb-3">
@@ -24,7 +24,7 @@
         <option value="teacher">Teacher</option> 
     </select>
 
-    <button class="mt-5 btn btn-outline-primary" type="submit" @onclick="RegisterUserAsync" >Register</button>
+    <button class="mt-5 btn btn-outline-success" type="submit" @onclick="RegisterUserAsync" >Register</button>
 
     @if (_msg is not null && _msg != "")
     {
@@ -51,7 +51,7 @@
         {
             ValidateUser();
             User createdUser = await UserService.CreateUserAsync(_dto);
-            NavManager.NavigateTo($"/users/{createdUser.Username}");
+            NavManager.NavigateTo($"admin/users/{createdUser.Username}");
         }
         catch (Exception e)
         {

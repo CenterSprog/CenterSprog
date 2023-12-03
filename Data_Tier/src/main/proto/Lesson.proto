@@ -6,7 +6,7 @@ option java_multiple_files = true;
 option java_package = "sep3.project.protobuf";
 option java_outer_classname = "LessonProto";
 
-message Lesson{
+message LessonData{
   optional string id = 1;
   int64 date = 2;
   string topic = 3;
@@ -16,17 +16,17 @@ message Lesson{
 
 message RequestAddLesson{
   string classId = 1;
-  Lesson lesson = 2;
+  LessonData lesson = 2;
 }
 message ResponseAddLesson{
-  Lesson lesson = 1;
+  LessonData lesson = 1;
 }
 message RequestAddAttendance{
   string lessonId = 1;
   repeated string usernames = 2;
 }
 message ResponseAddAttendance{
-  string result = 1;
+  int32 amountOfParticipants = 1;
 }
 message RequestGetAttendance{
   string lessonId = 1;
@@ -38,18 +38,32 @@ message RequestGetLessonsByClassId{
   string classId = 1;
 }
 message ResponseGetLessonsByClassId{
-  repeated Lesson lessons = 1;
+  repeated LessonData lessons = 1;
 }
 message RequestGetLessonById{
   string lessonId = 1;
 }
 message ResponseGetLessonById{
-  Lesson lesson = 1;
+  LessonData lesson = 1;
 }
 
 message RequestGetLessonExtendedByHomeworkHandInFeedback{
   string lessonId = 1;
   string username = 2;
+}
+
+
+message RequestDeleteLesson{
+  string lessonId = 1;
+}
+message ResponseDeleteLesson {
+    enum Status {
+    OK = 0;
+    FAILED = 1;
+   }
+
+  Status status = 1;
+  string message = 2;
 }
 
 //message ResponseGetLessonExtendedByHomeworkHandInFeedback{
@@ -62,8 +76,10 @@ service LessonService{
   rpc addAttendance(RequestAddAttendance) returns (ResponseAddAttendance);
   rpc getAttendance(RequestGetAttendance) returns (ResponseGetAttendance);
   rpc getLessonById(RequestGetLessonById) returns (ResponseGetLessonById);
+
   rpc getLessonsByClassId(RequestGetLessonsByClassId) returns (ResponseGetLessonsByClassId);
-//  rpc GetLessonExtendedByHomeworkHandInFeedback(RequestGetLessonExtendedByHomeworkHandInFeedback) returns (ResponseGetLessonExtendedByHomeworkHandInFeedback);
+  rpc deleteLesson(RequestDeleteLesson) returns ( ResponseDeleteLesson);
+  //  rpc GetLessonExtendedByHomeworkHandInFeedback(RequestGetLessonExtendedByHomeworkHandInFeedback) returns (ResponseGetLessonExtendedByHomeworkHandInFeedback);
 }
 
 
