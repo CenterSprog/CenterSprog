@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbecce9e-7f7d-4c07-9ecb-5484121f1f74" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data_Tier/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/configs/ModelConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/configs/ModelConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/ClassEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/ClassEntity.java" afterDir="false" />
@@ -21,7 +22,6 @@
       <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/proto/ClassEntity.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/proto/ClassEntity.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/proto/Lesson.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/proto/Lesson.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/proto/User.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/proto/User.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Application.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/ClientInterfaces/IClassClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/ClientInterfaces/IClassClient.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/ClientInterfaces/ILessonClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/ClientInterfaces/ILessonClient.cs" afterDir="false" />
@@ -113,7 +113,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feature/hand-in-homework",
+    "git-widget-placeholder": "Merging main",
     "last_opened_file_path": "C:/Program Files/Java",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -156,7 +156,7 @@
       <workItem from="1701105074381" duration="271000" />
       <workItem from="1701161812928" duration="33308000" />
       <workItem from="1701347431349" duration="1422000" />
-      <workItem from="1701552408616" duration="6756000" />
+      <workItem from="1701552408616" duration="7198000" />
     </task>
     <servers />
   </component>
