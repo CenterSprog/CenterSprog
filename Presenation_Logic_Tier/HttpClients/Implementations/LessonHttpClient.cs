@@ -36,35 +36,7 @@ public class LessonHttpClient : ILessonService
         return foundLesson;
     }
 
-    public async Task<IEnumerable<Lesson>> GetLessonsByClassIdAsync(string classId)
-    {
-        HttpResponseMessage response = await client.GetAsync($"lessons/Class/{classId}");
-        var result = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(result);
-        
-        if (!response.IsSuccessStatusCode)
-        {
-            logger.LogError($"Failed to retrieve lessons for class ID: {classId}. Status code: {response.StatusCode}");
-            throw new Exception($"Failed to get lessons for class with ID: {classId}. Status code: {response.StatusCode}");
-        }
-    
-        List<Lesson> foundLessons = JsonSerializer.Deserialize<List<Lesson>>(result, new JsonSerializerOptions()
-        {
-            PropertyNameCaseInsensitive = true
-        })!;
-        
-        
-        if (foundLessons == null)
-        {
-            logger.LogWarning($"Empty response for class ID: {classId}");
-            throw new Exception($"Failed to get lessons for class with ID: {classId}. Empty response.");
-        }
 
-        return foundLessons;
-
-    }
-
-   
     /*
     public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
     {

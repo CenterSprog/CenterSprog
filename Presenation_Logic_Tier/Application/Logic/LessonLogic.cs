@@ -20,11 +20,6 @@ public class LessonLogic : ILessonLogic
         return await _lessonClient.GetByIdAsync(id);
     }
 
-    public async Task<IEnumerable<Lesson>> GetLessonsByClassIdAsync(string classId)
-    {
-        return await _lessonClient.GetLessonsByClassIdAsync(classId);
-    }
-
     public async Task<int> AddAttendance(AddAttendanceDTO addAttendanceDto)
     {
         if (!addAttendanceDto.StudentUsernames.Any())

@@ -3,16 +3,18 @@ package sep3.project.data_tier.service;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import sep3.project.data_tier.entity.ClassEntity;
+import sep3.project.data_tier.entity.LessonEntity;
 import sep3.project.data_tier.entity.UserEntity;
 import sep3.project.data_tier.mappers.ClassMapper;
-import sep3.project.data_tier.mappers.ParticipantMapper;
+import sep3.project.data_tier.mappers.LessonMapper;
 import sep3.project.data_tier.mappers.UserMapper;
 import sep3.project.data_tier.repository.IClassRepository;
-import sep3.project.data_tier.repository.ILessonRepository;
 import sep3.project.data_tier.repository.IUserRepository;
 import sep3.project.protobuf.*;
 
@@ -27,7 +29,7 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
   private IUserRepository userRepository;
   private ClassMapper classMapper = ClassMapper.INSTANCE;
   private UserMapper userMapper = UserMapper.INSTANCE;
-  private ParticipantMapper participantMapper = ParticipantMapper.INSTANCE;
+  private LessonMapper lessonMapper = LessonMapper.INSTANCE;
 
   private final static Logger LOG = LoggerFactory.getLogger(ClassServiceImpl.class);
 
@@ -38,7 +40,9 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
     this.userRepository = userRepository;
   }
 
+
   @Override
+  @Transactional
   public void getClassEntityById(RequestGetClassEntity request, StreamObserver<ResponseGetClassEntity> response)
   {
     try {
@@ -49,20 +53,33 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
       {
         throw new IllegalStateException("No existing class with id " + id);
       }
+      Hibernate.initialize(existingClass.get());
 
       ClassData grpcClass = ClassData.newBuilder()
           .setId(existingClass.get().getId())
           .setTitle(existingClass.get().getTitle())
           .setRoom(existingClass.get().getRoom())
-          .build();
+          .buildPartial();
 
+      if (!existingClass.get().getLessons().isEmpty())
+        for(LessonEntity lessonEntity : existingClass.get().getLessons())
+          grpcClass = grpcClass.toBuilder().addLessons(
+              lessonMapper.toOverviewProto(lessonEntity)
+          ).buildPartial();
+
+      if (!existingClass.get().getUsers().isEmpty())
+        for(UserEntity userEntity : existingClass.get().getUsers())
+          grpcClass = grpcClass.toBuilder().addParticipants(
+              userMapper.toParticipantProto(userEntity)
+          ).buildPartial();
+
+      grpcClass.toBuilder().build();
 
       response.onNext(ResponseGetClassEntity.newBuilder().setClassEntity(grpcClass).build());
       response.onCompleted();
 
     }
     catch (Exception e)
-
     {
       response.onError(
           new Throwable(e.getMessage())
@@ -98,7 +115,7 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
 
         for(UserEntity userEntity : entity.getUsers())
           grpcClass = grpcClass.toBuilder().addParticipants(
-              participantMapper.toProto(userEntity)
+              userMapper.toParticipantProto(userEntity)
           ).buildPartial();
 
         grpcClass.toBuilder().build();

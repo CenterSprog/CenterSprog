@@ -33,6 +33,22 @@ public class ClassClient : IClassClient
         }
 
         ClassEntity retrievedClassEntity = new(reply.ClassEntity.Id, reply.ClassEntity.Title, reply.ClassEntity.Room);
+        if(reply.ClassEntity.Participants.Any()){
+            foreach (var userParticipant in reply.ClassEntity.Participants)
+            {
+                retrievedClassEntity.Participants.Add(new User(userParticipant.Username, userParticipant.FirstName,
+                    userParticipant.LastName, userParticipant.Role));
+            }
+        }
+
+        if (reply.ClassEntity.Lessons.Any())
+        {
+
+            foreach (var lesson in reply.ClassEntity.Lessons)
+            {
+                retrievedClassEntity.Lessons.Add(new Lesson(lesson.Id, lesson.Date, lesson.Description, lesson.Topic));
+            }
+        }
 
         return await Task.FromResult(retrievedClassEntity);
     }

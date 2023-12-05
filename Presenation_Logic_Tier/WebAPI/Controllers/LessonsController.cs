@@ -31,23 +31,7 @@ public class LessonsController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-    
 
-    [HttpGet("Class/{classId}", Name = "GetLessonsByClassIdAsync")]
-    public async Task<ActionResult<IEnumerable<Lesson>>> GetLessonsByClassIdAsync([FromRoute] string classId)
-    {
-        try
-        {
-            IEnumerable<Lesson> lessons = await _lessonLogic.GetLessonsByClassIdAsync(classId);
-            return new OkObjectResult(lessons);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return StatusCode(500, e.Message);
-        }
-    }
-    
     [HttpPost("{id}/Attendance", Name = "AddAttendanceAsync")]
     public async Task<ActionResult<IEnumerable<Lesson>>> GetLessonsByClassIdAsync([FromRoute] string id, List<String> studentUsernames)
     {

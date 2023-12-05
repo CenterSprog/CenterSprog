@@ -111,42 +111,6 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
 
         }
     }
-    @Override
-    public void getLessonsByClassId(RequestGetLessonsByClassId request, StreamObserver<ResponseGetLessonsByClassId> response) {
-        try {
-            String classId = request.getClassId();
-
-            List<LessonEntity> lessons = lessonRepository.findByClassId(classId);
-            List<LessonData> grpcLessons = new ArrayList<>();
-
-
-            for (LessonEntity lessonEntity : lessons) {
-                LessonData lesson = LessonData.newBuilder()
-                        .setId(lessonEntity.getId())
-                        .setDate(lessonEntity.getDate())
-                        .setTopic(lessonEntity.getTopic())
-                        .setDescription(lessonEntity.getDescription()).buildPartial();
-
-                if (lessonEntity.getHomework() != null) {
-                    LessonData.Builder Lesson = lesson.toBuilder().setHomework(
-                            Homework.newBuilder()
-                                    .setId(lessonEntity.getHomework().getId())
-                                    .setTitle(lessonEntity.getHomework().getTitle())
-                                    .setDeadline(lessonEntity.getHomework().getDeadline())
-                                    .setId(lessonEntity.getHomework().getId())
-                                    .setDescription(lessonEntity.getHomework().getDescription())
-                                    .build());
-                }
-                grpcLessons.add(lesson);
-            }
-            response.onNext(ResponseGetLessonsByClassId.newBuilder().addAllLessons(grpcLessons).build());
-            response.onCompleted();
-        } catch (Exception e) {
-            response.onError(new Throwable(e.getMessage()));
-            response.onCompleted();
-        }
-    }
-
 
 
     public void deleteLesson(RequestDeleteLesson request, StreamObserver<ResponseDeleteLesson> response) {
