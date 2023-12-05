@@ -5,6 +5,7 @@
 @inject ILessonService lessonService
 @inject IHandInHomeworkService HandInHomeworkService
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager navMgr
 
 <AuthorizeView>
     <Authorized>
@@ -42,22 +43,37 @@
                             <p>@lesson.Homework.Description</p>
                             <p><strong>Deadline:</strong> @lesson.Homework.Deadline </p>
                         </div>
-                        <div class="input-container">
+                        <AuthorizeView Policy="MustBeTeacher">
+                            <Authorized Context="teacherAuthorized">
+                                        <div class="submitted-container">
+                                        <button @onclick="ViewSubmittedHomeworks" type="button"><strong>View submitted homeworks</strong></button>
+                                        </div>
+                            </Authorized>
+                        </AuthorizeView>
+                       
+                        
+                            
+                            <AuthorizeView Policy="MustBeStudent">
+                                <Authorized Context="studentAuthorized">
+                                    <div class="input-container">
 
-                            @if (!homeworkSubmitted)
-                            {
-                                <input @bind="answer" type="text" placeholder="Paste your answer here"/>
-                                <button @onclick="HandInHomework" type="button"><strong>Hand in</strong></button>
-                            }
-                            else
-                            {
-                                <div class="submitted-container">
-                                    <button><strong>Submitted</strong></button>
-                                    <button @onclick="SeeFeedback" type="button"><strong>See feedback</strong></button>
-                                </div>
+                                    @if (!homeworkSubmitted)
+                                    {
 
-                            }
-                        </div>
+                                        <input @bind="answer" type="text" placeholder="Paste your answer here"/>
+                                        <button @onclick="HandInHomework" type="button"><strong>Hand in</strong></button>
+                                    }
+                                    else
+                                    {
+                                        <div class="submitted-container">
+                                            <button><strong>Submitted</strong></button>
+                                            <button @onclick="SeeFeedback" type="button"><strong>See feedback</strong></button>
+                                        </div>
+
+                                    }
+                                    </div>
+                                </Authorized>
+                            </AuthorizeView>
                     </div>
                 </div>
             }
@@ -70,7 +86,7 @@
                                 <img src="/homework.png" alt="Homework Icon"/>
                             </div>
                             <div class="homework-header-content">
-                                <h3>Homework </h3>
+                                <h3>Homework. </h3>
                             </div>
                         </div>
                     </div>
@@ -112,6 +128,7 @@
             public HomeworkHandInDTO Dto { get; set; }
 
             private bool homeworkSubmitted = false;
+            private bool showSubmittedHomeworks = false;
 
             protected override async Task OnInitializedAsync()
             {
@@ -122,7 +139,8 @@
                     handInHomework = new HandInHomework
                     {
                         Id = "",
-                        Answer = answer
+                        Answer = answer,
+                        StudentUsername = ""
                     };
                     
                 }
@@ -161,6 +179,13 @@
             // see feedback logic 
             }
 
+            private void ViewSubmittedHomeworks()
+            {
+                var homeworkId = homework.Id;
+                Console.WriteLine($"Getting submitted homeworks for the homework with id: {homeworkId}");
+                navMgr.NavigateTo($"/Homeworks/{homeworkId}");
+                Console.WriteLine($"Navigating to the submitted homeworks page with the id: {homeworkId}");
+            }
         }
 
     </Authorized>

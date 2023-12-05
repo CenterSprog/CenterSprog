@@ -14,6 +14,8 @@ import sep3.project.data_tier.repository.IHomeworkRepository;
 import sep3.project.data_tier.repository.IUserRepository;
 import sep3.project.protobuf.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @GrpcService
@@ -55,11 +57,14 @@ public class HandInHomeworkServiceImpl extends HandInHomeworkServiceGrpc.HandInH
 
       HandInHomeworkEntity savedHandInHomework = handInHomeworkRepository.save(handInHomework);
 
+      String savedStudentUsername = savedHandInHomework.getUser().getUsername();
+
 
       ResponseGetHandInHomework responseGetHandInHomework = ResponseGetHandInHomework.newBuilder()
           .setHandInHomework(HandInHomework.newBuilder()
               .setId(savedHandInHomework.getId())
               .setAnswer(savedHandInHomework.getAnswer())
+              .setStudentUsername(savedStudentUsername)
               .build())
           .build();
 
@@ -71,6 +76,41 @@ public class HandInHomeworkServiceImpl extends HandInHomeworkServiceGrpc.HandInH
     {
       response.onError(Status.INTERNAL.withDescription(
           "Error handling HandInHomework: " + e.getMessage()).asRuntimeException());
+    }
+  }
+  @Override
+  public void getHandInsByHomeworkId(RequestGetHandInsByHomeworkId request, StreamObserver<ResponseGetHandInsByHomeworkId> response)
+  {
+    String homeworkId = request.getHomeworkId();
+
+    try {
+      List<HandInHomeworkEntity> handIns = handInHomeworkRepository.findByHomeworkId(homeworkId);
+      List<HandInHomework> handInMessages = new ArrayList<>();
+
+      for (HandInHomeworkEntity entity : handIns) {
+
+        UserEntity user = entity.getUser();
+        String studentUsername = user.getUsername();
+
+        HandInHomework message = HandInHomework.newBuilder()
+            .setId(entity.getId())
+            .setAnswer(entity.getAnswer())
+            .setStudentUsername(studentUsername)
+            .build();
+        handInMessages.add(message);
+      }
+
+      ResponseGetHandInsByHomeworkId responseGetHandInsByHomeworkId = ResponseGetHandInsByHomeworkId.newBuilder()
+          .addAllHandIns(handInMessages)
+          .build();
+
+      response.onNext(responseGetHandInsByHomeworkId);
+      response.onCompleted();
+    }
+    catch (Exception e)
+    {
+      response.onError(Status.INTERNAL.withDescription(
+          "Error getting Hand Ins by HomeworkId: " + e.getMessage()).asRuntimeException());
     }
   }
 }

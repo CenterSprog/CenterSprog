@@ -1,0 +1,43 @@
+﻿@page "/Homeworks/{homeworkId}"  
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject IHandInHomeworkService handInService
+@inject IHomeworkService homeworkService
+
+
+@if (handIns == null)
+{
+    <span>Loading submitted homeworks...</span>
+}
+else if (!handIns.Any())
+{
+    <p>No hand-ins were submitted for this homework</p>
+}
+else
+{
+    <div class="homework-cards">
+        @foreach (var handIn in handIns)
+        {
+            <div class="homework-card">
+                <div class="card-content">
+                    <h4>Student: @handIn.StudentUsername</h4>
+                    <p>@handIn.Answer</p>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string homeworkId { get; set; }
+
+    Homework homework;
+
+    private IEnumerable<HandInHomework> handIns;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        handIns = await handInService.GetHandInsByHomeworkIdAsync(homeworkId);
+    }
+}
