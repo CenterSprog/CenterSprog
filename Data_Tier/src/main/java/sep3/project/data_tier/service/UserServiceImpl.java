@@ -8,12 +8,9 @@ import sep3.project.data_tier.mappers.UserMapper;
 import sep3.project.data_tier.repository.IUserRepository;
 import sep3.project.protobuf.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @GrpcService
 public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {

@@ -1,6 +1,7 @@
 syntax = "proto3";
 import "google/protobuf/empty.proto";
 import "Homework.proto";
+import "User.proto";
 
 option java_multiple_files = true;
 option java_package = "sep3.project.protobuf";
@@ -12,6 +13,7 @@ message LessonData{
   string topic = 3;
   string description = 4;
   optional Homework homework = 5;
+  repeated UserAttendee attendees = 6;
 }
 
 message LessonOverview{

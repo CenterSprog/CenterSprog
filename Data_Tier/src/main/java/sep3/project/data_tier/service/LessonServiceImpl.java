@@ -4,11 +4,15 @@ import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import sep3.project.data_tier.entity.ClassEntity;
 import sep3.project.data_tier.entity.HomeworkEntity;
 import sep3.project.data_tier.entity.LessonEntity;
 import sep3.project.data_tier.entity.UserEntity;
+import sep3.project.data_tier.mappers.HomeworkMapper;
+import sep3.project.data_tier.mappers.UserMapper;
 import sep3.project.data_tier.repository.IClassRepository;
 import sep3.project.data_tier.repository.IHomeworkRepository;
 import sep3.project.data_tier.repository.ILessonRepository;
@@ -26,6 +30,10 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
 
     private ILessonRepository lessonRepository;
     private IUserRepository userRepository;
+
+    private UserMapper userMapper = UserMapper.INSTANCE;
+    private HomeworkMapper homeworkMapper = HomeworkMapper.INSTANCE;
+
     private IHomeworkRepository homeworkRepository;
     private IClassRepository classRepository;
 
@@ -39,12 +47,15 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
     }
 
     @Override
+    @Transactional
     public void getLessonById(RequestGetLessonById request, StreamObserver<ResponseGetLessonById> response) {
         try {
             String id = request.getLessonId();
             Optional<LessonEntity> existingLesson = lessonRepository.findById(id);
             if (existingLesson.isEmpty())
                 throw new IllegalStateException("No exisitng lesson with id of: " + id);
+
+            Hibernate.initialize(existingLesson.get());
 
             LessonData grpcLesson = LessonData.newBuilder()
                     .setId(existingLesson.get().getId())
@@ -54,13 +65,16 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
 
             if (existingLesson.get().getHomework() != null)
                 grpcLesson = grpcLesson.toBuilder().setHomework(
-                        Homework.newBuilder()
-                                .setTitle(existingLesson.get().getHomework().getTitle())
-                                .setDeadline(existingLesson.get().getHomework().getDeadline())
-                                .setId(existingLesson.get().getHomework().getId())
-                                .setDescription(existingLesson.get().getHomework().getDescription())
-                                .build()
-                ).build();
+                    homeworkMapper.toProto(existingLesson.get().getHomework())
+                ).buildPartial();
+
+            if (!existingLesson.get().getAttendance().isEmpty())
+                for(UserEntity userEntity : existingLesson.get().getAttendance())
+                    grpcLesson = grpcLesson.toBuilder().addAttendees(
+                        userMapper.toAttendeeProto(userEntity)
+                    ).buildPartial();
+
+            grpcLesson.toBuilder().build();
 
             response.onNext(
                     ResponseGetLessonById.newBuilder()
@@ -95,10 +109,6 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
                 .filter(user -> studentUsernames.contains(user.getUsername()))
                 .collect(Collectors.toSet());
 
-            if (students.isEmpty()) {
-                throw new IllegalStateException("No user matches given usernames");
-            }
-
             existingLesson.get().setAttendance(students);
             lessonRepository.save(existingLesson.get());
 
@@ -107,7 +117,6 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
 
         } catch (Exception e) {
             response.onError(new Throwable("An error occurred: " + e.getMessage()));
-            response.onCompleted();
 
         }
     }
