@@ -8,12 +8,13 @@ public class ClassEntity
 
     public List<User> Participants { get; set; }
 
-    public List<Lesson> lessons { get; set; } = new List<Lesson>();
+    public List<Lesson> Lessons { get; set; }
     
 
     public ClassEntity(string id, string title, string room)
     {
         Participants = new List<User>();
+        Lessons = new List<Lesson>();
         Id = id;
         Title = title;
         Room = room;
@@ -26,14 +27,14 @@ public class ClassEntity
     
     public void CreateLesson(Lesson lesson)
     {
-        lessons.Add(lesson);
+        Lessons.Add(lesson);
     }
     
     
     public void EditLesson(string Id, Lesson updatedLesson)
     {
        
-        Lesson existingLesson = lessons.FirstOrDefault(l => l.Id == Id);
+        Lesson existingLesson = Lessons.FirstOrDefault(l => l.Id == Id);
 
        
         if (existingLesson != null)
@@ -50,12 +51,12 @@ public class ClassEntity
     public void RemoveLesson(string Id)
     {
         
-        var lessonToRemove = lessons.FirstOrDefault(l => l.Id == Id);
+        var lessonToRemove = Lessons.FirstOrDefault(l => l.Id == Id);
 
         
         if (lessonToRemove != null)
         {
-            lessons.Remove(lessonToRemove);
+            Lessons.Remove(lessonToRemove);
         }
         else
         {

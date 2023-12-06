@@ -12,7 +12,7 @@ message ClassData {
   optional string id = 1;
   string title = 2;
   string room = 3;
-  optional LessonData lessons = 4;
+  repeated LessonData lessons = 4;
   repeated UserParticipant participants = 5;
 }
 

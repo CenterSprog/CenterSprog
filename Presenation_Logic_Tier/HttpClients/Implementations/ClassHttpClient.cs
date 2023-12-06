@@ -28,7 +28,6 @@ public class ClassHttpClient : IClassService
         }
 
         return foundClass;
-
     }
 
     public async Task<IEnumerable<ClassEntity>> GetAllAsync(SearchClassDTO dto)

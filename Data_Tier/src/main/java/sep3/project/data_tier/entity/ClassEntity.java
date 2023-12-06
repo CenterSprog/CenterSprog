@@ -30,7 +30,7 @@ public class ClassEntity {
 	)
 	private Set<UserEntity> users = new HashSet<>();
 
-	@OneToMany()
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "class_lesson",
 			joinColumns = @JoinColumn(name = "class_id"),
@@ -96,5 +96,8 @@ public class ClassEntity {
 
 	public Set<UserEntity> getUsers() {
 		return users;
+	}
+	public Set<LessonEntity> getLessons() {
+		return lessons;
 	}
 }
