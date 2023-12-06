@@ -28,6 +28,7 @@ message UserParticipant{
   string lastName = 2;
   string role = 3;
   string username = 4;
+  string email = 5;
 }
 
 message RequestCreateUser{

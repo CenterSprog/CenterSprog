@@ -15,68 +15,80 @@ else
     <div class="class-container">
         <div class="class-card">
             <h2>@selectedClass.Title @selectedClass.Room</h2>
-            <AuthorizeView Policy="MustBeTeacher">
-                <div class="add-icon-container" @onclick="AddLesson">
-                    <img src="/add.png" alt="Add Icon"/>
-                </div>
-            </AuthorizeView>
+            <button type="button" class="btn btn-primary fw-bold" @onclick="@SeeParticipants">Participants <span class="oi oi-people"></span></button>
         </div>
     </div>
-@if (selectedClass.Lessons == null)
-{
-    <span>Loading lessons...</span>
-}
-else if (!selectedClass.Lessons.Any())
-{
-    <p>No lessons available for this class</p>
-}
-else
-{
+
     <div class="lessons-container">
-        @foreach (Lesson lesson in selectedClass.Lessons)
+    <AuthorizeView Policy="MustBeTeacher">
+        <div class="add-icon-container d-flex align-items-center justify-content-center w-100" @onclick="AddLesson">
+            <img src="/add.png" alt="Add Icon" style="width: 30px;"/>
+        </div>
+    </AuthorizeView>
+        @if (selectedClass.Lessons == null)
         {
-            Console.WriteLine($"Lesson ID: {lesson.Id}");
-            <div class="lesson-card">
-                <div class="icon-container">
-                    <img src="/notebook.png" alt="Lesson Icon"/>
+            <span>Loading lessons...</span>
+        }
+        else if (!selectedClass.Lessons.Any())
+        {
+            <p>No lessons available for this class</p>
+        }
+        else
+        {
+            @foreach (Lesson lesson in selectedClass.Lessons)
+            {
+                Console.WriteLine($"Lesson ID: {lesson.Id}");
+                <div class="lesson-card">
+                    <div class="icon-container">
+                        <img src="/notebook.png" alt="Lesson Icon"/>
+                    </div>
+                    <div class="lesson-content">
+                        <h4 @onclick="() => ViewLesson(lesson)">@lesson.Topic. @lesson.Date </h4>
+                        <AuthorizeView Policy="MustBeTeacher">
+                            <button @onclick:stopPropagation="true" @onclick:preventDefault="true"
+                                    @onclick="@(() => DeleteLessonById(lesson.Id))" type="button" class="btn btn-danger">
+                                Delete
+                            </button>
+                        </AuthorizeView>
+                    </div>
                 </div>
-                <div class="lesson-content">
-                    <h4 @onclick="() => ViewLesson(lesson)">@lesson.Topic. @lesson.Date </h4>
-                    <AuthorizeView Policy="MustBeTeacher">
-                        <button @onclick:stopPropagation="true" @onclick:preventDefault="true"
-                                @onclick="@(() => DeleteLessonById(lesson.Id))" type="button" class="btn btn-danger">
-                            Delete
-                        </button>
-                    </AuthorizeView>
-                </div>
-            </div>
+            }
         }
     </div>
-}
-@if (selectedClass.Participants == null)
-{
-    <span>Loading participants...</span>
-}
-else if (!selectedClass.Participants.Any())
-{
-    <p>No participants assigned for this class</p>
-}
-else
-{
-    <div class="lessons-container">
-        @foreach (User user in selectedClass.Participants)
+
+    <Modal ShowModal="showModal">
+        @if (selectedClass.Participants == null)
         {
-            <div class="lesson-card">
-                <div class="icon-container">
-                    <h4 class="oi oi-person"></h4>
-                </div>
-                <div class="lesson-content">
-                    <h4 >@user.FirstName @user.LastName </h4>
-                </div>
+            <span>Loading participants...</span>
+        }
+        else if (!selectedClass.Participants.Any())
+        {
+            <p>No participants assigned for this class</p>
+        }
+        else
+        {
+            <div class="d-flex flex-column w-100">
+                @foreach (User user in selectedClass.Participants.OrderByDescending(u=>u.Role))
+                {
+                    <div class="lesson-card mx-0 my-2">
+                        <div>
+                            <h5>
+                                @if (user.Role.Equals("teacher"))
+                                {
+                                    <span class="oi oi-text me-2"></span>
+                                }
+                                else
+                                {
+                                    <span class="oi oi-person me-2"></span>
+                                }
+                                @user.FirstName @user.LastName | @user.Email
+                            </h5>
+                        </div>
+                    </div>
+                }
             </div>
         }
-    </div>
-}
+    </Modal>
 }
 
 @code {
@@ -86,22 +98,28 @@ else
 
 
     private readonly LessonUpdateDTO updatedto = null!;
-
     private ClassEntity selectedClass;
+    private bool showModal;
+
+
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             selectedClass = await classService.GetByIdAsync(ClassId);
-            Console.WriteLine(selectedClass.ToString());
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
         }
     }
-
+    
+    private void SeeParticipants()
+    {
+        showModal = true;
+    }
+    
     private void ViewLesson(Lesson lesson)
     {
         var lessonId = lesson.Id;
@@ -147,3 +165,4 @@ else
     }
 
 }
+

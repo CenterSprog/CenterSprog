@@ -28,4 +28,13 @@ public class User
         LastName = lastName;
         Role = role;
     }
+    
+    public User(string username, string firstName, string lastName, string role, string email)
+    {
+        Username = username;
+        FirstName = firstName;
+        LastName = lastName;
+        Role = role;
+        Email = email;
+    }
 }

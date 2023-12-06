@@ -37,7 +37,7 @@ public class ClassClient : IClassClient
             foreach (var userParticipant in reply.ClassEntity.Participants)
             {
                 retrievedClassEntity.Participants.Add(new User(userParticipant.Username, userParticipant.FirstName,
-                    userParticipant.LastName, userParticipant.Role));
+                    userParticipant.LastName, userParticipant.Role, userParticipant.Email));
             }
         }
 
