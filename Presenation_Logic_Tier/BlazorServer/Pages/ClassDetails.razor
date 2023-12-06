@@ -124,7 +124,7 @@ else
     {
         var lessonId = lesson.Id;
         Console.WriteLine($"Getting lesson overview for the lesson with id: {lessonId}");
-        navMgr.NavigateTo($"/Lessons/{lessonId}");
+        navMgr.NavigateTo($"{ClassId}/Lessons/{lessonId}");
         Console.WriteLine($"Navigating to the lesson overview page with the id: {lessonId}");
     }
 

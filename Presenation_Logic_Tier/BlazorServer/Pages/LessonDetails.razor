@@ -1,8 +1,10 @@
-﻿@page "/Lessons/{lessonId}"  
+﻿@page "/{classId}/Lessons/{lessonId}"  
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.HomeworkDTO
+@using Domain.DTOs.LessonDTO
 @inject ILessonService lessonService
+@inject IClassService classService
 @inject IHandInHomeworkService HandInHomeworkService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
@@ -23,6 +25,8 @@
                     <div class="lesson-description">
                         <p>@lesson.Description</p>
                     </div>
+
+
                 </div>
             </div>
 
@@ -40,22 +44,29 @@
                         </div>
                         <div class="homework-description">
                             <p>@lesson.Homework.Description</p>
-                            <p><strong>Deadline:</strong> @lesson.Homework.Deadline </p>
+                            <p>
+                                <strong>Deadline:</strong> @lesson.Homework.Deadline
+                            </p>
                         </div>
                         <div class="input-container">
 
                             @if (!homeworkSubmitted)
                             {
                                 <input @bind="answer" type="text" placeholder="Paste your answer here"/>
-                                <button @onclick="HandInHomework" type="button"><strong>Hand in</strong></button>
+                                <button @onclick="HandInHomework" type="button">
+                                    <strong>Hand in</strong>
+                                </button>
                             }
                             else
                             {
                                 <div class="submitted-container">
-                                    <button><strong>Submitted</strong></button>
-                                    <button @onclick="SeeFeedback" type="button"><strong>See feedback</strong></button>
+                                    <button>
+                                        <strong>Submitted</strong>
+                                    </button>
+                                    <button @onclick="SeeFeedback" type="button">
+                                        <strong>See feedback</strong>
+                                    </button>
                                 </div>
-
                             }
                         </div>
                     </div>
@@ -70,7 +81,8 @@
                                 <img src="/homework.png" alt="Homework Icon"/>
                             </div>
                             <div class="homework-header-content">
-                                <h3>Homework </h3>
+                                <h3>Homework</h3>
+                                <p>No homework for this lesson yet. Check back later!</p>
                             </div>
                         </div>
                     </div>
@@ -83,23 +95,51 @@
                     @Msg
                 </div>
             }
-            
+
             <AuthorizeView Policy="MustBeTeacher">
                 <Authorized Context="teacherAuthorized">
-                                @if (lesson.Homework == null)
-                                {
-                                    <AssignHomeworkComponent LessonId=@lessonId LessonDate=@lesson.Date/>
-                                }
+                    @if (lesson.Homework == null)
+                    {
+                        <AssignHomeworkComponent LessonId=@lessonId LessonDate=@lesson.Date/>
+                    }
                 </Authorized>
             </AuthorizeView>
+            
+            @if (attendees != null)
+            {
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Select</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var attendee in attendees)
+                    {
+                        <tr>
+                            <td>@attendee.FirstName</td>
+                            <td><input type="checkbox" @bind="SelectedUsers[attendee.Username]" /></td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
 
-
-
+                <button class="btn btn-primary" @onclick="Submit">Submit</button>
+                @if (SelectedUserList != null && SelectedUserList.Any())
+                {
+                    <div>
+                        <h4>Amount of Participants</h4>
+                        <p>@amountOfParticipants/@attendees.Count()</p>
+                    </div>
+                }
+            }
 
         }
 
         @code {
-
+            [Parameter]
+            public string classId { get; set; }
             [Parameter]
             public string lessonId { get; set; }
 
@@ -107,14 +147,23 @@
             Homework homework;
             HandInHomework handInHomework;
             private string answer;
+            private string amountOfParticipants { get; set; }
             public string Msg { get; set; }
             User user;
             public HomeworkHandInDTO Dto { get; set; }
+            public IEnumerable<User> attendees { get; set; }
 
             private bool homeworkSubmitted = false;
+            
+            private Dictionary<string, bool> SelectedUsers = new();
+            private List<string> SelectedUserList;
 
             protected override async Task OnInitializedAsync()
             {
+                attendees = new List<User>();
+                SelectedUsers = new Dictionary<string, bool>();
+                SelectedUserList = new List<string>();
+                amountOfParticipants = "";
                 try
                 {
                     lesson = await lessonService.GetByIdAsync(lessonId);
@@ -124,7 +173,12 @@
                         Id = "",
                         Answer = answer
                     };
-                    
+                    attendees = await classService.GetAllAttendeesAsync(classId);
+
+                    foreach (var attendee in attendees)
+                    {
+                        SelectedUsers[attendee.Username] = false;
+                    }
                 }
                 catch (Exception e)
                 {
@@ -133,20 +187,26 @@
                 }
             }
 
+            private async void Submit()
+            {
+                SelectedUserList = SelectedUsers.Where(kvp => kvp.Value).Select(kvp => kvp.Key).ToList();
+                amountOfParticipants = await lessonService.AddAttendance(new AddAttendanceDTO(lessonId, SelectedUserList));
+            }
+
             private async Task HandInHomework()
             {
                 try
                 {
                     handInHomework.Answer = answer;
-                    
+
                     var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
                     var user = authState.User;
                     var username = user.Identity?.Name;
-                    
+
                     Dto = new HomeworkHandInDTO(homework.Id, username, handInHomework);
                     await HandInHomeworkService.HandInHomework(Dto);
                     Console.WriteLine("Homework submitted successfully!");
-                    
+
                     homeworkSubmitted = true;
                 }
                 catch (Exception ex)
@@ -164,9 +224,8 @@
         }
 
     </Authorized>
-    
+
     <NotAuthorized>
         <p>You are not authorized to view this content.</p>
     </NotAuthorized>
 </AuthorizeView>
-

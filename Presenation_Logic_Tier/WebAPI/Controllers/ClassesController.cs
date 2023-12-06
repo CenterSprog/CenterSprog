@@ -54,6 +54,24 @@ public class ClassesController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpGet("{id}/attendees", Name = "GetClassAttendeesAsync")]
+    public async Task<ActionResult<IEnumerable<User>>> GetAllAttendeesAsync([FromRoute] string id)
+    {
+        try
+        {   
+            IEnumerable<User> attendees = await _classLogic.GetAllAttendeesAsync(id);
+
+            if (attendees == null || !attendees.Any())
+                return NotFound();
+
+            return Ok(attendees);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
 
     [HttpPost]
     public async Task<ActionResult<ClassEntity>> CreateAsync(ClassCreationDTO dto)

@@ -14,12 +14,12 @@ public class LessonHttpClient : ILessonService
     private readonly HttpClient client;
     private readonly ILogger<LessonHttpClient> logger;
 
-    public LessonHttpClient(HttpClient client,  ILogger<LessonHttpClient> logger)
+    public LessonHttpClient(HttpClient client, ILogger<LessonHttpClient> logger)
     {
         this.client = client;
         this.logger = logger;
     }
-    
+
     public async Task<Lesson> GetByIdAsync(string id)
     {
         HttpResponseMessage response = await client.GetAsync($"/lessons/{id}");
@@ -28,12 +28,25 @@ public class LessonHttpClient : ILessonService
         {
             throw new Exception(result);
         }
+
         Lesson foundLesson = JsonSerializer.Deserialize<Lesson>(result, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
-        
+
         return foundLesson;
+    }
+
+    public async Task<string> AddAttendance(AddAttendanceDTO addAttendanceDto)
+    {
+        HttpResponseMessage response = await client.PostAsJsonAsync($"/lessons/{addAttendanceDto.LessonId}/Attendance", addAttendanceDto.StudentUsernames);
+        var result = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode || result is null)
+        {
+            throw new Exception("Failed to mark attendance from blazor");
+        }
+
+        return result;
     }
 
 
@@ -92,7 +105,6 @@ public class LessonHttpClient : ILessonService
     }
        
   */
-     
 
 
 /*
@@ -112,20 +124,16 @@ public class LessonHttpClient : ILessonService
      }*/
 
 
-     public async Task DeleteAsync(string lessonId)
+    public async Task DeleteAsync(string lessonId)
     {
         try
         {
-          HttpResponseMessage response = await client.DeleteAsync($"lessons/{lessonId}");
+            HttpResponseMessage response = await client.DeleteAsync($"lessons/{lessonId}");
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             throw;
         }
-        
     }
-
-    
-    
 }

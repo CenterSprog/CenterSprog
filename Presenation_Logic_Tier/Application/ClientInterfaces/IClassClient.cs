@@ -8,6 +8,7 @@ public interface IClassClient
     Task<ClassEntity> GetByIdAsync(string id);
 
     Task<IEnumerable<ClassEntity>> GetAllAsync(SearchClassDTO dto);
+    Task<IEnumerable<User>> GetAllAttendeesAsync(string id);
 
     Task<ClassEntity> CreateAsync(ClassCreationDTO dto);
 

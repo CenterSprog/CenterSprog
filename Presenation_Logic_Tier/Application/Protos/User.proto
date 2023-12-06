@@ -31,6 +31,12 @@ message UserParticipant{
   string email = 5;
 }
 
+message UserAttendee{
+  string firstName = 1;
+  string lastName = 2;
+  string username = 4;
+}
+
 message RequestCreateUser{
   UserCreationData user = 1;
 }

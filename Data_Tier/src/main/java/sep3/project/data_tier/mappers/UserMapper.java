@@ -3,6 +3,7 @@ package sep3.project.data_tier.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import sep3.project.data_tier.entity.UserEntity;
+import sep3.project.protobuf.UserAttendee;
 import sep3.project.protobuf.UserData;
 import sep3.project.protobuf.UserParticipant;
 
@@ -12,5 +13,6 @@ public interface UserMapper {
     UserData toProto(UserEntity userEntity);
     UserParticipant toParticipantProto(UserEntity userEntity);
 
+    UserAttendee toAttendeeProto(UserEntity userEntity);
     UserEntity toEntity(UserData userData);
 }

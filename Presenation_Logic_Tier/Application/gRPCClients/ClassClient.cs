@@ -21,16 +21,9 @@ public class ClassClient : IClassClient
         };
 
         var reply = new ResponseGetClassEntity();
-        try
-        {
+        
+        reply =  await client.getClassEntityByIdAsync(request);
 
-            reply = client.getClassEntityById(request);
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
 
         ClassEntity retrievedClassEntity = new(reply.ClassEntity.Id, reply.ClassEntity.Title, reply.ClassEntity.Room);
         if(reply.ClassEntity.Participants.Any()){
@@ -57,7 +50,7 @@ public class ClassClient : IClassClient
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new ClassEntityService.ClassEntityServiceClient(channel);
-        var request = new RequestGetClassEntities();;
+        var request = new RequestGetClassEntities();
         if (dto.Username != null)
             request.Username = dto.Username;
         
@@ -79,6 +72,32 @@ public class ClassClient : IClassClient
         }
 
         return await Task.FromResult(classes);
+    }
+
+    public async Task<IEnumerable<User>> GetAllAttendeesAsync(string id)
+    {
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new ClassEntityService.ClassEntityServiceClient(channel);
+        var request = new RequestGetClassAttendees
+        {
+            ClassId = id
+        };
+        
+        var reply = await client.getClassAttendeesAsync(request);
+
+        var attendees = new List<User>();
+        
+        foreach (var attendee in reply.Attendees)
+        {
+            attendees.Add(new User
+            {
+                FirstName = attendee.FirstName,
+                LastName = attendee.LastName,
+                Username = attendee.Username
+            });
+        }
+
+        return await Task.FromResult(attendees);
     }
 
     public async Task<ClassEntity> CreateAsync(ClassCreationDTO dto)

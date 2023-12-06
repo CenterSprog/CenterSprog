@@ -23,15 +23,9 @@ public class LessonClient : ILessonClient
         };
 
         var reply = new ResponseGetLessonById();
-        try
-        {
-            reply = client.getLessonById(request);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
 
+        reply = await client.getLessonByIdAsync(request);
+        
         Lesson foundLesson;
         if (reply.Lesson.Homework!=null)
         {
