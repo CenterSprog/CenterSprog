@@ -6,7 +6,7 @@ namespace HttpClients.ClientInterfaces;
 public interface ILessonService
 {
     Task<Lesson> GetByIdAsync(string id);
-       Task<string> AddAttendance(AddAttendanceDTO addAttendanceDto);
+    Task<string> AddAttendanceAsync(AddAttendanceDTO addAttendanceDto);
     //Task<Lesson> CreateAsync( LessonCreationDTO lessonCreationDto);
     
     

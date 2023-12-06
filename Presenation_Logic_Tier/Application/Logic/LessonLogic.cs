@@ -22,9 +22,6 @@ public class LessonLogic : ILessonLogic
 
     public async Task<int> AddAttendance(AddAttendanceDTO addAttendanceDto)
     {
-        if (!addAttendanceDto.StudentUsernames.Any())
-            throw new ArgumentException("At least one participant has to be selected.");
-        
         return await _lessonClient.AddAttendance(addAttendanceDto);
     }
     /*

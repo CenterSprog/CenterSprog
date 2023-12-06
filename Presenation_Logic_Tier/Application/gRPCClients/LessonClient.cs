@@ -26,16 +26,21 @@ public class LessonClient : ILessonClient
 
         reply = await client.getLessonByIdAsync(request);
         
-        Lesson foundLesson;
-        if (reply.Lesson.Homework!=null)
+        Lesson foundLesson = new(reply.Lesson.Id,reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic);
+
+        if (reply.Lesson.Homework != null)
+            foundLesson.Homework = new Homework(reply.Lesson.Homework.Id, reply.Lesson.Homework.Deadline,
+                reply.Lesson.Homework.Title, reply.Lesson.Homework.Description); 
+                
+        if (reply.Lesson.Attendees.Any())
         {
-            foundLesson = new(reply.Lesson.Id,reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic,
-                new Homework(reply.Lesson.Homework.Id, reply.Lesson.Homework.Deadline,
-                    reply.Lesson.Homework.Title, reply.Lesson.Homework.Description));
-        }   
-        else
-        {
-            foundLesson = new(reply.Lesson.Id, reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic);
+            foreach (var attendee in reply.Lesson.Attendees)
+            {
+                foundLesson.Attendees.Add(new User(
+                    attendee.Username,
+                    attendee.FirstName,
+                    attendee.LastName));
+            }
         }
 
         return await Task.FromResult(foundLesson);

@@ -25,8 +25,14 @@
                     <div class="lesson-description">
                         <p>@lesson.Description</p>
                     </div>
-
-
+                    <AuthorizeView Policy="MustBeTeacher">
+                        <Authorized Context="teacherAuthorized">
+                            @if (attendees != null)
+                            {
+                                <AttendanceComponent Attendees="attendees.ToList()" MarkedAttendees="lesson.Attendees" LessonId="@lessonId"/>
+                            }
+                        </Authorized>
+                    </AuthorizeView>
                 </div>
             </div>
 
@@ -104,123 +110,6 @@
                     }
                 </Authorized>
             </AuthorizeView>
-            
-            @if (attendees != null)
-            {
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Select</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var attendee in attendees)
-                    {
-                        <tr>
-                            <td>@attendee.FirstName</td>
-                            <td><input type="checkbox" @bind="SelectedUsers[attendee.Username]" /></td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-
-                <button class="btn btn-primary" @onclick="Submit">Submit</button>
-                @if (SelectedUserList != null && SelectedUserList.Any())
-                {
-                    <div>
-                        <h4>Amount of Participants</h4>
-                        <p>@amountOfParticipants/@attendees.Count()</p>
-                    </div>
-                }
-            }
-
-        }
-
-        @code {
-            [Parameter]
-            public string classId { get; set; }
-            [Parameter]
-            public string lessonId { get; set; }
-
-            Lesson lesson;
-            Homework homework;
-            HandInHomework handInHomework;
-            private string answer;
-            private string amountOfParticipants { get; set; }
-            public string Msg { get; set; }
-            User user;
-            public HomeworkHandInDTO Dto { get; set; }
-            public IEnumerable<User> attendees { get; set; }
-
-            private bool homeworkSubmitted = false;
-            
-            private Dictionary<string, bool> SelectedUsers = new();
-            private List<string> SelectedUserList;
-
-            protected override async Task OnInitializedAsync()
-            {
-                attendees = new List<User>();
-                SelectedUsers = new Dictionary<string, bool>();
-                SelectedUserList = new List<string>();
-                amountOfParticipants = "";
-                try
-                {
-                    lesson = await lessonService.GetByIdAsync(lessonId);
-                    homework = lesson.Homework;
-                    handInHomework = new HandInHomework
-                    {
-                        Id = "",
-                        Answer = answer
-                    };
-                    attendees = await classService.GetAllAttendeesAsync(classId);
-
-                    foreach (var attendee in attendees)
-                    {
-                        SelectedUsers[attendee.Username] = false;
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    Msg = $"{e.Message}";
-                }
-            }
-
-            private async void Submit()
-            {
-                SelectedUserList = SelectedUsers.Where(kvp => kvp.Value).Select(kvp => kvp.Key).ToList();
-                amountOfParticipants = await lessonService.AddAttendance(new AddAttendanceDTO(lessonId, SelectedUserList));
-            }
-
-            private async Task HandInHomework()
-            {
-                try
-                {
-                    handInHomework.Answer = answer;
-
-                    var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-                    var user = authState.User;
-                    var username = user.Identity?.Name;
-
-                    Dto = new HomeworkHandInDTO(homework.Id, username, handInHomework);
-                    await HandInHomeworkService.HandInHomework(Dto);
-                    Console.WriteLine("Homework submitted successfully!");
-
-                    homeworkSubmitted = true;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error submitting homework: {ex.Message}");
-                    Msg = $"Error submitting homework: {ex.Message}";
-                }
-            }
-
-            private void SeeFeedback()
-            {
-            // see feedback logic 
-            }
-
         }
 
     </Authorized>
@@ -229,3 +118,74 @@
         <p>You are not authorized to view this content.</p>
     </NotAuthorized>
 </AuthorizeView>
+
+@code {
+
+    [Parameter]
+    public string classId { get; set; }
+
+    [Parameter]
+    public string lessonId { get; set; }
+
+    Lesson lesson;
+    Homework homework;
+    HandInHomework handInHomework;
+    private string answer;
+    public string Msg { get; set; }
+    User user;
+    public HomeworkHandInDTO Dto { get; set; }
+    public IEnumerable<User> attendees { get; set; }
+
+    private bool homeworkSubmitted = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        attendees = new List<User>();
+        try
+        {
+            lesson = await lessonService.GetByIdAsync(lessonId);
+            homework = lesson.Homework;
+            handInHomework = new HandInHomework
+            {
+                Id = "",
+                Answer = answer
+            };
+            attendees = await classService.GetAllAttendeesAsync(classId);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            Msg = $"{e.Message}";
+        }
+    }
+
+
+    private async Task HandInHomework()
+    {
+        try
+        {
+            handInHomework.Answer = answer;
+
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var username = user.Identity?.Name;
+
+            Dto = new HomeworkHandInDTO(homework.Id, username, handInHomework);
+            await HandInHomeworkService.HandInHomework(Dto);
+            Console.WriteLine("Homework submitted successfully!");
+
+            homeworkSubmitted = true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error submitting homework: {ex.Message}");
+            Msg = $"Error submitting homework: {ex.Message}";
+        }
+    }
+
+    private void SeeFeedback()
+    {
+    // see feedback logic 
+    }
+
+}

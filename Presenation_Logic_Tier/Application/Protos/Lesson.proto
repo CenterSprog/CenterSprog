@@ -1,6 +1,7 @@
 syntax = "proto3";
 import "google/protobuf/empty.proto";
 import "Protos/Homework.proto";
+import "Protos/User.proto";
 
 option csharp_namespace = "gRPCClient";
 option java_multiple_files = true;
@@ -13,6 +14,7 @@ message LessonData{
   string topic = 3;
   string description = 4;
   optional Homework homework = 5;
+  repeated UserAttendee attendees = 6;
 }
 
 message LessonOverview{

@@ -37,7 +37,7 @@ public class LessonHttpClient : ILessonService
         return foundLesson;
     }
 
-    public async Task<string> AddAttendance(AddAttendanceDTO addAttendanceDto)
+    public async Task<string> AddAttendanceAsync(AddAttendanceDTO addAttendanceDto)
     {
         HttpResponseMessage response = await client.PostAsJsonAsync($"/lessons/{addAttendanceDto.LessonId}/Attendance", addAttendanceDto.StudentUsernames);
         var result = await response.Content.ReadAsStringAsync();

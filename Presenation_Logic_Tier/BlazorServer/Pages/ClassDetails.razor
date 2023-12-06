@@ -35,7 +35,7 @@ else
         }
         else
         {
-            @foreach (Lesson lesson in selectedClass.Lessons)
+            @foreach (Lesson lesson in selectedClass.Lessons.OrderByDescending(l=>l.Date))
             {
                 Console.WriteLine($"Lesson ID: {lesson.Id}");
                 <div class="lesson-card">
