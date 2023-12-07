@@ -47,7 +47,27 @@ public class HandInsController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-    
-    
-    
+
+    [HttpGet("{homeworkId}/{studentUsername}", Name = "GetHandInByHomeworkIdAndStudentUsernameAsync")]
+    public async Task<ActionResult<HandInHomework>> GetHandInByHomeworkIdAndStudentUsernameAsync(string homeworkId,
+        string studentUsername)
+    {
+        try
+        {
+            HandInHomework handIn = await _handInHomeworkLogic.GetHandInByHomeworkIdAndStudentUsernameAsync(homeworkId, studentUsername);
+
+            if (handIn == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(handIn);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+
 }

@@ -1,8 +1,12 @@
 ﻿@page "/Homeworks/{homeworkId}"  
 @using Domain.Models
 @using HttpClients.ClientInterfaces
-@inject IHandInHomeworkService handInService
-@inject IHomeworkService homeworkService
+@using UIComponents
+@using Domain.DTOs.FeedbackDTO
+@inject NavigationManager navMgr
+@inject IHandInHomeworkService HandInService
+@inject IHomeworkService HomeworkService
+@inject IFeedbackService FeedbackService
 
 
 @if (handIns == null)
@@ -18,7 +22,8 @@ else
     <div class="homework-cards">
         @foreach (var handIn in handIns)
         {
-            <div class="homework-card">
+            
+            <div class="homework-card" @onclick="() => ShowModal(handIn.StudentUsername, handIn.Answer)">
                 <div class="card-content">
                     <h4>Student: @handIn.StudentUsername</h4>
                     <p>@handIn.Answer</p>
@@ -28,16 +33,97 @@ else
     </div>
 }
 
+<Modal ShowModal="@showModal">
+    <div class="modal-content">
+        <h5>Student: @studentUsername</h5>
+        <p>Answer: @studentAnswer</p>
+     
+        <div class="mb-3">
+            <label for="gradeInput" class="form-label">Grade</label>
+            <input type="number" class="form-control" id="gradeInput" @bind="feedbackGrade" />
+        </div>
+        <div class="mb-3">
+            <label for="feedbackInput" class="form-label">Feedback</label>
+            <textarea class="form-control" id="feedbackInput" rows="3" @bind="@feedbackComment"></textarea>
+        </div>
+     
+        <button class="btn btn-primary" @onclick="SendFeedback">Send Feedback</button>
+        <button class="btn btn-secondary" @onclick="() => Proceed()">Close</button>
+        
+    </div>
+     @if (Msg is not null)
+        {
+            <div>
+                @Msg
+                </div>
+        }
+</Modal>
+
+
 @code {
     [Parameter]
     public string homeworkId { get; set; }
 
     Homework homework;
+    IEnumerable<HandInHomework> handIns;
+    HandInHomework handIn;
+    Feedback Feedback;
+    AddFeedbackDTO Dto { get; set; }
+    private bool showModal;
+    private string studentUsername;
+    private string studentAnswer;
+    private string feedbackText;
 
-    private IEnumerable<HandInHomework> handIns;
+    private int feedbackGrade { get; set; }
+    private string feedbackComment { get; set; }
     
+    private string Msg { get; set; }
+    
+    
+
     protected override async Task OnInitializedAsync()
     {
-        handIns = await handInService.GetHandInsByHomeworkIdAsync(homeworkId);
+        Msg = "";
+        handIns = await HandInService.GetHandInsByHomeworkIdAsync(homeworkId);
+    }
+    
+    
+    private void Proceed()
+    {
+        showModal = false;
+        navMgr.NavigateTo("/Homeworks/{homeworkId}");
+    }
+    
+    private void ShowModal(string username, string answer)
+    {
+        studentUsername = username;
+        studentAnswer = answer;
+        showModal = true;
+        
+        handIn = handIns.FirstOrDefault(h => h.StudentUsername == studentUsername && h.Answer == studentAnswer);
+
+    }
+    
+    private async Task SendFeedback()
+    {
+        var feedback = new Feedback()
+        {
+            Id = "",
+            Grade = feedbackGrade,
+            Comment = feedbackComment
+        };
+        
+        Dto = new AddFeedbackDTO(handIn.Id, handIn.StudentUsername, feedback);
+        try
+        {
+            await FeedbackService.AddFeedback(Dto);
+            showModal = false;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            Msg = $"Error: {ex.Message}";
+            StateHasChanged();
+        }
     }
 }

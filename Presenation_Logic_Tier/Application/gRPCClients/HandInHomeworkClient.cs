@@ -81,4 +81,44 @@ public class HandInHomeworkClient : IHandInHomeworkClient
         return await Task.FromResult(handIns);
 
     }
+
+    public async Task<HandInHomework> GetHandInByHomeworkIdAndStudentUsernameAsync(string homeworkId, string studentUsername)
+    {
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new HandInHomeworkService.HandInHomeworkServiceClient(channel);
+
+        var request = new RequestGetHandInByHomeworkIdAndStudentUsername
+        {
+            HomeworkId = homeworkId,
+            StudentUsername = studentUsername
+        };
+
+        var reply = new ResponseGetHandInHomework();
+        try
+        {
+            reply = client.getHandInByHomeworkIdAndStudentUsername(request);
+
+            if (reply?.HandInHomework != null)
+            {
+                var handIn = new HandInHomework(
+                    reply.HandInHomework.Id,
+                    reply.HandInHomework.Answer,
+                    reply.HandInHomework.StudentUsername
+                );
+
+                return await Task.FromResult(handIn);
+            }
+
+            return null;
+        }
+        catch (RpcException ex) when (ex.StatusCode == StatusCode.NotFound)
+        {
+            return null;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

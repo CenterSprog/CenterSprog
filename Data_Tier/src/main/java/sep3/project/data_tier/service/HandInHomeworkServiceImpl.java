@@ -113,4 +113,39 @@ public class HandInHomeworkServiceImpl extends HandInHomeworkServiceGrpc.HandInH
           "Error getting Hand Ins by HomeworkId: " + e.getMessage()).asRuntimeException());
     }
   }
+
+  @Override
+  public void getHandInByHomeworkIdAndStudentUsername(RequestGetHandInByHomeworkIdAndStudentUsername request, StreamObserver<ResponseGetHandInHomework> response)
+  {
+    String homeworkId = request.getHomeworkId();
+    String studentUsername = request.getStudentUsername();
+
+    try {
+      Optional<HandInHomeworkEntity> handInHomework = handInHomeworkRepository.findByHomework_IdAndUser_Username(homeworkId, studentUsername);
+
+      if (handInHomework.isPresent()) {
+        HandInHomeworkEntity entity = handInHomework.get();
+        UserEntity user = entity.getUser();
+        String savedStudentUsername = user.getUsername();
+
+        HandInHomework handInMessage = HandInHomework.newBuilder()
+            .setId(entity.getId())
+            .setAnswer(entity.getAnswer())
+            .setStudentUsername(savedStudentUsername)
+            .build();
+
+        ResponseGetHandInHomework responseGetHandInHomework = ResponseGetHandInHomework.newBuilder()
+            .setHandInHomework(handInMessage)
+            .build();
+
+        response.onNext(responseGetHandInHomework);
+        response.onCompleted();
+      } else {
+        response.onError(Status.NOT_FOUND.withDescription("Hand-in not found").asRuntimeException());
+      }
+    } catch (Exception e) {
+      response.onError(Status.INTERNAL.withDescription(
+          "Error getting Hand-in by HomeworkId and StudentUsername: " + e.getMessage()).asRuntimeException());
+    }
+  }
 }

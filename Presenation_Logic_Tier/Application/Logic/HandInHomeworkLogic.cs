@@ -27,4 +27,9 @@ public class HandInHomeworkLogic : IHandInHomeworkLogic
     {
         return await _handInHomeworkClient.GetHandInsByHomeworkIdAsync(homeworkId);
     }
+
+    public async Task<HandInHomework> GetHandInByHomeworkIdAndStudentUsernameAsync(string homeworkId, string studentUsername)
+    {
+        return await _handInHomeworkClient.GetHandInByHomeworkIdAndStudentUsernameAsync(homeworkId, studentUsername);
+    }
 }

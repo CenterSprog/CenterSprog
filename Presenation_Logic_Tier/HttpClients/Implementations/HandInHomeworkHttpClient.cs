@@ -59,4 +59,27 @@ public class HandInHomeworkHttpClient : IHandInHomeworkService
 
         return foundHandIns;
     }
+
+    public async Task<HandInHomework> GetHandInByHomeworkIdAndStudentUsernameAsync(string homeworkId, string studentUsername)
+    {
+        HttpResponseMessage response = await _client.GetAsync($"handIns/{homeworkId}/{studentUsername}");
+        var result = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Failed to get hand-in for homework ID: {homeworkId} and student username: {studentUsername}. Status code: {response.StatusCode}");
+        }
+
+        HandInHomework? handIn = JsonSerializer.Deserialize<HandInHomework>(result, new JsonSerializerOptions()
+        {
+            PropertyNameCaseInsensitive = true
+        });
+
+        if (handIn == null)
+        {
+            throw new Exception($"Failed to deserialize hand-in data for homework ID: {homeworkId} and student username: {studentUsername}.");
+        }
+
+        return handIn;
+    }
 }

@@ -66,7 +66,7 @@
                                     else
                                     {
                                         <div class="submitted-container">
-                                            <button><strong>Submitted</strong></button>
+                                            <button class="submitted-button" disabled><strong>Submitted</strong></button>
                                             <button @onclick="SeeFeedback" type="button"><strong>See feedback</strong></button>
                                         </div>
 
@@ -122,26 +122,34 @@
             Lesson lesson;
             Homework homework;
             HandInHomework handInHomework;
-            private string answer;
-            public string Msg { get; set; }
             User user;
-            public HomeworkHandInDTO Dto { get; set; }
+            HomeworkHandInDTO Dto { get; set; }
 
             private bool homeworkSubmitted = false;
-            private bool showSubmittedHomeworks = false;
+            private string answer;
+            public string Msg { get; set; }
 
             protected override async Task OnInitializedAsync()
             {
+                
                 try
                 {
                     lesson = await lessonService.GetByIdAsync(lessonId);
                     homework = lesson.Homework;
-                    handInHomework = new HandInHomework
+                    
+                        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                        var user = authState.User;
+                        var username = user.Identity?.Name;
+                    try
                     {
-                        Id = "",
-                        Answer = answer,
-                        StudentUsername = ""
-                    };
+                        handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync(homework.Id, username);
+
+                        homeworkSubmitted = handInHomework != null;
+                    }
+                    catch (Exception e)
+                    {
+                        homeworkSubmitted = false;
+                    }
                     
                 }
                 catch (Exception e)
@@ -155,6 +163,13 @@
             {
                 try
                 {
+                    handInHomework = new HandInHomework
+                    {
+                        Id = "",
+                        Answer = answer,
+                        StudentUsername = ""
+                    };
+                    
                     handInHomework.Answer = answer;
                     
                     var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -174,10 +189,6 @@
                 }
             }
 
-            private void SeeFeedback()
-            {
-            // see feedback logic 
-            }
 
             private void ViewSubmittedHomeworks()
             {
@@ -185,6 +196,12 @@
                 Console.WriteLine($"Getting submitted homeworks for the homework with id: {homeworkId}");
                 navMgr.NavigateTo($"/Homeworks/{homeworkId}");
                 Console.WriteLine($"Navigating to the submitted homeworks page with the id: {homeworkId}");
+            }
+            
+            
+            private void SeeFeedback()
+            {
+            // see feedback logic 
             }
         }
 
