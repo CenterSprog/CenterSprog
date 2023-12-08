@@ -53,7 +53,7 @@ else
 <!--update lesson  button-->    
 
 <button @onclick:stopPropagation="true" @onclick:preventDefault="true"  
-        @onclick="@(() => navMgr.NavigateTo($"/UpdateLesson/{ClassId}"))"
+        @onclick="@(() => navMgr.NavigateTo($"/UpdateLesson/{ClassId}/{lesson.Id}"))"
         type="button" class="btn btn-success">Update</button>
 
                                    </AuthorizeView>

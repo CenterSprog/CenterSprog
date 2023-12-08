@@ -1,4 +1,4 @@
-@page "/UpdateLesson/{ClassId}"
+@page "/UpdateLesson/{ClassId}/{LessonId}"
 @using Microsoft.AspNetCore.Components
 @using Domain.DTOs.LessonDTO
 @using Domain.Models
@@ -67,7 +67,7 @@
     [Parameter]
     public string ClassId { get; set; }
    [Parameter]
-   public string lessonId { get; set; }
+   public string LessonId { get; set; }
      
    
    
@@ -79,10 +79,8 @@
     
     {
         Date = DateTime.Now;
-        lessonDto = new LessonUpdateDTO(ClassId);
+        lessonDto = new LessonUpdateDTO(LessonId);
         base.OnInitialized();
-        
-       
     }
 
    /* protected override async Task OnInitializedAsync()
