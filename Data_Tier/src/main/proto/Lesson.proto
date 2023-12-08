@@ -23,6 +23,11 @@ message LessonOverview{
   string description = 4;
 }
 
+message LessonAttended{
+  int64 date = 1;
+  string topic = 2;
+}
+
 message RequestAddLesson{
   string classId = 1;
   LessonData lesson = 2;
@@ -42,6 +47,12 @@ message RequestGetAttendance{
 }
 message ResponseGetAttendance{
   repeated UserAttendee attendees = 1;
+}
+message RequestGetUserAttendance{
+  string username = 1;
+}
+message ResponseGetUserAttendance{
+  repeated LessonAttended attendedLessons = 1;
 }
 message RequestGetLessonsByClassId{
   string classId = 1;
