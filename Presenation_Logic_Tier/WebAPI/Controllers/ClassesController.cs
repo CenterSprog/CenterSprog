@@ -122,7 +122,7 @@ public class ClassesController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed updaing class controller : {e.Message} {e.StackTrace}");
+            Console.WriteLine($"Failed updating class controller : {e.Message} {e.StackTrace}");
             return StatusCode(500,e.Message + e.StackTrace);
         }
     }
