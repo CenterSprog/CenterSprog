@@ -1,4 +1,4 @@
-@page "/CreateLesson"
+@page "/CreateLesson/{ClassId}"
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.LessonDTO
@@ -10,7 +10,15 @@
 <div  xmlns="http://www.w3.org/1999/html" >
     
         <h3>Create Lesson</h3>
-  <br/>
+    <br/>
+    
+
+    <div>
+        
+    <h5 class="text-sm-center">If you are a teacher create lesson here  @ClassId</h5></div>
+   
+        
+    
   <div class="form-floating mb-3">
       <input type="text" class="form-control" id="floatingInput" @bind="lessonDto.Topic">
       <label for="floatingInput">Topic:</label>
@@ -59,25 +67,14 @@
     private string Description = "";
     
     [Parameter]
-    public string classId { get; set; }
-    //[Parameter]
-    //public long LessonDate { get; set; }*/
+    public string ClassId { get; set; }
     
-   
-    
-  /*
-    protected override void OnInitialized()
-    {
-        Dto = new HomeworkCreationDTO(LessonId);
-        Date = DateTime.Now;
-        base.OnInitialized();
-    }*/
     
     protected override void OnInitialized()
     {
         
         Date = DateTime.Now;
-        lessonDto = new LessonCreationDTO(classId);
+        lessonDto = new LessonCreationDTO(ClassId);
         base.OnInitialized();
     }
 
@@ -88,10 +85,11 @@
         {
             lessonDto.Date = Date.ToFileTimeUtc();
             
-            ValidateLesson();
-            await lessonService.CreateAsync(lessonDto);
-            //var createdLesson = await lessonService.CreateAsync(lessonDto);
-            //navMgr.NavigateTo($"/lessons/{createdLesson.Id}");
+           // ValidateLesson();
+            //await lessonService.CreateAsync(lessonDto);
+          
+            var createdLesson = await lessonService.CreateAsync(lessonDto);
+            navMgr.NavigateTo($"/lessons/{createdLesson.Id}");
             msg = "Lesson created successfully!";
             //showModal = true;
         }
@@ -105,8 +103,8 @@
     
    
  
-    private void ValidateLesson()
-    {
+   // private void ValidateLesson()
+   // {
        /* if (string.IsNullOrEmpty(lessonTopic))
         {
             msg = "Topic cannot be empty!";
@@ -118,25 +116,17 @@
             return;
         } DOESNT WORK*/
       
-        if (lessonDto.Topic == "")
+       /* if (lessonDto.Topic == "")
             throw new Exception("Topic is required");
         if(lessonDto.Description == "")
             throw new Exception("Description is required");
        // if (Date == "")
           //  throw new Exception("The date is required"); Error
-    }
+    }*/
     /*
     private void Proceed()
     {
         //showModal = false;
-        navMgr.NavigateTo("/ViewLessons");
+       navMgr.NavigateTo("/ViewLessons");
     }*/
 }
-
-
-
- 
-   
-   
-
-    

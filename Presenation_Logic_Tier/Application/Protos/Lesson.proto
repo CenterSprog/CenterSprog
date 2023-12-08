@@ -83,6 +83,21 @@ message ResponseDeleteLesson {
   Status status = 1;
   string message = 2;
 }
+
+message RequestUpdateLesson{
+  string id = 1;
+  //string classId = 2;
+  LessonData lesson = 3;
+}
+message ResponseUpdateLesson {
+  enum Status {
+    OK = 0;
+    FAILED = 1;
+  }
+  Status status = 1;
+  string message = 2;
+  
+}
 service LessonService{
   rpc addLesson(RequestAddLesson) returns (ResponseAddLesson);
   rpc markAttendance(RequestMarkAttendance) returns (ResponseMarkAttendance);
@@ -90,4 +105,5 @@ service LessonService{
   rpc getLessonById(RequestGetLessonById) returns (ResponseGetLessonById);
   rpc getLessonsByClassId(RequestGetLessonsByClassId) returns (ResponseGetLessonsByClassId);
   rpc deleteLesson(RequestDeleteLesson) returns (ResponseDeleteLesson);
+  rpc updateLesson(RequestUpdateLesson) returns (ResponseUpdateLesson);
 }

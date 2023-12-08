@@ -66,7 +66,7 @@ public class LessonsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody] LessonCreationDTO lessonCreationDto)
+    public async Task<ActionResult<Lesson>> CreateAsync([FromBody] LessonCreationDTO lessonCreationDto)
     {
         try
         {
@@ -80,9 +80,6 @@ public class LessonsController : ControllerBase
             Console.WriteLine($"Failed create lesson controller : {e.Message}");
             return StatusCode(500, e.Message);
         }
-
-
-
     }
 
     [HttpDelete("{lessonId}")]
@@ -104,33 +101,19 @@ public class LessonsController : ControllerBase
 
             return StatusCode(500, "An error occurred while processing the request.");
         }
-
-        /*
-
-            [HttpPut("lessons", Name = "UpdateAsync")]//{lessonId}
-            public async Task<ActionResult> UpdateAsync( [FromBody] LessonUpdateDTO lessonUpdateDto)
-            {
-                try
-                {
-
-                    if (!ModelState.IsValid)
-                    {
-                        return BadRequest(ModelState);
-                    }
-
-
-                    await _lessonLogic.UpdateAsync(lessonUpdateDto);
-
-
-                    return NoContent();
-                }
-                catch (Exception ex)
-                {
-
-                    return StatusCode(500, "An error occurred while processing the request.");
-                }
-            }
-        */
-
+    }
+    [HttpPatch]
+    public async Task<ActionResult> UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto)
+    {
+        try
+        {
+            await _lessonLogic.UpdateLessonAsync(lessonUpdateDto);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
     }
 }

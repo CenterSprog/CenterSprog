@@ -6,4 +6,5 @@ import sep3.project.data_tier.entity.LessonEntity;
 
 @Repository
 public interface ILessonRepository extends JpaRepository<LessonEntity, String> {
+  void deleteById(String lessonId);
 }

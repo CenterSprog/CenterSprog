@@ -7,12 +7,13 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+import sep3.project.data_tier.entity.ClassEntity;
 import sep3.project.data_tier.entity.LessonEntity;
 import sep3.project.data_tier.entity.UserEntity;
 import sep3.project.data_tier.mappers.HomeworkMapper;
 import sep3.project.data_tier.mappers.LessonMapper;
 import sep3.project.data_tier.repository.IClassRepository;
-import sep3.project.data_tier.repository.IHomeworkRepository;
 import sep3.project.data_tier.repository.ILessonRepository;
 import sep3.project.data_tier.repository.IUserRepository;
 import sep3.project.protobuf.*;
@@ -29,16 +30,17 @@ public class LessonServiceImpl
 
   private ILessonRepository lessonRepository;
   private IUserRepository userRepository;
+  private IClassRepository classRepository;
 
   private HomeworkMapper homeworkMapper = HomeworkMapper.INSTANCE;
   private LessonMapper lessonMapper = LessonMapper.INSTANCE;
 
   @Autowired
-  public LessonServiceImpl(ILessonRepository lessonRepository,
-      IUserRepository userRepository) {
-
-    this.lessonRepository = lessonRepository;
+  public LessonServiceImpl(IUserRepository userRepository, ILessonRepository lessonRepository,
+      IClassRepository classRepository) {
     this.userRepository = userRepository;
+    this.lessonRepository = lessonRepository;
+    this.classRepository = classRepository;
   }
 
   @Override
@@ -166,28 +168,81 @@ public class LessonServiceImpl
     }
   }
 
+  @Override
   public void addLesson(RequestAddLesson request, StreamObserver<ResponseAddLesson> response) {
 
-    String topic = request.getLesson().getTopic();
-    long date = request.getLesson().getDate();
-    String description = request.getLesson().getDescription();
+    String classId = request.getClassId();
+    LessonEntity lesson = new LessonEntity(
+        request.getLesson().getDate(),
+        request.getLesson().getTopic(),
+        request.getLesson().getDescription()
+
+    );
 
     try {
 
-      LessonEntity createdLesson = new LessonEntity(date, topic, description);
-      lessonRepository.save(createdLesson);
+      Optional<ClassEntity> existingClass = classRepository.findById(classId);
+      if (existingClass.isEmpty())
+        throw new IllegalStateException("Class with given id does not exist.");
 
-      response.onNext(
-          ResponseAddLesson.newBuilder()
-              .setLesson(
-                  lessonMapper.toProto(createdLesson))
-              .build());
+      LessonEntity savedLesson = lessonRepository.save(lesson);
+      existingClass.get().addLesson(savedLesson);
+      classRepository.save(existingClass.get());
 
-      response.onCompleted();
+      try {
+
+        response.onNext(
+            ResponseAddLesson.newBuilder()
+                .setLesson(
+                    LessonData.newBuilder()
+                        .setId(savedLesson.getId())
+                        .setDate(savedLesson.getDate())
+                        .setDescription(savedLesson.getDescription())
+                        .setTopic(savedLesson.getTopic()))
+                .build());
+
+        response.onCompleted();
+
+        response.onCompleted();
+      } catch (Exception e) {
+        System.out.println("HERE: " + e.getMessage());
+      }
 
     } catch (Exception e) {
       response.onError(
-          Status.INTERNAL.withDescription("Error creating class : " + e.getMessage()).asRuntimeException());
+          new Throwable(e.getMessage()));
+    }
+  }
+
+  public void updateLesson(RequestUpdateLesson request, StreamObserver<ResponseUpdateLesson> response) {
+    String lessonId = request.getId();
+
+    // Retrieve the existing lesson from the repository
+    Optional<LessonEntity> currentLesson = lessonRepository.findById(lessonId);
+    if (currentLesson.isEmpty()) {
+      throw new IllegalStateException("No existing lesson with ID of: " + lessonId);
+    }
+
+    LessonEntity currentLessonUpdated = currentLesson.get();
+
+    // Update the existing lesson's attributes based on the request
+
+    currentLessonUpdated.setDate(request.getLesson().getDate());
+    currentLessonUpdated.setTopic(request.getLesson().getTopic());
+    currentLessonUpdated.setDescription(request.getLesson().getDescription());
+
+    // Save the updated lesson back to the repository
+    lessonRepository.save(currentLessonUpdated);
+
+    try {
+      response.onNext(
+          ResponseUpdateLesson.newBuilder()
+              .setStatus(ResponseUpdateLesson.Status.OK)
+              .setMessage("Lesson deleted successfully")
+              .build());
+      response.onCompleted();
+    } catch (Exception e) {
+      System.out.println("Error updating lesson: " + e.getMessage());
     }
   }
 }

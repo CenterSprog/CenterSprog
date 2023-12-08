@@ -36,6 +36,13 @@ public class LessonEntity {
 		this.topic = topic;
 		this.description = description;
 	}
+	public LessonEntity(String id,long date, String topic, String description) {
+		this.id = id;
+		this.date = date;
+		this.topic = topic;
+		this.description = description;
+	}
+
 
 	public void addHomework(HomeworkEntity homework) {
 

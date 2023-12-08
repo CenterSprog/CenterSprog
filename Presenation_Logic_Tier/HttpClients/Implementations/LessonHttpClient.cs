@@ -80,18 +80,15 @@ public class LessonHttpClient : ILessonService
 
         return createdLesson;
     }
-    /*
-         public async Task UpdateAsync(LessonUpdateDTO updateDto)
-         {
+    public async Task UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto)
+    {
 
-
-
-                 // Make an asynchronous HTTP PUT request
-                 HttpResponseMessage response = await client.PutAsync($"lessons/{updateDto.Id}", content);
-
-
-
-         }*/
+        HttpResponseMessage response = await client.PatchAsJsonAsync("/lessons", lessonUpdateDto);
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception("Failed to update lesson ");
+        }
+    }
 
     public async Task DeleteAsync(string lessonId)
     {

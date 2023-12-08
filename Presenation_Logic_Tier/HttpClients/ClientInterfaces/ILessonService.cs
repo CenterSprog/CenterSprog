@@ -9,6 +9,6 @@ public interface ILessonService
     Task<string> MarkAttendanceAsync(MarkAttendanceDTO markAttendanceDto);
     Task<IEnumerable<User>> GetAttendanceAsync(string id);
     Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto);
-    //Task UpdateAsync(LessonUpdateDTO updateDto);
+    Task UpdateLessonAsync(LessonUpdateDTO updateDto);
     Task DeleteAsync(string lessonId);
 }

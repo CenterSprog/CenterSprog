@@ -4,25 +4,28 @@ public class LessonCreationDTO
     
     
     public long Date{ get; set; }
-    public string classId { get; }
+    public string ClassId { get; set; }
    
     public string Topic{ get; set; }
     
     public string Description{ get; set; }
+    
 
-    public LessonCreationDTO(string classId)
-    {
-        this.classId = classId;
-    }
+   
 
     public LessonCreationDTO( long date, string topic, 
-        string description)
+        string description, string classId)
     {
       
         Date = date;
+        ClassId = classId;
         Topic = topic;
         Description = description;
     }
+    public LessonCreationDTO(string classId)
+         {
+             ClassId = classId;
+         }
 
     public LessonCreationDTO()
     {

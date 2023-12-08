@@ -46,10 +46,15 @@ else
 
                       <AuthorizeView Policy="MustBeTeacher">
 
+<!--delete lesson button-->
+<button @onclick:stopPropagation="true" @onclick:preventDefault="true" 
+        @onclick="@(()=>DeleteLessonById(lesson.Id))" type="button" class="btn btn-danger">Delete</button>
 
-                    <button @onclick:stopPropagation="true" @onclick:preventDefault="true" 
-                            @onclick="@(()=>DeleteLessonById(lesson.Id))" type="button" class="btn btn-danger">Delete</button>
-                  
+<!--update lesson  button-->    
+
+<button @onclick:stopPropagation="true" @onclick:preventDefault="true"  
+        @onclick="@(() => navMgr.NavigateTo($"/UpdateLesson/{ClassId}"))"
+        type="button" class="btn btn-success">Update</button>
 
                                    </AuthorizeView>
                 </div>
@@ -94,7 +99,7 @@ else
     
     private void AddLesson()
     {
-        navMgr.NavigateTo("/CreateLesson");
+        navMgr.NavigateTo($"/CreateLesson/{ClassId}");
     }
 
     
@@ -116,20 +121,7 @@ else
         }
         
     }
-    /*
-    private async Task UpdateAsync()
-    {
-        try
-        {
-            await lessonService.UpdateAsync(updatedto);
-            navMgr.NavigateTo("/ViewUpdateLesson");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-           
-        }
-    }*/
+  
     
 
 }

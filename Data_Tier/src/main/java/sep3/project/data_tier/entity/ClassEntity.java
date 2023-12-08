@@ -23,19 +23,12 @@ public class ClassEntity {
 	@Column
 	private String room;
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-			name = "user_class",
-			joinColumns = @JoinColumn(name = "class_id"),
-			inverseJoinColumns = @JoinColumn(name="username")
-	)
+	@JoinTable(name = "user_class", joinColumns = @JoinColumn(name = "class_id"), inverseJoinColumns = @JoinColumn(name = "username"))
 	private Set<UserEntity> users = new HashSet<>();
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-			name = "class_lesson",
-			joinColumns = @JoinColumn(name = "class_id"),
-			inverseJoinColumns = @JoinColumn(name = "lesson_id")
-	)
+	@JoinTable(name = "class_lesson", joinColumns = @JoinColumn(name = "class_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
+
 	private Set<LessonEntity> lessons = new HashSet<>();
 
 	public ClassEntity() {
@@ -45,20 +38,30 @@ public class ClassEntity {
 		this.title = title;
 		this.room = room;
 	}
-	public void addUser(UserEntity user){
+
+	public void addUser(UserEntity user) {
 		users.add(user);
 	}
-	public void addLesson(LessonEntity lesson){lessons.add(lesson);}
 
-	public void removeLesson(String id){lessons.removeIf(lesson -> lesson.getId().equals(id));}
-	public void removeUser(String username){users.removeIf(user -> user.getUsername().equals(username));}
+	public void addLesson(LessonEntity lesson) {
+		lessons.add(lesson);
+	}
 
-	public void setUsers(ArrayList<UserEntity> users){
+	public void removeLesson(String id) {
+		lessons.removeIf(lesson -> lesson.getId().equals(id));
+	}
+
+	public void removeUser(String username) {
+		users.removeIf(user -> user.getUsername().equals(username));
+	}
+
+	public void setUsers(ArrayList<UserEntity> users) {
 		this.users = new HashSet<>();
-		for(UserEntity user : users){
+		for (UserEntity user : users) {
 			this.users.add(user);
 		}
 	}
+
 	public String getId() {
 		return id;
 	}
@@ -92,11 +95,10 @@ public class ClassEntity {
 				'}';
 	}
 
-
-
 	public Set<UserEntity> getUsers() {
 		return users;
 	}
+
 	public Set<LessonEntity> getLessons() {
 		return lessons;
 	}

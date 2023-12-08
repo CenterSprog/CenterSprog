@@ -97,12 +97,14 @@ public class LessonClient : ILessonClient
         var request = new RequestAddLesson
 
         {
-            ClassId = lessonCreationDto.classId,
+            ClassId = lessonCreationDto.ClassId,
             Lesson = new LessonData
             {
                 Topic = lessonCreationDto.Topic,
                 Date = lessonCreationDto.Date,
-                Description = lessonCreationDto.Description
+                Description = lessonCreationDto.Description,
+                Homework = null,
+                Id = "",
             }
         };
 
@@ -113,22 +115,20 @@ public class LessonClient : ILessonClient
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            Console.WriteLine("HERE: " + e);
         }
 
         Lesson createdLesson =
             new Lesson(reply.Lesson.Id, reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic);
+
         return await Task.FromResult(createdLesson);
     }
-
-
-
 
     public async Task DeleteAsync(string lessonId)
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new LessonService.LessonServiceClient(channel);
-        //create methods in proto file create response methods and create body 
+
 
         var request = new RequestDeleteLesson
         {
@@ -148,7 +148,6 @@ public class LessonClient : ILessonClient
         }
         catch (RpcException e)
         {
-
             Console.WriteLine($" gRPC call failed: {e.Status}");
             throw;
         }
@@ -156,11 +155,37 @@ public class LessonClient : ILessonClient
     }
 
 
-    /*
-        public async Task UpdateAsync(Lesson updateDto)
+    public async Task UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto)
+    {
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new LessonService.LessonServiceClient(channel);
+
+        var request = new RequestUpdateLesson()
+
         {
-            using var channel = GrpcChannel.ForAddress("http://localhost:1111");
-            var client = new LessonService.LessonServiceClient(channel);
+            Id = lessonUpdateDto.Id,
+            Lesson = new LessonData
+            {
+                Topic = lessonUpdateDto.Topic,
+                Date = lessonUpdateDto.Date,
+                Description = lessonUpdateDto.Description,
+                Homework = null,
+                Id = ""
+            }
+        };
+
+        var reply = new ResponseUpdateLesson();
+        try
+        {
+            reply = await client.updateLessonAsync(request);
         }
-        */
+        catch (Exception e)
+        {
+            Console.WriteLine("HERE: " + e);
+        }
+
+        var createdLesson =
+            new Lesson(lessonUpdateDto.Id, lessonUpdateDto.Date, lessonUpdateDto.Description, lessonUpdateDto.Topic);
+
+    }
 }
