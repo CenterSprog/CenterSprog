@@ -4,8 +4,12 @@
             <h2 class="fst-italic">Lesson Overview</h2>
         </div>
 @code {
+    [Parameter]
+    public string ClassId { get; set; }
+    [Parameter]
+    public string LessonId { get; set; }
     private void RedirectToPostDetails()
     {
-        navMgr.NavigateTo($"/Lessons/52358eff-87c8-4a9a-ab21-de8fc91096d8");
+        navMgr.NavigateTo($"{ClassId}/Lessons/{LessonId}");
     }
 }

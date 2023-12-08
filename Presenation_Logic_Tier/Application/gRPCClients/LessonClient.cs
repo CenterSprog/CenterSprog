@@ -23,45 +23,33 @@ public class LessonClient : ILessonClient
         };
 
         var reply = new ResponseGetLessonById();
-        try
-        {
-            reply = client.getLessonById(request);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
 
-        Lesson foundLesson;
-        if (reply.Lesson.Homework!=null)
-        {
-            foundLesson = new(reply.Lesson.Id,reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic,
-                new Homework(reply.Lesson.Homework.Id, reply.Lesson.Homework.Deadline,
-                    reply.Lesson.Homework.Title, reply.Lesson.Homework.Description));
-        }   
-        else
-        {
-            foundLesson = new(reply.Lesson.Id, reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic);
-        }
+        reply = await client.getLessonByIdAsync(request);
+        
+        Lesson foundLesson = new(reply.Lesson.Id,reply.Lesson.Date, reply.Lesson.Description, reply.Lesson.Topic);
+
+        if (reply.Lesson.Homework != null)
+            foundLesson.Homework = new Homework(reply.Lesson.Homework.Id, reply.Lesson.Homework.Deadline,
+                reply.Lesson.Homework.Title, reply.Lesson.Homework.Description);
 
         return await Task.FromResult(foundLesson);
     }
-    
-    public Task<int> AddAttendance(AddAttendanceDTO addAttendanceDto)
+
+    public async Task<int> MarkAttendanceAsync(MarkAttendanceDTO markAttendanceDto)
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new LessonService.LessonServiceClient(channel);
         //create methods in proto file create response methods and create body 
 
-        var request = new RequestAddAttendance()
+        var request = new RequestMarkAttendance()
         {
-            LessonId = addAttendanceDto.LessonId,
-            Usernames = {addAttendanceDto.StudentUsernames}
+            LessonId = markAttendanceDto.LessonId,
+            Usernames = {markAttendanceDto.StudentUsernames}
         };
-        var reply = new ResponseAddAttendance();
+        var reply = new ResponseMarkAttendance();
         try
         {
-            reply = client.addAttendance(request);
+            reply = await client.markAttendanceAsync(request);
         } catch (RpcException e)
         {
 
@@ -69,7 +57,36 @@ public class LessonClient : ILessonClient
             throw;
         }
 
-        return Task.FromResult(reply.AmountOfParticipants);
+        return await Task.FromResult(reply.AmountOfParticipants);
+    }
+
+    public async Task<IEnumerable<User>> GetAttendanceAsync(string id)
+    {
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new LessonService.LessonServiceClient(channel);
+
+        var request = new RequestGetAttendance()
+        {
+            LessonId = id
+        };
+
+        var reply = new ResponseGetAttendance();
+
+        reply = await client.getAttendanceAsync(request);
+        
+        var attendees = new List<User>();
+        
+        foreach (var attendee in reply.Attendees)
+        {
+            attendees.Add(new User
+            {
+                FirstName = attendee.FirstName,
+                LastName = attendee.LastName,
+                Username = attendee.Username
+            });
+        }
+
+        return await Task.FromResult(attendees);
     }
 
 

@@ -54,6 +54,42 @@ public class ClassesController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpGet("{id}/attendees", Name = "GetClassAttendeesAsync")]
+    public async Task<ActionResult<IEnumerable<User>>> GetAllAttendeesAsync([FromRoute] string id)
+    {
+        try
+        {   
+            IEnumerable<User> attendees = await _classLogic.GetAllAttendeesAsync(id);
+
+            if (attendees == null || !attendees.Any())
+                return NotFound();
+
+            return Ok(attendees);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpGet("{id}/participants", Name = "GetAllParticipantsAsync")]
+    public async Task<ActionResult<IEnumerable<User>>> GetAllParticipantsAsync([FromRoute] string id)
+    {
+        try
+        {   
+            IEnumerable<User> participants = await _classLogic.GetAllParticipantsAsync(id);
+
+            if (participants == null || !participants.Any())
+                return NotFound();
+
+            return Ok(participants);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
 
     [HttpPost]
     public async Task<ActionResult<ClassEntity>> CreateAsync(ClassCreationDTO dto)
@@ -86,7 +122,7 @@ public class ClassesController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed updaing class controller : {e.Message} {e.StackTrace}");
+            Console.WriteLine($"Failed updating class controller : {e.Message} {e.StackTrace}");
             return StatusCode(500,e.Message + e.StackTrace);
         }
     }

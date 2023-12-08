@@ -6,8 +6,9 @@ namespace Application.LogicInterfaces;
 public interface ILessonLogic
 {
     Task<Lesson> GetByIdAsync(string id);
-    Task<int> AddAttendance(AddAttendanceDTO addAttendanceDto);
-    
+    Task<int> MarkAttendanceAsync(MarkAttendanceDTO markAttendanceDto);
+    Task<IEnumerable<User>> GetAttendanceAsync(string id);
+
    // Task<Lesson> CreateAsync( LessonCreationDTO lessonCreationDto);
     
     

@@ -20,12 +20,14 @@ public class LessonLogic : ILessonLogic
         return await _lessonClient.GetByIdAsync(id);
     }
 
-    public async Task<int> AddAttendance(AddAttendanceDTO addAttendanceDto)
+    public async Task<int> MarkAttendanceAsync(MarkAttendanceDTO markAttendanceDto)
     {
-        if (!addAttendanceDto.StudentUsernames.Any())
-            throw new ArgumentException("At least one participant has to be selected.");
-        
-        return await _lessonClient.AddAttendance(addAttendanceDto);
+        return await _lessonClient.MarkAttendanceAsync(markAttendanceDto);
+    }
+
+    public async Task<IEnumerable<User>> GetAttendanceAsync(string id)
+    {
+        return await _lessonClient.GetAttendanceAsync(id);
     }
     /*
     public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)

@@ -15,16 +15,16 @@ else
     <div class="class-container">
         <div class="class-card">
             <h2>@selectedClass.Title @selectedClass.Room</h2>
-            <button type="button" class="btn btn-primary fw-bold" @onclick="@SeeParticipants">Participants <span class="oi oi-people"></span></button>
+            <ParticipantsComponent ClassId="@ClassId"/>
         </div>
     </div>
 
     <div class="lessons-container">
-    <AuthorizeView Policy="MustBeTeacher">
-        <div class="add-icon-container d-flex align-items-center justify-content-center w-100" @onclick="AddLesson">
-            <img src="/add.png" alt="Add Icon" style="width: 30px;"/>
-        </div>
-    </AuthorizeView>
+        <AuthorizeView Policy="MustBeTeacher">
+            <div class="add-icon-container d-flex align-items-center justify-content-center w-100" @onclick="AddLesson">
+                <img src="/add.png" alt="Add Icon" style="width: 30px;"/>
+            </div>
+        </AuthorizeView>
         @if (selectedClass.Lessons == null)
         {
             <span>Loading lessons...</span>
@@ -35,7 +35,7 @@ else
         }
         else
         {
-            @foreach (Lesson lesson in selectedClass.Lessons)
+            @foreach (Lesson lesson in selectedClass.Lessons.OrderByDescending(l => l.Date))
             {
                 Console.WriteLine($"Lesson ID: {lesson.Id}");
                 <div class="lesson-card">
@@ -55,40 +55,6 @@ else
             }
         }
     </div>
-
-    <Modal ShowModal="showModal">
-        @if (selectedClass.Participants == null)
-        {
-            <span>Loading participants...</span>
-        }
-        else if (!selectedClass.Participants.Any())
-        {
-            <p>No participants assigned for this class</p>
-        }
-        else
-        {
-            <div class="d-flex flex-column w-100">
-                @foreach (User user in selectedClass.Participants.OrderByDescending(u=>u.Role))
-                {
-                    <div class="lesson-card mx-0 my-2">
-                        <div>
-                            <h5>
-                                @if (user.Role.Equals("teacher"))
-                                {
-                                    <span class="oi oi-text me-2"></span>
-                                }
-                                else
-                                {
-                                    <span class="oi oi-person me-2"></span>
-                                }
-                                @user.FirstName @user.LastName | @user.Email
-                            </h5>
-                        </div>
-                    </div>
-                }
-            </div>
-        }
-    </Modal>
 }
 
 @code {
@@ -99,8 +65,6 @@ else
 
     private readonly LessonUpdateDTO updatedto = null!;
     private ClassEntity selectedClass;
-    private bool showModal;
-
 
 
     protected override async Task OnInitializedAsync()
@@ -114,17 +78,12 @@ else
             Console.WriteLine(e);
         }
     }
-    
-    private void SeeParticipants()
-    {
-        showModal = true;
-    }
-    
+
     private void ViewLesson(Lesson lesson)
     {
         var lessonId = lesson.Id;
         Console.WriteLine($"Getting lesson overview for the lesson with id: {lessonId}");
-        navMgr.NavigateTo($"/Lessons/{lessonId}");
+        navMgr.NavigateTo($"{ClassId}/Lessons/{lessonId}");
         Console.WriteLine($"Navigating to the lesson overview page with the id: {lessonId}");
     }
 
@@ -165,4 +124,3 @@ else
     }
 
 }
-

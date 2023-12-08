@@ -32,18 +32,35 @@ public class LessonsController : ControllerBase
         }
     }
 
-    [HttpPost("{id}/Attendance", Name = "AddAttendanceAsync")]
-    public async Task<ActionResult<IEnumerable<Lesson>>> GetLessonsByClassIdAsync([FromRoute] string id, List<String> studentUsernames)
+    [HttpPost("{id}/attendance", Name = "MarkAttendanceAsync")]
+    public async Task<ActionResult<int>> MarkAttendanceAsync([FromRoute] string id, List<String> studentUsernames)
     {
         try
         {
-            AddAttendanceDTO addAttendanceDto = new(id, studentUsernames);
-            int amountOfParticipants = await _lessonLogic.AddAttendance(addAttendanceDto);
+            MarkAttendanceDTO markAttendanceDto = new(id, studentUsernames);
+            int amountOfParticipants = await _lessonLogic.MarkAttendanceAsync(markAttendanceDto);
             return Ok(amountOfParticipants.ToString());
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    [HttpGet("{id}/attendance", Name = "GetAttendanceAsync")]
+    public async Task<ActionResult<IEnumerable<User>>> GetAttendanceAsync([FromRoute] string id)
+    {
+        try
+        {   
+            IEnumerable<User> attendees = await _lessonLogic.GetAttendanceAsync(id);
+
+            if (attendees == null)
+                return NotFound();
+
+            return Ok(attendees);
+        }
+        catch (Exception e)
+        {
             return StatusCode(500, e.Message);
         }
     }

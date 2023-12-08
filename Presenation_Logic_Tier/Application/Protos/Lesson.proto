@@ -1,6 +1,7 @@
 syntax = "proto3";
 import "google/protobuf/empty.proto";
 import "Protos/Homework.proto";
+import "Protos/User.proto";
 
 option csharp_namespace = "gRPCClient";
 option java_multiple_files = true;
@@ -13,6 +14,7 @@ message LessonData{
   string topic = 3;
   string description = 4;
   optional Homework homework = 5;
+  repeated UserAttendee attendees = 6;
 }
 
 message LessonOverview{
@@ -28,18 +30,18 @@ message RequestAddLesson{
 message ResponseAddLesson{
   LessonData lesson = 1;
 }
-message RequestAddAttendance{
+message RequestMarkAttendance{
   string lessonId = 1;
   repeated string usernames = 2;
 }
-message ResponseAddAttendance{
+message ResponseMarkAttendance{
   int32 amountOfParticipants = 1;
 }
 message RequestGetAttendance{
   string lessonId = 1;
 }
 message ResponseGetAttendance{
-  repeated string usernames = 1;
+  repeated UserAttendee attendees = 1;
 }
 message RequestGetLessonsByClassId{
   string classId = 1;
@@ -58,16 +60,12 @@ message RequestGetLessonExtendedByHomeworkHandInFeedback{
   string username = 2;
 }
 
-
-
 message RequestDeleteLesson{
   string lessonId = 1;
 }
 message ResponseDeleteLesson{
   LessonData lesson = 1;
 }
-
-
 
 //message ResponseGetLessonExtendedByHomeworkHandInFeedback{
 //  Lesson lesson = 1;
@@ -76,7 +74,7 @@ message ResponseDeleteLesson{
 //}
 service LessonService{
   rpc addLesson(RequestAddLesson) returns (ResponseAddLesson);
-  rpc addAttendance(RequestAddAttendance) returns (ResponseAddAttendance);
+  rpc markAttendance(RequestMarkAttendance) returns (ResponseMarkAttendance);
   rpc getAttendance(RequestGetAttendance) returns (ResponseGetAttendance);
   rpc getLessonById(RequestGetLessonById) returns (ResponseGetLessonById);
   rpc getLessonsByClassId(RequestGetLessonsByClassId) returns (ResponseGetLessonsByClassId);

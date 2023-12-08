@@ -1,8 +1,10 @@
-﻿@page "/Lessons/{lessonId}"  
+﻿@page "/{classId}/Lessons/{lessonId}"  
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.HomeworkDTO
+@using Domain.DTOs.LessonDTO
 @inject ILessonService lessonService
+@inject IClassService classService
 @inject IHandInHomeworkService HandInHomeworkService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
@@ -23,6 +25,14 @@
                     <div class="lesson-description">
                         <p>@lesson.Description</p>
                     </div>
+                    <AuthorizeView Policy="MustBeTeacher">
+                        <Authorized Context="teacherAuthorized">
+                            @if (attendees != null)
+                            {
+                                <MarkAttendanceComponent Attendees="attendees.ToList()" LessonId="@lessonId"/>
+                            }
+                        </Authorized>
+                    </AuthorizeView>
                 </div>
             </div>
 
@@ -40,22 +50,29 @@
                         </div>
                         <div class="homework-description">
                             <p>@lesson.Homework.Description</p>
-                            <p><strong>Deadline:</strong> @lesson.Homework.Deadline </p>
+                            <p>
+                                <strong>Deadline:</strong> @lesson.Homework.Deadline
+                            </p>
                         </div>
                         <div class="input-container">
 
                             @if (!homeworkSubmitted)
                             {
                                 <input @bind="answer" type="text" placeholder="Paste your answer here"/>
-                                <button @onclick="HandInHomework" type="button"><strong>Hand in</strong></button>
+                                <button @onclick="HandInHomework" type="button">
+                                    <strong>Hand in</strong>
+                                </button>
                             }
                             else
                             {
                                 <div class="submitted-container">
-                                    <button><strong>Submitted</strong></button>
-                                    <button @onclick="SeeFeedback" type="button"><strong>See feedback</strong></button>
+                                    <button>
+                                        <strong>Submitted</strong>
+                                    </button>
+                                    <button @onclick="SeeFeedback" type="button">
+                                        <strong>See feedback</strong>
+                                    </button>
                                 </div>
-
                             }
                         </div>
                     </div>
@@ -70,7 +87,8 @@
                                 <img src="/homework.png" alt="Homework Icon"/>
                             </div>
                             <div class="homework-header-content">
-                                <h3>Homework </h3>
+                                <h3>Homework</h3>
+                                <p>No homework for this lesson yet. Check back later!</p>
                             </div>
                         </div>
                     </div>
@@ -83,90 +101,91 @@
                     @Msg
                 </div>
             }
-            
+
             <AuthorizeView Policy="MustBeTeacher">
                 <Authorized Context="teacherAuthorized">
-                                @if (lesson.Homework == null)
-                                {
-                                    <AssignHomeworkComponent LessonId=@lessonId LessonDate=@lesson.Date/>
-                                }
+                    @if (lesson.Homework == null)
+                    {
+                        <AssignHomeworkComponent LessonId=@lessonId LessonDate=@lesson.Date/>
+                    }
                 </Authorized>
             </AuthorizeView>
-
-
-
-
-        }
-
-        @code {
-
-            [Parameter]
-            public string lessonId { get; set; }
-
-            Lesson lesson;
-            Homework homework;
-            HandInHomework handInHomework;
-            private string answer;
-            public string Msg { get; set; }
-            User user;
-            public HomeworkHandInDTO Dto { get; set; }
-
-            private bool homeworkSubmitted = false;
-
-            protected override async Task OnInitializedAsync()
-            {
-                try
-                {
-                    lesson = await lessonService.GetByIdAsync(lessonId);
-                    homework = lesson.Homework;
-                    handInHomework = new HandInHomework
-                    {
-                        Id = "",
-                        Answer = answer
-                    };
-                    
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    Msg = $"{e.Message}";
-                }
-            }
-
-            private async Task HandInHomework()
-            {
-                try
-                {
-                    handInHomework.Answer = answer;
-                    
-                    var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-                    var user = authState.User;
-                    var username = user.Identity?.Name;
-                    
-                    Dto = new HomeworkHandInDTO(homework.Id, username, handInHomework);
-                    await HandInHomeworkService.HandInHomework(Dto);
-                    Console.WriteLine("Homework submitted successfully!");
-                    
-                    homeworkSubmitted = true;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error submitting homework: {ex.Message}");
-                    Msg = $"Error submitting homework: {ex.Message}";
-                }
-            }
-
-            private void SeeFeedback()
-            {
-            // see feedback logic 
-            }
-
         }
 
     </Authorized>
-    
+
     <NotAuthorized>
         <p>You are not authorized to view this content.</p>
     </NotAuthorized>
 </AuthorizeView>
 
+@code {
+
+    [Parameter]
+    public string classId { get; set; }
+
+    [Parameter]
+    public string lessonId { get; set; }
+
+    Lesson lesson;
+    Homework homework;
+    HandInHomework handInHomework;
+    private string answer;
+    public string Msg { get; set; }
+    User user;
+    public HomeworkHandInDTO Dto { get; set; }
+    public IEnumerable<User> attendees { get; set; }
+
+    private bool homeworkSubmitted = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        attendees = new List<User>();
+        try
+        {
+            lesson = await lessonService.GetByIdAsync(lessonId);
+            homework = lesson.Homework;
+            handInHomework = new HandInHomework
+            {
+                Id = "",
+                Answer = answer
+            };
+            attendees = await classService.GetAllAttendeesAsync(classId);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            Msg = $"{e.Message}";
+        }
+    }
+
+
+    private async Task HandInHomework()
+    {
+        try
+        {
+            handInHomework.Answer = answer;
+
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var username = user.Identity?.Name;
+
+            Dto = new HomeworkHandInDTO(homework.Id, username, handInHomework);
+            await HandInHomeworkService.HandInHomework(Dto);
+            Console.WriteLine("Homework submitted successfully!");
+
+            homeworkSubmitted = true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error submitting homework: {ex.Message}");
+            Msg = $"Error submitting homework: {ex.Message}";
+        }
+    }
+
+    private void SeeFeedback()
+    {
+    // see feedback logic 
+    }
+
+}

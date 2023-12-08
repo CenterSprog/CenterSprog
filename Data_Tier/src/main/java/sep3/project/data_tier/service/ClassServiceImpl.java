@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@GrpcService
-public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceImplBase
+@GrpcService public class ClassServiceImpl
+    extends ClassEntityServiceGrpc.ClassEntityServiceImplBase
 {
   private IClassRepository classRepository;
   private IUserRepository userRepository;
@@ -31,21 +31,22 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
   private UserMapper userMapper = UserMapper.INSTANCE;
   private LessonMapper lessonMapper = LessonMapper.INSTANCE;
 
-  private final static Logger LOG = LoggerFactory.getLogger(ClassServiceImpl.class);
+  private final static Logger LOG = LoggerFactory.getLogger(
+      ClassServiceImpl.class);
 
-  @Autowired
-  public ClassServiceImpl(IClassRepository classRepository, IUserRepository userRepository)
+  @Autowired public ClassServiceImpl(IClassRepository classRepository,
+      IUserRepository userRepository)
   {
     this.classRepository = classRepository;
     this.userRepository = userRepository;
   }
 
-
-  @Override
-  @Transactional
-  public void getClassEntityById(RequestGetClassEntity request, StreamObserver<ResponseGetClassEntity> response)
+  @Override @Transactional public void getClassEntityById(
+      RequestGetClassEntity request,
+      StreamObserver<ResponseGetClassEntity> response)
   {
-    try {
+    try
+    {
       String id = request.getClassId();
       Optional<ClassEntity> existingClass = classRepository.findById(id);
 
@@ -58,146 +59,239 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
       ClassData grpcClass = ClassData.newBuilder()
           .setId(existingClass.get().getId())
           .setTitle(existingClass.get().getTitle())
-          .setRoom(existingClass.get().getRoom())
-          .buildPartial();
+          .setRoom(existingClass.get().getRoom()).buildPartial();
 
       if (!existingClass.get().getLessons().isEmpty())
-        for(LessonEntity lessonEntity : existingClass.get().getLessons())
-          grpcClass = grpcClass.toBuilder().addLessons(
-              lessonMapper.toOverviewProto(lessonEntity)
-          ).buildPartial();
+        for (LessonEntity lessonEntity : existingClass.get().getLessons())
+          grpcClass = grpcClass.toBuilder()
+              .addLessons(lessonMapper.toOverviewProto(lessonEntity))
+              .buildPartial();
 
       if (!existingClass.get().getUsers().isEmpty())
-        for(UserEntity userEntity : existingClass.get().getUsers())
-          grpcClass = grpcClass.toBuilder().addParticipants(
-              userMapper.toParticipantProto(userEntity)
-          ).buildPartial();
+        for (UserEntity userEntity : existingClass.get().getUsers())
+          grpcClass = grpcClass.toBuilder()
+              .addParticipants(userMapper.toParticipantProto(userEntity))
+              .buildPartial();
 
       grpcClass.toBuilder().build();
 
-      response.onNext(ResponseGetClassEntity.newBuilder().setClassEntity(grpcClass).build());
+      response.onNext(
+          ResponseGetClassEntity.newBuilder().setClassEntity(grpcClass)
+              .build());
       response.onCompleted();
 
     }
     catch (Exception e)
     {
-      response.onError(
-          new Throwable(e.getMessage())
-      );
+      response.onError(new Throwable(e.getMessage()));
     }
   }
 
-  @Override
-  public void getClassEntities(RequestGetClassEntities request, StreamObserver<ResponseGetClassEntities> response)
+  @Override public void getClassEntities(RequestGetClassEntities request,
+      StreamObserver<ResponseGetClassEntities> response)
   {
-    try {
+    try
+    {
       String username = request.getUsername();
       List<ClassEntity> classes = new ArrayList<>();
-      System.out.println("Get all classes for : " + username + ", is null " + (username == null ) );
-      if(username.equals("") )
+      System.out.println(
+          "Get all classes for : " + username + ", is null " + (username
+              == null));
+      if (username.equals(""))
         classes = classRepository.findAll();
       else
         classes = classRepository.findByUsers_Username(username);
 
-      for (ClassEntity klasa: classes) {
+      for (ClassEntity klasa : classes)
+      {
         System.out.println(klasa.getTitle());
       }
 
       List<ClassData> grpcsClasses = new ArrayList<>();
       for (ClassEntity entity : classes)
       {
-        ClassData grpcClass = ClassData.newBuilder()
-            .setId(entity.getId())
-            .setTitle(entity.getTitle())
-            .setRoom(entity.getRoom()).buildPartial();
+        ClassData grpcClass = ClassData.newBuilder().setId(entity.getId())
+            .setTitle(entity.getTitle()).setRoom(entity.getRoom())
+            .buildPartial();
 
         System.out.println(entity.getUsers().size());
 
-        for(UserEntity userEntity : entity.getUsers())
-          grpcClass = grpcClass.toBuilder().addParticipants(
-              userMapper.toParticipantProto(userEntity)
-          ).buildPartial();
+        for (UserEntity userEntity : entity.getUsers())
+          grpcClass = grpcClass.toBuilder()
+              .addParticipants(userMapper.toParticipantProto(userEntity))
+              .buildPartial();
 
         grpcClass.toBuilder().build();
         grpcsClasses.add(grpcClass);
       }
       ResponseGetClassEntities responseMessage = ResponseGetClassEntities.newBuilder()
-          .addAllClassEntities(grpcsClasses)
-          .build();
+          .addAllClassEntities(grpcsClasses).build();
 
       response.onNext(responseMessage);
       response.onCompleted();
     }
     catch (Exception e)
     {
-      response.onError(
-          Status.INTERNAL.withDescription("Error fetching classes: " + e.getMessage()).asRuntimeException());
+      response.onError(Status.INTERNAL.withDescription(
+          "Error fetching classes: " + e.getMessage()).asRuntimeException());
     }
   }
 
+  @Override @Transactional public void getClassAttendees(
+      RequestGetClassAttendees request,
+      StreamObserver<ResponseGetClassAttendees> response)
+  {
+    try
+    {
+      String id = request.getClassId();
+      Optional<ClassEntity> existingClass = classRepository.findById(id);
 
-  @Override
-  public void createClassEntity(RequestCreateClassEntity request, StreamObserver<ResponseCreateClassEntity> response){
+      if (existingClass.isEmpty())
+      {
+        throw new IllegalStateException("No existing class with id " + id);
+      }
+
+      Hibernate.initialize(existingClass);
+
+      List<UserAttendee> attendees = new ArrayList<>();
+      for (UserEntity entity : existingClass.get().getUsers())
+      {
+        if (entity.getRole().equals("student"))
+        {
+          UserAttendee grpcAttendee = UserAttendee.newBuilder()
+              .setFirstName(entity.getFirstName())
+              .setLastName(entity.getLastName())
+              .setUsername(entity.getUsername()).build();
+
+          attendees.add(grpcAttendee);
+        }
+      }
+
+      response.onNext(
+          ResponseGetClassAttendees.newBuilder().addAllAttendees(attendees)
+              .build());
+      response.onCompleted();
+    }
+    catch (Exception e)
+
+    {
+      response.onError(new Throwable(e.getMessage()));
+      response.onCompleted();
+    }
+  }
+
+  @Override @Transactional public void getClassParticipants(
+      RequestGetClassParticipants request,
+      StreamObserver<ResponseGetClassParticipants> response)
+  {
+    try
+    {
+      String id = request.getClassId();
+      Optional<ClassEntity> existingClass = classRepository.findById(id);
+
+      if (existingClass.isEmpty())
+      {
+        throw new IllegalStateException("No existing class with id " + id);
+      }
+
+      Hibernate.initialize(existingClass);
+
+      List<UserParticipant> participants = new ArrayList<>();
+      for (UserEntity entity : existingClass.get().getUsers())
+      {
+        UserParticipant grpcParticipant = UserParticipant.newBuilder()
+            .setFirstName(entity.getFirstName())
+            .setLastName(entity.getLastName())
+            .setUsername(entity.getUsername())
+            .setRole(entity.getRole())
+            .setEmail(entity.getEmail())
+            .build();
+
+        participants.add(grpcParticipant);
+      }
+
+      response.onNext(
+          ResponseGetClassParticipants.newBuilder().addAllParticipants(participants)
+              .build());
+      response.onCompleted();
+    }
+    catch (Exception e)
+
+    {
+      response.onError(new Throwable(e.getMessage()));
+      response.onCompleted();
+    }
+  }
+
+  @Override public void createClassEntity(RequestCreateClassEntity request,
+      StreamObserver<ResponseCreateClassEntity> response)
+  {
     String title = request.getClassEntityCreation().getTitle();
     String room = request.getClassEntityCreation().getRoom();
 
-    try{
+    try
+    {
 
-      ClassEntity createdClass = new ClassEntity(title,room);
+      ClassEntity createdClass = new ClassEntity(title, room);
       classRepository.save(createdClass);
 
-      response.onNext(
-              ResponseCreateClassEntity.newBuilder()
-                      .setClassEntity(
-                              classMapper.toProto(createdClass)
-                      ).build()
-      );
+      response.onNext(ResponseCreateClassEntity.newBuilder()
+          .setClassEntity(classMapper.toProto(createdClass)).build());
 
       response.onCompleted();
 
-    }catch(Exception e){
-      response.onError(
-              Status.INTERNAL.withDescription("Error creating class : " + e.getMessage()).asRuntimeException()
-      );
+    }
+    catch (Exception e)
+    {
+      response.onError(Status.INTERNAL.withDescription(
+          "Error creating class : " + e.getMessage()).asRuntimeException());
     }
   }
 
-  @Override
-  public void updateParticipants(RequestUpdateClassParticipants request, StreamObserver<ResponseUpdateClassParticipants> response){
+  @Override public void updateParticipants(
+      RequestUpdateClassParticipants request,
+      StreamObserver<ResponseUpdateClassParticipants> response)
+  {
     String classId = request.getId();
     List<String> participantsUsernames = request.getParticipantsUsernamesList();
 
-    try{
+    try
+    {
 
-      handleAssigningUsersToClass(classId,participantsUsernames);
+      handleAssigningUsersToClass(classId, participantsUsernames);
 
       response.onNext(
-              ResponseUpdateClassParticipants.newBuilder().setResult(true).build()
-      );
+          ResponseUpdateClassParticipants.newBuilder().setResult(true).build());
       response.onCompleted();
 
-    }catch (Exception e){
+    }
+    catch (Exception e)
+    {
       response.onError(
-              new Throwable(e.getMessage()+ " : " + e.getStackTrace())
-      );
+          new Throwable(e.getMessage() + " : " + e.getStackTrace()));
     }
 
   }
 
-  private void handleAssigningUsersToClass(String classId, List<String> participantsUsernames){
+  private void handleAssigningUsersToClass(String classId,
+      List<String> participantsUsernames)
+  {
     ArrayList<UserEntity> newParticipants = new ArrayList<>();
     Optional<ClassEntity> existingClass = classRepository.findById(classId);
-    if(existingClass.isEmpty())
-      throw new IllegalStateException("Class with given id doesnt exist, cannot update.");
+    if (existingClass.isEmpty())
+      throw new IllegalStateException(
+          "Class with given id doesnt exist, cannot update.");
     ClassEntity updatableClass = existingClass.get();
 
-
-    for(String username : participantsUsernames){
-      Optional<UserEntity> existingUser = userRepository.getByUsername(username);
-      if(existingUser.isPresent()){
+    for (String username : participantsUsernames)
+    {
+      Optional<UserEntity> existingUser = userRepository.getByUsername(
+          username);
+      if (existingUser.isPresent())
+      {
 
         // --- Makes sure that the student will always be the part of only one class
-        if(existingUser.get().getRole().equals("student"))
+        if (existingUser.get().getRole().equals("student"))
           removeUserFromAllClasses(existingUser.get());
 
         newParticipants.add(existingUser.get());
@@ -207,12 +301,14 @@ public class ClassServiceImpl extends ClassEntityServiceGrpc.ClassEntityServiceI
     updatableClass.setUsers(newParticipants);
     classRepository.save(updatableClass);
 
-
   }
 
-  private void removeUserFromAllClasses(UserEntity userEntity){
-    List<ClassEntity> classEntities = classRepository.findByUsersContains(userEntity);
-    for(ClassEntity course : classEntities){
+  private void removeUserFromAllClasses(UserEntity userEntity)
+  {
+    List<ClassEntity> classEntities = classRepository.findByUsersContains(
+        userEntity);
+    for (ClassEntity course : classEntities)
+    {
       course.removeUser(userEntity.getUsername());
       classRepository.save(course);
     }
