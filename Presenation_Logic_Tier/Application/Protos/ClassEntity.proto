@@ -14,7 +14,6 @@ message ClassData {
   string room = 3;
   repeated LessonData lessons = 4;
   repeated UserParticipant participants = 5;
-
 }
 
 message ClassEntityCreation{
@@ -52,6 +51,14 @@ message ResponseUpdateClassParticipants{
   bool result = 1;
 }
 
+message RequestGetClassParticipants{
+  string classId = 1;
+}
+
+message ResponseGetClassParticipants{
+  repeated UserParticipant participants= 1;
+}
+
 message RequestGetClassAttendees{
   string classId = 1;
 }
@@ -65,4 +72,5 @@ service ClassEntityService{
   rpc getClassEntities(RequestGetClassEntities) returns (ResponseGetClassEntities);
   rpc updateParticipants(RequestUpdateClassParticipants) returns (ResponseUpdateClassParticipants);
   rpc getClassAttendees(RequestGetClassAttendees) returns (ResponseGetClassAttendees);
+  rpc getClassParticipants(RequestGetClassParticipants) returns (ResponseGetClassParticipants);
 }

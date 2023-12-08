@@ -9,6 +9,7 @@ public interface IClassClient
 
     Task<IEnumerable<ClassEntity>> GetAllAsync(SearchClassDTO dto);
     Task<IEnumerable<User>> GetAllAttendeesAsync(string id);
+    Task<IEnumerable<User>> GetAllParticipantsAsync(string id);
 
     Task<ClassEntity> CreateAsync(ClassCreationDTO dto);
 

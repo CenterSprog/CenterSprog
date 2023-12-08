@@ -7,7 +7,8 @@ public interface ILessonLogic
 {
     Task<Lesson> GetByIdAsync(string id);
     Task<int> AddAttendance(AddAttendanceDTO addAttendanceDto);
-    
+    Task<IEnumerable<User>> GetAttendanceAsync(string id);
+
    // Task<Lesson> CreateAsync( LessonCreationDTO lessonCreationDto);
     
     

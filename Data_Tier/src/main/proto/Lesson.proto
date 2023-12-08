@@ -41,7 +41,7 @@ message RequestGetAttendance{
   string lessonId = 1;
 }
 message ResponseGetAttendance{
-  repeated string usernames = 1;
+  repeated UserAttendee attendees = 1;
 }
 message RequestGetLessonsByClassId{
   string classId = 1;

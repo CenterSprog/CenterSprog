@@ -7,8 +7,6 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import sep3.project.data_tier.entity.ClassEntity;
-import sep3.project.data_tier.entity.HomeworkEntity;
 import sep3.project.data_tier.entity.LessonEntity;
 import sep3.project.data_tier.entity.UserEntity;
 import sep3.project.data_tier.mappers.HomeworkMapper;
@@ -31,7 +29,6 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
     private ILessonRepository lessonRepository;
     private IUserRepository userRepository;
 
-    private UserMapper userMapper = UserMapper.INSTANCE;
     private HomeworkMapper homeworkMapper = HomeworkMapper.INSTANCE;
 
     private IHomeworkRepository homeworkRepository;
@@ -68,12 +65,6 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
                     homeworkMapper.toProto(existingLesson.get().getHomework())
                 ).buildPartial();
 
-            if (!existingLesson.get().getAttendance().isEmpty())
-                for(UserEntity userEntity : existingLesson.get().getAttendance())
-                    grpcLesson = grpcLesson.toBuilder().addAttendees(
-                        userMapper.toAttendeeProto(userEntity)
-                    ).buildPartial();
-
             grpcLesson.toBuilder().build();
 
             response.onNext(
@@ -93,7 +84,42 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
         }
 
     }
+    @Override
+    @Transactional
+    public void getAttendance(RequestGetAttendance request, StreamObserver<ResponseGetAttendance> response) {
+        try {
+            String id = request.getLessonId();
+            Optional<LessonEntity> existingLesson = lessonRepository.findById(id);
+            if (existingLesson.isEmpty())
+                throw new IllegalStateException("No exisitng lesson with id of: " + id);
 
+            Hibernate.initialize(existingLesson.get());
+            List<UserAttendee> grpcUsers = new ArrayList<>();
+            if (!existingLesson.get().getAttendance().isEmpty())
+                for(UserEntity userEntity : existingLesson.get().getAttendance())
+                {
+                    UserAttendee grpcUser = UserAttendee.newBuilder().setUsername(
+                            userEntity.getUsername()).setFirstName(
+                            userEntity.getFirstName()).setLastName(
+                            userEntity.getLastName()).build();
+                    grpcUsers.add(grpcUser);
+                }
+
+            response.onNext(
+                ResponseGetAttendance.newBuilder()
+                    .addAllAttendees(
+                        grpcUsers
+                    ).build()
+            );
+            response.onCompleted();
+        } catch (Exception e) {
+            response.onError(
+                new Throwable(e.getMessage())
+            );
+            response.onCompleted();
+        }
+
+    }
     @Override
     public void addAttendance(RequestAddAttendance request, StreamObserver<ResponseAddAttendance> response) {
         String id = request.getLessonId();

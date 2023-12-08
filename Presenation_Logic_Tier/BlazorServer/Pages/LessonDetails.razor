@@ -29,7 +29,7 @@
                         <Authorized Context="teacherAuthorized">
                             @if (attendees != null)
                             {
-                                <AttendanceComponent Attendees="attendees.ToList()" MarkedAttendees="lesson.Attendees" LessonId="@lessonId"/>
+                                <MarkAttendanceComponent Attendees="attendees.ToList()" LessonId="@lessonId"/>
                             }
                         </Authorized>
                     </AuthorizeView>

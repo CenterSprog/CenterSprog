@@ -1,6 +1,4 @@
-using System.Net;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
 using Domain.DTOs.LessonDTO;
 using Domain.Models;
@@ -39,7 +37,8 @@ public class LessonHttpClient : ILessonService
 
     public async Task<string> AddAttendanceAsync(AddAttendanceDTO addAttendanceDto)
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync($"/lessons/{addAttendanceDto.LessonId}/Attendance", addAttendanceDto.StudentUsernames);
+        HttpResponseMessage response = await client.PostAsJsonAsync($"/lessons/{addAttendanceDto.LessonId}/attendance",
+            addAttendanceDto.StudentUsernames);
         var result = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode || result is null)
         {
@@ -47,6 +46,25 @@ public class LessonHttpClient : ILessonService
         }
 
         return result;
+    }
+
+    public async Task<IEnumerable<User>> GetAttendanceAsync(string id)
+    {
+        HttpResponseMessage responseMessage = await client.GetAsync($"/lessons/{id}/attendance");
+
+        string responseBody = await responseMessage.Content.ReadAsStringAsync();
+        if (string.IsNullOrEmpty(responseBody))
+        {
+            throw new Exception("Empty response received while fetching attendees.");
+        }
+
+        ICollection<User> attendees = JsonSerializer.Deserialize<ICollection<User>>(responseBody,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+
+        return attendees;
     }
 
 

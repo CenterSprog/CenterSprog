@@ -1,0 +1,75 @@
+﻿@using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject IClassService classService
+
+<button type="button" class="btn btn-primary fw-bold" @onclick="@SeeParticipantsAsync">Participants <span class="oi oi-people"></span></button>
+<Modal ShowModal="ShowModal">
+        @if (Participants == null)
+        {
+            <span>Loading participants...</span>
+        }
+        else if (!Participants.Any())
+        {
+            <p>No participants assigned for this class</p>
+        }
+        else
+        {
+            <div class="d-flex flex-column w-100">
+                @foreach (User user in Participants.OrderByDescending(u=>u.Role))
+                {
+                    <div class="border border-dark rounded p-4 mx-0 my-2">
+                            <h5 class="mb-0">
+                                @if (user.Role.Equals("teacher"))
+                                {
+                                    <span class="oi oi-text me-2"></span>
+                                }
+                                else
+                                {
+                                    <span class="oi oi-person me-2"></span>
+                                }
+                                @user.FirstName @user.LastName | @user.Email
+                            </h5>
+                    </div>
+                }
+            </div>
+        }
+            @if (Msg != null)
+            {
+                <div class="alert-danger alert mt-5">
+                    @Msg
+                </div>
+            }
+    </Modal>
+@code {
+    [Parameter]
+    public string ClassId { get; set; }
+    
+    private IEnumerable<User> Participants { get; set; }
+    private bool ShowModal { get; set; }
+    private string? Msg { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Participants = new List<User>();
+        Msg = null;
+    }
+    
+    private async Task FetchParticipants()
+    {
+        try
+        {
+            Participants = await classService.GetAllParticipantsAsync(ClassId);
+        }
+        catch (Exception e)
+        {
+            Msg = $"Failed to fetch participants: {e.Message} {e.StackTrace}";
+        }
+        
+    }
+    private async Task SeeParticipantsAsync()
+    {
+        await FetchParticipants();
+        ShowModal = true;
+    }
+    
+}

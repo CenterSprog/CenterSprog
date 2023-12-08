@@ -24,6 +24,11 @@ public class LessonLogic : ILessonLogic
     {
         return await _lessonClient.AddAttendance(addAttendanceDto);
     }
+
+    public async Task<IEnumerable<User>> GetAttendanceAsync(string id)
+    {
+        return await _lessonClient.GetAttendanceAsync(id);
+    }
     /*
     public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
     {

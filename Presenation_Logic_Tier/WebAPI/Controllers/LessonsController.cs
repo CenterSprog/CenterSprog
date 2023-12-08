@@ -32,8 +32,8 @@ public class LessonsController : ControllerBase
         }
     }
 
-    [HttpPost("{id}/Attendance", Name = "AddAttendanceAsync")]
-    public async Task<ActionResult<IEnumerable<Lesson>>> GetLessonsByClassIdAsync([FromRoute] string id, List<String> studentUsernames)
+    [HttpPost("{id}/attendance", Name = "AddAttendanceAsync")]
+    public async Task<ActionResult<int>> AddAttendanceAsync([FromRoute] string id, List<String> studentUsernames)
     {
         try
         {
@@ -44,6 +44,23 @@ public class LessonsController : ControllerBase
         catch (Exception e)
         {
             Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    [HttpGet("{id}/attendance", Name = "GetAttendanceAsync")]
+    public async Task<ActionResult<IEnumerable<User>>> GetAttendanceAsync([FromRoute] string id)
+    {
+        try
+        {   
+            IEnumerable<User> attendees = await _lessonLogic.GetAttendanceAsync(id);
+
+            if (attendees == null)
+                return NotFound();
+
+            return Ok(attendees);
+        }
+        catch (Exception e)
+        {
             return StatusCode(500, e.Message);
         }
     }

@@ -4,7 +4,7 @@
 @inject ILessonService lessonService;
 
 <div class="d-flex align-items-center">
-    <button type="button" class="btn btn-warning fw-bold w-auto" @onclick="@SeeAttendees">Attendance <span class="oi oi-calendar"></span></button>
+    <button type="button" class="btn btn-warning fw-bold w-auto" @onclick="@SeeAttendeesAsync">Mark Attendance <span class="oi oi-calendar"></span></button>
     @if (Success is not null)
     {
         <div class="alert-success alert ms-3 mb-0">
@@ -51,10 +51,6 @@
 </Modal>
 
 @code {
-
-    [Parameter]
-    public List<User>? MarkedAttendees { get; set; }
-
     [Parameter]
     public List<User> Attendees { get; set; }
 
@@ -66,6 +62,8 @@
     private string? Success { get; set; }
     private Dictionary<string, bool> SelectedUsers { get; set; }
     private List<string> SelectedUserList { get; set; }
+    private IEnumerable<User>? MarkedAttendees { get; set; }
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -73,6 +71,25 @@
         Success = null;
         SelectedUsers = new Dictionary<string, bool>();
         SelectedUserList = new List<string>();
+        MarkedAttendees = new List<User>();
+
+    }
+
+    private async Task FetchMarkedAttendeesAsync()
+    {
+        try
+        {
+            MarkedAttendees = await lessonService.GetAttendanceAsync(LessonId);
+        }
+        catch (Exception e)
+        {
+            Msg = e.Message + e.StackTrace;
+        }
+    }
+
+    private async Task SeeAttendeesAsync()
+    {
+        await FetchMarkedAttendeesAsync();
 
         if (MarkedAttendees != null)
         {
@@ -82,10 +99,6 @@
                 SelectedUsers[attendee.Username] = isSelected;
             }
         }
-    }
-
-    private void SeeAttendees()
-    {
         ShowModal = true;
     }
 

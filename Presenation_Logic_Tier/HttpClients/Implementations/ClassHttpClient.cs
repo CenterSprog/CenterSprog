@@ -82,6 +82,25 @@ public class ClassHttpClient : IClassService
         return attendees;
     }
 
+    public async Task<IEnumerable<User>> GetAllParticipantsAsync(string id)
+    {
+        HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/{id}/participants");
+
+        string responseBody = await responseMessage.Content.ReadAsStringAsync();
+        if (string.IsNullOrEmpty(responseBody))
+        {
+            throw new Exception("Empty response received while fetching participants.");
+        }
+
+        ICollection<User> participants = JsonSerializer.Deserialize<ICollection<User>>(responseBody,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+
+        return participants;
+    }
+
     public async Task<ClassEntity> CreateAsync(ClassCreationDTO dto)
     {
         HttpResponseMessage response = await _client.PostAsJsonAsync("/classes/", dto);

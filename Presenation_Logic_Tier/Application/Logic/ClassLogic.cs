@@ -30,6 +30,11 @@ public class ClassLogic : IClassLogic
         return await _classClient.GetAllAttendeesAsync(id);
     }
 
+    public async Task<IEnumerable<User>> GetAllParticipantsAsync(string id)
+    {
+        return await _classClient.GetAllParticipantsAsync(id);
+    }
+
     public async Task<ClassEntity> CreateAsync(ClassCreationDTO dto)
     {
         try

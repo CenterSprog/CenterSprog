@@ -7,6 +7,7 @@ public interface ILessonService
 {
     Task<Lesson> GetByIdAsync(string id);
     Task<string> AddAttendanceAsync(AddAttendanceDTO addAttendanceDto);
+    Task<IEnumerable<User>> GetAttendanceAsync(string id);
     //Task<Lesson> CreateAsync( LessonCreationDTO lessonCreationDto);
     
     

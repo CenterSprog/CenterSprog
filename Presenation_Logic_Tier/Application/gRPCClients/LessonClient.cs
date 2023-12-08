@@ -30,22 +30,11 @@ public class LessonClient : ILessonClient
 
         if (reply.Lesson.Homework != null)
             foundLesson.Homework = new Homework(reply.Lesson.Homework.Id, reply.Lesson.Homework.Deadline,
-                reply.Lesson.Homework.Title, reply.Lesson.Homework.Description); 
-                
-        if (reply.Lesson.Attendees.Any())
-        {
-            foreach (var attendee in reply.Lesson.Attendees)
-            {
-                foundLesson.Attendees.Add(new User(
-                    attendee.Username,
-                    attendee.FirstName,
-                    attendee.LastName));
-            }
-        }
+                reply.Lesson.Homework.Title, reply.Lesson.Homework.Description);
 
         return await Task.FromResult(foundLesson);
     }
-    
+
     public Task<int> AddAttendance(AddAttendanceDTO addAttendanceDto)
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
@@ -69,6 +58,35 @@ public class LessonClient : ILessonClient
         }
 
         return Task.FromResult(reply.AmountOfParticipants);
+    }
+
+    public async Task<IEnumerable<User>> GetAttendanceAsync(string id)
+    {
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new LessonService.LessonServiceClient(channel);
+
+        var request = new RequestGetAttendance()
+        {
+            LessonId = id
+        };
+
+        var reply = new ResponseGetAttendance();
+
+        reply = await client.getAttendanceAsync(request);
+        
+        var attendees = new List<User>();
+        
+        foreach (var attendee in reply.Attendees)
+        {
+            attendees.Add(new User
+            {
+                FirstName = attendee.FirstName,
+                LastName = attendee.LastName,
+                Username = attendee.Username
+            });
+        }
+
+        return await Task.FromResult(attendees);
     }
 
 
