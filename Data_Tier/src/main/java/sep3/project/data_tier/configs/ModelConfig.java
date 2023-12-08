@@ -41,6 +41,7 @@ public class ModelConfig {
 
 
             c1.addUser(s1);
+            c1.addUser(s2);
             c1.addUser(t1);
             c1.addUser(t2);
 

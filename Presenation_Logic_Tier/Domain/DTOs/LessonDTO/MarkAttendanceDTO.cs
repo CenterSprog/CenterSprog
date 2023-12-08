@@ -1,11 +1,11 @@
 ﻿namespace Domain.DTOs.LessonDTO;
 
-public class AddAttendanceDTO
+public class MarkAttendanceDTO
 {
     public string LessonId { get; set; }
     public List<String> StudentUsernames { get; set; }
 
-    public AddAttendanceDTO(string lessonId, List<String> studentUsernames)
+    public MarkAttendanceDTO(string lessonId, List<String> studentUsernames)
     {
         LessonId = lessonId;
         StudentUsernames = studentUsernames;

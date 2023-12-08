@@ -30,11 +30,11 @@ message RequestAddLesson{
 message ResponseAddLesson{
   LessonData lesson = 1;
 }
-message RequestAddAttendance{
+message RequestMarkAttendance{
   string lessonId = 1;
   repeated string usernames = 2;
 }
-message ResponseAddAttendance{
+message ResponseMarkAttendance{
   int32 amountOfParticipants = 1;
 }
 message RequestGetAttendance{
@@ -82,7 +82,7 @@ message ResponseDeleteLesson {
 //}
 service LessonService{
   rpc addLesson(RequestAddLesson) returns (ResponseAddLesson);
-  rpc addAttendance(RequestAddAttendance) returns (ResponseAddAttendance);
+  rpc markAttendance(RequestMarkAttendance) returns (ResponseMarkAttendance);
   rpc getAttendance(RequestGetAttendance) returns (ResponseGetAttendance);
   rpc getLessonById(RequestGetLessonById) returns (ResponseGetLessonById);
 

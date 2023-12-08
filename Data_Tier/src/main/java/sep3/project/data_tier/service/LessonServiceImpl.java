@@ -121,7 +121,7 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
 
     }
     @Override
-    public void addAttendance(RequestAddAttendance request, StreamObserver<ResponseAddAttendance> response) {
+    public void markAttendance(RequestMarkAttendance request, StreamObserver<ResponseMarkAttendance> response) {
         String id = request.getLessonId();
         try {
             Optional<LessonEntity> existingLesson = lessonRepository.findById(id);
@@ -138,7 +138,7 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
             existingLesson.get().setAttendance(students);
             lessonRepository.save(existingLesson.get());
 
-            response.onNext(ResponseAddAttendance.newBuilder().setAmountOfParticipants(students.size()).build());
+            response.onNext(ResponseMarkAttendance.newBuilder().setAmountOfParticipants(students.size()).build());
             response.onCompleted();
 
         } catch (Exception e) {

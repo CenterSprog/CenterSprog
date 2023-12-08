@@ -35,10 +35,10 @@ public class LessonHttpClient : ILessonService
         return foundLesson;
     }
 
-    public async Task<string> AddAttendanceAsync(AddAttendanceDTO addAttendanceDto)
+    public async Task<string> MarkAttendanceAsync(MarkAttendanceDTO markAttendanceDto)
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync($"/lessons/{addAttendanceDto.LessonId}/attendance",
-            addAttendanceDto.StudentUsernames);
+        HttpResponseMessage response = await client.PostAsJsonAsync($"/lessons/{markAttendanceDto.LessonId}/attendance",
+            markAttendanceDto.StudentUsernames);
         var result = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode || result is null)
         {

@@ -35,21 +35,21 @@ public class LessonClient : ILessonClient
         return await Task.FromResult(foundLesson);
     }
 
-    public Task<int> AddAttendance(AddAttendanceDTO addAttendanceDto)
+    public async Task<int> MarkAttendanceAsync(MarkAttendanceDTO markAttendanceDto)
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new LessonService.LessonServiceClient(channel);
         //create methods in proto file create response methods and create body 
 
-        var request = new RequestAddAttendance()
+        var request = new RequestMarkAttendance()
         {
-            LessonId = addAttendanceDto.LessonId,
-            Usernames = {addAttendanceDto.StudentUsernames}
+            LessonId = markAttendanceDto.LessonId,
+            Usernames = {markAttendanceDto.StudentUsernames}
         };
-        var reply = new ResponseAddAttendance();
+        var reply = new ResponseMarkAttendance();
         try
         {
-            reply = client.addAttendance(request);
+            reply = await client.markAttendanceAsync(request);
         } catch (RpcException e)
         {
 
@@ -57,7 +57,7 @@ public class LessonClient : ILessonClient
             throw;
         }
 
-        return Task.FromResult(reply.AmountOfParticipants);
+        return await Task.FromResult(reply.AmountOfParticipants);
     }
 
     public async Task<IEnumerable<User>> GetAttendanceAsync(string id)

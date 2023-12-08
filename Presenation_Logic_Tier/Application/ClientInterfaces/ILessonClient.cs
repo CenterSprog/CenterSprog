@@ -7,7 +7,7 @@ namespace Application.ClientInterfaces;
 public interface ILessonClient
 {
     Task<Lesson?> GetByIdAsync(string id);
-    Task<int> AddAttendance(AddAttendanceDTO addAttendanceDto);
+    Task<int> MarkAttendanceAsync(MarkAttendanceDTO markAttendanceDto);
     Task<IEnumerable<User>> GetAttendanceAsync(string id);
 
     //Task<Lesson> CreateAsync(Lesson lesson);

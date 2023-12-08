@@ -40,7 +40,7 @@
             </tbody>
         </table>
 
-        <button class="btn btn-primary" @onclick="Submit">Submit</button>
+        <button class="btn btn-primary" @onclick="MarkAttendance">Submit</button>
     }
     @if (Msg != null)
     {
@@ -102,12 +102,12 @@
         ShowModal = true;
     }
 
-    private async Task Submit()
+    private async Task MarkAttendance()
     {
         SelectedUserList = SelectedUsers.Where(kvp => kvp.Value).Select(kvp => kvp.Key).ToList();
         try
         {
-            var amountOfAttendees = await lessonService.AddAttendanceAsync(new AddAttendanceDTO(LessonId, SelectedUserList));
+            var amountOfAttendees = await lessonService.MarkAttendanceAsync(new MarkAttendanceDTO(LessonId, SelectedUserList));
             Success = $"Attendance was successfully marked. {amountOfAttendees}/{Attendees.Count} attendees";
             ShowModal = false;
         }
