@@ -12,13 +12,17 @@ message ClassData {
   string title = 2;
   string room = 3;
   repeated LessonOverview lessons = 4;
-//  inheritly repeated is optional
   repeated UserParticipant participants = 5;
 }
 
 message ClassEntityCreation{
   string title = 1;
   string room = 2;
+}
+
+message ClassAttenance{
+  repeated LessonAttended lessons = 1;
+  repeated LessonAttendance lessonsAttendance = 2;
 }
 
 message RequestCreateClassEntity{
@@ -53,24 +57,25 @@ message ResponseUpdateClassParticipants{
 
 message RequestGetClassParticipants{
   string classId = 1;
+  optional string role = 2;
 }
 
 message ResponseGetClassParticipants{
   repeated UserParticipant participants= 1;
 }
-
-message RequestGetClassAttendees{
+message RequestGetClassAttendance{
   string classId = 1;
+  optional string username = 2;
+}
+message ResponseGetClassAttendance{
+  ClassAttenance attendance = 1;
 }
 
-message ResponseGetClassAttendees{
-  repeated UserAttendee attendees= 1;
-}
 service ClassEntityService{
   rpc createClassEntity(RequestCreateClassEntity) returns (ResponseCreateClassEntity);
   rpc getClassEntityById(RequestGetClassEntity) returns (ResponseGetClassEntity);
   rpc getClassEntities(RequestGetClassEntities) returns (ResponseGetClassEntities);
   rpc updateParticipants(RequestUpdateClassParticipants) returns (ResponseUpdateClassParticipants);
-  rpc getClassAttendees(RequestGetClassAttendees) returns (ResponseGetClassAttendees);
   rpc getClassParticipants(RequestGetClassParticipants) returns (ResponseGetClassParticipants);
+  rpc getClassAttendance(RequestGetClassAttendance) returns (ResponseGetClassAttendance);
 }

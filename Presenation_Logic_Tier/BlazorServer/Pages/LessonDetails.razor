@@ -4,7 +4,6 @@
 @using Domain.DTOs.HomeworkDTO
 @using Domain.DTOs.LessonDTO
 @inject ILessonService lessonService
-@inject IClassService classService
 @inject IHandInHomeworkService HandInHomeworkService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
@@ -27,10 +26,7 @@
                     </div>
                     <AuthorizeView Policy="MustBeTeacher">
                         <Authorized Context="teacherAuthorized">
-                            @if (attendees != null)
-                            {
-                                <MarkAttendanceComponent Attendees="attendees.ToList()" LessonId="@lessonId"/>
-                            }
+                            <MarkAttendanceComponent LessonId="@lessonId" ClassId="@classId"/>
                         </Authorized>
                     </AuthorizeView>
                 </div>
@@ -134,13 +130,11 @@
     public string Msg { get; set; }
     User user;
     public HomeworkHandInDTO Dto { get; set; }
-    public IEnumerable<User> attendees { get; set; }
 
     private bool homeworkSubmitted = false;
 
     protected override async Task OnInitializedAsync()
     {
-        attendees = new List<User>();
         try
         {
             lesson = await lessonService.GetByIdAsync(lessonId);
@@ -150,7 +144,6 @@
                 Id = "",
                 Answer = answer
             };
-            attendees = await classService.GetAllAttendeesAsync(classId);
         }
         catch (Exception e)
         {

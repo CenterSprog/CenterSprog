@@ -15,7 +15,19 @@ else
     <div class="class-container">
         <div class="class-card">
             <h2>@selectedClass.Title @selectedClass.Room</h2>
-            <ParticipantsComponent ClassId="@ClassId"/>
+            <div class="d-flex">
+                <AuthorizeView Policy="MustBeTeacher">
+                    <Authorized Context="teacherAuthorized">
+                        <ClassAttendanceComponent ClassId="@ClassId"/>
+                    </Authorized>
+                </AuthorizeView>
+                <AuthorizeView Policy="MustBeStudent">
+                    <Authorized Context="studentAuthorized">
+                        <SingleUserAttendanceComponent ClassId="@ClassId"/>
+                    </Authorized>
+                </AuthorizeView>
+                <ParticipantsComponent ClassId="@ClassId"/>
+            </div>
         </div>
     </div>
 
