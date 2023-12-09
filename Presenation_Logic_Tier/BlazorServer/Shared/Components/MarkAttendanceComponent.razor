@@ -1,7 +1,10 @@
 ﻿@using Domain.Models
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.LessonDTO
+@using Domain.DTOs.ClassDTO
 @inject ILessonService lessonService;
+@inject IClassService classService
+
 
 <div class="d-flex align-items-center">
     <button type="button" class="btn btn-warning fw-bold w-auto" @onclick="@SeeAttendeesAsync">Mark Attendance <span class="oi oi-calendar"></span></button>
@@ -52,17 +55,17 @@
 
 @code {
     [Parameter]
-    public List<User> Attendees { get; set; }
-
-    [Parameter]
     public string LessonId { get; set; }
-
+    [Parameter]
+    public string ClassId { get; set; }
+    
     private bool ShowModal { get; set; }
     private string? Msg { get; set; }
     private string? Success { get; set; }
     private Dictionary<string, bool> SelectedUsers { get; set; }
     private List<string> SelectedUserList { get; set; }
-    private IEnumerable<User>? MarkedAttendees { get; set; }
+    private IEnumerable<User> MarkedAttendees { get; set; }
+    private IEnumerable<User> Attendees { get; set; }
 
 
     protected override async Task OnInitializedAsync()
@@ -72,7 +75,7 @@
         SelectedUsers = new Dictionary<string, bool>();
         SelectedUserList = new List<string>();
         MarkedAttendees = new List<User>();
-
+        Attendees = new List<User>();
     }
 
     private async Task FetchMarkedAttendeesAsync()
@@ -80,6 +83,7 @@
         try
         {
             MarkedAttendees = await lessonService.GetAttendanceAsync(LessonId);
+            Attendees = await classService.GetAllParticipantsAsync(new SearchClassParticipantsDTO(ClassId, "student"));
         }
         catch (Exception e)
         {
@@ -108,7 +112,7 @@
         try
         {
             var amountOfAttendees = await lessonService.MarkAttendanceAsync(new MarkAttendanceDTO(LessonId, SelectedUserList));
-            Success = $"Attendance was successfully marked. {amountOfAttendees}/{Attendees.Count} attendees";
+            Success = $"Attendance was successfully marked. {amountOfAttendees}/{Attendees.Count()} attendees";
             ShowModal = false;
         }
         catch (Exception e)

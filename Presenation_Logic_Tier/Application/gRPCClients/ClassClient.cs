@@ -2,6 +2,7 @@
 using Domain.DTOs.ClassDTO;
 using Domain.Models;
 using Google.Protobuf.Collections;
+using Grpc.Core;
 using Grpc.Net.Client;
 using gRPCClient;
 using ClassEntity = Domain.Models.ClassEntity;
@@ -21,8 +22,16 @@ public class ClassClient : IClassClient
         };
 
         var reply = new ResponseGetClassEntity();
-        
-        reply =  await client.getClassEntityByIdAsync(request);
+
+        try
+        {
+            reply =  await client.getClassEntityByIdAsync(request);
+        }
+        catch (RpcException e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
 
 
         ClassEntity retrievedClassEntity = new(reply.ClassEntity.Id, reply.ClassEntity.Title, reply.ClassEntity.Room);
@@ -67,40 +76,16 @@ public class ClassClient : IClassClient
         return await Task.FromResult(classes);
     }
 
-    public async Task<IEnumerable<User>> GetAllAttendeesAsync(string id)
+    public async Task<IEnumerable<User>> GetAllParticipantsAsync(SearchClassParticipantsDTO dto)
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new ClassEntityService.ClassEntityServiceClient(channel);
-        var request = new RequestGetClassAttendees
+        var request = new RequestGetClassParticipants
         {
-            ClassId = id
+            ClassId = dto.Id
         };
-        
-        var reply = await client.getClassAttendeesAsync(request);
-
-        var attendees = new List<User>();
-        
-        foreach (var attendee in reply.Attendees)
-        {
-            attendees.Add(new User
-            {
-                FirstName = attendee.FirstName,
-                LastName = attendee.LastName,
-                Username = attendee.Username
-            });
-        }
-
-        return await Task.FromResult(attendees);
-    }
-
-    public async Task<IEnumerable<User>> GetAllParticipantsAsync(string id)
-    {
-        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
-        var client = new ClassEntityService.ClassEntityServiceClient(channel);
-        var request = new RequestGetClassParticipants()
-        {
-            ClassId = id
-        };
+        if (dto.Role != null)
+            request.Role = dto.Role;
         
         var reply = await client.getClassParticipantsAsync(request);
 
@@ -168,5 +153,64 @@ public class ClassClient : IClassClient
         }
 
         return await Task.FromResult(reply.Result);
+    }
+
+    public async Task<IEnumerable<Lesson>> GetClassAttendanceByUsernameAsync(SearchClassAttendanceDTO dto)
+    {
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new ClassEntityService.ClassEntityServiceClient(channel);
+
+        var request = new RequestGetClassAttendance()
+        {
+            ClassId = dto.Id,
+            Username = dto.Username
+        };
+        
+        var reply =  await client.getClassAttendanceAsync(request);
+
+        var lessons = new List<Lesson>();
+
+        if (reply.Attendance.Lessons.Any())
+        {
+            foreach (var lesson in reply.Attendance.Lessons)
+            {
+                lessons.Add(new Lesson{Id =lesson.Id, Topic = lesson.Topic, Date = lesson.Date});
+            }
+        }
+
+        return await Task.FromResult(lessons);
+    }
+
+    public async Task<IEnumerable<Lesson>> GetClassAttendanceAsync(string id)
+    {
+        using var channel = GrpcChannel.ForAddress("http://localhost:1111");
+        var client = new ClassEntityService.ClassEntityServiceClient(channel);
+
+        var request = new RequestGetClassAttendance()
+        {
+            ClassId = id
+        };
+
+        var reply = new ResponseGetClassAttendance();
+        
+        reply =  await client.getClassAttendanceAsync(request);
+
+
+        var lessons = new List<Lesson>();
+        
+        if (reply.Attendance.LessonsAttendance.Any())
+        {
+            foreach (var lesson in reply.Attendance.LessonsAttendance)
+            {
+                var participants = new List<User>();
+                foreach (var userParticipant in lesson.Participants)
+                {
+                    participants.Add( new User{Username = userParticipant.Username});
+                }
+                lessons.Add(new Lesson{Id =lesson.Id, Attendees = participants});
+            }
+        }
+
+        return await Task.FromResult(lessons);
     }
 }

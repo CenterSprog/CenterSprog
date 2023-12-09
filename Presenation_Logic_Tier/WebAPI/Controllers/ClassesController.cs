@@ -1,5 +1,7 @@
 ﻿using Application.LogicInterfaces;
 using Domain.DTOs.ClassDTO;
+using Domain.DTOs.LessonDTO;
+using Domain.DTOs.UserDTO;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -54,31 +56,14 @@ public class ClassesController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-    
-    [HttpGet("{id}/attendees", Name = "GetClassAttendeesAsync")]
-    public async Task<ActionResult<IEnumerable<User>>> GetAllAttendeesAsync([FromRoute] string id)
-    {
-        try
-        {   
-            IEnumerable<User> attendees = await _classLogic.GetAllAttendeesAsync(id);
 
-            if (attendees == null || !attendees.Any())
-                return NotFound();
-
-            return Ok(attendees);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.Message);
-        }
-    }
-    
     [HttpGet("{id}/participants", Name = "GetAllParticipantsAsync")]
-    public async Task<ActionResult<IEnumerable<User>>> GetAllParticipantsAsync([FromRoute] string id)
+    public async Task<ActionResult<IEnumerable<User>>> GetAllParticipantsAsync([FromRoute] string id, [FromQuery] string? role)
     {
         try
-        {   
-            IEnumerable<User> participants = await _classLogic.GetAllParticipantsAsync(id);
+        {
+            SearchClassParticipantsDTO dto = new SearchClassParticipantsDTO(id, role);
+            IEnumerable<User> participants = await _classLogic.GetAllParticipantsAsync(dto);
 
             if (participants == null || !participants.Any())
                 return NotFound();
@@ -124,6 +109,36 @@ public class ClassesController : ControllerBase
         {
             Console.WriteLine($"Failed updating class controller : {e.Message} {e.StackTrace}");
             return StatusCode(500,e.Message + e.StackTrace);
+        }
+    }
+    [HttpGet("{id}/attendances", Name = "GetClassAttendanceAsync")]
+    public async Task<ActionResult<IEnumerable<UserAttendanceDTO>>> GetClassAttendanceAsync([FromRoute] string id, [FromQuery] string? username)
+    {
+        try
+        {
+            if (!string.IsNullOrEmpty(username))
+            {
+                var dto = new SearchClassAttendanceDTO(id, username);
+                var lessons = await _classLogic.GetClassAttendanceByUsernameAsync(dto);
+
+                if (lessons == null)
+                    return NotFound();
+
+                return Ok(lessons);
+            }
+            else
+            {
+                var attendees = await _classLogic.GetClassAttendanceAsync(id);
+
+                if (attendees == null)
+                    return NotFound();
+
+                return Ok(attendees);
+            }
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
         }
     }
 }

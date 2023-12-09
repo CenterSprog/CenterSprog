@@ -26,15 +26,9 @@ message UserCreationData{
 message UserParticipant{
   string firstName = 1;
   string lastName = 2;
-  string role = 3;
+  optional string role = 3;
   string username = 4;
-  string email = 5;
-}
-
-message UserAttendee{
-  string firstName = 1;
-  string lastName = 2;
-  string username = 4;
+  optional string email = 5;
 }
 
 message RequestCreateUser{

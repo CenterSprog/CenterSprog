@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import sep3.project.data_tier.entity.LessonEntity;
 import sep3.project.data_tier.entity.UserEntity;
 import sep3.project.data_tier.mappers.HomeworkMapper;
-import sep3.project.data_tier.mappers.UserMapper;
 import sep3.project.data_tier.repository.IClassRepository;
 import sep3.project.data_tier.repository.IHomeworkRepository;
 import sep3.project.data_tier.repository.ILessonRepository;
@@ -94,11 +93,11 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
                 throw new IllegalStateException("No exisitng lesson with id of: " + id);
 
             Hibernate.initialize(existingLesson.get());
-            List<UserAttendee> grpcUsers = new ArrayList<>();
+            List<UserParticipant> grpcUsers = new ArrayList<>();
             if (!existingLesson.get().getAttendance().isEmpty())
                 for(UserEntity userEntity : existingLesson.get().getAttendance())
                 {
-                    UserAttendee grpcUser = UserAttendee.newBuilder().setUsername(
+                    UserParticipant grpcUser = UserParticipant.newBuilder().setUsername(
                             userEntity.getUsername()).setFirstName(
                             userEntity.getFirstName()).setLastName(
                             userEntity.getLastName()).build();
@@ -107,7 +106,7 @@ public class LessonServiceImpl extends LessonServiceGrpc.LessonServiceImplBase {
 
             response.onNext(
                 ResponseGetAttendance.newBuilder()
-                    .addAllAttendees(
+                    .addAllParticipants(
                         grpcUsers
                     ).build()
             );

@@ -2,6 +2,8 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using Domain.DTOs.ClassDTO;
+using Domain.DTOs.LessonDTO;
+using Domain.DTOs.UserDTO;
 using Domain.Models;
 using HttpClients.ClientInterfaces;
 
@@ -63,28 +65,12 @@ public class ClassHttpClient : IClassService
 
     }
 
-    public async Task<IEnumerable<User>> GetAllAttendeesAsync(string id)
+    public async Task<IEnumerable<User>> GetAllParticipantsAsync(SearchClassParticipantsDTO dto)
     {
-        HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/{id}/attendees");
-
-        string responseBody = await responseMessage.Content.ReadAsStringAsync();
-        if (string.IsNullOrEmpty(responseBody))
-        {
-            throw new Exception("Empty response received while fetching attendees.");
-        }
-
-        ICollection<User> attendees = JsonSerializer.Deserialize<ICollection<User>>(responseBody,
-            new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            })!;
-
-        return attendees;
-    }
-
-    public async Task<IEnumerable<User>> GetAllParticipantsAsync(string id)
-    {
-        HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/{id}/participants");
+        string query = "";
+        if (!string.IsNullOrEmpty(dto.Role))
+           query += $"?role={dto.Role}";
+        HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/{dto.Id}/participants"+ query);
 
         string responseBody = await responseMessage.Content.ReadAsStringAsync();
         if (string.IsNullOrEmpty(responseBody))
@@ -124,5 +110,43 @@ public class ClassHttpClient : IClassService
         }
 
         return result;
+    }
+
+    public async Task<IEnumerable<UserAttendanceDTO>> GetClassAttendanceAsync(string id)
+    {
+        HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/{id}/attendances");
+
+        string responseBody = await responseMessage.Content.ReadAsStringAsync();
+        if (string.IsNullOrEmpty(responseBody))
+        {
+            throw new Exception("Empty response received while fetching attendees.");
+        }
+
+        ICollection<UserAttendanceDTO> attendees = JsonSerializer.Deserialize<ICollection<UserAttendanceDTO>>(responseBody,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+
+        return attendees;
+    }
+
+    public async Task<IEnumerable<LessonAttendanceDTO>> GetClassAttendanceByUsernameAsync(SearchClassAttendanceDTO dto)
+    {
+        HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/{dto.Id}/attendances?username={dto.Username}");
+
+        string responseBody = await responseMessage.Content.ReadAsStringAsync();
+        if (string.IsNullOrEmpty(responseBody))
+        {
+            throw new Exception("Empty response received while fetching lessons.");
+        }
+
+        ICollection<LessonAttendanceDTO> lessons = JsonSerializer.Deserialize<ICollection<LessonAttendanceDTO>>(responseBody,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+
+        return lessons;
     }
 }

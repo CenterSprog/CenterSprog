@@ -13,7 +13,7 @@ message LessonData{
   string topic = 3;
   string description = 4;
   optional Homework homework = 5;
-  repeated UserAttendee attendees = 6;
+  repeated UserParticipant attendees = 6;
 }
 
 message LessonOverview{
@@ -21,6 +21,17 @@ message LessonOverview{
   int64 date = 2;
   string topic = 3;
   string description = 4;
+}
+
+message LessonAttendance{
+  string id = 1;
+  repeated UserParticipant participants = 2;
+}
+
+message LessonAttended{
+  string id = 1;
+  int64 date = 3;
+  string topic = 4;
 }
 
 message RequestAddLesson{
@@ -41,7 +52,7 @@ message RequestGetAttendance{
   string lessonId = 1;
 }
 message ResponseGetAttendance{
-  repeated UserAttendee attendees = 1;
+  repeated UserParticipant participants = 1;
 }
 message RequestGetLessonsByClassId{
   string classId = 1;
@@ -85,9 +96,9 @@ service LessonService{
   rpc markAttendance(RequestMarkAttendance) returns (ResponseMarkAttendance);
   rpc getAttendance(RequestGetAttendance) returns (ResponseGetAttendance);
   rpc getLessonById(RequestGetLessonById) returns (ResponseGetLessonById);
-
   rpc getLessonsByClassId(RequestGetLessonsByClassId) returns (ResponseGetLessonsByClassId);
-  rpc deleteLesson(RequestDeleteLesson) returns ( ResponseDeleteLesson);
+
+  rpc deleteLesson(RequestDeleteLesson) returns (ResponseDeleteLesson);
   //  rpc GetLessonExtendedByHomeworkHandInFeedback(RequestGetLessonExtendedByHomeworkHandInFeedback) returns (ResponseGetLessonExtendedByHomeworkHandInFeedback);
 }
 

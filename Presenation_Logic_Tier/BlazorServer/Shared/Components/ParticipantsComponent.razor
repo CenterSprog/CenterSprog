@@ -1,8 +1,9 @@
 ﻿@using Domain.Models
 @using HttpClients.ClientInterfaces
+@using Domain.DTOs.ClassDTO
 @inject IClassService classService
 
-<button type="button" class="btn btn-primary fw-bold" @onclick="@SeeParticipantsAsync">Participants <span class="oi oi-people"></span></button>
+<button type="button" class="btn btn-primary fw-bold ms-3" @onclick="@SeeParticipantsAsync">Participants <span class="oi oi-people"></span></button>
 <Modal ShowModal="ShowModal">
         @if (Participants == null)
         {
@@ -58,7 +59,7 @@
     {
         try
         {
-            Participants = await classService.GetAllParticipantsAsync(ClassId);
+            Participants = await classService.GetAllParticipantsAsync(new SearchClassParticipantsDTO(ClassId, null));
         }
         catch (Exception e)
         {

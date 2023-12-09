@@ -74,19 +74,19 @@ public class LessonClient : ILessonClient
 
         reply = await client.getAttendanceAsync(request);
         
-        var attendees = new List<User>();
+        var participants = new List<User>();
         
-        foreach (var attendee in reply.Attendees)
+        foreach (var participant in reply.Participants)
         {
-            attendees.Add(new User
+            participants.Add(new User
             {
-                FirstName = attendee.FirstName,
-                LastName = attendee.LastName,
-                Username = attendee.Username
+                FirstName = participant.FirstName,
+                LastName = participant.LastName,
+                Username = participant.Username
             });
         }
 
-        return await Task.FromResult(attendees);
+        return await Task.FromResult(participants);
     }
 
 

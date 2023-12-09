@@ -18,9 +18,7 @@ import sep3.project.data_tier.repository.IClassRepository;
 import sep3.project.data_tier.repository.IUserRepository;
 import sep3.project.protobuf.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @GrpcService public class ClassServiceImpl
     extends ClassEntityServiceGrpc.ClassEntityServiceImplBase
@@ -93,7 +91,7 @@ import java.util.Optional;
     try
     {
       String username = request.getUsername();
-      List<ClassEntity> classes = new ArrayList<>();
+      List<ClassEntity> classes;
       System.out.println(
           "Get all classes for : " + username + ", is null " + (username
               == null));
@@ -137,49 +135,6 @@ import java.util.Optional;
     }
   }
 
-  @Override @Transactional public void getClassAttendees(
-      RequestGetClassAttendees request,
-      StreamObserver<ResponseGetClassAttendees> response)
-  {
-    try
-    {
-      String id = request.getClassId();
-      Optional<ClassEntity> existingClass = classRepository.findById(id);
-
-      if (existingClass.isEmpty())
-      {
-        throw new IllegalStateException("No existing class with id " + id);
-      }
-
-      Hibernate.initialize(existingClass);
-
-      List<UserAttendee> attendees = new ArrayList<>();
-      for (UserEntity entity : existingClass.get().getUsers())
-      {
-        if (entity.getRole().equals("student"))
-        {
-          UserAttendee grpcAttendee = UserAttendee.newBuilder()
-              .setFirstName(entity.getFirstName())
-              .setLastName(entity.getLastName())
-              .setUsername(entity.getUsername()).build();
-
-          attendees.add(grpcAttendee);
-        }
-      }
-
-      response.onNext(
-          ResponseGetClassAttendees.newBuilder().addAllAttendees(attendees)
-              .build());
-      response.onCompleted();
-    }
-    catch (Exception e)
-
-    {
-      response.onError(new Throwable(e.getMessage()));
-      response.onCompleted();
-    }
-  }
-
   @Override @Transactional public void getClassParticipants(
       RequestGetClassParticipants request,
       StreamObserver<ResponseGetClassParticipants> response)
@@ -199,20 +154,21 @@ import java.util.Optional;
       List<UserParticipant> participants = new ArrayList<>();
       for (UserEntity entity : existingClass.get().getUsers())
       {
+        if (request.hasRole() && !entity.getRole().equals(request.getRole()))
+        {
+          continue;
+        }
+
         UserParticipant grpcParticipant = UserParticipant.newBuilder()
             .setFirstName(entity.getFirstName())
-            .setLastName(entity.getLastName())
-            .setUsername(entity.getUsername())
-            .setRole(entity.getRole())
-            .setEmail(entity.getEmail())
-            .build();
+            .setLastName(entity.getLastName()).setUsername(entity.getUsername())
+            .setEmail(entity.getEmail()).setRole(entity.getRole()).build();
 
         participants.add(grpcParticipant);
       }
 
-      response.onNext(
-          ResponseGetClassParticipants.newBuilder().addAllParticipants(participants)
-              .build());
+      response.onNext(ResponseGetClassParticipants.newBuilder()
+          .addAllParticipants(participants).build());
       response.onCompleted();
     }
     catch (Exception e)
@@ -245,6 +201,67 @@ import java.util.Optional;
     {
       response.onError(Status.INTERNAL.withDescription(
           "Error creating class : " + e.getMessage()).asRuntimeException());
+    }
+  }
+
+  @Override @Transactional public void getClassAttendance(
+      RequestGetClassAttendance request,
+      StreamObserver<ResponseGetClassAttendance> response)
+  {
+    try
+    {
+      String id = request.getClassId();
+      Optional<ClassEntity> existingClass = classRepository.findById(id);
+
+      if (existingClass.isEmpty())
+        throw new IllegalStateException("No existing class with id " + id);
+
+      Hibernate.initialize(existingClass);
+
+      ClassAttenance classAttenance = ClassAttenance.newBuilder()
+          .buildPartial();
+      if (request.hasUsername())
+      {
+        String username = request.getUsername();
+        Set<LessonEntity> lessons = existingClass.get().getLessons();
+        if (!lessons.isEmpty())
+        {
+          for (LessonEntity lessonEntity : lessons)
+          {
+            if (lessonEntity.getAttendance().stream().anyMatch(
+                userEntity -> userEntity.getUsername().equals(username)))
+            {
+              classAttenance = classAttenance.toBuilder()
+                  .addLessons(lessonMapper.toAttendandedProto(lessonEntity))
+                  .buildPartial();
+            }
+          }
+        }
+      }
+      else {
+        if (!existingClass.get().getLessons().isEmpty()) {
+          for (LessonEntity lessonEntity : existingClass.get().getLessons()) {
+            Set<UserEntity> usersInAttendance = lessonEntity.getAttendance();
+            for (UserEntity userEntity : usersInAttendance) {
+              LessonAttendance lessonAttendance = LessonAttendance.newBuilder().setId(
+                  lessonEntity.getId()).addParticipants(userMapper.toParticipantProto(userEntity)).build();
+              classAttenance = classAttenance.toBuilder().addLessonsAttendance(lessonAttendance).buildPartial();
+            }
+          }
+        }
+      }
+
+      classAttenance = classAttenance.toBuilder().build();
+
+      response.onNext(
+          ResponseGetClassAttendance.newBuilder().setAttendance(classAttenance)
+              .build());
+      response.onCompleted();
+
+    }
+    catch (Exception e)
+    {
+      response.onError(new Throwable(e.getMessage()));
     }
   }
 
