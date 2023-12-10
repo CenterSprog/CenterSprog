@@ -3,58 +3,53 @@
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.HomeworkDTO
 @using Domain.DTOs.LessonDTO
+@using UIComponents
 @inject ILessonService lessonService
 @inject IHandInHomeworkService HandInHomeworkService
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IFeedbackService FeedbackService
+@inject NavigationManager navMgr
 
-<AuthorizeView>
-    <Authorized>
-        @if (lesson != null)
-        {
-            <div class="lesson-container">
-                <div class="lesson-card">
-                    <div class="lesson-header">
-                        <div class="icon-container">
-                            <img src="/notebook.png" alt="Lesson Icon"/>
-                        </div>
-                        <div class="lesson-header-content">
-                            <h3>Lesson. @lesson.Date @lesson.Topic</h3>
-                        </div>
+@if (Lesson != null)
+{
+    <LessonDetailComponent Lesson=@Lesson/>
+
+    @if (Lesson.Homework != null)
+    {
+        <div class="homework-container">
+            <div class="homework-card">
+                <div class="homework-header">
+                    <div class="icon-container">
+                        <img src="/homework.png" alt="Homework Icon"/>
                     </div>
-                    <div class="lesson-description">
-                        <p>@lesson.Description</p>
+                    <div class="homework-header-content">
+                        <h3>Homework. @Lesson.Date @Lesson.Homework.Title</h3>
                     </div>
-                    <AuthorizeView Policy="MustBeTeacher">
-                        <Authorized Context="teacherAuthorized">
-                            <MarkAttendanceComponent LessonId="@lessonId" ClassId="@classId"/>
-                        </Authorized>
-                    </AuthorizeView>
                 </div>
-            </div>
+                <div class="homework-description">
+                    <p>@Lesson.Homework.Description</p>
+                    <p>
+                        <strong>Deadline:</strong> @Lesson.Homework.Deadline
+                    </p>
+                </div>
+                <AuthorizeView Policy="MustBeTeacher">
+                    <Authorized Context="teacherAuthorized">
+                        <div class="submitted-container">
+                            <button @onclick="ViewSubmittedHomeworks" type="button">
+                                <strong>View submitted homeworks</strong>
+                            </button>
+                        </div>
+                    </Authorized>
+                </AuthorizeView>
 
-            @if (lesson.Homework != null)
-            {
-                <div class="homework-container">
-                    <div class="homework-card">
-                        <div class="homework-header">
-                            <div class="icon-container">
-                                <img src="/homework.png" alt="Homework Icon"/>
-                            </div>
-                            <div class="homework-header-content">
-                                <h3>Homework. @lesson.Date @lesson.Homework.Title</h3>
-                            </div>
-                        </div>
-                        <div class="homework-description">
-                            <p>@lesson.Homework.Description</p>
-                            <p>
-                                <strong>Deadline:</strong> @lesson.Homework.Deadline
-                            </p>
-                        </div>
+
+                <AuthorizeView Policy="MustBeStudent">
+                    <Authorized Context="studentAuthorized">
                         <div class="input-container">
 
-                            @if (!homeworkSubmitted)
+                            @if (!HomeworkSubmitted)
                             {
-                                <input @bind="answer" type="text" placeholder="Paste your answer here"/>
+                                <input @bind="Answer" type="text" placeholder="Paste your answer here"/>
                                 <button @onclick="HandInHomework" type="button">
                                     <strong>Hand in</strong>
                                 </button>
@@ -62,7 +57,7 @@
                             else
                             {
                                 <div class="submitted-container">
-                                    <button>
+                                    <button class="submitted-button" disabled>
                                         <strong>Submitted</strong>
                                     </button>
                                     <button @onclick="SeeFeedback" type="button">
@@ -70,50 +65,64 @@
                                     </button>
                                 </div>
                             }
+                            <div class="msg-container">
+                                @if (Msg is not null)
+                                {
+                                    <div>
+                                        @Msg
+                                    </div>
+                                }
+                            </div>
+
                         </div>
+                    </Authorized>
+                </AuthorizeView>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="homework-container homework-no-content">
+            <div class="homework-card">
+                <div class="homework-header">
+                    <div class="icon-container">
+                        <img src="/homework.png" alt="Homework Icon"/>
+                    </div>
+                    <div class="homework-header-content">
+                        <h3>Homework. </h3>
+                        <p>No homework for this lesson yet. Check back later!</p>
                     </div>
                 </div>
-            }
-            else
+            </div>
+        </div>
+    }
+
+
+    <Modal ShowModal="@showModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h4>Feedback</h4>
+                <button type="button" class="close-button" aria-label="Close" @onclick="() => CloseModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Grade:</strong> @Feedback.Grade</p>
+                <p><strong>Comment:</strong> @Feedback.Comment</p>
+            </div>
+        </div>
+    </Modal>
+
+    <AuthorizeView Policy="MustBeTeacher">
+        <Authorized Context="teacherAuthorized">
+            @if (Lesson.Homework == null)
             {
-                <div class="homework-container homework-no-content">
-                    <div class="homework-card">
-                        <div class="homework-header">
-                            <div class="icon-container">
-                                <img src="/homework.png" alt="Homework Icon"/>
-                            </div>
-                            <div class="homework-header-content">
-                                <h3>Homework</h3>
-                                <p>No homework for this lesson yet. Check back later!</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <AssignHomeworkComponent LessonId=@lessonId LessonDate=@Lesson.Date/>
             }
+        </Authorized>
+    </AuthorizeView>
+}
 
-            @if (Msg is not null)
-            {
-                <div>
-                    @Msg
-                </div>
-            }
-
-            <AuthorizeView Policy="MustBeTeacher">
-                <Authorized Context="teacherAuthorized">
-                    @if (lesson.Homework == null)
-                    {
-                        <AssignHomeworkComponent LessonId=@lessonId LessonDate=@lesson.Date/>
-                    }
-                </Authorized>
-            </AuthorizeView>
-        }
-
-    </Authorized>
-
-    <NotAuthorized>
-        <p>You are not authorized to view this content.</p>
-    </NotAuthorized>
-</AuthorizeView>
 
 @code {
 
@@ -123,51 +132,93 @@
     [Parameter]
     public string lessonId { get; set; }
 
-    Lesson lesson;
-    Homework homework;
-    HandInHomework handInHomework;
-    private string answer;
-    public string Msg { get; set; }
-    User user;
-    public HomeworkHandInDTO Dto { get; set; }
+    Lesson Lesson { get; set; }
+    Homework Homework { get; set; }
+    HandInHomework handInHomework { get; set; }
+    User User { get; set; }
+    HomeworkHandInDTO Dto { get; set; }
+    Feedback Feedback { get; set; }
 
-    private bool homeworkSubmitted = false;
+    public bool HomeworkSubmitted { get; set; }
+    public string Answer { get; set; }
+    public string Msg { get; set; }
+    private bool showModal { get; set; }
+    private string studentUsername { get; set; }
+
 
     protected override async Task OnInitializedAsync()
     {
+        Lesson = await lessonService.GetByIdAsync(lessonId);
+        Msg = null;
+        Answer = null;
+        HomeworkSubmitted = false;
+        Feedback = new Feedback();
+        User = new User();
+        Homework = new Homework();
+        handInHomework = new HandInHomework();
+        showModal = false;
+        studentUsername = null;
+
+
+        await FetchHandins();
+
+        await base.OnInitializedAsync();
+    }
+
+    private async Task FetchHandins()
+    {
         try
         {
-            lesson = await lessonService.GetByIdAsync(lessonId);
-            homework = lesson.Homework;
-            handInHomework = new HandInHomework
+            Msg = null;
+            Lesson = await lessonService.GetByIdAsync(lessonId);
+            Homework = Lesson.Homework;
+
+            var username = await GetAuthenticatedUsernameAsync();
+            try
             {
-                Id = "",
-                Answer = answer
-            };
+                handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync(Homework.Id, username);
+
+                HomeworkSubmitted = handInHomework != null;
+            }
+            catch (Exception e)
+            {
+                HomeworkSubmitted = false;
+            }
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            Msg = $"{e.Message}";
+            Msg = e.Message;
         }
     }
-
 
     private async Task HandInHomework()
     {
         try
         {
-            handInHomework.Answer = answer;
+            if (string.IsNullOrWhiteSpace(Answer))
+            {
+                Msg = "Please provide an answer before submitting.";
+                StateHasChanged();
+                return;
+            }
+            handInHomework = new HandInHomework
+            {
+                Id = "",
+                Answer = Answer,
+                StudentUsername = ""
+            };
 
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var user = authState.User;
-            var username = user.Identity?.Name;
+            handInHomework.Answer = Answer;
 
-            Dto = new HomeworkHandInDTO(homework.Id, username, handInHomework);
+            var username = await GetAuthenticatedUsernameAsync();
+
+            Dto = new HomeworkHandInDTO(Homework.Id, username, handInHomework);
             await HandInHomeworkService.HandInHomework(Dto);
             Console.WriteLine("Homework submitted successfully!");
 
-            homeworkSubmitted = true;
+            HomeworkSubmitted = true;
+            Msg = null;
         }
         catch (Exception ex)
         {
@@ -176,9 +227,65 @@
         }
     }
 
-    private void SeeFeedback()
+
+    private void ViewSubmittedHomeworks()
     {
-    // see feedback logic 
+        var homeworkId = Homework.Id;
+        Console.WriteLine($"Getting submitted homeworks for the homework with id: {homeworkId}");
+        navMgr.NavigateTo($"/Homeworks/{homeworkId}");
+        Console.WriteLine($"Navigating to the submitted homeworks page with the id: {homeworkId}");
+    }
+
+
+    private async Task SeeFeedback()
+    {
+        try
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var username = await GetAuthenticatedUsernameAsync();
+
+            if (handInHomework != null && username != null)
+            {
+                var feedback = await FeedbackService.GetFeedbackByHandInIdAndStudentUsernameAsync(handInHomework.Id, username);
+
+                if (feedback != null)
+                {
+                    Feedback = new Feedback
+                    {
+                        Grade = feedback.Grade,
+                        Comment = feedback.Comment
+                    };
+
+                    studentUsername = username;
+                    Answer = "";
+                    showModal = true;
+                }
+                else
+                {
+                    Console.WriteLine("No feedback available for this hand-in.");
+                }
+            }
+        }
+
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching feedback: {ex.Message}");
+            Console.WriteLine($"StackTrace: {ex.StackTrace}");
+            Msg = "No feedback is available at the moment";
+        }
+    }
+
+    private void CloseModal()
+    {
+        showModal = false;
+    }
+
+    private async Task<string> GetAuthenticatedUsernameAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        return user.Identity?.Name;
     }
 
 }

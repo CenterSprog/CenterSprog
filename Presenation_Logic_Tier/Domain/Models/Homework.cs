@@ -14,4 +14,8 @@ public class Homework
         Title = title;
         Description = description;
     }
+
+    public Homework()
+    {
+    }
 }

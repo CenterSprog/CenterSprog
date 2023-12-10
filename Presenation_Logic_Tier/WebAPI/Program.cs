@@ -5,6 +5,7 @@ using Application.gRPCClients;
 using Application.Logic;
 using Application.LogicInterfaces;
 using Domain.Auth;
+using Domain.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using HttpClients.ClientInterfaces;
@@ -49,11 +50,14 @@ builder.Services.AddScoped<IClassLogic, ClassLogic>();
 builder.Services.AddScoped<IClassClient, ClassClient>();
 builder.Services.AddScoped<IHandInHomeworkLogic, HandInHomeworkLogic>();
 builder.Services.AddScoped<HandInHomeworkClient>();
+builder.Services.AddScoped<IFeedbackClient, FeedbackClient>();
+builder.Services.AddScoped<IFeedbackLogic, FeedbackLogic>();
 
 builder.Services.AddScoped<IHandInHomeworkService, HandInHomeworkHttpClient>();
 
 builder.Services.AddHttpClient<ILessonService, LessonHttpClient>();
 builder.Services.AddHttpClient<IHandInHomeworkService, HandInHomeworkHttpClient>();
+builder.Services.AddHttpClient<IFeedbackService, FeedbackHttpClient>();
 
 builder.Services.AddLogging(builder => builder
     .AddConsole()

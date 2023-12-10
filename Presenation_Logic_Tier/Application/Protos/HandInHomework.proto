@@ -10,6 +10,7 @@ option java_outer_classname = "HandInHomeworkProto";
 message HandInHomework{
   optional string id = 1;
   string answer = 2;
+  string studentUsername = 3;
 
 }
 message RequestCreateHandInHomework{
@@ -27,8 +28,15 @@ message RequestGetHandInByHomeworkIdAndStudentUsername{
   string homeworkId = 1;
   string studentUsername = 2;
 }
+message RequestGetHandInsByHomeworkId{
+  string homeworkId = 1;
+}
+message ResponseGetHandInsByHomeworkId{
+  repeated HandInHomework handIns = 1;
+}
 service HandInHomeworkService{
   rpc handInHomework( RequestCreateHandInHomework ) returns (ResponseGetHandInHomework);
   rpc getHandInById(RequestGetHandInHomework) returns (ResponseGetHandInHomework);
   rpc getHandInByHomeworkIdAndStudentUsername (RequestGetHandInByHomeworkIdAndStudentUsername) returns (ResponseGetHandInHomework);
+  rpc getHandInsByHomeworkId(RequestGetHandInsByHomeworkId) returns (ResponseGetHandInsByHomeworkId);
 }
