@@ -2,6 +2,7 @@
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.ClassDTO
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IClassService classService
 @inject NavigationManager navMgr
 
@@ -36,10 +37,13 @@ else
         
     protected override async Task OnInitializedAsync()
     {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var username = user.Identity?.Name;
         msg = "";
         try
         {
-            classes = await classService.GetAllAsync(new SearchClassDTO("joseph"));
+            classes = await classService.GetAllAsync(new SearchClassDTO(username));
         }
         catch (Exception e)
         {

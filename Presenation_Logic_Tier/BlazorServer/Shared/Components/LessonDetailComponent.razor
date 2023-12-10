@@ -1,0 +1,25 @@
+﻿@using Domain.Models
+
+@if (Lesson != null)
+{
+    <div class="lesson-container">
+    <div class="lesson-card">
+        <div class="lesson-header">
+            <div class="icon-container">
+                <img src="/notebook.png" alt="Lesson Icon" />
+            </div>
+            <div class="lesson-header-content">
+                <h3>Lesson. @Lesson.Date @Lesson.Topic</h3>
+            </div>
+        </div>
+        <div class="lesson-description">
+            <p>@Lesson.Description</p>
+        </div>
+    </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Lesson Lesson { get; set; }
+}

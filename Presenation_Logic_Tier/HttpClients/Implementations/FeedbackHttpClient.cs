@@ -15,7 +15,7 @@ public class FeedbackHttpClient : IFeedbackService
         _client = client;
     }
 
-    public async Task<Feedback> AddFeedback(AddFeedbackDTO addFeedbackDto)
+    public async Task<Feedback> AddFeedbackAsync(AddFeedbackDTO addFeedbackDto)
     {
         HttpResponseMessage responseMessage = await _client.PostAsJsonAsync("/feedbacks", addFeedbackDto);
         Feedback? createdFeedback = await responseMessage.Content.ReadFromJsonAsync<Feedback>();
@@ -29,8 +29,12 @@ public class FeedbackHttpClient : IFeedbackService
 
     public async Task<Feedback> GetFeedbackByHandInIdAndStudentUsernameAsync(string handInId, string studentUsername)
     {
-        HttpResponseMessage responseMessage = await _client.GetAsync($"/feedbacks?handInId={handInId}&studentUsername={studentUsername}");
+        HttpResponseMessage responseMessage = await _client.GetAsync($"/feedbacks/{handInId}/{studentUsername}");
 
+        if (!responseMessage.IsSuccessStatusCode)
+        {
+            throw new Exception($"Failed to get feedback. Status code: {responseMessage.StatusCode}");
+        }
         
         Feedback? createdFeedback = await responseMessage.Content.ReadFromJsonAsync<Feedback>();
         

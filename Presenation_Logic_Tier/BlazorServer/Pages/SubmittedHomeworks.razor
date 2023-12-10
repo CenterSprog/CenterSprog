@@ -9,20 +9,19 @@
 @inject IFeedbackService FeedbackService
 
 
-@if (handIns == null)
+@if (HandIns == null)
 {
     <span>Loading submitted homeworks...</span>
 }
-else if (!handIns.Any())
+else if (!HandIns.Any())
 {
     <p>No hand-ins were submitted for this homework</p>
 }
 else
 {
     <div class="homework-cards">
-        @foreach (var handIn in handIns)
+        @foreach (var handIn in HandIns)
         {
-            
             <div class="homework-card" @onclick="() => ShowModal(handIn.StudentUsername, handIn.Answer)">
                 <div class="card-content">
                     <h4>Student: @handIn.StudentUsername</h4>
@@ -34,90 +33,133 @@ else
 }
 
 <Modal ShowModal="@showModal">
-    <div class="modal-content">
-        <h5>Student: @studentUsername</h5>
-        <p>Answer: @studentAnswer</p>
-     
-        <div class="mb-3">
-            <label for="gradeInput" class="form-label">Grade</label>
-            <input type="number" class="form-control" id="gradeInput" @bind="feedbackGrade" />
+    <div class="modal-container">
+        <div class="modal-header">
+            <h4>Give feedback</h4>
+            <button type="button" class="close-button" aria-label="Close" @onclick="() => Proceed()">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-        <div class="mb-3">
-            <label for="feedbackInput" class="form-label">Feedback</label>
-            <textarea class="form-control" id="feedbackInput" rows="3" @bind="@feedbackComment"></textarea>
+        <div class="modal-body">
+            <p><strong>Student:</strong> @StudentUsername</p>
+                    <p><strong>Answer:</strong> @StudentAnswer</p>
+            
+                    <div class="mb-3">
+                        <label for="gradeInput" class="form-label">Grade</label>
+                        <input type="number" class="form-control" id="gradeInput" @bind="FeedbackGrade"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="feedbackInput" class="form-label">Feedback</label>
+                        <textarea class="form-control" id="feedbackInput" rows="3" @bind="@FeedbackComment"></textarea>
+                    </div>
+            
+                    <div class="buttons-container">
+                        <button class="btn btn-primary" @onclick="SendFeedback">Send Feedback</button>
+                    </div>
+            
+                        <div class="msg-container">
+                            @if (Msg is not null)
+                            {
+                                <div style="text-align: center;">
+                                    @Msg
+                                </div>
+                            }
+                        </div>
         </div>
-     
-        <button class="btn btn-primary" @onclick="SendFeedback">Send Feedback</button>
-        <button class="btn btn-secondary" @onclick="() => Proceed()">Close</button>
         
-    </div>
-     @if (Msg is not null)
-        {
-            <div>
-                @Msg
-                </div>
-        }
+            </div>
+
 </Modal>
 
 
 @code {
+
     [Parameter]
     public string homeworkId { get; set; }
 
-    Homework homework;
-    IEnumerable<HandInHomework> handIns;
-    HandInHomework handIn;
-    Feedback Feedback;
+    Homework Homework { get; set; }
+    IEnumerable<HandInHomework> HandIns { get; set; }
+    HandInHomework HandIn { get; set; }
     AddFeedbackDTO Dto { get; set; }
-    private bool showModal;
-    private string studentUsername;
-    private string studentAnswer;
-    private string feedbackText;
+    private bool showModal { get; set; }
+    private string StudentUsername { get; set; }
+    private string StudentAnswer { get; set; }
 
-    private int feedbackGrade { get; set; }
-    private string feedbackComment { get; set; }
-    
+    private int FeedbackGrade { get; set; }
+    private string FeedbackComment { get; set; }
     private string Msg { get; set; }
-    
-    
+
 
     protected override async Task OnInitializedAsync()
     {
-        Msg = "";
-        handIns = await HandInService.GetHandInsByHomeworkIdAsync(homeworkId);
+        Homework = new Homework();
+        HandIns = await HandInService.GetHandInsByHomeworkIdAsync(homeworkId);
+        HandIn = new HandInHomework();
+        showModal = false;
+        StudentUsername = null;
+        StudentAnswer = null;
+        FeedbackGrade = 0;
+        FeedbackComment = null;
+        Msg = null;
+
+
+        await base.OnInitializedAsync();
     }
-    
-    
+
+
     private void Proceed()
     {
+        Msg = null;
         showModal = false;
         navMgr.NavigateTo("/Homeworks/{homeworkId}");
     }
-    
+
     private void ShowModal(string username, string answer)
     {
-        studentUsername = username;
-        studentAnswer = answer;
+        StudentUsername = username;
+        StudentAnswer = answer;
         showModal = true;
-        
-        handIn = handIns.FirstOrDefault(h => h.StudentUsername == studentUsername && h.Answer == studentAnswer);
 
+        HandIn = HandIns.FirstOrDefault(h => h.StudentUsername == StudentUsername && h.Answer == StudentAnswer);
     }
-    
+
     private async Task SendFeedback()
     {
+        if (string.IsNullOrWhiteSpace(FeedbackComment))
+        {
+            Msg = "Please provide both grade and feedback";
+            StateHasChanged();
+            return;
+        }
+        try
+        {
+    //check if there is already a feedback for this hand-in
+            var existingFeedback = await FeedbackService.GetFeedbackByHandInIdAndStudentUsernameAsync(HandIn.Id, HandIn.StudentUsername);
+            if (existingFeedback != null)
+            {
+                Msg = "Feedback already provided for this hand-in";
+                StateHasChanged();
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching existing feedback: {ex.Message}");
+        }
+
         var feedback = new Feedback()
         {
             Id = "",
-            Grade = feedbackGrade,
-            Comment = feedbackComment
+            Grade = FeedbackGrade,
+            Comment = FeedbackComment
         };
-        
-        Dto = new AddFeedbackDTO(handIn.Id, handIn.StudentUsername, feedback);
+
+        Dto = new AddFeedbackDTO(HandIn.Id, HandIn.StudentUsername, feedback);
         try
         {
-            await FeedbackService.AddFeedback(Dto);
-            showModal = false;
+            await FeedbackService.AddFeedbackAsync(Dto);
+            Msg = "Feedback was successfully added";
+            StateHasChanged();
         }
         catch (Exception ex)
         {
@@ -126,4 +168,5 @@ else
             StateHasChanged();
         }
     }
+
 }

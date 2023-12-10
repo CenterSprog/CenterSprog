@@ -1,0 +1,29 @@
+﻿@using Domain.Models
+@inject NavigationManager navMgr
+
+<div class="submitted-container">
+    <button @onclick="ViewSubmittedHomeworks" type="button">
+        <strong>View submitted homeworks</strong>
+    </button>
+</div>
+
+@code {
+    
+    Homework Homework { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        Homework = new Homework();
+        base.OnInitialized();
+    }
+
+    private void ViewSubmittedHomeworks()
+    {
+        var homeworkId = Homework.Id;
+        Console.WriteLine($"Getting submitted homeworks for the homework with id: {homeworkId}");
+        navMgr.NavigateTo($"/Homeworks/{homeworkId}");
+        Console.WriteLine($"Navigating to the submitted homeworks page with the id: {homeworkId}");
+    }
+
+}

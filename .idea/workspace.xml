@@ -5,29 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbecce9e-7f7d-4c07-9ecb-5484121f1f74" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/mappers/FeedbackMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/FeedbackServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/ClientInterfaces/IFeedbackClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Logic/FeedbackLogic.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/LogicInterfaces/IFeedbackLogic.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Protos/Feedback.proto" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/FeedbackClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Modal.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Modal.razor.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/DTOs/FeedbackDTO/AddFeedbackDTO.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/Feedback.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/ClientInterfaces/IFeedbackService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/FeedbackHttpClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/FeedbacksController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/HomeworkDetailComponent.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/HomeworkDetailComponent.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LessonDetailComponent.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LessonDetailComponent.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/ViewSubmittedHomeworksComponent.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/ViewSubmittedHomeworksComponent.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c926018e-153c-4b39-8db8-808a33194b29.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c926018e-153c-4b39-8db8-808a33194b29.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IFeedbackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IFeedbackRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IHandInHomeworkRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IHandInHomeworkRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/HandInHomeworkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/HandInHomeworkServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/proto/Feedback.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/proto/Feedback.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/Application.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/SubmittedHomeworks.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/SubmittedHomeworks.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/SubmittedHomeworks.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/SubmittedHomeworks.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Modal.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Modal.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/wwwroot/css/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/wwwroot/css/site.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/Homework.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Domain/Models/Homework.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/ClientInterfaces/IFeedbackService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/ClientInterfaces/IFeedbackService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/FeedbackHttpClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/HttpClients/Implementations/FeedbackHttpClient.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +41,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/view-submitted-homeworks" />
+        <entry key="$PROJECT_DIR$" value="feature/give-feedback" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -80,7 +76,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/give-feedback&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/see-feedback&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Program Files/Java&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -125,7 +121,9 @@
       <workItem from="1701347431349" duration="1422000" />
       <workItem from="1701552408616" duration="10825000" />
       <workItem from="1701616355565" duration="29032000" />
-      <workItem from="1701849937123" duration="27066000" />
+      <workItem from="1701849937123" duration="32150000" />
+      <workItem from="1702033300109" duration="8030000" />
+      <workItem from="1702231144430" duration="815000" />
     </task>
     <servers />
   </component>

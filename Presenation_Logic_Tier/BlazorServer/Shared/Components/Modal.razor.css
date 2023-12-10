@@ -16,10 +16,14 @@
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
-    border: 1px solid #000000;
     /*display:inline-block;*/
     width: 30%; /* Could be more or less, depending on screen size */
     min-width: 300px;
     border-radius: 25px;
     box-shadow: 0 5px 30px 15px #3f3f3f;
+}
+.modal-container button {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Adjust the gap between buttons as needed */
 }
