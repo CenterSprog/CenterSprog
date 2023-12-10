@@ -2,13 +2,10 @@
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.HomeworkDTO
-@using Domain.DTOs.LessonDTO
-@using UIComponents
 @inject ILessonService lessonService
 @inject IHandInHomeworkService HandInHomeworkService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IFeedbackService FeedbackService
-@inject NavigationManager navMgr
 
 @if (Lesson != null)
 {
@@ -34,47 +31,18 @@
                 </div>
                 <AuthorizeView Policy="MustBeTeacher">
                     <Authorized Context="teacherAuthorized">
-                        <div class="submitted-container">
-                            <button @onclick="ViewSubmittedHomeworks" type="button">
-                                <strong>View submitted homeworks</strong>
-                            </button>
-                        </div>
+
+                        <ViewSubmittedHomeworksComponent LessonId="@lessonId" ClassId="@classId"/>
+
                     </Authorized>
                 </AuthorizeView>
 
 
                 <AuthorizeView Policy="MustBeStudent">
                     <Authorized Context="studentAuthorized">
-                        <div class="input-container">
 
-                            @if (!HomeworkSubmitted)
-                            {
-                                <input @bind="Answer" type="text" placeholder="Paste your answer here"/>
-                                <button @onclick="HandInHomework" type="button">
-                                    <strong>Hand in</strong>
-                                </button>
-                            }
-                            else
-                            {
-                                <div class="submitted-container">
-                                    <button class="submitted-button" disabled>
-                                        <strong>Submitted</strong>
-                                    </button>
-                                    <button @onclick="SeeFeedback" type="button">
-                                        <strong>See feedback</strong>
-                                    </button>
-                                </div>
-                            }
-                            <div class="msg-container">
-                                @if (Msg is not null)
-                                {
-                                    <div>
-                                        @Msg
-                                    </div>
-                                }
-                            </div>
+                        <HandInHomeworkComponent LessonId="@lessonId" ClassId="@classId"/>
 
-                        </div>
                     </Authorized>
                 </AuthorizeView>
             </div>
@@ -90,28 +58,14 @@
                     </div>
                     <div class="homework-header-content">
                         <h3>Homework. </h3>
-                        <p>No homework for this lesson yet. Check back later!</p>
                     </div>
+                </div>
+                <div class="homework-description">
+                    <p>No homework for this lesson yet. Check back later!</p>
                 </div>
             </div>
         </div>
     }
-
-
-    <Modal ShowModal="@showModal">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h4>Feedback</h4>
-                <button type="button" class="close-button" aria-label="Close" @onclick="() => CloseModal()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p><strong>Grade:</strong> @Feedback.Grade</p>
-                <p><strong>Comment:</strong> @Feedback.Comment</p>
-            </div>
-        </div>
-    </Modal>
 
     <AuthorizeView Policy="MustBeTeacher">
         <Authorized Context="teacherAuthorized">
@@ -136,13 +90,11 @@
     Homework Homework { get; set; }
     HandInHomework handInHomework { get; set; }
     User User { get; set; }
-    HomeworkHandInDTO Dto { get; set; }
     Feedback Feedback { get; set; }
 
     public bool HomeworkSubmitted { get; set; }
     public string Answer { get; set; }
     public string Msg { get; set; }
-    private bool showModal { get; set; }
     private string studentUsername { get; set; }
 
 
@@ -154,14 +106,12 @@
         HomeworkSubmitted = false;
         Feedback = new Feedback();
         User = new User();
-        Homework = new Homework();
+        Homework = Lesson.Homework;
         handInHomework = new HandInHomework();
-        showModal = false;
         studentUsername = null;
 
 
         await FetchHandins();
-
         await base.OnInitializedAsync();
     }
 
@@ -170,14 +120,14 @@
         try
         {
             Msg = null;
-            Lesson = await lessonService.GetByIdAsync(lessonId);
-            Homework = Lesson.Homework;
 
-            var username = await GetAuthenticatedUsernameAsync();
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var username = user.Identity?.Name;
+
             try
             {
                 handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync(Homework.Id, username);
-
                 HomeworkSubmitted = handInHomework != null;
             }
             catch (Exception e)
@@ -190,102 +140,6 @@
             Console.WriteLine(e);
             Msg = e.Message;
         }
-    }
-
-    private async Task HandInHomework()
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(Answer))
-            {
-                Msg = "Please provide an answer before submitting.";
-                StateHasChanged();
-                return;
-            }
-            handInHomework = new HandInHomework
-            {
-                Id = "",
-                Answer = Answer,
-                StudentUsername = ""
-            };
-
-            handInHomework.Answer = Answer;
-
-            var username = await GetAuthenticatedUsernameAsync();
-
-            Dto = new HomeworkHandInDTO(Homework.Id, username, handInHomework);
-            await HandInHomeworkService.HandInHomework(Dto);
-            Console.WriteLine("Homework submitted successfully!");
-
-            HomeworkSubmitted = true;
-            Msg = null;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error submitting homework: {ex.Message}");
-            Msg = $"Error submitting homework: {ex.Message}";
-        }
-    }
-
-
-    private void ViewSubmittedHomeworks()
-    {
-        var homeworkId = Homework.Id;
-        Console.WriteLine($"Getting submitted homeworks for the homework with id: {homeworkId}");
-        navMgr.NavigateTo($"/Homeworks/{homeworkId}");
-        Console.WriteLine($"Navigating to the submitted homeworks page with the id: {homeworkId}");
-    }
-
-
-    private async Task SeeFeedback()
-    {
-        try
-        {
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var user = authState.User;
-            var username = await GetAuthenticatedUsernameAsync();
-
-            if (handInHomework != null && username != null)
-            {
-                var feedback = await FeedbackService.GetFeedbackByHandInIdAndStudentUsernameAsync(handInHomework.Id, username);
-
-                if (feedback != null)
-                {
-                    Feedback = new Feedback
-                    {
-                        Grade = feedback.Grade,
-                        Comment = feedback.Comment
-                    };
-
-                    studentUsername = username;
-                    Answer = "";
-                    showModal = true;
-                }
-                else
-                {
-                    Console.WriteLine("No feedback available for this hand-in.");
-                }
-            }
-        }
-
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error fetching feedback: {ex.Message}");
-            Console.WriteLine($"StackTrace: {ex.StackTrace}");
-            Msg = "No feedback is available at the moment";
-        }
-    }
-
-    private void CloseModal()
-    {
-        showModal = false;
-    }
-
-    private async Task<string> GetAuthenticatedUsernameAsync()
-    {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-        return user.Identity?.Name;
     }
 
 }

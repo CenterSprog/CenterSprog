@@ -1,6 +1,10 @@
 ﻿@using Domain.Models
+@using HttpClients.ClientInterfaces
+@using Domain.DTOs.HomeworkDTO
 @inject NavigationManager navMgr
-
+@inject ILessonService lessonService
+@inject IHandInHomeworkService HandInHomeworkService
+@inject AuthenticationStateProvider AuthenticationStateProvider
 <div class="submitted-container">
     <button @onclick="ViewSubmittedHomeworks" type="button">
         <strong>View submitted homeworks</strong>
@@ -8,14 +12,62 @@
 </div>
 
 @code {
-    
+
+    [Parameter]
+    public string lessonId { get; set; }
+    [Parameter]
+    public string classId { get; set; }
+    public string Msg { get; set; }
     Homework Homework { get; set; }
+    Lesson Lesson { get; set; }
+    HandInHomework handInHomework { get; set; }
+
+    public bool HomeworkSubmitted { get; set; }
+    public string Answer { get; set; }
+    private bool showModal { get; set; }
+    private string studentUsername { get; set; }
 
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
+        Lesson = await lessonService.GetByIdAsync(lessonId);
+        Msg = null;
+        Answer = null;
+        HomeworkSubmitted = false;
         Homework = new Homework();
+        handInHomework = new HandInHomework();
+        showModal = false;
+        studentUsername = null;
+        
+        await FetchHandins();
+        
         base.OnInitialized();
+    }
+    private async Task FetchHandins()
+    {
+        try
+        {
+            Msg = null;
+            Lesson = await lessonService.GetByIdAsync(lessonId);
+            Homework = Lesson.Homework;
+            
+            var username = await GetAuthenticatedUsernameAsync();
+            try
+            {
+                handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync(Homework.Id, username);
+
+                HomeworkSubmitted = handInHomework != null;
+            }
+            catch (Exception e)
+            {
+                HomeworkSubmitted = false;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            Msg = e.Message;
+        }
     }
 
     private void ViewSubmittedHomeworks()
@@ -24,6 +76,13 @@
         Console.WriteLine($"Getting submitted homeworks for the homework with id: {homeworkId}");
         navMgr.NavigateTo($"/Homeworks/{homeworkId}");
         Console.WriteLine($"Navigating to the submitted homeworks page with the id: {homeworkId}");
+    }
+    
+    private async Task<string> GetAuthenticatedUsernameAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        return user.Identity?.Name;
     }
 
 }

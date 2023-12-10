@@ -1,0 +1,123 @@
+﻿@using Domain.Models
+@using Domain.DTOs.HomeworkDTO
+@using HttpClients.ClientInterfaces
+@inject ILessonService lessonService
+@inject IHandInHomeworkService HandInHomeworkService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IFeedbackService FeedbackService
+
+<div class="submitted-container">
+    <button class="submitted-button" disabled>
+        <strong>Submitted</strong>
+    </button>
+
+    <button @onclick="SeeFeedback" type="button">
+        <strong>See feedback</strong>
+    </button>
+</div>
+<div class="msg-container">
+    @if (Msg is not null)
+    {
+        <div>
+            @Msg
+        </div>
+    }
+</div>
+
+<Modal ShowModal="@showModal">
+    <div class="modal-container">
+        <h4 class="fw-bold">Feedback</h4>
+        <div class="modal-body">
+            <p>
+                <strong>Grade:</strong> @Feedback.Grade
+            </p>
+            <p>
+                <strong>Comment:</strong> @Feedback.Comment
+            </p>
+        </div>
+
+
+    </div>
+</Modal>
+
+@code {
+
+    [Parameter]
+    public string lessonId { get; set; }
+
+    [Parameter]
+    public string classId { get; set; }
+
+    [Parameter]
+    public HandInHomework handInHomework { get; set; }
+
+    Lesson Lesson { get; set; }
+    Homework Homework { get; set; }
+    User User { get; set; }
+    HomeworkHandInDTO Dto { get; set; }
+    Feedback Feedback { get; set; }
+
+    public string Answer { get; set; }
+    public string Msg { get; set; }
+    private bool showModal { get; set; }
+    private string studentUsername { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Lesson = await lessonService.GetByIdAsync(lessonId);
+        Msg = null;
+        Answer = null;
+        Feedback = new Feedback();
+        User = new User();
+        Homework = Lesson.Homework;
+        handInHomework = new HandInHomework();
+        showModal = false;
+        studentUsername = null;
+
+        await base.OnInitializedAsync();
+    }
+
+
+    private async Task SeeFeedback()
+    {
+        try
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var username = user.Identity?.Name;
+            
+            handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync(Homework.Id, username);
+            
+            Console.WriteLine(handInHomework.Id + username);
+
+            if (handInHomework != null && username != null)
+            {
+                var feedback = await FeedbackService.GetFeedbackByHandInIdAndStudentUsernameAsync(handInHomework.Id, username);
+
+                if (feedback != null)
+                {
+                    Feedback = new Feedback
+                    {
+                        Grade = feedback.Grade,
+                        Comment = feedback.Comment
+                    };
+
+                    studentUsername = username;
+                    Answer = "";
+                    showModal = true;
+                }
+                else
+                {
+                    Console.WriteLine("No feedback available for this hand-in.");
+                }
+            }
+        }
+
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching feedback: {ex.Message}");
+            Msg = "No feedback is available at the moment";
+        }
+    }
+    
+}

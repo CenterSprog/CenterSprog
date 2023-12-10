@@ -28,3 +28,7 @@
     flex-direction: column;
     gap: 0.5rem; 
 }
+
+.modal-box .btn-light {
+    background: transparent;
+}

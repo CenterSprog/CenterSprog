@@ -44,48 +44,6 @@
 p {
     margin-top: 20px;
 }
-
-.input-container {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
-    margin-top: auto;
-    margin-right: 10px;
-}
-
-.input-container button {
-    padding: 8px 12px;
-    margin-right: 10px;
-    border: none;
-    border-radius: 15px;
-}
-
-.input-container input {
-    border-radius: 15px;
-    margin-right: 10px;
-    flex: 1;
-    padding: 5px;
-    background-color: white;
-    color: black;
-    border: 1px solid #D9D9D9;
-}
-.input-container input::placeholder {
-    color: #999;
-}
-
-.submitted-container {
-    margin-right: 10px;
-}
-.submitted-container button {
-    padding: 8px 12px;
-    margin-right: auto;
-    border: none;
-    border-radius: 15px;
-}
-.submitted-button {
-    background-color: green;
-    color: white;
-}
 .msg-container{
     margin-bottom: 10px;
     color: red;
@@ -99,7 +57,7 @@ p {
     height: 100%;
 }
 
-button {
+.button {
     border: none;
     border-radius: 15px;
 }
