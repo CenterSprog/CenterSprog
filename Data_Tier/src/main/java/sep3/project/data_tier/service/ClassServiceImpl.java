@@ -218,43 +218,25 @@ import java.util.*;
 
       Hibernate.initialize(existingClass);
 
-      ClassAttenance classAttenance = ClassAttenance.newBuilder()
-          .buildPartial();
-      if (request.hasUsername())
-      {
-        String username = request.getUsername();
-        Set<LessonEntity> lessons = existingClass.get().getLessons();
-        if (!lessons.isEmpty())
+      List<LessonAttendance> lessonsAttendance = new ArrayList<>();
+        if (!existingClass.get().getLessons().isEmpty())
         {
-          for (LessonEntity lessonEntity : lessons)
+          for (LessonEntity lessonEntity : existingClass.get().getLessons())
           {
-            if (lessonEntity.getAttendance().stream().anyMatch(
-                userEntity -> userEntity.getUsername().equals(username)))
-            {
-              classAttenance = classAttenance.toBuilder()
-                  .addLessons(lessonMapper.toAttendandedProto(lessonEntity))
-                  .buildPartial();
-            }
-          }
-        }
-      }
-      else {
-        if (!existingClass.get().getLessons().isEmpty()) {
-          for (LessonEntity lessonEntity : existingClass.get().getLessons()) {
             Set<UserEntity> usersInAttendance = lessonEntity.getAttendance();
-            for (UserEntity userEntity : usersInAttendance) {
-              LessonAttendance lessonAttendance = LessonAttendance.newBuilder().setId(
-                  lessonEntity.getId()).addParticipants(userMapper.toParticipantProto(userEntity)).build();
-              classAttenance = classAttenance.toBuilder().addLessonsAttendance(lessonAttendance).buildPartial();
+            for (UserEntity userEntity : usersInAttendance)
+            {
+              LessonAttendance lessonAttendance = LessonAttendance.newBuilder()
+                  .setId(lessonEntity.getId())
+                  .addParticipants(userMapper.toParticipantProto(userEntity))
+                  .build();
+              lessonsAttendance.add(lessonAttendance);
             }
           }
         }
-      }
-
-      classAttenance = classAttenance.toBuilder().build();
 
       response.onNext(
-          ResponseGetClassAttendance.newBuilder().setAttendance(classAttenance)
+          ResponseGetClassAttendance.newBuilder().addAllLessonsAttendance(lessonsAttendance)
               .build());
       response.onCompleted();
 
@@ -264,6 +246,48 @@ import java.util.*;
       response.onError(new Throwable(e.getMessage()));
     }
   }
+
+  @Override @Transactional public void getClassAttendanceByUsername(
+      RequestGetClassAttendanceByUsername request,
+      StreamObserver<ResponseGetClassAttendanceByUsername> response)
+  {
+    try
+    {
+      String id = request.getClassId();
+      Optional<ClassEntity> existingClass = classRepository.findById(id);
+
+      if (existingClass.isEmpty())
+        throw new IllegalStateException("No existing class with id " + id);
+
+      Hibernate.initialize(existingClass);
+
+      List<LessonAttended> lessonsAttended = new ArrayList<>();
+      Set<LessonEntity> lessons = existingClass.get().getLessons();
+      if (!lessons.isEmpty())
+      {
+        for (LessonEntity lessonEntity : lessons)
+        {
+          if (lessonEntity.getAttendance().stream().anyMatch(
+              userEntity -> userEntity.getUsername().equals(request.getUsername())))
+          {
+            lessonsAttended.add(lessonMapper.toAttendandedProto(lessonEntity));
+          }
+        }
+      }
+
+    response.onNext(ResponseGetClassAttendanceByUsername.newBuilder()
+        .addAllLessons(lessonsAttended).build());
+    response.onCompleted();
+
+  }
+    catch(
+  Exception e)
+
+  {
+    response.onError(new Throwable(e.getMessage()));
+  }
+
+}
 
   @Override public void updateParticipants(
       RequestUpdateClassParticipants request,

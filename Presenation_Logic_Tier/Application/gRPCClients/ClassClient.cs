@@ -160,19 +160,19 @@ public class ClassClient : IClassClient
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new ClassEntityService.ClassEntityServiceClient(channel);
 
-        var request = new RequestGetClassAttendance()
+        var request = new RequestGetClassAttendanceByUsername()
         {
             ClassId = dto.Id,
             Username = dto.Username
         };
         
-        var reply =  await client.getClassAttendanceAsync(request);
+        var reply =  await client.getClassAttendanceByUsernameAsync(request);
 
         var lessons = new List<Lesson>();
 
-        if (reply.Attendance.Lessons.Any())
+        if (reply.Lessons.Any())
         {
-            foreach (var lesson in reply.Attendance.Lessons)
+            foreach (var lesson in reply.Lessons)
             {
                 lessons.Add(new Lesson{Id =lesson.Id, Topic = lesson.Topic, Date = lesson.Date});
             }
@@ -198,9 +198,9 @@ public class ClassClient : IClassClient
 
         var lessons = new List<Lesson>();
         
-        if (reply.Attendance.LessonsAttendance.Any())
+        if (reply.LessonsAttendance.Any())
         {
-            foreach (var lesson in reply.Attendance.LessonsAttendance)
+            foreach (var lesson in reply.LessonsAttendance)
             {
                 var participants = new List<User>();
                 foreach (var userParticipant in lesson.Participants)
