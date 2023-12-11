@@ -16,7 +16,7 @@ public class LessonsController : ControllerBase
     {
         _lessonLogic = lessonLogic;
     }
-    
+
     [HttpGet("{id}", Name = "GetLessonByIdAsync")]
     public async Task<ActionResult<Lesson>> GetByIdAsync([FromRoute] string id)
     {
@@ -51,7 +51,7 @@ public class LessonsController : ControllerBase
     public async Task<ActionResult<IEnumerable<User>>> GetAttendanceAsync([FromRoute] string id)
     {
         try
-        {   
+        {
             IEnumerable<User> attendees = await _lessonLogic.GetAttendanceAsync(id);
 
             if (attendees == null)
@@ -64,93 +64,24 @@ public class LessonsController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-  /*  
-    
-    [HttpGet("lessons", Name = "GetAsync")]
-    public async Task<IActionResult> GetAsync([FromQuery] SearchLessonParametersDTO searchParameters)
+
+    [HttpPost]
+    public async Task<ActionResult<Lesson>> CreateAsync([FromBody] LessonCreationDTO lessonCreationDto)
     {
         try
         {
-            
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            
-            IEnumerable<Lesson> lessons = await _lessonLogic.GetAsync(searchParameters);
-
-           
-            if (lessons == null || !lessons.Any())
-            {
-                return NotFound();
-            }
-
-            
-            return Ok(lessons);
+            Lesson? createdLesson = await _lessonLogic.CreateAsync(lessonCreationDto);
+            if (createdLesson == null)
+                throw new Exception("Failed to create new Lesson in lesson controller");
+            return Created($"lessons/{createdLesson.Id}", createdLesson);
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            
-            return StatusCode(500, "An error occurred while processing the request.");
+            Console.WriteLine($"Failed create lesson controller : {e.Message}");
+            return StatusCode(500, e.Message);
         }
     }
 
-   */ 
-    
-/*
-    [HttpPost("lessons", Name = "CreateAsync")]
-    public async Task<IActionResult> CreateAsync([FromBody] LessonCreationDTO lessonCreationDto)
-    {
-        try
-        {
-           
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            
-            Lesson createdLesson = await _lessonLogic.CreateAsync(lessonCreationDto);
-
-            
-            return CreatedAtRoute("GetAsync", new { id = createdLesson.Id }, createdLesson);
-        }
-        catch (Exception ex)
-        {
-            
-            return StatusCode(500, "An error occurred while processing the request.");
-        }
-    }*/
-
-/*
-   
-    [HttpPut("lessons", Name = "UpdateAsync")]//{lessonId}
-    public async Task<ActionResult> UpdateAsync( [FromBody] LessonUpdateDTO lessonUpdateDto)
-    {
-        try
-        {
-           
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-           
-            await _lessonLogic.UpdateAsync(lessonUpdateDto);
-
-           
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            
-            return StatusCode(500, "An error occurred while processing the request.");
-        }
-    }
-*/
-   
     [HttpDelete("{lessonId}")]
     public async Task<ActionResult> DeleteAsync([FromRoute] string lessonId)
     {
@@ -158,24 +89,31 @@ public class LessonsController : ControllerBase
         {
             bool deleted = await _lessonLogic.DeleteAsync(lessonId);
 
-          if (!deleted)
+            if (!deleted)
             {
                 return NotFound();
             }
-            
+
             return Ok();
         }
         catch (Exception ex)
         {
-            
+
             return StatusCode(500, "An error occurred while processing the request.");
         }
     }
-
-
-
-
-    
-
-
+    [HttpPatch]
+    public async Task<ActionResult> UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto)
+    {
+        try
+        {
+            await _lessonLogic.UpdateLessonAsync(lessonUpdateDto);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 }

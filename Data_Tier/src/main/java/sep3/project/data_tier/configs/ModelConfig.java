@@ -4,7 +4,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import sep3.project.data_tier.entity.ClassEntity;
-import sep3.project.data_tier.entity.HomeworkEntity;
 import sep3.project.data_tier.entity.LessonEntity;
 import sep3.project.data_tier.entity.UserEntity;
 import sep3.project.data_tier.repository.*;
@@ -14,9 +13,6 @@ public class ModelConfig {
     @Bean
     CommandLineRunner productCommandLineRunner(
             IClassRepository classRepository,
-            IFeedbackRepository feedbackRepository,
-            IHandInHomeworkRepository handInHomeworkRepository,
-            IHomeworkRepository homeworkRepository,
             IUserRepository userRepository,
             ILessonRepository lessonRepository
     ){

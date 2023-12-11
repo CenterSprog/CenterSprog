@@ -27,6 +27,7 @@ public class Lesson
         Date = date;
         Description = description;
         Topic = topic;
+        Homework = null;
     }
     [JsonConstructor]
 

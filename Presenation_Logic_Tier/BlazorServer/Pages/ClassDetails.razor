@@ -1,0 +1,130 @@
+﻿@page "/classes/{classId}"
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@using Domain.DTOs.LessonDTO
+@inject ILessonService lessonService
+@inject IClassService classService
+@inject NavigationManager navMgr
+
+@if (lessons == null)
+{
+    <span>Loading lessons...</span>
+}
+else if (!lessons.Any())
+{
+    <p>No lessons available for this class</p>
+}
+else
+{
+    <div class="class-container">
+        <div class="class-card">
+            <h2>@selectedClass.Title @selectedClass.Room</h2>
+            
+              <AuthorizeView Policy="MustBeTeacher">
+              <div class="add-icon-container" @onclick="AddLesson">
+                  <img src="/add.png" alt="Add Icon" />
+                  
+                  
+                  
+              </div>
+               </AuthorizeView>
+        </div>
+    </div>
+    
+    <div class="lessons-container">
+        @foreach (Lesson lesson in lessons)
+        {
+            Console.WriteLine($"Lesson ID: {lesson.Id}");
+            <div class="lesson-card" >
+                <div class="icon-container">
+                    <img src="/notebook.png" alt="Lesson Icon" />
+                </div>
+                
+                <div class="lesson-content">
+
+                    <h4 @onclick="() => ViewLesson(lesson)">@lesson.Topic. @lesson.Date </h4>
+
+                      <AuthorizeView Policy="MustBeTeacher">
+
+<!--delete lesson button-->
+<button @onclick:stopPropagation="true" @onclick:preventDefault="true" 
+        @onclick="@(()=>DeleteLessonById(lesson.Id))" type="button" class="btn btn-danger">Delete</button>
+
+<!--update lesson  button-->    
+
+<button @onclick:stopPropagation="true" @onclick:preventDefault="true"  
+        @onclick="@(() => navMgr.NavigateTo($"/UpdateLesson/{ClassId}/{lesson.Id}"))"
+        type="button" class="btn btn-success">Update</button>
+
+                                   </AuthorizeView>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public string ClassId { get; set; }
+    
+   
+    private readonly LessonUpdateDTO updatedto = null!;
+
+    private ClassEntity selectedClass;
+    private IEnumerable<Lesson> lessons;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            selectedClass = await classService.GetByIdAsync(ClassId);
+            Console.WriteLine(selectedClass);
+            lessons = await lessonService.GetLessonsByClassIdAsync(ClassId);
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    private void ViewLesson(Lesson lesson)
+    {
+        var lessonId = lesson.Id;
+        Console.WriteLine($"Getting lesson overview for the lesson with id: {lessonId}");
+        navMgr.NavigateTo($"/Lessons/{lessonId}");
+        Console.WriteLine($"Navigating to the lesson overview page with the id: {lessonId}");
+    }
+    
+    private void AddLesson()
+    {
+        navMgr.NavigateTo($"/CreateLesson/{ClassId}");
+    }
+
+    
+
+    private async Task DeleteLessonById(string lessonId)
+    {
+       try
+        {
+            await lessonService.DeleteAsync(lessonId);
+            
+            var list = new List<Lesson>(lessons!);
+            list.RemoveAll(lesson => lesson.Id == lessonId);
+            lessons = list.AsEnumerable();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            
+        }
+        
+    }
+  
+    
+
+}
+
+
+

@@ -68,79 +68,27 @@ public class LessonHttpClient : ILessonService
     }
 
 
-    /*
     public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
     {
-      try
-      {
-        // Convert lessonCreationDto to JSON to include in the request body
-        string jsonBody = JsonSerializer.Serialize(lessonCreationDto);
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
 
-        // Make an asynchronous HTTP POST request
-        HttpResponseMessage response = await client.PostAsync("lessons", content);
-
-        // Check if the request was not successful
+        HttpResponseMessage response = await client.PostAsJsonAsync("/lessons", lessonCreationDto);
+        Lesson? createdLesson = await response.Content.ReadFromJsonAsync<Lesson>();
         if (!response.IsSuccessStatusCode)
         {
-            // Log an error and throw an exception
-            logger.LogError($"Failed to create lesson. Status code: {response.StatusCode}");
-            throw new Exception($"Failed to create lesson. Status code: {response.StatusCode}");
+            throw new Exception("Failed to create a new lesson ");
         }
 
-        // Read the response content
-        var result = await response.Content.ReadAsStringAsync();
-
-        // Deserialize the result into a Lesson
-        var createdLesson = JsonSerializer.Deserialize<Lesson>(result, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        })!;
-
-        // Check if the deserialization was unsuccessful
-        if (createdLesson == null)
-        {
-            // Log a warning and throw an exception
-            logger.LogWarning($"Failed to create lesson. Empty response.");
-            throw new Exception($"Failed to create lesson. Empty response.");
-        }
-
-        // Return the created lesson
         return createdLesson;
-      }
-      catch (HttpRequestException ex)
-      {
-        // Log an error for HTTP request exception and throw an exception
-        logger.LogError($"HTTP request error: {ex.Message}");
-        throw new Exception($"Failed to create lesson. HTTP request error: {ex.Message}");
-      }
-      catch (Exception ex)
-      {
-        // Log an error for other exceptions and throw an exception
-        logger.LogError($"An error occurred: {ex.Message}");
-        throw new Exception($"Failed to create lesson. An error occurred: {ex.Message}");
-      }
     }
-       
-  */
+    public async Task UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto)
+    {
 
-
-/*
-     public async Task UpdateAsync(LessonUpdateDTO updateDto)
-     {
-        
-         
-             // Convert updateDto to JSON to include in the request body
-             string jsonBody = JsonSerializer.Serialize(updateDto);
-             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-             // Make an asynchronous HTTP PUT request
-             HttpResponseMessage response = await client.PutAsync($"lessons/{updateDto.Id}", content);
-
-             
-         
-     }*/
-
+        HttpResponseMessage response = await client.PatchAsJsonAsync("/lessons", lessonUpdateDto);
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception("Failed to update lesson ");
+        }
+    }
 
     public async Task DeleteAsync(string lessonId)
     {

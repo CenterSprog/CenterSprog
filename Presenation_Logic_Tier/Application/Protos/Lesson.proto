@@ -75,22 +75,35 @@ message RequestGetLessonExtendedByHomeworkHandInFeedback{
 message RequestDeleteLesson{
   string lessonId = 1;
 }
-message ResponseDeleteLesson{
-  LessonData lesson = 1;
+message ResponseDeleteLesson {
+  enum Status {
+    OK = 0;
+    FAILED = 1;
+  }
+  Status status = 1;
+  string message = 2;
 }
 
-//message ResponseGetLessonExtendedByHomeworkHandInFeedback{
-//  Lesson lesson = 1;
-//  optional HomeworkHelper homework = 2;
-//  optional FeedbackHelper feedback = 3;
-//}
+message RequestUpdateLesson{
+  string id = 1;
+  //string classId = 2;
+  LessonData lesson = 3;
+}
+message ResponseUpdateLesson {
+  enum Status {
+    OK = 0;
+    FAILED = 1;
+  }
+  Status status = 1;
+  string message = 2;
+  
+}
 service LessonService{
   rpc addLesson(RequestAddLesson) returns (ResponseAddLesson);
   rpc markAttendance(RequestMarkAttendance) returns (ResponseMarkAttendance);
   rpc getAttendance(RequestGetAttendance) returns (ResponseGetAttendance);
   rpc getLessonById(RequestGetLessonById) returns (ResponseGetLessonById);
   rpc getLessonsByClassId(RequestGetLessonsByClassId) returns (ResponseGetLessonsByClassId);
-
   rpc deleteLesson(RequestDeleteLesson) returns (ResponseDeleteLesson);
-  //  rpc GetLessonExtendedByHomeworkHandInFeedback(RequestGetLessonExtendedByHomeworkHandInFeedback) returns (ResponseGetLessonExtendedByHomeworkHandInFeedback);
+  rpc updateLesson(RequestUpdateLesson) returns (ResponseUpdateLesson);
 }

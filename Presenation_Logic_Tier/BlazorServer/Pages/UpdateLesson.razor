@@ -1,0 +1,101 @@
+
+@page "/UpdateLesson/{ClassId}/{LessonId}"
+
+@using Microsoft.AspNetCore.Components
+@using Domain.DTOs.LessonDTO
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject ILessonService lessonService
+@inject NavigationManager navMgr
+ @if(Lesson!=null){
+<div  xmlns="http://www.w3.org/1999/html" >
+    <h3>Update Lesson</h3>
+    <div class="form-floating mb-3">
+       @*    <input value="@Topic" @onchange=@(e => Topic = e.Value.ToString()) type="text" class="form-control" id="floatingInput" /> <span>@Topic</span> *@
+        <input type="text" class="form-control" id="floatingInput" @bind="Lesson.Topic" >
+      <label for="floatingInput" >Topic</label>
+
+    </div>
+    <br/>
+    <div class="form-floating mb-3">
+        <input type="date" class="form-control" id="floatingInput" @bind="Date">
+        <label for="floatingInput">Date</label>
+    </div>
+    <br/>
+    <div class="form-floating">
+        <textarea class="form-control" id="floatingTextarea" @bind="Lesson.Description"></textarea>
+        <label for="floatingTextarea">Description</label>
+    </div>
+    <br/>
+  
+    <div class="button-row">
+        
+        <button @onclick="Update" type="button" class="btn btn-primary">Update Lesson</button>
+    </div>
+</div>}
+
+ @if (Msg is not null) 
+ { 
+     <div> 
+         @Msg 
+     </div> 
+ }
+
+
+
+@code {
+    [Parameter]
+    public string ClassId { get; set; }
+    [Parameter]
+    public string LessonId { get; set; }
+    public DateTime Date { get; set; }
+    private string? Msg { get; set; }
+    public Lesson Lesson { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    
+    {
+       Date = DateTime.Now;
+       Msg = null;
+       try
+       {
+           Lesson = await lessonService.GetByIdAsync(LessonId);
+       }
+       catch (Exception e)
+       {
+           Console.WriteLine(e);
+           Msg = $"{e.Message}";
+       }
+    }
+    
+    
+    private async Task Update()
+    {
+        try
+            { 
+                await lessonService.UpdateLessonAsync(new LessonUpdateDTO(Date.ToFileTimeUtc(),LessonId, Lesson.Topic, Lesson.Description)); 
+                Msg = "Lesson updated successfully!";
+                navMgr.NavigateTo($"/classes/{ClassId}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Msg = e.Message;
+            }
+    
+    }
+   
+    /*
+    
+     private void ValidateLesson()
+     {
+         if (lessonDto.Topic == "")
+            throw new Exception("Topic is required");
+        if(lessonDto.Description == "")
+            throw new Exception("Description is required");
+       // if (Date == "")
+           // throw new Exception("The date is required"); 
+    }*/
+    
+}

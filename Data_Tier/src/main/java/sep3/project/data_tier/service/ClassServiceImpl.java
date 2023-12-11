@@ -280,7 +280,6 @@ import java.util.*;
     {
       response.onError(new Throwable(e.getMessage()));
     }
-
   }
 
   @Override public void updateParticipants(

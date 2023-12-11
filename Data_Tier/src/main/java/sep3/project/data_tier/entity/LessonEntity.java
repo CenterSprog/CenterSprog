@@ -3,7 +3,6 @@ package sep3.project.data_tier.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,22 +21,12 @@ public class LessonEntity {
 	private String description;
 
 	@OneToOne
-	@JoinColumn(
-			name = "homeworkId",
-			unique = true,
-			nullable = true,
-			updatable = true
-	)
+	@JoinColumn(name = "homeworkId", unique = true, nullable = true, updatable = true)
 	private HomeworkEntity homework;
 
 	@ManyToMany
-	@JoinTable(
-			name = "attendance",
-			joinColumns = @JoinColumn(name = "lessonId"),
-			inverseJoinColumns = @JoinColumn(name = "studentUsername")
-	)
+	@JoinTable(name = "attendance", joinColumns = @JoinColumn(name = "lessonId"), inverseJoinColumns = @JoinColumn(name = "studentUsername"))
 	private Set<UserEntity> attendance = new HashSet<>();
-
 
 	public LessonEntity() {
 	}
@@ -47,11 +36,18 @@ public class LessonEntity {
 		this.topic = topic;
 		this.description = description;
 	}
+	public LessonEntity(String id,long date, String topic, String description) {
+		this.id = id;
+		this.date = date;
+		this.topic = topic;
+		this.description = description;
+	}
 
-	public void addHomework (HomeworkEntity homework)
-	{
+
+	public void addHomework(HomeworkEntity homework) {
 
 	}
+
 	public String getId() {
 		return id;
 	}
@@ -102,13 +98,11 @@ public class LessonEntity {
 				'}';
 	}
 
-	public Set<UserEntity> getAttendance()
-	{
+	public Set<UserEntity> getAttendance() {
 		return attendance;
 	}
 
-	public void setAttendance(Set<UserEntity> attendance)
-	{
+	public void setAttendance(Set<UserEntity> attendance) {
 		this.attendance = attendance;
 	}
 }
