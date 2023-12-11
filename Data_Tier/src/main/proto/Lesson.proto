@@ -103,7 +103,6 @@ service LessonService{
   rpc getAttendance(RequestGetAttendance) returns (ResponseGetAttendance);
   rpc getLessonById(RequestGetLessonById) returns (ResponseGetLessonById);
   rpc getLessonsByClassId(RequestGetLessonsByClassId) returns (ResponseGetLessonsByClassId);
-
   rpc deleteLesson(RequestDeleteLesson) returns ( ResponseDeleteLesson);
   rpc updateLesson(RequestUpdateLesson) returns ( ResponseUpdateLesson);
 }

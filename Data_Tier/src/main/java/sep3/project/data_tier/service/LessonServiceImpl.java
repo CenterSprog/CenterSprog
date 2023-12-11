@@ -33,7 +33,6 @@ public class LessonServiceImpl
   private IClassRepository classRepository;
 
   private HomeworkMapper homeworkMapper = HomeworkMapper.INSTANCE;
-  private LessonMapper lessonMapper = LessonMapper.INSTANCE;
 
   @Autowired
   public LessonServiceImpl(IUserRepository userRepository, ILessonRepository lessonRepository,
@@ -80,9 +79,8 @@ public class LessonServiceImpl
     }
 
   }
-  @Over
-
-  ransactional
+  @Override
+  @Transactional
   public void getAttendance(
       RequestGetAttendance request,
       StreamObserver<ResponseGetAttendance> response) {
@@ -214,7 +212,7 @@ public class LessonServiceImpl
     }
   }
 
-  @Overri
+  @Override
   public void updateLesson(RequestUpdateLesson request, StreamObserver<ResponseUpdateLesson> response) {
     String lessonId = request.getId();
 
@@ -234,16 +232,16 @@ public class LessonServiceImpl
 
     try {
       response.onNext(
-          ResponseUpdateLesson.newBuilder()
-              .setStatus(ResponseUpdateLesson.Status.OK)
-              .setMessage("Lesson deleted successfully")
-              .build());
+              ResponseUpdateLesson.newBuilder()
+                      .setStatus(ResponseUpdateLesson.Status.OK)
+                      .setMessage("Lesson deleted successfully")
+                      .build());
       response.onCompleted();
     } catch (Exception e) {
       System.out.println("Error updating lesson: " + e.getMessage());
     }
 
-  
+  }
 }
 
   
