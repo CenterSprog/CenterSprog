@@ -1,6 +1,7 @@
 ﻿using Application.LogicInterfaces;
 using Domain.DTOs.HomeworkDTO;
 using Domain.Models;
+using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -24,9 +25,12 @@ public class HomeworksController : ControllerBase
             Homework createdHomework = await _homeworkLogic.CreateAsync(dto);
             return Created($"/homeworks/{createdHomework.Id}", createdHomework);
         }
+        catch (RpcException e)
+        {
+            return NotFound(e.Message);
+        }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
     }

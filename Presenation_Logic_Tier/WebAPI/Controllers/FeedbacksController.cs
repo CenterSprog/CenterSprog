@@ -22,22 +22,23 @@ public class FeedbacksController : ControllerBase
     {
         try
         {
-            Feedback? createdFeedback = await _feedbackLogic.AddFeedbackAsync(addFeedbackDto);
-            if (createdFeedback == null)
-                throw new Exception("Failed to create a new feedback in feedback controller");
+            Feedback createdFeedback = await _feedbackLogic.AddFeedbackAsync(addFeedbackDto);
+
             return Created($"/feedbacks/{createdFeedback.Id}", createdFeedback);
         }
-        
+        catch (RpcException e)
+        {
+            return NotFound(e.Message);
+        }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed to add feedback controller : {e.Message}");
             return StatusCode(500, e.Message);
         }
     }
 
     [HttpGet ("{handInId}/{studentUsername}", Name = "GetFeedbackByHomeworkIdAndStudentUsernameAsync")]
-    public async Task<ActionResult<Feedback>> GetFeedbackByHandInIdAndStudentUsernameAsync(string handInId,
-        string studentUsername)
+    public async Task<ActionResult<Feedback>> GetFeedbackByHandInIdAndStudentUsernameAsync([FromRoute] string handInId,
+        [FromRoute] string studentUsername)
     {
         try
         {
@@ -45,16 +46,13 @@ public class FeedbacksController : ControllerBase
 
             return Ok(feedback);
         }
-
         catch (RpcException e)
         {
             return NotFound(e.Message);
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed to get feedback from controller: {e.Message}");
             return StatusCode(500, e.Message);
         }
-
     }
 }

@@ -3,6 +3,7 @@ using Domain.DTOs.ClassDTO;
 using Domain.DTOs.LessonDTO;
 using Domain.DTOs.UserDTO;
 using Domain.Models;
+using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,9 +29,12 @@ public class ClassesController : ControllerBase
             ClassEntity classEntity = await _classLogic.GetByIdAsync(id);
             return Ok(classEntity);
         }
+        catch (RpcException e)
+        {
+            return NotFound(e.Message);
+        }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
     }
@@ -50,9 +54,12 @@ public class ClassesController : ControllerBase
 
             return Ok(classes);
         }
+        catch (RpcException e)
+        {
+            return NotFound(e.Message);
+        }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
     }
@@ -69,6 +76,10 @@ public class ClassesController : ControllerBase
                 return NotFound();
 
             return Ok(participants);
+        }
+        catch (RpcException e)
+        {
+            return NotFound(e.Message);
         }
         catch (Exception e)
         {
@@ -93,7 +104,7 @@ public class ClassesController : ControllerBase
         }
     }
 
-    [HttpPatch]
+    [HttpPatch("{id}", Name = "UpdateAsync")]
     [Authorize("MustBeAdmin")]
     public async Task<ActionResult<Boolean>> UpdateAsync(ClassUpdateDTO dto)
     {
@@ -105,10 +116,13 @@ public class ClassesController : ControllerBase
             return Ok(result);
 
         }
+        catch (RpcException e)
+        {
+            return NotFound(e.Message);
+        }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed updating class controller : {e.Message} {e.StackTrace}");
-            return StatusCode(500,e.Message + e.StackTrace);
+            return StatusCode(500, e.Message);
         }
     }
     [HttpGet("{id}/attendances", Name = "GetClassAttendanceAsync")]
@@ -135,6 +149,10 @@ public class ClassesController : ControllerBase
 
                 return Ok(attendees);
             }
+        }
+        catch (RpcException e)
+        {
+            return NotFound(e.Message);
         }
         catch (Exception e)
         {

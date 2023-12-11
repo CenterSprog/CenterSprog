@@ -6,8 +6,6 @@ using Application.LogicInterfaces;
 using Domain.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using HandInHomeworkClient = Application.gRPCClients.HandInHomeworkClient;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,8 +29,8 @@ builder.Services.AddScoped<IClassClient, ClassClient>();
 builder.Services.AddScoped<IHandInHomeworkLogic, HandInHomeworkLogic>();
 builder.Services.AddScoped<IHandInHomeworkClient, HandInHomeworkClient>();
 
-builder.Services.AddScoped<IFeedbackClient, FeedbackClient>();
 builder.Services.AddScoped<IFeedbackLogic, FeedbackLogic>();
+builder.Services.AddScoped<IFeedbackClient, FeedbackClient>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

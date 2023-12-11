@@ -86,20 +86,19 @@ public class LessonsController : ControllerBase
     public async Task<ActionResult> DeleteAsync([FromRoute] string lessonId)
     {
         try
-        {
-            bool deleted = await _lessonLogic.DeleteAsync(lessonId);
+        { 
+          var deleted = await _lessonLogic.DeleteAsync(lessonId);
 
-            if (!deleted)
-            {
-                return NotFound();
-            }
-
-            return Ok();
+          if (!deleted)
+          {
+              return NotFound();
+          }
+            
+          return Ok();
         }
         catch (Exception ex)
         {
-
-            return StatusCode(500, "An error occurred while processing the request.");
+            return StatusCode(500, ex.Message);
         }
     }
     [HttpPatch]

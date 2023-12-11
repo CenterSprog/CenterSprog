@@ -1,6 +1,5 @@
 ﻿using Application.ClientInterfaces;
 using Domain.DTOs.LessonDTO;
-using Google.Protobuf.WellKnownTypes;
 using Grpc.Net.Client;
 using gRPCClient;
 using Domain.Models;

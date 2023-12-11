@@ -1,5 +1,4 @@
 ﻿using Application.ClientInterfaces;
-using Application.gRPCClients;
 using Application.LogicInterfaces;
 using Domain.DTOs.HomeworkDTO;
 using Domain.Models;
@@ -10,7 +9,7 @@ public class HandInHomeworkLogic : IHandInHomeworkLogic
 {
     private readonly IHandInHomeworkClient _handInHomeworkClient;
 
-    public HandInHomeworkLogic(HandInHomeworkClient handInHomeworkClient)
+    public HandInHomeworkLogic(IHandInHomeworkClient handInHomeworkClient)
     {
         _handInHomeworkClient = handInHomeworkClient;
     }

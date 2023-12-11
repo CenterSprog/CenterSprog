@@ -1,7 +1,9 @@
-﻿using Application.LogicInterfaces;
+﻿using IHandInHomeworkLogic = Application.LogicInterfaces.IHandInHomeworkLogic;
 using Domain.DTOs.HomeworkDTO;
 using Domain.Models;
+using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace WebAPI.Controllers;
 
@@ -25,12 +27,14 @@ public class HandInsController : ControllerBase
             HandInHomework handedInHomework = await _handInHomeworkLogic.HandInHomework(dto);
             return Created($"/handIns/{handedInHomework.Id}, {handedInHomework.Answer}", handedInHomework);
         }
+        catch (RpcException e)
+        {
+            return NotFound(e.Message);
+        }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
-
     }
 
     [HttpGet("{homeworkId}", Name = "GetHandInsByHomeworkIdAsync")]
@@ -41,9 +45,12 @@ public class HandInsController : ControllerBase
             IEnumerable<HandInHomework> handIns = await _handInHomeworkLogic.GetHandInsByHomeworkIdAsync(homeworkId);
             return new OkObjectResult(handIns);
         }
+        catch (RpcException e)
+        {
+            return NotFound(e.Message);
+        }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
     }
@@ -63,9 +70,12 @@ public class HandInsController : ControllerBase
 
             return Ok(handIn);
         }
+        catch (RpcException e)
+        {
+            return NotFound(e.Message);
+        }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
     }

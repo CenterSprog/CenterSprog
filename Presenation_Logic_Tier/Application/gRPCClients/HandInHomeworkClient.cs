@@ -1,11 +1,9 @@
-﻿using System.Collections.Immutable;
-using Application.ClientInterfaces;
+﻿using Application.ClientInterfaces;
 using Domain.DTOs.HomeworkDTO;
 using Grpc.Core;
 using Grpc.Net.Client;
 using gRPCClient;
 using HandInHomework = Domain.Models.HandInHomework;
-
 
 namespace Application.gRPCClients;
 
