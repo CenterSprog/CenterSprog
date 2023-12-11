@@ -1,12 +1,8 @@
 syntax = "proto3";
-import "google/protobuf/empty.proto";
 import "Protos/Lesson.proto";
 import "Protos/User.proto";
 
 option csharp_namespace = "gRPCClient";
-option java_multiple_files = true;
-option java_package = "sep3.project.protobuf";
-option java_outer_classname = "ClassEntityProto";
 
 message ClassData {
   optional string id = 1;

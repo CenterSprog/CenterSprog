@@ -19,7 +19,7 @@ public class UsersController : ControllerBase
 
     [HttpPost]
     [Authorize("MustBeAdmin")]
-    public async Task<ActionResult<User>> RegisterUser(UserCreationDto dto)
+    public async Task<ActionResult<User>> RegisterUser(UserCreationDTO dto)
     {
         Console.WriteLine("REGISTERING THE USER");
         try

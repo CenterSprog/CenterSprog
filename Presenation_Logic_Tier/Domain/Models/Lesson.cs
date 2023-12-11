@@ -29,7 +29,6 @@ public class Lesson
         Topic = topic;
         Homework = null;
     }
-    [JsonConstructor]
 
     public Lesson(){}
 }

@@ -26,8 +26,7 @@ public class ClassLogic : IClassLogic
     {
         return await _classClient.GetAllAsync(dto);
     }
-
-
+    
     public async Task<IEnumerable<User>> GetAllParticipantsAsync(SearchClassParticipantsDTO dto)
     {
         return await _classClient.GetAllParticipantsAsync(dto);

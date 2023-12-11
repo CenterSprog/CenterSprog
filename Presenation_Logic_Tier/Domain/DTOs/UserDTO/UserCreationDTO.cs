@@ -1,6 +1,6 @@
 ﻿namespace Domain.DTOs.UserDTO;
 
-public class UserCreationDto
+public class UserCreationDTO
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -8,7 +8,7 @@ public class UserCreationDto
     
     public string Role { get; set; }
 
-    public UserCreationDto()
+    public UserCreationDTO()
     {
     }
 

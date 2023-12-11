@@ -40,7 +40,7 @@ public class UserClient : IUserClient
         return await Task.FromResult(exisingUser);
     }
 
-    public async Task<User> CreateUserAsync(UserCreationDto dto)
+    public async Task<User> CreateUserAsync(UserCreationDTO dto)
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new UserService.UserServiceClient(channel);

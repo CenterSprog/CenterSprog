@@ -33,7 +33,7 @@ public class UserLogic : IUserLogic
         return await Task.FromResult(authenticatedUser);
     }
 
-    public async Task<User> CreateUserAsync(UserCreationDto dto)
+    public async Task<User> CreateUserAsync(UserCreationDTO dto)
     {
         User? createdUser = await _userClient.CreateUserAsync(dto);
         return await Task.FromResult(createdUser);
