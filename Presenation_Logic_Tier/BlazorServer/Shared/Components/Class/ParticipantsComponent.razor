@@ -45,14 +45,16 @@
     [Parameter]
     public string ClassId { get; set; }
     
-    private IEnumerable<User> Participants { get; set; }
-    private bool ShowModal { get; set; }
-    private string? Msg { get; set; }
+    public IEnumerable<User> Participants { get; set; }
+    public bool ShowModal { get; set; }
+    public string? Msg { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         Participants = new List<User>();
         Msg = null;
+        
+        await base.OnInitializedAsync();
     }
     
     private async Task FetchParticipants()

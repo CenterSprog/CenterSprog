@@ -20,30 +20,30 @@
     public string Msg { get; set; }
     Homework Homework { get; set; }
     Lesson Lesson { get; set; }
-    HandInHomework handInHomework { get; set; }
+    HandInHomework HandInHomework { get; set; }
 
     public bool HomeworkSubmitted { get; set; }
     public string Answer { get; set; }
-    private bool showModal { get; set; }
-    private string studentUsername { get; set; }
+    public bool ShowModal { get; set; }
+    public string StudentUsername { get; set; }
 
 
-    protected override async void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         Lesson = await lessonService.GetByIdAsync(lessonId);
         Msg = null;
         Answer = null;
         HomeworkSubmitted = false;
         Homework = new Homework();
-        handInHomework = new HandInHomework();
-        showModal = false;
-        studentUsername = null;
+        HandInHomework = new HandInHomework();
+        ShowModal = false;
+        StudentUsername = null;
         
-        await FetchHandins();
+        await FetchHandinsAsync();
         
-        base.OnInitialized();
+        base.OnInitializedAsync();
     }
-    private async Task FetchHandins()
+    private async Task FetchHandinsAsync()
     {
         try
         {
@@ -51,12 +51,15 @@
             Lesson = await lessonService.GetByIdAsync(lessonId);
             Homework = Lesson.Homework;
             
-            var username = await GetAuthenticatedUsernameAsync();
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var username = user.Identity?.Name;
+            
             try
             {
-                handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync(Homework.Id, username);
+                HandInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync(Homework.Id, username);
 
-                HomeworkSubmitted = handInHomework != null;
+                HomeworkSubmitted = HandInHomework != null;
             }
             catch (Exception e)
             {
@@ -77,12 +80,4 @@
         navMgr.NavigateTo($"/Homeworks/{homeworkId}");
         Console.WriteLine($"Navigating to the submitted homeworks page with the id: {homeworkId}");
     }
-    
-    private async Task<string> GetAuthenticatedUsernameAsync()
-    {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-        return user.Identity?.Name;
-    }
-
 }

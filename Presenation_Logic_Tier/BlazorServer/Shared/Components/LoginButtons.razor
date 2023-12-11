@@ -11,25 +11,20 @@
         <div class="greeting-container">
              Hello @context.User.Identity.Name
         </div>
-        <img class="icon" src="img/Logout.png" @onclick="Logout" alt=""/>
+        <img class="icon" src="img/Logout.png" @onclick="LogoutAsync" alt=""/>
     </Authorized>
     <NotAuthorized>
-        <div class="greeting-container">
-        Not Authorised @counter
-        </div>
         <img class="icon" src="img/Login.png" @onclick="Login" alt=""/>
     </NotAuthorized>
 </AuthorizeView>
 
 @code {
-    private int counter = 0;
     private void Login()
     {
-        counter += 1;
         navMgr.NavigateTo("/login");
     }
 
-    private async Task Logout()
+    private async Task LogoutAsync()
     {
         await userService.LogoutAsync();
         navMgr.NavigateTo("/");

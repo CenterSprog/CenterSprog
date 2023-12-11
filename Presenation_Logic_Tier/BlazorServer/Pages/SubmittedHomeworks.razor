@@ -31,7 +31,7 @@ else
     </div>
 }
 
-<Modal ShowModal="@showModal">
+<Modal ShowModal="@ShowModal">
     <div class="modal-container">
         <div class="modal-header">
             <h4 class="fw-bold">Give feedback</h4>
@@ -55,7 +55,7 @@ else
             </div>
 
             <div class="buttons-container">
-                <button class="btn btn-primary" @onclick="SendFeedback">Send Feedback</button>
+                <button class="btn btn-primary" @onclick="SendFeedbackAsync">Send Feedback</button>
             </div>
 
             <div class="msg-container">
@@ -81,13 +81,13 @@ else
     IEnumerable<HandInHomework> HandIns { get; set; }
     HandInHomework HandIn { get; set; }
     AddFeedbackDTO Dto { get; set; }
-    private bool showModal { get; set; }
-    private string StudentUsername { get; set; }
-    private string StudentAnswer { get; set; }
+    public bool ShowModal { get; set; }
+    public string StudentUsername { get; set; }
+    public string StudentAnswer { get; set; }
 
-    private int FeedbackGrade { get; set; }
-    private string FeedbackComment { get; set; }
-    private string Msg { get; set; }
+    public int FeedbackGrade { get; set; }
+    public string FeedbackComment { get; set; }
+    public string Msg { get; set; }
 
 
     protected override async Task OnInitializedAsync()
@@ -95,7 +95,7 @@ else
         Homework = new Homework();
         HandIns = await HandInService.GetHandInsByHomeworkIdAsync(homeworkId);
         HandIn = new HandInHomework();
-        showModal = false;
+        ShowModal = false;
         StudentUsername = null;
         StudentAnswer = null;
         FeedbackGrade = 0;
@@ -109,7 +109,7 @@ else
     private void GradeHandIn(string username, string answer)
     {
         Msg = null;
-        showModal = true;
+        ShowModal = true;
         StudentUsername = username;
         StudentAnswer = answer;
  
@@ -117,7 +117,7 @@ else
         HandIn = HandIns.FirstOrDefault(h => h.StudentUsername == StudentUsername && h.Answer == StudentAnswer);
     }
 
-    private async Task SendFeedback()
+    private async Task SendFeedbackAsync()
     {
         if (string.IsNullOrWhiteSpace(FeedbackComment))
         {

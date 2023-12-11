@@ -43,7 +43,7 @@
             </tbody>
         </table>
 
-        <button class="btn btn-primary" @onclick="MarkAttendance">Submit</button>
+        <button class="btn btn-primary" @onclick="MarkAttendanceAsync">Submit</button>
     }
     @if (Msg != null)
     {
@@ -59,13 +59,13 @@
     [Parameter]
     public string ClassId { get; set; }
     
-    private bool ShowModal { get; set; }
-    private string? Msg { get; set; }
-    private string? Success { get; set; }
-    private Dictionary<string, bool> SelectedUsers { get; set; }
-    private List<string> SelectedUserList { get; set; }
-    private IEnumerable<User> MarkedAttendees { get; set; }
-    private IEnumerable<User> Attendees { get; set; }
+    public bool ShowModal { get; set; }
+    public string? Msg { get; set; }
+    public string? Success { get; set; }
+    public Dictionary<string, bool> SelectedUsers { get; set; }
+    public List<string> SelectedUserList { get; set; }
+    public IEnumerable<User> MarkedAttendees { get; set; }
+    public IEnumerable<User> Attendees { get; set; }
 
 
     protected override async Task OnInitializedAsync()
@@ -76,6 +76,8 @@
         SelectedUserList = new List<string>();
         MarkedAttendees = new List<User>();
         Attendees = new List<User>();
+
+       await base.OnInitializedAsync();
     }
 
     private async Task FetchMarkedAttendeesAsync()
@@ -106,7 +108,7 @@
         ShowModal = true;
     }
 
-    private async Task MarkAttendance()
+    private async Task MarkAttendanceAsync()
     {
         SelectedUserList = SelectedUsers.Where(kvp => kvp.Value).Select(kvp => kvp.Key).ToList();
         try

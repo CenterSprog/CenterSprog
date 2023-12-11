@@ -12,7 +12,7 @@
 <section class="d-flex flex-column">
      
         
-    <select class="form-select" aria-label="Class selection"  @onchange="HandleClassChange">
+    <select class="form-select" aria-label="Class selection"  @onchange="HandleClassChangeAsync">
         @if (MyClasses.Any())
         {   
             <option selected value="">Select class to manage</option>
@@ -54,7 +54,7 @@
     
     <div class="d-flex flex-column justify-content-between mt-5">
         
-        <button class="btn btn-outline-success" @onclick="HandleSubmit">Reassign classes</button>
+        <button class="btn btn-outline-success" @onclick="HandleSubmitAsync">Reassign classes</button>
 
         
 
@@ -94,13 +94,13 @@
         CheckList = new List<Boolean>();
         Users = new List<User>();
         
-        await FetchClasses();
+        await FetchClassesAsync();
         
         
         await base.OnInitializedAsync();
     }
 
-    private async Task FetchClasses()
+    private async Task FetchClassesAsync()
     {
         try
         {
@@ -116,7 +116,7 @@
         }
     }
 
-    private async Task FetchUsers()
+    private async Task FetchUsersAsync()
     {
         try
         {
@@ -129,7 +129,7 @@
         
     }
 
-    private async Task HandleClassChange(ChangeEventArgs args)
+    private async Task HandleClassChangeAsync(ChangeEventArgs args)
     {
         Success = Success;
         Console.WriteLine("CHANIGNG,......");
@@ -138,7 +138,7 @@
         CheckList = new List<Boolean>();
         if (SelectedClassId == null || SelectedClassId.Equals("")) return;
         
-        await FetchUsers();
+        await FetchUsersAsync();
         for (int i = 0; i < Users.Count; i++)
         {
             User currentUser = Users[i];
@@ -155,7 +155,7 @@
         CheckList[i] = !CheckList[i];
     }
     
-    private async void HandleSubmit()
+    private async void HandleSubmitAsync()
     {
         if (SelectedClassId == "")
         {
@@ -179,7 +179,7 @@
             if (updatedWithSuccess == false) 
                 throw new Exception("Failed to update the class :/");
             Success = "Successfully updated the class :)";
-            await FetchClasses();
+            await FetchClassesAsync();
             
         }
         catch (Exception e)

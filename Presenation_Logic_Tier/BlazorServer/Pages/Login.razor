@@ -9,17 +9,17 @@
             <h3>Please login</h3>
             <div class="field">
                 <label>User name:</label>
-                <input type="text" @bind="userName"/>
+                <input type="text" @bind="Username"/>
             </div>
             <div class="field">
                 <label style="text-align: center">Password:</label>
-                <input type="password" @bind="password"/>
+                <input type="password" @bind="Password"/>
             </div>
-            @if (!string.IsNullOrEmpty(errorLabel))
+            @if (!string.IsNullOrEmpty(Msg))
             {
                 <div class="field">
                     <label style="color: red">
-                        @errorLabel
+                        @Msg
                     </label>
                 </div>
             }
@@ -36,22 +36,22 @@
 </AuthorizeView>
 
 @code {
-    private string userName;
-    private string password;
-    private string errorLabel;
+    public string Username;
+    public string Password;
+    public string Msg;
     
     private async Task LoginAsync()
     {
-        errorLabel = "";
+        Msg = "";
         try
         {
-            await userService.LoginAsync(userName, password);
-            navMgr.NavigateTo("/");
+            await userService.LoginAsync(Username, Password);
+            navMgr.NavigateTo("/ClassesOverview");
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            errorLabel = $"Error: {e.Message}";
+            Msg = $"Error: {e.Message}";
         }
     }
 }

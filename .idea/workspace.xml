@@ -5,34 +5,47 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbecce9e-7f7d-4c07-9ecb-5484121f1f74" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c926018e-153c-4b39-8db8-808a33194b29.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c926018e-153c-4b39-8db8-808a33194b29.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Class/ClassesOverview.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Class/ClassesOverview.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Homework/AssignHomeworkComponent.razor.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/Heartbeat.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/HomeworkEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/entity/HomeworkEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IClassRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IClassRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IFeedbackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IFeedbackRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IHandInHomeworkRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IHandInHomeworkRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IHeartbeatRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IHomeworkRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IHomeworkRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/ILessonRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/ILessonRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/repository/IUserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/ClassServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/ClassServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/FeedbackServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/FeedbackServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/HandInHomeworkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/HandInHomeworkServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/HeartbeatServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/HomeworkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/HomeworkServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/LessonServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/LessonServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/java/sep3/project/data_tier/service/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/proto/ClassEntity.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/proto/ClassEntity.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/proto/Feedback.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/proto/Feedback.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/proto/HandInHomework.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/proto/HandInHomework.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/proto/Homework.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/proto/Homework.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/proto/Lesson.proto" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Tier/src/main/proto/Lesson.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Tier/src/main/proto/heartbeat.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/FeedbackClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/Application/gRPCClients/FeedbackClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/BlazorServer.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/BlazorServer.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Data/WeatherForecast.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Data/WeatherForecastService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Admin.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Admin/AdminMenu.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/AdminOverviewUsers.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Admin/AdminOverviewUsers.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/AdminRegister.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Admin/AdminRegister.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/AdminUserDetails.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Admin/AdminUserDetails.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/AssignClass.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Admin/AdminAssignClass.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Class/ClassDetails.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/ClassDetails.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Class/ClassDetails.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Heartbeat.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Index.razor.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LessonDetailComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LessonDetailComponent.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/FeedbacksController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/WebAPI/Controllers/FeedbacksController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/LessonDetails.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Login.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/Login.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/SubmittedHomeworks.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Pages/SubmittedHomeworks.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/AssignHomeworkComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Homework/AssignHomeworkComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/ClassAttendanceComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Attendance/ClassAttendanceComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/HandInHomeworkComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Homework/HandInHomeworkComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/HandInHomeworkComponent.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Homework/HandInHomeworkComponent.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LessonDetailComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Lesson/LessonDetailComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LessonDetailComponent.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Lesson/LessonDetailComponent.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LessonOverviewComponent.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LoginButtons.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/LoginButtons.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/MarkAttendanceComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Attendance/MarkAttendanceComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/ParticipantsComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Class/ParticipantsComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/RegisterClassComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Admin/RegisterClassComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/RegisterUserComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Admin/RegisterUserComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/SeeFeedbackComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Homework/SeeFeedbackComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/SeeFeedbackComponent.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Homework/SeeFeedbackComponent.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/SingleUserAttendanceComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Attendance/SingleUserAttendanceComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/ViewSubmittedHomeworksComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Homework/ViewSubmittedHomeworksComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/ViewSubmittedHomeworksComponent.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/Components/Homework/ViewSubmittedHomeworksComponent.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/Shared/NavMenu.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/_Imports.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presenation_Logic_Tier/BlazorServer/_Imports.razor" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +98,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "cleanup/data-tier",
+    "git-widget-placeholder": "cleanup/presentation-tier",
     "last_opened_file_path": "C:/Program Files/Java",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -133,7 +146,7 @@
       <workItem from="1701849937123" duration="32150000" />
       <workItem from="1702033300109" duration="8030000" />
       <workItem from="1702231144430" duration="8178000" />
-      <workItem from="1702282605966" duration="5163000" />
+      <workItem from="1702282605966" duration="9324000" />
     </task>
     <servers />
   </component>

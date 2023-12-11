@@ -39,6 +39,7 @@
 .homework-no-content {
     height: 100px;
     margin-bottom: 20px;
+    position: relative;
 }
 
 p {

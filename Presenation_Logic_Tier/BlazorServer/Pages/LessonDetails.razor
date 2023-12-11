@@ -1,11 +1,9 @@
 ﻿@page "/{classId}/Lessons/{lessonId}"  
 @using Domain.Models
 @using HttpClients.ClientInterfaces
-@using Domain.DTOs.HomeworkDTO
 @inject ILessonService lessonService
 @inject IHandInHomeworkService HandInHomeworkService
 @inject AuthenticationStateProvider AuthenticationStateProvider
-@inject IFeedbackService FeedbackService
 
 @if (Lesson != null)
 {
@@ -59,6 +57,15 @@
                     <div class="homework-header-content">
                         <h3>Homework. </h3>
                     </div>
+                    <AuthorizeView Policy="MustBeTeacher">
+                        <Authorized Context="teacherAuthorized">
+                            @if (Lesson.Homework == null)
+                            {
+                                <AssignHomeworkComponent LessonId=@lessonId LessonDate=@Lesson.Date/>
+                            }
+                        </Authorized>
+                    </AuthorizeView>
+
                 </div>
                 <div class="homework-description">
                     <p>No homework for this lesson yet. Check back later!</p>
@@ -66,15 +73,6 @@
             </div>
         </div>
     }
-
-    <AuthorizeView Policy="MustBeTeacher">
-        <Authorized Context="teacherAuthorized">
-            @if (Lesson.Homework == null)
-            {
-                <AssignHomeworkComponent LessonId=@lessonId LessonDate=@Lesson.Date/>
-            }
-        </Authorized>
-    </AuthorizeView>
 }
 
 
@@ -95,7 +93,7 @@
     public bool HomeworkSubmitted { get; set; }
     public string Answer { get; set; }
     public string Msg { get; set; }
-    private string studentUsername { get; set; }
+    public string studentUsername { get; set; }
 
 
     protected override async Task OnInitializedAsync()
@@ -111,11 +109,11 @@
         studentUsername = null;
 
 
-        await FetchHandins();
+        await FetchHandinsAsync();
         await base.OnInitializedAsync();
     }
 
-    private async Task FetchHandins()
+    private async Task FetchHandinsAsync()
     {
         try
         {

@@ -7,7 +7,7 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="d-flex align-items-center">
-    <button type="button" class="btn btn-warning fw-bold w-auto" @onclick="@SeeClassAttendance">Attendance <span class="oi oi-calendar"></span></button>
+    <button type="button" class="btn btn-warning fw-bold w-auto" @onclick="@SeeClassAttendanceAsync">Attendance <span class="oi oi-calendar"></span></button>
 </div>
 <Modal ShowModal="ShowModal">
 
@@ -51,17 +51,19 @@
     [Parameter]
     public string ClassId { get; set; }
 
-    private bool ShowModal { get; set; }
-    private string? Msg { get; set; }
-    private IEnumerable<UserAttendanceDTO> Users { get; set; }
+    public bool ShowModal { get; set; }
+    public string? Msg { get; set; }
+    public IEnumerable<UserAttendanceDTO> Users { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         Msg = null;
         Users = new List<UserAttendanceDTO>();
+
+        await base.OnInitializedAsync();
     }
 
-    private async Task FetchClassAttendance()
+    private async Task FetchClassAttendanceAsync()
     {
         try
         {
@@ -73,9 +75,9 @@
         }
     }
 
-    private async Task SeeClassAttendance()
+    private async Task SeeClassAttendanceAsync()
     {
-        await FetchClassAttendance();
+        await FetchClassAttendanceAsync();
         ShowModal = true;
     }
 }

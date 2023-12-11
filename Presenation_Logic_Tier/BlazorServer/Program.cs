@@ -1,7 +1,4 @@
 using BlazorServer.Auth;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using BlazorServer.Data;
 using Domain.Auth;
 using HttpClients.ClientInterfaces;
 using HttpClients.Implementations;
@@ -12,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 
 builder.Services.AddScoped(
     sp => 
@@ -23,7 +19,6 @@ builder.Services.AddScoped(
 
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
 AuthorizationPolicies.AddPolicies(builder.Services);
-builder.Services.AddScoped<IHeartbeatService, HeartbeatHttpClient>();
 builder.Services.AddScoped<IUserService, UserHttpClient>();
 builder.Services.AddScoped<IHomeworkService, HomeworkHttpClient>();
 builder.Services.AddScoped<IClassService, ClassHttpClient>();

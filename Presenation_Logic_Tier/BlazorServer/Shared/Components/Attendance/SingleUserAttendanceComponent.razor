@@ -57,10 +57,10 @@
     [Parameter]
     public string ClassId { get; set; }
 
-    private bool ShowModal { get; set; }
-    private string? Msg { get; set; }
-    private IEnumerable<LessonAttendanceDTO> Lessons { get; set; }
-    private string TotalAbsence { get; set; }
+    public bool ShowModal { get; set; }
+    public string? Msg { get; set; }
+    public IEnumerable<LessonAttendanceDTO> Lessons { get; set; }
+    public string TotalAbsence { get; set; }
 
 
     protected override async Task OnInitializedAsync()
@@ -68,6 +68,8 @@
         Msg = null;
         Lessons = new List<LessonAttendanceDTO>();
         TotalAbsence = "0.00";
+
+        await base.OnInitializedAsync();
     }
 
     private async Task FetchMyAttendanceAsync()

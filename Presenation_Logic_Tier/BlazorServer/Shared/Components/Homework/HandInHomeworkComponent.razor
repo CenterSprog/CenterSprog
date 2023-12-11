@@ -9,7 +9,7 @@
     @if (!HomeworkSubmitted)
     {
         <input @bind="Answer" type="text" placeholder="Paste your answer here"/>
-        <button @onclick="HandInHomework" type="button">
+        <button @onclick="HandInHomeworkAsync" type="button">
             <strong>Hand in</strong>
         </button>
     }
@@ -38,15 +38,12 @@
     Lesson Lesson { get; set; }
     Homework Homework { get; set; }
     HandInHomework handInHomework { get; set; }
-    User User { get; set; }
     HomeworkHandInDTO Dto { get; set; }
     Feedback Feedback { get; set; }
 
     public bool HomeworkSubmitted { get; set; }
     public string Answer { get; set; }
     public string Msg { get; set; }
-    private bool showModal { get; set; }
-    private string studentUsername { get; set; }
 
 
     protected override async Task OnInitializedAsync()
@@ -56,18 +53,15 @@
         Answer = null;
         HomeworkSubmitted = false;
         Feedback = new Feedback();
-        User = new User();
         Homework = new Homework();
         handInHomework = new HandInHomework();
-        showModal = false;
-        studentUsername = null;
 
-        await FetchHandins();
+        await FetchHandinsAsync();
 
         await base.OnInitializedAsync();
     }
 
-    private async Task FetchHandins()
+    private async Task FetchHandinsAsync()
     {
         try
         {
@@ -96,7 +90,7 @@
         }
     }
 
-    private async Task HandInHomework()
+    private async Task HandInHomeworkAsync()
     {
         try
         {

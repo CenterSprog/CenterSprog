@@ -9,40 +9,42 @@
     <p>Register user</p>
     <div class="mb-3">
         <label for="firstNameInput" class="form-label">First name</label>
-        <input type="text" class="form-control" id="firstNameInput" @bind="_dto.FirstName">
+        <input type="text" class="form-control" id="firstNameInput" @bind="Dto.FirstName">
     </div>
     <div class="mb-3">
         <label for="lastNameInput" class="form-label">Last name</label>
-        <input type="text" class="form-control" id="lastNameInput" @bind="_dto.LastName">
+        <input type="text" class="form-control" id="lastNameInput" @bind="Dto.LastName">
     </div>
     <div class="mb-3">
         <label for="emailInput" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="emailInput" placeholder="name@example.com" @bind="_dto.Email">
+        <input type="email" class="form-control" id="emailInput" placeholder="name@example.com" @bind="Dto.Email">
     </div>
-    <select @bind="_dto.Role" class="form-select" aria-label="Role selection">
+    <select @bind="Dto.Role" class="form-select" aria-label="Role selection">
         <option value="student">Student</option> 
         <option value="teacher">Teacher</option> 
     </select>
 
     <button class="mt-5 btn btn-outline-success" type="submit" @onclick="RegisterUserAsync" >Register</button>
 
-    @if (_msg is not null && _msg != "")
+    @if (Msg is not null && Msg != "")
     {
         <div class="mt-4 alert-danger alert">
-            @_msg
+            @Msg
         </div>
     }
 </section>
 
 @code {
-    private string _msg;
-    private UserCreationDto _dto;
+    public string Msg;
+    public UserCreationDto Dto;
 
     protected override async Task OnInitializedAsync()
     {
-        _msg = null;
-        _dto = new UserCreationDto();
-        _dto.Role = "student";
+        Msg = null;
+        Dto = new UserCreationDto();
+        Dto.Role = "student";
+
+        await base.OnInitializedAsync();
     }
 
     public async Task RegisterUserAsync()
@@ -50,25 +52,25 @@
         try
         {
             ValidateUser();
-            User createdUser = await UserService.CreateUserAsync(_dto);
+            User createdUser = await UserService.CreateUserAsync(Dto);
             NavManager.NavigateTo($"admin/users/{createdUser.Username}");
         }
         catch (Exception e)
         {
             
-            _msg = e.Message;
+            Msg = e.Message;
         }
     }
 
     private void ValidateUser()
     {
-        if (_dto.FirstName.Trim() == "")
+        if (Dto.FirstName.Trim() == "")
             throw new Exception("First name is required");
-        if( _dto.LastName.Trim() == "")
+        if( Dto.LastName.Trim() == "")
             throw new Exception("Last name is required");
-        if (!IsValidEmail(_dto.Email))
+        if (!IsValidEmail(Dto.Email))
             throw new Exception("Invalid email address");
-        if(_dto.Role.Trim() == "")
+        if(Dto.Role.Trim() == "")
             throw new Exception("Role need to be selected");
 
     }

@@ -6,7 +6,7 @@
 @inject IClassService classService
 @inject NavigationManager navMgr
 
-@if (selectedClass == null)
+@if (SelectedClass == null)
 {
     <span>Loading class details...</span>
 }
@@ -14,7 +14,7 @@ else
 {
     <div class="class-container">
         <div class="class-card">
-            <h2>@selectedClass.Title @selectedClass.Room</h2>
+            <h2>@SelectedClass.Title @SelectedClass.Room</h2>
             <div class="d-flex">
                 <AuthorizeView Policy="MustBeTeacher">
                     <Authorized Context="teacherAuthorized">
@@ -37,17 +37,17 @@ else
                 <img src="/add.png" alt="Add Icon" style="width: 30px;"/>
             </div>
         </AuthorizeView>
-        @if (selectedClass.Lessons == null)
+        @if (SelectedClass.Lessons == null)
         {
             <span>Loading lessons...</span>
         }
-        else if (!selectedClass.Lessons.Any())
+        else if (!SelectedClass.Lessons.Any())
         {
             <p>No lessons available for this class</p>
         }
         else
         {
-            @foreach (Lesson lesson in selectedClass.Lessons.OrderByDescending(l => l.Date))
+            @foreach (Lesson lesson in SelectedClass.Lessons.OrderByDescending(l => l.Date))
             {
                 Console.WriteLine($"Lesson ID: {lesson.Id}");
                 <div class="lesson-card">
@@ -58,7 +58,7 @@ else
                         <h4 @onclick="() => ViewLesson(lesson)">@lesson.Topic. @lesson.Date </h4>
                         <AuthorizeView Policy="MustBeTeacher">
                             <button @onclick:stopPropagation="true" @onclick:preventDefault="true"
-                                    @onclick="@(() => DeleteLessonById(lesson.Id))" type="button" class="btn btn-danger">
+                                    @onclick="@(() => DeleteLessonByIdAsync(lesson.Id))" type="button" class="btn btn-danger">
                                 Delete
                             </button>
                         </AuthorizeView>
@@ -73,22 +73,24 @@ else
 
     [Parameter]
     public string ClassId { get; set; }
-
-
-    private readonly LessonUpdateDTO updatedto = null!;
-    private ClassEntity selectedClass;
+    
+    public LessonUpdateDTO Updatedto { get; set; }
+    public ClassEntity SelectedClass;
 
 
     protected override async Task OnInitializedAsync()
     {
+        Updatedto = null!;
         try
         {
-            selectedClass = await classService.GetByIdAsync(ClassId);
+            SelectedClass = await classService.GetByIdAsync(ClassId);
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
         }
+
+        await base.OnInitializedAsync();
     }
 
     private void ViewLesson(Lesson lesson)
@@ -100,15 +102,15 @@ else
     }
 
 
-    private async Task DeleteLessonById(string lessonId)
+    private async Task DeleteLessonByIdAsync(string lessonId)
     {
         try
         {
             await lessonService.DeleteAsync(lessonId);
 
-            var list = new List<Lesson>(selectedClass.Lessons!);
+            var list = new List<Lesson>(SelectedClass.Lessons!);
             list.RemoveAll(lesson => lesson.Id == lessonId);
-            selectedClass.Lessons = list;
+            SelectedClass.Lessons = list;
         }
         catch (Exception e)
         {

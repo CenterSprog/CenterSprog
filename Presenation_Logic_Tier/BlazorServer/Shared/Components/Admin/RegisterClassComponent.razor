@@ -10,32 +10,34 @@
     <p>Register class</p>
     <div class="mb-3">
         <label for="titleInput" class="form-label">Title</label>
-        <input type="text" class="form-control" id="titleInput" @bind="_dto.Title">
+        <input type="text" class="form-control" id="titleInput" @bind="Dto.Title">
     </div>
     <div class="mb-3">
         <label for="roomInput" class="form-label">Room</label>
-        <input type="text" class="form-control" id="roomInput" @bind="_dto.Room">
+        <input type="text" class="form-control" id="roomInput" @bind="Dto.Room">
     </div>
      
 
     <button class="mt-5 btn btn-outline-success" type="submit" @onclick="RegisterClassAsync" >Register</button>
 
-    @if (_msg is not null && _msg != "")
+    @if (Msg is not null && Msg != "")
     {
         <div class="mt-4 alert-danger alert">
-            @_msg
+            @Msg
         </div>
     }
 </section>
 
 @code {
-    private string _msg;
-    private ClassCreationDTO _dto;
+    public string Msg;
+    public ClassCreationDTO Dto;
     
     protected override async Task OnInitializedAsync()
     {
-        _msg = null;
-        _dto = new ClassCreationDTO(); 
+        Msg = null;
+        Dto = new ClassCreationDTO();
+
+        await base.OnInitializedAsync();
     }
 
     public async Task RegisterClassAsync()
@@ -43,21 +45,21 @@
         try
         {
             ValidateClass();
-            ClassEntity createdClass = await ClassService.CreateAsync(_dto);
+            ClassEntity createdClass = await ClassService.CreateAsync(Dto);
             NavManager.NavigateTo($"/classes/{createdClass.Id}");
         }
         catch (Exception e)
         {
             
-            _msg = e.Message;
+            Msg = e.Message;
         }
     }
 
     private void ValidateClass()
     {
-        if (_dto.Title.Trim() == "")
+        if (Dto.Title.Trim() == "")
             throw new Exception("Title is required");
-        if (_dto.Room.Trim() == "")
+        if (Dto.Room.Trim() == "")
             throw new Exception("Room is required");
     }
 

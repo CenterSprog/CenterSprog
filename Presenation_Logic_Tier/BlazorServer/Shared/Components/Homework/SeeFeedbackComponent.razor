@@ -11,7 +11,7 @@
         <strong>Submitted</strong>
     </button>
 
-    <button @onclick="SeeFeedback" type="button">
+    <button @onclick="SeeFeedbackAsync" type="button">
         <strong>See feedback</strong>
     </button>
 </div>
@@ -24,7 +24,7 @@
     }
 </div>
 
-<Modal ShowModal="@showModal">
+<Modal ShowModal="@ShowModal">
     <div class="modal-container">
         <h4 class="fw-bold">Feedback</h4>
         <div class="modal-body">
@@ -59,8 +59,8 @@
 
     public string Answer { get; set; }
     public string Msg { get; set; }
-    private bool showModal { get; set; }
-    private string studentUsername { get; set; }
+    public bool ShowModal { get; set; }
+    public string StudentUsername { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -71,14 +71,14 @@
         User = new User();
         Homework = Lesson.Homework;
         handInHomework = new HandInHomework();
-        showModal = false;
-        studentUsername = null;
+        ShowModal = false;
+        StudentUsername = null;
 
         await base.OnInitializedAsync();
     }
 
 
-    private async Task SeeFeedback()
+    private async Task SeeFeedbackAsync()
     {
         try
         {
@@ -102,9 +102,9 @@
                         Comment = feedback.Comment
                     };
 
-                    studentUsername = username;
+                    StudentUsername = username;
                     Answer = "";
-                    showModal = true;
+                    ShowModal = true;
                 }
                 else
                 {
