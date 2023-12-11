@@ -12,4 +12,6 @@ public interface ILessonClient
     Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto);
     Task UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto);
     Task DeleteAsync(string lessonId);
+    
+
 }

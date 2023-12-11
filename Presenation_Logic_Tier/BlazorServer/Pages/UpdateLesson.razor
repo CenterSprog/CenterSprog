@@ -1,28 +1,20 @@
+
 @page "/UpdateLesson/{ClassId}/{LessonId}"
+
 @using Microsoft.AspNetCore.Components
 @using Domain.DTOs.LessonDTO
 @using Domain.Models
 @using HttpClients.ClientInterfaces
-
-@inject IClassService classService
 @inject ILessonService lessonService
 @inject NavigationManager navMgr
-
+ @if(Lesson!=null){
 <div  xmlns="http://www.w3.org/1999/html" >
-    
     <h3>Update Lesson</h3>
-    <br/>
-    
-
-    <div>
-        
-        <h5 class="text-sm-center">If you are a teacher update the lesson here  </h5></div>
-   
-        
-    
     <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="floatingInput" @bind="lessonDto.Topic">
-        <label for="floatingInput">Topic:</label>
+       @*    <input value="@Topic" @onchange=@(e => Topic = e.Value.ToString()) type="text" class="form-control" id="floatingInput" /> <span>@Topic</span> *@
+        <input type="text" class="form-control" id="floatingInput" @bind="Lesson.Topic" >
+      <label for="floatingInput" >Topic</label>
+
     </div>
     <br/>
     <div class="form-floating mb-3">
@@ -31,8 +23,8 @@
     </div>
     <br/>
     <div class="form-floating">
-        <textarea class="form-control" id="floatingTextarea" @bind="lessonDto.Description"></textarea>
-        <label for="floatingTextarea">Description:</label>
+        <textarea class="form-control" id="floatingTextarea" @bind="Lesson.Description"></textarea>
+        <label for="floatingTextarea">Description</label>
     </div>
     <br/>
   
@@ -40,119 +32,70 @@
         
         <button @onclick="Update" type="button" class="btn btn-primary">Update Lesson</button>
     </div>
-</div>
+</div>}
 
-@if (msg is not null)
-{
-    <div>
-        @msg
-    </div>
-}
-@*
-<Modal ShowModal="showModal">
-    <p>You have successfully created a new lesson!</p>
-    <button @onclick="@Proceed">Wonderful</button>
-</Modal>*@
+ @if (Msg is not null) 
+ { 
+     <div> 
+         @Msg 
+     </div> 
+ }
 
 
 
 @code {
-    //private bool showModal;
-    public LessonUpdateDTO lessonDto;
-    public DateTime Date { get; set; }
-    private string msg = "";
-    private string Topic = "";
-    private string Description = "";
-    
     [Parameter]
     public string ClassId { get; set; }
-   [Parameter]
-   public string LessonId { get; set; }
-     
-   
-   
-   
+    [Parameter]
+    public string LessonId { get; set; }
+    public DateTime Date { get; set; }
+    private string? Msg { get; set; }
+    public Lesson Lesson { get; set; }
 
-    
-    
-    protected override void OnInitialized()
+
+    protected override async Task OnInitializedAsync()
     
     {
-        Date = DateTime.Now;
-        lessonDto = new LessonUpdateDTO(LessonId);
-        base.OnInitialized();
+       Date = DateTime.Now;
+       Msg = null;
+       try
+       {
+           Lesson = await lessonService.GetByIdAsync(LessonId);
+       }
+       catch (Exception e)
+       {
+           Console.WriteLine(e);
+           Msg = $"{e.Message}";
+       }
     }
-
-   /* protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-
-            Date = DateTime.Now;
-
-            lessonDto = new LessonUpdateDTO(ClassId);
-            lessonDto = new LessonUpdateDTO(lessonId)
-            {
-                Topic = lessonDto.Topic,
-                Date = lessonDto.Date,
-                Description = lessonDto.Description,
-                    Id="",
-                
-            };
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            msg = e.Message;
-        }
-    }*/
-
-
-
+    
+    
     private async Task Update()
     {
         try
-            {
-                lessonDto.Date = Date.ToFileTimeUtc();
-                //var createdLesson = await lessonService.UpdateLessonAsync(lessonDto);
-                await lessonService.UpdateLessonAsync(lessonDto);
+            { 
+                await lessonService.UpdateLessonAsync(new LessonUpdateDTO(Date.ToFileTimeUtc(),LessonId, Lesson.Topic, Lesson.Description)); 
+                Msg = "Lesson updated successfully!";
                 navMgr.NavigateTo($"/classes/{ClassId}");
-                
-                msg = "Lesson created successfully!";
-    //showModal = true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                msg = e.Message;
+                Msg = e.Message;
             }
     
-           /*
-            await lessonService.UpdateLessonAsync(lessonUpdateDto);
-            navMgr.NavigateTo($"/Lessons/{lessonUpdateDto.Id}");*/
-            
-    // ValidateLesson();
-    //await lessonService.CreateAsync(lessonDto);
-
-          //  var updatedLesson = await lessonService.UpdateLessonAsync(lessonUpdateDto);
-            //navMgr.NavigateTo($"/lessons/{updatedLesson.Id}");
-            //msg = "Lesson updated successfully!";
-    //showModal = true;
-        
     }
-    
-    
    
- 
-    // private void ValidateLesson()
-    //
-      
-    /* if (lessonDto.Topic == "")
+    /*
+    
+     private void ValidateLesson()
+     {
+         if (lessonDto.Topic == "")
             throw new Exception("Topic is required");
         if(lessonDto.Description == "")
             throw new Exception("Description is required");
        // if (Date == "")
-          //  throw new Exception("The date is required"); Error
+           // throw new Exception("The date is required"); 
     }*/
     
 }

@@ -80,9 +80,9 @@ public class LessonServiceImpl
     }
 
   }
+  @Over
 
-  @Override
-  @Transactional
+  ransactional
   public void getAttendance(
       RequestGetAttendance request,
       StreamObserver<ResponseGetAttendance> response) {
@@ -214,10 +214,10 @@ public class LessonServiceImpl
     }
   }
 
+  @Overri
   public void updateLesson(RequestUpdateLesson request, StreamObserver<ResponseUpdateLesson> response) {
     String lessonId = request.getId();
 
-    // Retrieve the existing lesson from the repository
     Optional<LessonEntity> currentLesson = lessonRepository.findById(lessonId);
     if (currentLesson.isEmpty()) {
       throw new IllegalStateException("No existing lesson with ID of: " + lessonId);
@@ -225,13 +225,11 @@ public class LessonServiceImpl
 
     LessonEntity currentLessonUpdated = currentLesson.get();
 
-    // Update the existing lesson's attributes based on the request
 
     currentLessonUpdated.setDate(request.getLesson().getDate());
     currentLessonUpdated.setTopic(request.getLesson().getTopic());
     currentLessonUpdated.setDescription(request.getLesson().getDescription());
 
-    // Save the updated lesson back to the repository
     lessonRepository.save(currentLessonUpdated);
 
     try {
@@ -244,5 +242,87 @@ public class LessonServiceImpl
     } catch (Exception e) {
       System.out.println("Error updating lesson: " + e.getMessage());
     }
-  }
+
+  
 }
+
+  
+  
+
+    
+    
+        
+        
+        
+
+    
+
+     
+
+      
+       
+        
+
+       
+      
+      
+
+       
+
+        
+            
+                
+                    
+                        
+                        
+                        
+                        
+                
+
+        
+
+        
+        
+        
+      
+
+      
+      
+          
+    
+  
+
+  
+  
+    
+
+    
+    
+      
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+          
+              
+              
+              
+      
+    
+      
+    
+  
+
+   
+
+
+
+

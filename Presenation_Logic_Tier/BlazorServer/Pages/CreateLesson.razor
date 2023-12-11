@@ -1,9 +1,9 @@
 @page "/CreateLesson/{ClassId}"
-@using Domain.Models
+
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.LessonDTO
 @using Microsoft.AspNetCore.Components
-@inject IUserService userService
+
 @inject ILessonService lessonService
 @inject NavigationManager navMgr
 
@@ -63,7 +63,7 @@
     public LessonCreationDTO lessonDto;
     public DateTime Date { get; set; }
     private string msg = "";
-    private string lessonTopic = "";
+    private string Topic = "";
     private string Description = "";
     
     [Parameter]
@@ -86,7 +86,7 @@
             lessonDto.Date = Date.ToFileTimeUtc();
             
            // ValidateLesson();
-            //await lessonService.CreateAsync(lessonDto);
+           
           
             var createdLesson = await lessonService.CreateAsync(lessonDto);
             navMgr.NavigateTo($"/lessons/{createdLesson.Id}");

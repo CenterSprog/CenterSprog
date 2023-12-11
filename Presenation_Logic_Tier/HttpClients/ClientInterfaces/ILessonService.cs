@@ -11,4 +11,5 @@ public interface ILessonService
     Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto);
     Task UpdateLessonAsync(LessonUpdateDTO updateDto);
     Task DeleteAsync(string lessonId);
+    
 }
