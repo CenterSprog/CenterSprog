@@ -3,18 +3,12 @@ package sep3.project.data_tier.service;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import sep3.project.data_tier.entity.FeedbackEntity;
 import sep3.project.data_tier.entity.HandInHomeworkEntity;
-import sep3.project.data_tier.entity.HomeworkEntity;
-import sep3.project.data_tier.entity.UserEntity;
 import sep3.project.data_tier.mappers.FeedbackMapper;
 import sep3.project.data_tier.repository.IFeedbackRepository;
 import sep3.project.data_tier.repository.IHandInHomeworkRepository;
-import sep3.project.data_tier.repository.IHomeworkRepository;
-import sep3.project.data_tier.repository.IUserRepository;
 import sep3.project.protobuf.*;
 
 import java.util.Optional;
@@ -23,20 +17,15 @@ import java.util.Optional;
     extends FeedbackServiceGrpc.FeedbackServiceImplBase
 {
   private IFeedbackRepository feedbackRepository;
-  private IHomeworkRepository homeworkRepository;
-  private IUserRepository userRepository;
+
   private IHandInHomeworkRepository handInHomeworkRepository;
   private FeedbackMapper feedbackMapper = FeedbackMapper.INSTANCE;
-  private final static Logger LOG = LoggerFactory.getLogger(
-      ClassServiceImpl.class);
 
   @Autowired public FeedbackServiceImpl(IFeedbackRepository feedbackRepository,
-      IHomeworkRepository homeworkRepository, IUserRepository userRepository,
       IHandInHomeworkRepository handInHomeworkRepository)
   {
     this.feedbackRepository = feedbackRepository;
-    this.homeworkRepository = homeworkRepository;
-    this.userRepository = userRepository;
+
     this.handInHomeworkRepository = handInHomeworkRepository;
   }
 
@@ -114,7 +103,6 @@ import java.util.Optional;
       }
       else
       {
-
         response.onError(Status.NOT_FOUND.withDescription(
                 "Hand-in homework not found for the given IDs.")
             .asRuntimeException());

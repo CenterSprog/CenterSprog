@@ -1,5 +1,6 @@
 ﻿using Application.ClientInterfaces;
 using Domain.DTOs.FeedbackDTO;
+using Grpc.Core;
 using Grpc.Net.Client;
 using gRPCClient;
 using Feedback = Domain.Models.Feedback;
@@ -70,10 +71,14 @@ public class FeedbackClient : IFeedbackClient
                 return null; 
             }
         }
+        catch (RpcException ex) when (ex.StatusCode == StatusCode.NotFound)
+        {
+            throw new RpcException(new Status(StatusCode.Internal, "Internal Server Error"), ex.Message);
+        }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            return null; 
+            throw;
         }
     }
 

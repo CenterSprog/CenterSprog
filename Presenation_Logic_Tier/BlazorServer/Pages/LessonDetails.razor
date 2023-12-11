@@ -9,7 +9,7 @@
 
 @if (Lesson != null)
 {
-    <LessonDetailComponent Lesson=@Lesson/>
+    <LessonDetailComponent Lesson=@Lesson ClassId="@classId"/>
 
     @if (Lesson.Homework != null)
     {

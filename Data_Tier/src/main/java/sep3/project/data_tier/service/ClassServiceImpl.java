@@ -4,8 +4,6 @@ import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.hibernate.Hibernate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import sep3.project.data_tier.entity.ClassEntity;
@@ -28,9 +26,6 @@ import java.util.*;
   private ClassMapper classMapper = ClassMapper.INSTANCE;
   private UserMapper userMapper = UserMapper.INSTANCE;
   private LessonMapper lessonMapper = LessonMapper.INSTANCE;
-
-  private final static Logger LOG = LoggerFactory.getLogger(
-      ClassServiceImpl.class);
 
   @Autowired public ClassServiceImpl(IClassRepository classRepository,
       IUserRepository userRepository)
@@ -219,25 +214,24 @@ import java.util.*;
       Hibernate.initialize(existingClass);
 
       List<LessonAttendance> lessonsAttendance = new ArrayList<>();
-        if (!existingClass.get().getLessons().isEmpty())
+      if (!existingClass.get().getLessons().isEmpty())
+      {
+        for (LessonEntity lessonEntity : existingClass.get().getLessons())
         {
-          for (LessonEntity lessonEntity : existingClass.get().getLessons())
+          Set<UserEntity> usersInAttendance = lessonEntity.getAttendance();
+          for (UserEntity userEntity : usersInAttendance)
           {
-            Set<UserEntity> usersInAttendance = lessonEntity.getAttendance();
-            for (UserEntity userEntity : usersInAttendance)
-            {
-              LessonAttendance lessonAttendance = LessonAttendance.newBuilder()
-                  .setId(lessonEntity.getId())
-                  .addParticipants(userMapper.toParticipantProto(userEntity))
-                  .build();
-              lessonsAttendance.add(lessonAttendance);
-            }
+            LessonAttendance lessonAttendance = LessonAttendance.newBuilder()
+                .setId(lessonEntity.getId())
+                .addParticipants(userMapper.toParticipantProto(userEntity))
+                .build();
+            lessonsAttendance.add(lessonAttendance);
           }
         }
+      }
 
-      response.onNext(
-          ResponseGetClassAttendance.newBuilder().addAllLessonsAttendance(lessonsAttendance)
-              .build());
+      response.onNext(ResponseGetClassAttendance.newBuilder()
+          .addAllLessonsAttendance(lessonsAttendance).build());
       response.onCompleted();
 
     }
@@ -268,26 +262,26 @@ import java.util.*;
         for (LessonEntity lessonEntity : lessons)
         {
           if (lessonEntity.getAttendance().stream().anyMatch(
-              userEntity -> userEntity.getUsername().equals(request.getUsername())))
+              userEntity -> userEntity.getUsername()
+                  .equals(request.getUsername())))
           {
             lessonsAttended.add(lessonMapper.toAttendandedProto(lessonEntity));
           }
         }
       }
 
-    response.onNext(ResponseGetClassAttendanceByUsername.newBuilder()
-        .addAllLessons(lessonsAttended).build());
-    response.onCompleted();
+      response.onNext(ResponseGetClassAttendanceByUsername.newBuilder()
+          .addAllLessons(lessonsAttended).build());
+      response.onCompleted();
+
+    }
+    catch (Exception e)
+
+    {
+      response.onError(new Throwable(e.getMessage()));
+    }
 
   }
-    catch(
-  Exception e)
-
-  {
-    response.onError(new Throwable(e.getMessage()));
-  }
-
-}
 
   @Override public void updateParticipants(
       RequestUpdateClassParticipants request,

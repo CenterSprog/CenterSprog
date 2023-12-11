@@ -1,6 +1,7 @@
 ﻿using Application.LogicInterfaces;
 using Domain.DTOs.FeedbackDTO;
 using Domain.Models;
+using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -40,21 +41,20 @@ public class FeedbacksController : ControllerBase
     {
         try
         {
-            Feedback? feedback = await _feedbackLogic.GetFeedbackByHandInIdAndStudentUsernameAsync(handInId, studentUsername);
+            Feedback feedback = await _feedbackLogic.GetFeedbackByHandInIdAndStudentUsernameAsync(handInId, studentUsername);
 
-            if (feedback != null)
-            {
-                return Ok(feedback);
-            }
-            else
-            {
-                return NotFound($"No feedback found for HandInId: {handInId} and StudentUsername: {studentUsername}");
-            }
+            return Ok(feedback);
+        }
+
+        catch (RpcException e)
+        {
+            return NotFound(e.Message);
         }
         catch (Exception e)
         {
             Console.WriteLine($"Failed to get feedback from controller: {e.Message}");
             return StatusCode(500, e.Message);
         }
+
     }
 }

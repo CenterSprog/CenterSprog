@@ -15,6 +15,7 @@
         <div class="lesson-description">
             <p>@Lesson.Description</p>
         </div>
+        <MarkAttendanceComponent LessonId="@Lesson.Id" ClassId="@ClassId"/>
     </div>
     </div>
 }
@@ -22,4 +23,6 @@
 @code {
     [Parameter]
     public Lesson Lesson { get; set; }
+    [Parameter]
+    public string ClassId { get; set; }
 }

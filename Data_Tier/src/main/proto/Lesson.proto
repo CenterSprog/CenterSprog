@@ -1,5 +1,4 @@
 syntax = "proto3";
-import "google/protobuf/empty.proto";
 import "Homework.proto";
 import "User.proto";
 
@@ -86,20 +85,13 @@ message ResponseDeleteLesson {
   string message = 2;
 }
 
-//message ResponseGetLessonExtendedByHomeworkHandInFeedback{
-//  Lesson lesson = 1;
-//  optional HomeworkHelper homework = 2;
-//  optional FeedbackHelper feedback = 3;
-//}
 service LessonService{
   rpc addLesson(RequestAddLesson) returns (ResponseAddLesson);
   rpc markAttendance(RequestMarkAttendance) returns (ResponseMarkAttendance);
   rpc getAttendance(RequestGetAttendance) returns (ResponseGetAttendance);
   rpc getLessonById(RequestGetLessonById) returns (ResponseGetLessonById);
   rpc getLessonsByClassId(RequestGetLessonsByClassId) returns (ResponseGetLessonsByClassId);
-
   rpc deleteLesson(RequestDeleteLesson) returns (ResponseDeleteLesson);
-  //  rpc GetLessonExtendedByHomeworkHandInFeedback(RequestGetLessonExtendedByHomeworkHandInFeedback) returns (ResponseGetLessonExtendedByHomeworkHandInFeedback);
 }
 
 

@@ -12,50 +12,49 @@ import sep3.project.protobuf.*;
 
 import java.util.Optional;
 
-@GrpcService
-public class HomeworkServiceImpl extends HomeworkServiceGrpc.HomeworkServiceImplBase {
+@GrpcService public class HomeworkServiceImpl
+    extends HomeworkServiceGrpc.HomeworkServiceImplBase
+{
 
-    private HomeworkMapper homeworkMapper = HomeworkMapper.INSTANCE;
-    private ILessonRepository lessonRepository;
-    private IHomeworkRepository homeworkRepository;
+  private HomeworkMapper homeworkMapper = HomeworkMapper.INSTANCE;
+  private ILessonRepository lessonRepository;
+  private IHomeworkRepository homeworkRepository;
 
-    @Autowired
-    public HomeworkServiceImpl(IHomeworkRepository homeworkRepository, ILessonRepository lessonRepository) {
-        this.homeworkRepository = homeworkRepository;
-        this.lessonRepository = lessonRepository;
+  @Autowired public HomeworkServiceImpl(IHomeworkRepository homeworkRepository,
+      ILessonRepository lessonRepository)
+  {
+    this.homeworkRepository = homeworkRepository;
+    this.lessonRepository = lessonRepository;
+  }
+
+  @Override public void addHomework(RequestAddHomework request,
+      StreamObserver<Homework> response)
+  {
+    String lessonId = request.getLessonId();
+    HomeworkEntity homework = new HomeworkEntity(
+        request.getHomework().getDeadline(), request.getHomework().getTitle(),
+        request.getHomework().getDescription());
+
+    try
+    {
+
+      Optional<LessonEntity> existingLesson = lessonRepository.findById(
+          lessonId);
+      if (existingLesson.isEmpty())
+        throw new IllegalStateException("Lesson with given id does not exist.");
+
+      HomeworkEntity savedHomework = homeworkRepository.save(homework);
+      existingLesson.get().setHomework(homework);
+      lessonRepository.save(existingLesson.get());
+
+      response.onNext(homeworkMapper.toProto(homework).toBuilder().build());
+      response.onCompleted();
+
     }
-
-    @Override
-    public void addHomework(RequestAddHomework request, StreamObserver<Homework> response){
-        String lessonId = request.getLessonId();
-        HomeworkEntity homework = new HomeworkEntity(
-                request.getHomework().getDeadline(),
-                request.getHomework().getTitle(),
-                request.getHomework().getDescription()
-        );
-
-        try{
-
-            Optional<LessonEntity> existingLesson = lessonRepository.findById(lessonId);
-            if(existingLesson.isEmpty())
-                throw new IllegalStateException("Lesson with given id does not exist.");
-
-            HomeworkEntity savedHomework =  homeworkRepository.save(homework);
-            existingLesson.get().setHomework(homework);
-            lessonRepository.save(existingLesson.get());
-
-
-            response.onNext(
-                    homeworkMapper.toProto(homework).toBuilder().build()
-            );
-            response.onCompleted();
-
-        }catch (Exception e){
-            response.onError(
-                    new Throwable(e.getMessage())
-            );
-        }
+    catch (Exception e)
+    {
+      response.onError(new Throwable(e.getMessage()));
     }
-
+  }
 
 }

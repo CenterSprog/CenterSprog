@@ -1,5 +1,4 @@
 syntax = "proto3";
-import "google/protobuf/empty.proto";
 
 
 option java_multiple_files = true;
@@ -23,5 +22,4 @@ message ResponseAddHomework{
 
 service HomeworkService{
   rpc addHomework(RequestAddHomework) returns (Homework);
-
 }
