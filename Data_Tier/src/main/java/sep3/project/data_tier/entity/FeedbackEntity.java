@@ -21,8 +21,7 @@ public class FeedbackEntity {
 	public FeedbackEntity() {
 	}
 
-	public FeedbackEntity(String id, int grade, String comment) {
-		this.id = id;
+	public FeedbackEntity(int grade, String comment) {
 		this.grade = grade;
 		this.comment = comment;
 	}

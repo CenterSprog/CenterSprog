@@ -3,6 +3,7 @@ using Domain.DTOs.ClassDTO;
 using Domain.DTOs.LessonDTO;
 using Domain.DTOs.UserDTO;
 using Domain.Models;
+using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,9 +29,12 @@ public class ClassesController : ControllerBase
             ClassEntity classEntity = await _classLogic.GetByIdAsync(id);
             return Ok(classEntity);
         }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
+        }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
     }
@@ -43,16 +47,14 @@ public class ClassesController : ControllerBase
             SearchClassDTO dto = new SearchClassDTO(username);
             IEnumerable<ClassEntity> classes = await _classLogic.GetAllAsync(dto);
 
-            if (classes == null || !classes.Any())
-            {
-                return NotFound();
-            }
-
             return Ok(classes);
+        }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
     }
@@ -65,10 +67,11 @@ public class ClassesController : ControllerBase
             SearchClassParticipantsDTO dto = new SearchClassParticipantsDTO(id, role);
             IEnumerable<User> participants = await _classLogic.GetAllParticipantsAsync(dto);
 
-            if (participants == null || !participants.Any())
-                return NotFound();
-
             return Ok(participants);
+        }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
         }
         catch (Exception e)
         {
@@ -77,25 +80,26 @@ public class ClassesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<ClassEntity>> CreateAsync(ClassCreationDTO dto)
+    public async Task<ActionResult<ClassEntity>> CreateAsync([FromBody] ClassCreationDTO dto)
     {
         try
         {
             ClassEntity? createdClass = await _classLogic.CreateAsync(dto);
-            if (createdClass == null)
-                throw new Exception("Failed to create new class in class controller");
             return Created($"classes/{createdClass.Id}", createdClass);
+        }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed create class controller : {e.Message}");
-            return StatusCode(500,e.Message);
+            return StatusCode(500, e.Message);
         }
     }
 
-    [HttpPatch]
+    [HttpPatch("{id}", Name = "UpdateAsync")]
     [Authorize("MustBeAdmin")]
-    public async Task<ActionResult<Boolean>> UpdateAsync(ClassUpdateDTO dto)
+    public async Task<ActionResult<Boolean>> UpdateAsync([FromBody] ClassUpdateDTO dto)
     {
         try
         {
@@ -105,10 +109,13 @@ public class ClassesController : ControllerBase
             return Ok(result);
 
         }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
+        }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed updating class controller : {e.Message} {e.StackTrace}");
-            return StatusCode(500,e.Message + e.StackTrace);
+            return StatusCode(500, e.Message);
         }
     }
     [HttpGet("{id}/attendances", Name = "GetClassAttendanceAsync")]
@@ -126,15 +133,13 @@ public class ClassesController : ControllerBase
 
                 return Ok(lessons);
             }
-            else
-            {
-                var attendees = await _classLogic.GetClassAttendanceAsync(id);
+            var attendees = await _classLogic.GetClassAttendanceAsync(id);
 
-                if (attendees == null)
-                    return NotFound();
-
-                return Ok(attendees);
-            }
+            return Ok(attendees);
+        }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
         }
         catch (Exception e)
         {

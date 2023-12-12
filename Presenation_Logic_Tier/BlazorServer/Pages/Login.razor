@@ -1,4 +1,4 @@
-﻿@page "/Login"
+﻿@page "/login"
 @using HttpClients.ClientInterfaces
 @inject IUserService userService
 @inject NavigationManager navMgr
@@ -46,12 +46,11 @@
         try
         {
             await userService.LoginAsync(Username, Password);
-            navMgr.NavigateTo("/ClassesOverview");
+            navMgr.NavigateTo("/my-classes");
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            Msg = $"Error: {e.Message}";
+            Msg = e.Message;
         }
     }
 }

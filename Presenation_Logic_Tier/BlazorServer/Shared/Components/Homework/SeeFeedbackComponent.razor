@@ -88,8 +88,6 @@
             
             handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync(Homework.Id, username);
             
-            Console.WriteLine(handInHomework.Id + username);
-
             if (handInHomework != null && username != null)
             {
                 var feedback = await FeedbackService.GetFeedbackByHandInIdAndStudentUsernameAsync(handInHomework.Id, username);
@@ -115,7 +113,6 @@
 
         catch (Exception ex)
         {
-            Console.WriteLine($"Error fetching feedback: {ex.Message}");
             Msg = "No feedback is available at the moment";
         }
     }

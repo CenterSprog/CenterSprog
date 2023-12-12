@@ -100,29 +100,20 @@
                 StateHasChanged();
                 return;
             }
-            handInHomework = new HandInHomework
-            {
-                Id = "",
-                Answer = Answer,
-                StudentUsername = ""
-            };
 
-            handInHomework.Answer = Answer;
 
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
             var username = user.Identity?.Name;
             
-            Dto = new HomeworkHandInDTO(Homework.Id, username, handInHomework);
+            Dto = new HomeworkHandInDTO(Homework.Id, username, Answer);
             await HandInHomeworkService.HandInHomework(Dto);
-            Console.WriteLine("Homework submitted successfully!");
 
             HomeworkSubmitted = true;
             Msg = null;
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error submitting homework: {ex.Message}");
             Msg = $"Error submitting homework: {ex.Message}";
         }
     }

@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 using Domain.DTOs.FeedbackDTO;
 using Domain.Models;
 using HttpClients.ClientInterfaces;
@@ -29,7 +28,7 @@ public class FeedbackHttpClient : IFeedbackService
 
     public async Task<Feedback> GetFeedbackByHandInIdAndStudentUsernameAsync(string handInId, string studentUsername)
     {
-        HttpResponseMessage responseMessage = await _client.GetAsync($"/feedbacks/{handInId}/{studentUsername}");
+        HttpResponseMessage responseMessage = await _client.GetAsync($"/feedbacks/{handInId}/student/{studentUsername}");
 
         if (!responseMessage.IsSuccessStatusCode)
         {

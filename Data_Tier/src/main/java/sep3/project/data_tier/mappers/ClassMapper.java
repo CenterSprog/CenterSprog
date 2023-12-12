@@ -10,7 +10,6 @@ public interface ClassMapper
 {
   ClassMapper INSTANCE = Mappers.getMapper(ClassMapper.class);
   ClassData toProto(ClassEntity classData);
-
   ClassEntity toEntity(ClassData classEntity);
 
 }

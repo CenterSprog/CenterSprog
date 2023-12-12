@@ -18,43 +18,41 @@ public class FeedbacksController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Feedback>> AddFeedback(AddFeedbackDTO addFeedbackDto)
+    public async Task<ActionResult<Feedback>> AddFeedback([FromBody] AddFeedbackDTO addFeedbackDto)
     {
         try
         {
-            Feedback? createdFeedback = await _feedbackLogic.AddFeedbackAsync(addFeedbackDto);
-            if (createdFeedback == null)
-                throw new Exception("Failed to create a new feedback in feedback controller");
+            Feedback createdFeedback = await _feedbackLogic.AddFeedbackAsync(addFeedbackDto);
+
             return Created($"/feedbacks/{createdFeedback.Id}", createdFeedback);
         }
-        
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
+        }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed to add feedback controller : {e.Message}");
             return StatusCode(500, e.Message);
         }
     }
 
-    [HttpGet ("{handInId}/{studentUsername}", Name = "GetFeedbackByHomeworkIdAndStudentUsernameAsync")]
-    public async Task<ActionResult<Feedback>> GetFeedbackByHandInIdAndStudentUsernameAsync(string handInId,
-        string studentUsername)
+    [HttpGet ("{handInId}/student/{username}", Name = "GetFeedbackByHomeworkIdAndStudentUsernameAsync")]
+    public async Task<ActionResult<Feedback>> GetFeedbackByHandInIdAndStudentUsernameAsync([FromRoute] string handInId,
+        [FromRoute] string username)
     {
         try
         {
-            Feedback feedback = await _feedbackLogic.GetFeedbackByHandInIdAndStudentUsernameAsync(handInId, studentUsername);
+            Feedback feedback = await _feedbackLogic.GetFeedbackByHandInIdAndStudentUsernameAsync(handInId, username);
 
             return Ok(feedback);
         }
-
         catch (RpcException e)
         {
-            return NotFound(e.Message);
+            return NotFound(e.Status.Detail);
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed to get feedback from controller: {e.Message}");
             return StatusCode(500, e.Message);
         }
-
     }
 }

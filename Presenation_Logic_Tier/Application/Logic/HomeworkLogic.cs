@@ -18,13 +18,8 @@ public class HomeworkLogic : IHomeworkLogic
 
     public async Task<Homework> CreateAsync(HomeworkCreationDTO dto)
     {
+        // Deadline before lesson, title and description required
             Homework createdHomework = await _homeworkClient.CreateAsync(dto);
             return await Task.FromResult(createdHomework);
-        // catch (Exception e)
-        // { 
-        //     Console.WriteLine(e);
-        //     // SOME ERROR HANDLING ???      
-        //     return await Task.FromException<Homework>(null);
-        // }
     }
 }

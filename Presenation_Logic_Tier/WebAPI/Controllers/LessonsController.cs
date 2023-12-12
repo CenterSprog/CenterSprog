@@ -25,15 +25,18 @@ public class LessonsController : ControllerBase
             Lesson lesson = await _lessonLogic.GetByIdAsync(id);
             return Ok(lesson);
         }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
+        }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
     }
 
     [HttpPost("{id}/attendance", Name = "MarkAttendanceAsync")]
-    public async Task<ActionResult<int>> MarkAttendanceAsync([FromRoute] string id, List<String> studentUsernames)
+    public async Task<ActionResult<int>> MarkAttendanceAsync([FromRoute] string id, [FromBody] List<String> studentUsernames)
     {
         try
         {
@@ -41,9 +44,12 @@ public class LessonsController : ControllerBase
             int amountOfParticipants = await _lessonLogic.MarkAttendanceAsync(markAttendanceDto);
             return Ok(amountOfParticipants.ToString());
         }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
+        }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
     }
@@ -54,10 +60,11 @@ public class LessonsController : ControllerBase
         {
             IEnumerable<User> attendees = await _lessonLogic.GetAttendanceAsync(id);
 
-            if (attendees == null)
-                return NotFound();
-
             return Ok(attendees);
+        }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
         }
         catch (Exception e)
         {
@@ -70,49 +77,52 @@ public class LessonsController : ControllerBase
     {
         try
         {
-            Lesson? createdLesson = await _lessonLogic.CreateAsync(lessonCreationDto);
-            if (createdLesson == null)
-                throw new Exception("Failed to create new Lesson in lesson controller");
+            Lesson createdLesson = await _lessonLogic.CreateAsync(lessonCreationDto);
+
             return Created($"lessons/{createdLesson.Id}", createdLesson);
+        }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed create lesson controller : {e.Message}");
             return StatusCode(500, e.Message);
         }
     }
 
     [HttpDelete("{lessonId}")]
-    public async Task<ActionResult> DeleteAsync([FromRoute] string lessonId)
+    public async Task<ActionResult<Boolean>> DeleteAsync([FromRoute] string lessonId)
     {
         try
-        {
-            bool deleted = await _lessonLogic.DeleteAsync(lessonId);
-
-            if (!deleted)
-            {
-                return NotFound();
-            }
-
-            return Ok();
+        { 
+          var deleted = await _lessonLogic.DeleteAsync(lessonId);
+           
+          return Ok(deleted);
         }
-        catch (Exception ex)
+        catch (RpcException e)
         {
-
-            return StatusCode(500, "An error occurred while processing the request.");
+            return NotFound(e.Status.Detail);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
         }
     }
-    [HttpPatch]
-    public async Task<ActionResult> UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto)
+    [HttpPut]
+    public async Task<ActionResult> UpdateLessonAsync([FromBody] LessonUpdateDTO lessonUpdateDto)
     {
         try
         {
             await _lessonLogic.UpdateLessonAsync(lessonUpdateDto);
             return Ok();
         }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
+        }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
     }

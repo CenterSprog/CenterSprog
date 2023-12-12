@@ -21,13 +21,13 @@ public class LessonHttpClient : ILessonService
     public async Task<Lesson> GetByIdAsync(string id)
     {
         HttpResponseMessage response = await client.GetAsync($"/lessons/{id}");
-        string result = await response.Content.ReadAsStringAsync();
+        string responseContent = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception(result);
+            throw new Exception(responseContent);
         }
 
-        Lesson foundLesson = JsonSerializer.Deserialize<Lesson>(result, new JsonSerializerOptions
+        Lesson foundLesson = JsonSerializer.Deserialize<Lesson>(responseContent, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
@@ -39,26 +39,26 @@ public class LessonHttpClient : ILessonService
     {
         HttpResponseMessage response = await client.PostAsJsonAsync($"/lessons/{markAttendanceDto.LessonId}/attendance",
             markAttendanceDto.StudentUsernames);
-        var result = await response.Content.ReadAsStringAsync();
-        if (!response.IsSuccessStatusCode || result is null)
+        string responseContent = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
         {
-            throw new Exception("Failed to mark attendance from blazor");
+            throw new Exception(responseContent);
         }
 
-        return result;
+        return responseContent;
     }
 
     public async Task<IEnumerable<User>> GetAttendanceAsync(string id)
     {
-        HttpResponseMessage responseMessage = await client.GetAsync($"/lessons/{id}/attendance");
+        HttpResponseMessage response = await client.GetAsync($"/lessons/{id}/attendance");
 
-        string responseBody = await responseMessage.Content.ReadAsStringAsync();
-        if (string.IsNullOrEmpty(responseBody))
+        string responseContent = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
         {
-            throw new Exception("Empty response received while fetching attendees.");
+            throw new Exception(responseContent);
         }
 
-        ICollection<User> attendees = JsonSerializer.Deserialize<ICollection<User>>(responseBody,
+        ICollection<User> attendees = JsonSerializer.Deserialize<ICollection<User>>(responseContent,
             new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
@@ -83,23 +83,23 @@ public class LessonHttpClient : ILessonService
     public async Task UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto)
     {
 
-        HttpResponseMessage response = await client.PatchAsJsonAsync("/lessons", lessonUpdateDto);
+        HttpResponseMessage response = await client.PutAsJsonAsync("/lessons", lessonUpdateDto);
+        string responseContent = await response.Content.ReadAsStringAsync();
+
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception("Failed to update lesson ");
+            throw new Exception(responseContent);
         }
     }
 
     public async Task DeleteAsync(string lessonId)
     {
-        try
-        {
-            HttpResponseMessage response = await client.DeleteAsync($"lessons/{lessonId}");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        HttpResponseMessage response = await client.DeleteAsync($"lessons/{lessonId}");
+            string responseContent = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception(responseContent);
+            }
     }
 }

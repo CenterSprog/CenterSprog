@@ -1,10 +1,6 @@
-﻿@using Domain.Models
-@using HttpClients.ClientInterfaces
-@using Domain.DTOs.LessonDTO
-@using Domain.DTOs.ClassDTO
+﻿@using HttpClients.ClientInterfaces
 @using Domain.DTOs.UserDTO
 @inject IClassService ClassService;
-@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="d-flex align-items-center">
     <button type="button" class="btn btn-warning fw-bold w-auto" @onclick="@SeeClassAttendanceAsync">Attendance <span class="oi oi-calendar"></span></button>
@@ -71,7 +67,7 @@
         }
         catch (Exception e)
         {
-            Msg = e.Message + e.StackTrace;
+            Msg = "Could not get attendance of users";
         }
     }
 

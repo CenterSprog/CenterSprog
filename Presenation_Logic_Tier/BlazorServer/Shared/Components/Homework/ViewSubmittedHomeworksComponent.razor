@@ -76,8 +76,6 @@
     private void ViewSubmittedHomeworks()
     {
         var homeworkId = Homework.Id;
-        Console.WriteLine($"Getting submitted homeworks for the homework with id: {homeworkId}");
-        navMgr.NavigateTo($"/Homeworks/{homeworkId}");
-        Console.WriteLine($"Navigating to the submitted homeworks page with the id: {homeworkId}");
+        navMgr.NavigateTo($"/homeworks/{homeworkId}");
     }
 }

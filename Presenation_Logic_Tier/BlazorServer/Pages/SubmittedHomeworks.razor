@@ -1,10 +1,8 @@
-﻿@page "/Homeworks/{homeworkId}"  
+﻿@page "/homeworks/{HomeworkId}"  
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.FeedbackDTO
-@inject NavigationManager navMgr
 @inject IHandInHomeworkService HandInService
-@inject IHomeworkService HomeworkService
 @inject IFeedbackService FeedbackService
 
 
@@ -27,6 +25,12 @@ else
                     <p>@handIn.Answer</p>
                 </div>
             </div>
+            @if (Msg is not null)
+            {
+                <div>
+                    <p class="text-danger">@Msg</p>
+                </div>
+            }
         }
     </div>
 }
@@ -75,7 +79,7 @@ else
 @code {
 
     [Parameter]
-    public string homeworkId { get; set; }
+    public string HomeworkId { get; set; }
 
     Homework Homework { get; set; }
     IEnumerable<HandInHomework> HandIns { get; set; }
@@ -93,7 +97,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         Homework = new Homework();
-        HandIns = await HandInService.GetHandInsByHomeworkIdAsync(homeworkId);
+        HandIns = await HandInService.GetHandInsByHomeworkIdAsync(HomeworkId);
         HandIn = new HandInHomework();
         ShowModal = false;
         StudentUsername = null;
@@ -127,7 +131,6 @@ else
         }
         try
         {
-    //check if there is already a feedback for this hand-in
             var existingFeedback = await FeedbackService.GetFeedbackByHandInIdAndStudentUsernameAsync(HandIn.Id, HandIn.StudentUsername);
             if (existingFeedback != null)
             {
@@ -141,14 +144,7 @@ else
             Console.WriteLine($"Error fetching existing feedback: {ex.Message}");
         }
 
-        var feedback = new Feedback()
-        {
-            Id = "",
-            Grade = FeedbackGrade,
-            Comment = FeedbackComment
-        };
-
-        Dto = new AddFeedbackDTO(HandIn.Id, HandIn.StudentUsername, feedback);
+        Dto = new AddFeedbackDTO(HandIn.Id, HandIn.StudentUsername, FeedbackGrade, FeedbackComment);
         try
         {
             await FeedbackService.AddFeedbackAsync(Dto);

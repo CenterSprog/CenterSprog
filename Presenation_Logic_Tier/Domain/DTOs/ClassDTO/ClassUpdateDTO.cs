@@ -8,7 +8,6 @@ public class ClassUpdateDTO
     public string? Room { get; set; }
     public string? Title { get; set; }
     public List<string>? Participants { get; set; }
-    // public string? JWT { get; set; }
 
     public ClassUpdateDTO()
     {

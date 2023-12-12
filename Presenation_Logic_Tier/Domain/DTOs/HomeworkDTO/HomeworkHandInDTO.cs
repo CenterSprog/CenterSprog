@@ -6,12 +6,12 @@ public class HomeworkHandInDTO
 {
     public string HomeworkId { get; set; }
     public string StudentUsername { get; set; }
-    public HandInHomework HandInHomework { get; set; }
+    public string Answer { get; set; }
 
-    public HomeworkHandInDTO(string homeworkId, string studentUsername, HandInHomework handInHomework)
+    public HomeworkHandInDTO(string homeworkId, string studentUsername, string answer)
     {
         HomeworkId = homeworkId;
         StudentUsername = studentUsername;
-        HandInHomework = handInHomework;
+        Answer = answer;
     }
 }

@@ -1,4 +1,4 @@
-﻿@page "/{classId}/Lessons/{lessonId}"  
+﻿@page "/my-classes/{ClassId}/lessons/{LessonId}"  
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @inject ILessonService lessonService
@@ -7,7 +7,7 @@
 
 @if (Lesson != null)
 {
-    <LessonDetailComponent Lesson=@Lesson ClassId="@classId"/>
+    <LessonDetailComponent Lesson=@Lesson ClassId="@ClassId"/>
 
     @if (Lesson.Homework != null)
     {
@@ -28,20 +28,12 @@
                     </p>
                 </div>
                 <AuthorizeView Policy="MustBeTeacher">
-                    <Authorized Context="teacherAuthorized">
-
-                        <ViewSubmittedHomeworksComponent LessonId="@lessonId" ClassId="@classId"/>
-
-                    </Authorized>
+                        <ViewSubmittedHomeworksComponent LessonId="@LessonId" ClassId="@ClassId"/>
                 </AuthorizeView>
 
 
                 <AuthorizeView Policy="MustBeStudent">
-                    <Authorized Context="studentAuthorized">
-
-                        <HandInHomeworkComponent LessonId="@lessonId" ClassId="@classId"/>
-
-                    </Authorized>
+                        <HandInHomeworkComponent LessonId="@LessonId" ClassId="@ClassId"/>
                 </AuthorizeView>
             </div>
         </div>
@@ -58,12 +50,10 @@
                         <h3>Homework. </h3>
                     </div>
                     <AuthorizeView Policy="MustBeTeacher">
-                        <Authorized Context="teacherAuthorized">
                             @if (Lesson.Homework == null)
                             {
-                                <AssignHomeworkComponent LessonId=@lessonId LessonDate=@Lesson.Date/>
+                                <AssignHomeworkComponent LessonId=@LessonId LessonDate=@Lesson.Date />
                             }
-                        </Authorized>
                     </AuthorizeView>
 
                 </div>
@@ -79,10 +69,10 @@
 @code {
 
     [Parameter]
-    public string classId { get; set; }
+    public string ClassId { get; set; }
 
     [Parameter]
-    public string lessonId { get; set; }
+    public string LessonId { get; set; }
 
     Lesson Lesson { get; set; }
     Homework Homework { get; set; }
@@ -98,7 +88,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Lesson = await lessonService.GetByIdAsync(lessonId);
+        Lesson = await lessonService.GetByIdAsync(LessonId);
         Msg = null;
         Answer = null;
         HomeworkSubmitted = false;
@@ -139,5 +129,4 @@
             Msg = e.Message;
         }
     }
-
 }

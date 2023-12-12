@@ -13,7 +13,7 @@ message HandInHomework{
 message RequestCreateHandInHomework{
   string homeworkId = 1;
   string studentUsername = 2;
-  HandInHomework handInHomework = 3;
+  string answer = 3;
 }
 message ResponseGetHandInHomework{
   HandInHomework handInHomework = 1;

@@ -33,11 +33,11 @@ message LessonAttended{
   string topic = 4;
 }
 
-message RequestAddLesson{
+message RequestCreateLesson{
   string classId = 1;
   LessonData lesson = 2;
 }
-message ResponseAddLesson{
+message ResponseCreateLesson{
   LessonData lesson = 1;
 }
 message RequestMarkAttendance{
@@ -98,7 +98,7 @@ message ResponseUpdateLesson {
 
 }
 service LessonService{
-  rpc addLesson(RequestAddLesson) returns (ResponseAddLesson);
+  rpc CreateLesson(RequestCreateLesson) returns (ResponseCreateLesson);
   rpc markAttendance(RequestMarkAttendance) returns (ResponseMarkAttendance);
   rpc getAttendance(RequestGetAttendance) returns (ResponseGetAttendance);
   rpc getLessonById(RequestGetLessonById) returns (ResponseGetLessonById);

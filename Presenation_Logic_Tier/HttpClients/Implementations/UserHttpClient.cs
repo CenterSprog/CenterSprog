@@ -68,7 +68,7 @@ public class UserHttpClient : IUserService
     
     public async Task LoginAsync(string username, string password)
     {
-        UserLoginDto userLoginDto = new()
+        UserLoginDTO userLoginDto = new()
         {
             Username = username,
             Password = password
@@ -101,7 +101,7 @@ public class UserHttpClient : IUserService
         return Task.CompletedTask;
     }
     
-    public async Task<User> CreateUserAsync(UserCreationDto dto)
+    public async Task<User> CreateUserAsync(UserCreationDTO dto)
     {
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Jwt);
         HttpResponseMessage response = await _client.PostAsJsonAsync("/users", dto);

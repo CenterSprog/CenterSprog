@@ -11,11 +11,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Pages\Admin\Admin.razor" />
       <AdditionalFiles Include="Pages\Admin\AdminOverviewUsers.razor" />
       <AdditionalFiles Include="Pages\Admin\AdminRegister.razor" />
       <AdditionalFiles Include="Pages\Admin\AdminUserDetails.razor" />
-      <AdditionalFiles Include="Pages\Admin\AssignClass.razor" />
       <AdditionalFiles Include="Pages\Class\ClassDetails.razor" />
       <AdditionalFiles Include="Shared\Components\Admin\RegisterClassComponent.razor" />
       <AdditionalFiles Include="Shared\Components\Admin\RegisterUserComponent.razor" />
@@ -28,7 +26,6 @@
       <AdditionalFiles Include="Shared\Components\Homework\SeeFeedbackComponent.razor" />
       <AdditionalFiles Include="Shared\Components\Homework\ViewSubmittedHomeworksComponent.razor" />
       <AdditionalFiles Include="Shared\Components\Lesson\LessonDetailComponent.razor" />
-      <AdditionalFiles Include="Shared\Components\Lesson\LessonOverviewComponent.razor" />
     </ItemGroup>
 
 </Project>

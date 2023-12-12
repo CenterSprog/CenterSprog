@@ -1,5 +1,6 @@
 package sep3.project.data_tier.service;
 
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import sep3.project.data_tier.repository.IHomeworkRepository;
 import sep3.project.data_tier.repository.ILessonRepository;
 import sep3.project.protobuf.*;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @GrpcService public class HomeworkServiceImpl
@@ -41,19 +43,19 @@ import java.util.Optional;
       Optional<LessonEntity> existingLesson = lessonRepository.findById(
           lessonId);
       if (existingLesson.isEmpty())
-        throw new IllegalStateException("Lesson with given id does not exist.");
+        throw new NoSuchElementException("No existing lesson with id " + lessonId);
 
-      HomeworkEntity savedHomework = homeworkRepository.save(homework);
+      homeworkRepository.save(homework);
       existingLesson.get().setHomework(homework);
       lessonRepository.save(existingLesson.get());
 
       response.onNext(homeworkMapper.toProto(homework).toBuilder().build());
       response.onCompleted();
-
     }
     catch (Exception e)
     {
-      response.onError(new Throwable(e.getMessage()));
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
   }
 
