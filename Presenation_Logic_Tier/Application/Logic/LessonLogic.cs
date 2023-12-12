@@ -30,59 +30,24 @@ public class LessonLogic : ILessonLogic
     {
         return await _lessonClient.GetAttendanceAsync(id);
     }
-    
+
 
     public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
     {
-       
-        var newLesson = new Lesson
-        {
-
-            Topic = lessonCreationDto.Topic,
-            Date = lessonCreationDto.Date,
-            Description = lessonCreationDto.Description
-        };
-
+        // Validate
         var createdLesson = await _lessonClient.CreateAsync(lessonCreationDto);
 
         return createdLesson;
     }
 
-    public async Task<bool> DeleteAsync(string lessonId)
+    public async Task<Boolean> DeleteAsync(string lessonId)
     {
-        Lesson? lesson = await _lessonClient.GetByIdAsync(lessonId);
-        if (lesson == null)
-        {
-            throw new Exception($"Lesson with ID {lessonId} was not found!");
-
-        }
-
-        await _lessonClient.DeleteAsync(lessonId);
-        return true;
+        return await _lessonClient.DeleteAsync(lessonId);
     }
 
-
-    public async Task UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto)
+    public async Task<Boolean> UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto)
     {
-        Lesson? lesson = await _lessonClient.GetByIdAsync(lessonUpdateDto.Id);
-
-        if (lesson == null)
-        {
-            throw new Exception($"Can not find Lesson with Id {lessonUpdateDto.Id}");
-        }
-
-        // Updating the existing lesson with the values from the update DTO
-        var newLesson = new Lesson
-        {
-
-            Topic = lessonUpdateDto.Topic,
-            Date = lessonUpdateDto.Date,
-            Description = lessonUpdateDto.Description
-
-        };
-        await _lessonClient.UpdateLessonAsync(lessonUpdateDto);
-       
-
+        // Validate
+        return await _lessonClient.UpdateLessonAsync(lessonUpdateDto);
     }
 }
-

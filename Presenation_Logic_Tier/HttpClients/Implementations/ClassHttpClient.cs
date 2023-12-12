@@ -47,7 +47,6 @@ public class ClassHttpClient : IClassService
             throw new Exception(
                 $"Failed to fetch classes for username '{username}'. Status code: {responseMessage.StatusCode}");
         }
-
         string responseBody = await responseMessage.Content.ReadAsStringAsync();
         if (string.IsNullOrEmpty(responseBody))
         {
@@ -61,8 +60,6 @@ public class ClassHttpClient : IClassService
             })!;
 
         return classes;
-
-
     }
 
     public async Task<IEnumerable<User>> GetAllParticipantsAsync(SearchClassParticipantsDTO dto)

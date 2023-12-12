@@ -16,7 +16,7 @@ public class HandInHomeworkLogic : IHandInHomeworkLogic
 
     public async Task<HandInHomework> HandInHomework(HomeworkHandInDTO dto)
     {
-
+        // Answer required
         HandInHomework homeworkToHandIn = await _handInHomeworkClient.HandInHomework(dto);
         return await Task.FromResult(homeworkToHandIn);
 

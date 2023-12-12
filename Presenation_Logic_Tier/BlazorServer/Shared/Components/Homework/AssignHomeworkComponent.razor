@@ -1,6 +1,7 @@
 ﻿@using Domain.DTOs.HomeworkDTO
 @using HttpClients.ClientInterfaces
 @inject IHomeworkService HomeworkService 
+@inject NavigationManager navMgr
 
 <div class="add-icon-container" @onclick="AddHomeworkModalAsync">
     <img src="/add.png" alt="Add Icon" style="width: 30px;"/>
@@ -31,7 +32,7 @@
                 @if (Msg is not null)
                 {
                     <div>
-                        @Msg
+                        <p class="text-danger">@Msg</p>
                     </div>
                 }
             </div>
@@ -49,7 +50,7 @@
 
     [Parameter]
     public long LessonDate { get; set; }
-
+    
     public string Msg { get; set; }
     public HomeworkCreationDTO Dto { get; set; }
     public DateTime Date { get; set; }
@@ -74,30 +75,29 @@
     public async Task AddHomeworkAsync()
     {
         Msg = null;
-        ShowModal = true;
-        
         try
         {
             Dto.Deadline = Date.ToFileTimeUtc();
             ValidateHomework();
-            await HomeworkService.CreateAsync(Dto);
-            Msg = "Assigned homework successfully!";
+            if (Msg == null)
+            {
+                await HomeworkService.CreateAsync(Dto);
+                navMgr.NavigateTo(navMgr.Uri, forceLoad: true);
+            }
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             Msg = e.Message;
         }
     }
 
     private void ValidateHomework()
     {
-        if (string.IsNullOrWhiteSpace(Dto.Title))
-            throw new Exception("Title is required");
-        if (string.IsNullOrWhiteSpace(Dto.Description))
-            throw new Exception("Description is required");
+        if (string.IsNullOrEmpty(Dto.Title))
+            Msg = "Title is required";
+        if (string.IsNullOrEmpty(Dto.Description))
+            Msg = "Description is required";
         if (Dto.Deadline < LessonDate)
-            throw new Exception("The deadline of the homework cannot be before the lesson's date");
+            Msg = "The deadline of the homework cannot be before the lesson's date";
     }
-
 }

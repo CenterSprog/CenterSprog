@@ -31,11 +31,11 @@ message LessonAttended{
   string topic = 4;
 }
 
-message RequestAddLesson{
+message RequestCreateLesson{
   string classId = 1;
   LessonData lesson = 2;
 }
-message ResponseAddLesson{
+message ResponseCreateLesson{
   LessonData lesson = 1;
 }
 message RequestMarkAttendance{
@@ -63,10 +63,12 @@ message RequestGetLessonById{
 message ResponseGetLessonById{
   LessonData lesson = 1;
 }
+
 message RequestGetLessonExtendedByHomeworkHandInFeedback{
   string lessonId = 1;
   string username = 2;
 }
+
 
 message RequestDeleteLesson{
   string lessonId = 1;
@@ -82,8 +84,7 @@ message ResponseDeleteLesson {
 
 message RequestUpdateLesson{
   string id = 1;
-  //string classId = 2;
-  LessonData lesson = 3;
+  LessonData lesson = 2;
 }
 message ResponseUpdateLesson {
   enum Status {
@@ -92,14 +93,14 @@ message ResponseUpdateLesson {
   }
   Status status = 1;
   string message = 2;
-  
+
 }
 service LessonService{
-  rpc addLesson(RequestAddLesson) returns (ResponseAddLesson);
+  rpc CreateLesson(RequestCreateLesson) returns (ResponseCreateLesson);
   rpc markAttendance(RequestMarkAttendance) returns (ResponseMarkAttendance);
   rpc getAttendance(RequestGetAttendance) returns (ResponseGetAttendance);
   rpc getLessonById(RequestGetLessonById) returns (ResponseGetLessonById);
   rpc getLessonsByClassId(RequestGetLessonsByClassId) returns (ResponseGetLessonsByClassId);
-  rpc deleteLesson(RequestDeleteLesson) returns (ResponseDeleteLesson);
-  rpc updateLesson(RequestUpdateLesson) returns (ResponseUpdateLesson);
+  rpc deleteLesson(RequestDeleteLesson) returns ( ResponseDeleteLesson);
+  rpc updateLesson(RequestUpdateLesson) returns ( ResponseUpdateLesson);
 }

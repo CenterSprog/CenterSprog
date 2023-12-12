@@ -1,4 +1,4 @@
-﻿@page "/ClassesOverview"
+﻿@page "/my-classes"
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.ClassDTO
@@ -17,13 +17,13 @@ else if (!Classes.Any())
 else
 {
     <div class="classes-container">
-        @foreach (ClassEntity _class in Classes)
+        @foreach (var _class in Classes)
         {
-            <div class="class-card" @onclick="() => ViewClass(_class)">
+            <div class="class-card" @onclick="() => ViewClass(_class.Id)">
                 <div class="class-header">
                     <h4 class="class-text">@_class.Title @_class.Room</h4>
                 </div>
-                </div>
+            </div>
         }
     </div>
 }
@@ -38,7 +38,12 @@ else
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
-        var username = user.Identity?.Name;
+        string? username = null;
+
+        if (!user.IsInRole("admin"))
+        {
+            username = user.Identity?.Name;
+        }
         Msg = "";
         try
         {
@@ -52,11 +57,8 @@ else
         await base.OnInitializedAsync();
     }
 
-    private void ViewClass(ClassEntity classEntity)
+    private void ViewClass(string classId)
     {
-        var classId = classEntity.Id;
-        Console.WriteLine($"Getting lessons for the class with id: {classId}");
-        navMgr.NavigateTo($"/classes/{classId}");
-        Console.WriteLine($"Navigating to the class details page with the id {classId}");
+        navMgr.NavigateTo($"/my-classes/{classId}");
     }
 }

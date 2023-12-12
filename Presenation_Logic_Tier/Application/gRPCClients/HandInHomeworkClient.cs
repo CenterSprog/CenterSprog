@@ -18,29 +18,16 @@ public class HandInHomeworkClient : IHandInHomeworkClient
         {
             HomeworkId = dto.HomeworkId,
             StudentUsername = dto.StudentUsername,
-            HandInHomework = new gRPCClient.HandInHomework
-            {
-                Id = dto.HandInHomework.Id,
-                Answer = dto.HandInHomework.Answer,
-                StudentUsername = dto.StudentUsername
-            }
+            Answer = dto.Answer
         };
 
-        var reply = new ResponseGetHandInHomework();
-        try
-        {
-            reply = client.handInHomework(request);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
+        var reply = client.handInHomework(request);
 
         HandInHomework createdHandIn =
-            new HandInHomework(reply.HandInHomework.Id, reply.HandInHomework.Answer, reply.HandInHomework.StudentUsername);
+            new HandInHomework(reply.HandInHomework.Id, reply.HandInHomework.Answer,
+                reply.HandInHomework.StudentUsername);
 
         return await Task.FromResult(createdHandIn);
-
     }
 
     public async Task<IEnumerable<HandInHomework>> GetHandInsByHomeworkIdAsync(string homeworkId)
@@ -53,18 +40,10 @@ public class HandInHomeworkClient : IHandInHomeworkClient
             HomeworkId = homeworkId
         };
 
-        var reply = new ResponseGetHandInsByHomeworkId();
-        try
-        {
-            reply = client.getHandInsByHomeworkId(request);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
+        var reply = client.getHandInsByHomeworkId(request);
 
         var handIns = new List<HandInHomework>();
-        
+
         foreach (var grpcHandIn in reply.HandIns)
         {
             var handIn = new HandInHomework(
@@ -72,15 +51,15 @@ public class HandInHomeworkClient : IHandInHomeworkClient
                 grpcHandIn.Answer,
                 grpcHandIn.StudentUsername
             );
-            
+
             handIns.Add(handIn);
         }
 
         return await Task.FromResult(handIns);
-
     }
 
-    public async Task<HandInHomework> GetHandInByHomeworkIdAndStudentUsernameAsync(string homeworkId, string studentUsername)
+    public async Task<HandInHomework> GetHandInByHomeworkIdAndStudentUsernameAsync(string homeworkId,
+        string studentUsername)
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new HandInHomeworkService.HandInHomeworkServiceClient(channel);
@@ -92,31 +71,15 @@ public class HandInHomeworkClient : IHandInHomeworkClient
         };
 
         var reply = new ResponseGetHandInHomework();
-        try
-        {
-            reply = client.getHandInByHomeworkIdAndStudentUsername(request);
 
-            if (reply?.HandInHomework != null)
-            {
-                var handIn = new HandInHomework(
-                    reply.HandInHomework.Id,
-                    reply.HandInHomework.Answer,
-                    reply.HandInHomework.StudentUsername
-                );
+        reply = client.getHandInByHomeworkIdAndStudentUsername(request);
 
-                return await Task.FromResult(handIn);
-            }
+        var handIn = new HandInHomework(
+            reply.HandInHomework.Id,
+            reply.HandInHomework.Answer,
+            reply.HandInHomework.StudentUsername
+        );
 
-            return null;
-        }
-        catch (RpcException ex) when (ex.StatusCode == StatusCode.NotFound)
-        {
-            return null;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        return await Task.FromResult(handIn);
     }
 }

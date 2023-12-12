@@ -18,7 +18,7 @@ public class FeedbacksController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Feedback>> AddFeedback(AddFeedbackDTO addFeedbackDto)
+    public async Task<ActionResult<Feedback>> AddFeedback([FromBody] AddFeedbackDTO addFeedbackDto)
     {
         try
         {
@@ -28,7 +28,7 @@ public class FeedbacksController : ControllerBase
         }
         catch (RpcException e)
         {
-            return NotFound(e.Message);
+            return NotFound(e.Status.Detail);
         }
         catch (Exception e)
         {
@@ -36,19 +36,19 @@ public class FeedbacksController : ControllerBase
         }
     }
 
-    [HttpGet ("{handInId}/{studentUsername}", Name = "GetFeedbackByHomeworkIdAndStudentUsernameAsync")]
+    [HttpGet ("{handInId}/student/{username}", Name = "GetFeedbackByHomeworkIdAndStudentUsernameAsync")]
     public async Task<ActionResult<Feedback>> GetFeedbackByHandInIdAndStudentUsernameAsync([FromRoute] string handInId,
-        [FromRoute] string studentUsername)
+        [FromRoute] string username)
     {
         try
         {
-            Feedback feedback = await _feedbackLogic.GetFeedbackByHandInIdAndStudentUsernameAsync(handInId, studentUsername);
+            Feedback feedback = await _feedbackLogic.GetFeedbackByHandInIdAndStudentUsernameAsync(handInId, username);
 
             return Ok(feedback);
         }
         catch (RpcException e)
         {
-            return NotFound(e.Message);
+            return NotFound(e.Status.Detail);
         }
         catch (Exception e)
         {

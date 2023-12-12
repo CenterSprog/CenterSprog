@@ -44,9 +44,8 @@ import java.util.*;
       Optional<ClassEntity> existingClass = classRepository.findById(id);
 
       if (existingClass.isEmpty())
-      {
-        throw new IllegalStateException("No existing class with id " + id);
-      }
+        throw new NoSuchElementException("No existing class with id " + id);
+
       Hibernate.initialize(existingClass.get());
 
       ClassData grpcClass = ClassData.newBuilder()
@@ -60,12 +59,6 @@ import java.util.*;
               .addLessons(lessonMapper.toOverviewProto(lessonEntity))
               .buildPartial();
 
-      if (!existingClass.get().getUsers().isEmpty())
-        for (UserEntity userEntity : existingClass.get().getUsers())
-          grpcClass = grpcClass.toBuilder()
-              .addParticipants(userMapper.toParticipantProto(userEntity))
-              .buildPartial();
-
       grpcClass.toBuilder().build();
 
       response.onNext(
@@ -76,7 +69,8 @@ import java.util.*;
     }
     catch (Exception e)
     {
-      response.onError(new Throwable(e.getMessage()));
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
   }
 
@@ -85,19 +79,20 @@ import java.util.*;
   {
     try
     {
-      String username = request.getUsername();
       List<ClassEntity> classes;
-      System.out.println(
-          "Get all classes for : " + username + ", is null " + (username
-              == null));
-      if (username.equals(""))
-        classes = classRepository.findAll();
-      else
-        classes = classRepository.findByUsers_Username(username);
 
-      for (ClassEntity klasa : classes)
+      if (request.hasUsername())
       {
-        System.out.println(klasa.getTitle());
+        String username = request.getUsername();
+        Optional<UserEntity> user = userRepository.getByUsername(username);
+        if (user.isEmpty())
+          throw new NoSuchElementException(
+              "No existing user with username " + username);
+        classes = classRepository.findByUsers_Username(username);
+      }
+      else
+      {
+        classes = classRepository.findAll();
       }
 
       List<ClassData> grpcsClasses = new ArrayList<>();
@@ -106,9 +101,6 @@ import java.util.*;
         ClassData grpcClass = ClassData.newBuilder().setId(entity.getId())
             .setTitle(entity.getTitle()).setRoom(entity.getRoom())
             .buildPartial();
-
-        System.out.println(entity.getUsers().size());
-
         for (UserEntity userEntity : entity.getUsers())
           grpcClass = grpcClass.toBuilder()
               .addParticipants(userMapper.toParticipantProto(userEntity))
@@ -125,8 +117,8 @@ import java.util.*;
     }
     catch (Exception e)
     {
-      response.onError(Status.INTERNAL.withDescription(
-          "Error fetching classes: " + e.getMessage()).asRuntimeException());
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
   }
 
@@ -140,9 +132,7 @@ import java.util.*;
       Optional<ClassEntity> existingClass = classRepository.findById(id);
 
       if (existingClass.isEmpty())
-      {
-        throw new IllegalStateException("No existing class with id " + id);
-      }
+        throw new NoSuchElementException("No existing class with id " + id);
 
       Hibernate.initialize(existingClass);
 
@@ -154,10 +144,7 @@ import java.util.*;
           continue;
         }
 
-        UserParticipant grpcParticipant = UserParticipant.newBuilder()
-            .setFirstName(entity.getFirstName())
-            .setLastName(entity.getLastName()).setUsername(entity.getUsername())
-            .setEmail(entity.getEmail()).setRole(entity.getRole()).build();
+        UserParticipant grpcParticipant = userMapper.toParticipantProto(entity).toBuilder().build();
 
         participants.add(grpcParticipant);
       }
@@ -167,10 +154,9 @@ import java.util.*;
       response.onCompleted();
     }
     catch (Exception e)
-
     {
-      response.onError(new Throwable(e.getMessage()));
-      response.onCompleted();
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
   }
 
@@ -188,9 +174,7 @@ import java.util.*;
 
       response.onNext(ResponseCreateClassEntity.newBuilder()
           .setClassEntity(classMapper.toProto(createdClass)).build());
-
       response.onCompleted();
-
     }
     catch (Exception e)
     {
@@ -209,7 +193,7 @@ import java.util.*;
       Optional<ClassEntity> existingClass = classRepository.findById(id);
 
       if (existingClass.isEmpty())
-        throw new IllegalStateException("No existing class with id " + id);
+        throw new NoSuchElementException("No existing class with id " + id);
 
       Hibernate.initialize(existingClass);
 
@@ -221,11 +205,14 @@ import java.util.*;
           Set<UserEntity> usersInAttendance = lessonEntity.getAttendance();
           for (UserEntity userEntity : usersInAttendance)
           {
-            LessonAttendance lessonAttendance = LessonAttendance.newBuilder()
-                .setId(lessonEntity.getId())
-                .addParticipants(userMapper.toParticipantProto(userEntity))
-                .build();
-            lessonsAttendance.add(lessonAttendance);
+            if (!userEntity.getRole().equals("student")){
+              continue;
+            }
+              LessonAttendance lessonAttendance = LessonAttendance.newBuilder()
+                  .setId(lessonEntity.getId())
+                  .addParticipants(userMapper.toParticipantProto(userEntity))
+                  .build();
+              lessonsAttendance.add(lessonAttendance);
           }
         }
       }
@@ -233,11 +220,11 @@ import java.util.*;
       response.onNext(ResponseGetClassAttendance.newBuilder()
           .addAllLessonsAttendance(lessonsAttendance).build());
       response.onCompleted();
-
     }
     catch (Exception e)
     {
-      response.onError(new Throwable(e.getMessage()));
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
   }
 
@@ -255,6 +242,12 @@ import java.util.*;
 
       Hibernate.initialize(existingClass);
 
+      String username = request.getUsername();
+      Optional<UserEntity> user = userRepository.getByUsername(username);
+      if (user.isEmpty())
+        throw new NoSuchElementException(
+            "No existing user with username " + username);
+
       List<LessonAttended> lessonsAttended = new ArrayList<>();
       Set<LessonEntity> lessons = existingClass.get().getLessons();
       if (!lessons.isEmpty())
@@ -263,7 +256,7 @@ import java.util.*;
         {
           if (lessonEntity.getAttendance().stream().anyMatch(
               userEntity -> userEntity.getUsername()
-                  .equals(request.getUsername())))
+                  .equals(username)))
           {
             lessonsAttended.add(lessonMapper.toAttendandedProto(lessonEntity));
           }
@@ -276,9 +269,9 @@ import java.util.*;
 
     }
     catch (Exception e)
-
     {
-      response.onError(new Throwable(e.getMessage()));
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
   }
 
@@ -288,11 +281,26 @@ import java.util.*;
   {
     String classId = request.getId();
     List<String> participantsUsernames = request.getParticipantsUsernamesList();
-
     try
     {
+      ArrayList<UserEntity> newParticipants = new ArrayList<>();
+      Optional<ClassEntity> existingClass = classRepository.findById(classId);
+      if (existingClass.isEmpty())
+        throw new NoSuchElementException(
+            "No existing class with id " + classId);
 
-      handleAssigningUsersToClass(classId, participantsUsernames);
+      for (String username : participantsUsernames)
+      {
+        Optional<UserEntity> existingUser = userRepository.getByUsername(
+            username);
+        if (existingUser.isPresent())
+        {
+          newParticipants.add(existingUser.get());
+        }
+      }
+
+      existingClass.get().setUsers(newParticipants);
+      classRepository.save(existingClass.get());
 
       response.onNext(
           ResponseUpdateClassParticipants.newBuilder().setResult(true).build());
@@ -301,50 +309,8 @@ import java.util.*;
     }
     catch (Exception e)
     {
-      response.onError(
-          new Throwable(e.getMessage() + " : " + e.getStackTrace()));
-    }
-
-  }
-
-  private void handleAssigningUsersToClass(String classId,
-      List<String> participantsUsernames)
-  {
-    ArrayList<UserEntity> newParticipants = new ArrayList<>();
-    Optional<ClassEntity> existingClass = classRepository.findById(classId);
-    if (existingClass.isEmpty())
-      throw new IllegalStateException(
-          "Class with given id doesnt exist, cannot update.");
-    ClassEntity updatableClass = existingClass.get();
-
-    for (String username : participantsUsernames)
-    {
-      Optional<UserEntity> existingUser = userRepository.getByUsername(
-          username);
-      if (existingUser.isPresent())
-      {
-
-        // --- Makes sure that the student will always be the part of only one class
-        if (existingUser.get().getRole().equals("student"))
-          removeUserFromAllClasses(existingUser.get());
-
-        newParticipants.add(existingUser.get());
-      }
-    }
-
-    updatableClass.setUsers(newParticipants);
-    classRepository.save(updatableClass);
-
-  }
-
-  private void removeUserFromAllClasses(UserEntity userEntity)
-  {
-    List<ClassEntity> classEntities = classRepository.findByUsersContains(
-        userEntity);
-    for (ClassEntity course : classEntities)
-    {
-      course.removeUser(userEntity.getUsername());
-      classRepository.save(course);
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
   }
 }

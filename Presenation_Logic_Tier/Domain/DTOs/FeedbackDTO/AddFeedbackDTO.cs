@@ -1,17 +1,17 @@
-﻿using Domain.Models;
-
-namespace Domain.DTOs.FeedbackDTO;
+﻿namespace Domain.DTOs.FeedbackDTO;
 
 public class AddFeedbackDTO
 {
     public string HandInId { get; set; }
     public string StudentUsername { get; set; }
-    public Feedback Feedback { get; set; }
+    public int Grade { get; set; }
+    public string Comment { get; set; }
 
-    public AddFeedbackDTO(string handInId, string studentUsername, Feedback feedback)
+    public AddFeedbackDTO(string handInId, string studentUsername, int grade, string comment)
     {
         HandInId = handInId;
         StudentUsername = studentUsername;
-        Feedback = feedback;
+        Grade = grade;
+        Comment = comment;
     }
 }

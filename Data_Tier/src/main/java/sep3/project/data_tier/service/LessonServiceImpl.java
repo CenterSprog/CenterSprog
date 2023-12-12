@@ -12,46 +12,41 @@ import sep3.project.data_tier.entity.ClassEntity;
 import sep3.project.data_tier.entity.LessonEntity;
 import sep3.project.data_tier.entity.UserEntity;
 import sep3.project.data_tier.mappers.HomeworkMapper;
-import sep3.project.data_tier.mappers.LessonMapper;
 import sep3.project.data_tier.repository.IClassRepository;
 import sep3.project.data_tier.repository.ILessonRepository;
 import sep3.project.data_tier.repository.IUserRepository;
 import sep3.project.protobuf.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-@GrpcService
-public class LessonServiceImpl
-    extends LessonServiceGrpc.LessonServiceImplBase {
+@GrpcService public class LessonServiceImpl
+    extends LessonServiceGrpc.LessonServiceImplBase
+{
 
   private ILessonRepository lessonRepository;
   private IUserRepository userRepository;
   private IClassRepository classRepository;
-
   private HomeworkMapper homeworkMapper = HomeworkMapper.INSTANCE;
 
-  @Autowired
-  public LessonServiceImpl(IUserRepository userRepository, ILessonRepository lessonRepository,
-      IClassRepository classRepository) {
+  @Autowired public LessonServiceImpl(IUserRepository userRepository,
+      ILessonRepository lessonRepository, IClassRepository classRepository)
+  {
     this.userRepository = userRepository;
     this.lessonRepository = lessonRepository;
     this.classRepository = classRepository;
   }
 
-  @Override
-  @Transactional
-  public void getLessonById(
+  @Override @Transactional public void getLessonById(
       RequestGetLessonById request,
-      StreamObserver<ResponseGetLessonById> response) {
-    try {
+      StreamObserver<ResponseGetLessonById> response)
+  {
+    try
+    {
       String id = request.getLessonId();
       Optional<LessonEntity> existingLesson = lessonRepository.findById(id);
       if (existingLesson.isEmpty())
-        throw new IllegalStateException("No existing lesson with id of: " + id);
+        throw new NoSuchElementException("No existing class with id " + id);
 
       Hibernate.initialize(existingLesson.get());
 
@@ -63,37 +58,40 @@ public class LessonServiceImpl
 
       if (existingLesson.get().getHomework() != null)
         grpcLesson = grpcLesson.toBuilder().setHomework(
-            homeworkMapper.toProto(existingLesson.get().getHomework()))
+                homeworkMapper.toProto(existingLesson.get().getHomework()))
             .buildPartial();
 
       grpcLesson.toBuilder().build();
 
       response.onNext(
           ResponseGetLessonById.newBuilder().setLesson(grpcLesson).build());
-
       response.onCompleted();
 
-    } catch (Exception e) {
-      response.onError(new Throwable(e.getMessage()));
-      response.onCompleted();
     }
-
+    catch (Exception e)
+    {
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
+    }
   }
-  @Override
-  @Transactional
-  public void getAttendance(
+
+  @Override @Transactional public void getAttendance(
       RequestGetAttendance request,
-      StreamObserver<ResponseGetAttendance> response) {
-    try {
+      StreamObserver<ResponseGetAttendance> response)
+  {
+    try
+    {
       String id = request.getLessonId();
       Optional<LessonEntity> existingLesson = lessonRepository.findById(id);
       if (existingLesson.isEmpty())
-        throw new IllegalStateException("No existing lesson with id of: " + id);
+        throw new NoSuchElementException("No existing class with id " + id);
 
       Hibernate.initialize(existingLesson.get());
+
       List<UserParticipant> grpcUsers = new ArrayList<>();
       if (!existingLesson.get().getAttendance().isEmpty())
-        for (UserEntity userEntity : existingLesson.get().getAttendance()) {
+        for (UserEntity userEntity : existingLesson.get().getAttendance())
+        {
           UserParticipant grpcUser = UserParticipant.newBuilder()
               .setUsername(userEntity.getUsername())
               .setFirstName(userEntity.getFirstName())
@@ -105,23 +103,25 @@ public class LessonServiceImpl
           ResponseGetAttendance.newBuilder().addAllParticipants(grpcUsers)
               .build());
       response.onCompleted();
-    } catch (Exception e) {
-      response.onError(new Throwable(e.getMessage()));
-      response.onCompleted();
+    }
+    catch (Exception e)
+    {
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
 
   }
 
-  @Override
-  public void markAttendance(RequestMarkAttendance request,
-      StreamObserver<ResponseMarkAttendance> response) {
+  @Override public void markAttendance(RequestMarkAttendance request,
+      StreamObserver<ResponseMarkAttendance> response)
+  {
     String id = request.getLessonId();
-    try {
+    try
+    {
       Optional<LessonEntity> existingLesson = lessonRepository.findById(id);
 
-      if (existingLesson.isEmpty()) {
-        throw new IllegalStateException("No existing lesson with id of: " + id);
-      }
+      if (existingLesson.isEmpty())
+        throw new NoSuchElementException("No existing lesson with id " + id);
 
       List<String> studentUsernames = request.getUsernamesList();
       Set<UserEntity> students = userRepository.findAll().stream()
@@ -134,193 +134,101 @@ public class LessonServiceImpl
       response.onNext(ResponseMarkAttendance.newBuilder()
           .setAmountOfParticipants(students.size()).build());
       response.onCompleted();
-
-    } catch (Exception e) {
-      response.onError(new Throwable("An error occurred: " + e.getMessage()));
-
+    }
+    catch (Exception e)
+    {
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
   }
 
-  @Override
-  public void deleteLesson(RequestDeleteLesson request,
-      StreamObserver<ResponseDeleteLesson> response) {
-    try {
+  @Override @Transactional public void deleteLesson(RequestDeleteLesson request,
+      StreamObserver<ResponseDeleteLesson> response)
+  {
+    try
+    {
       String lessonId = request.getLessonId();
       Optional<LessonEntity> lesson = lessonRepository.findById(lessonId);
       if (lesson.isEmpty())
-        throw new IllegalStateException(
-            "No exisitng lesson with id of: " + lessonId);
+        throw new NoSuchElementException(
+            "No existing lesson with id of: " + lessonId);
 
-      lessonRepository.deleteById(lessonId);
+      lessonRepository.delete(lesson.get());
 
-      response.onNext(
-          ResponseDeleteLesson.newBuilder()
-              .setStatus(ResponseDeleteLesson.Status.OK)
-              .setMessage("Lesson deleted successfully")
-              .build());
+      response.onNext(ResponseDeleteLesson.newBuilder()
+          .setStatus(ResponseDeleteLesson.Status.OK)
+          .setMessage("Lesson deleted successfully").build());
       response.onCompleted();
-    } catch (Exception e) {
-      response.onError(
-          new StatusRuntimeException(Status.INTERNAL.withDescription("Error deleting lesson: " + e.getMessage())));
-      response.onCompleted();
+    }
+    catch (Exception e)
+    {
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
   }
 
-  @Override
-  public void addLesson(RequestAddLesson request, StreamObserver<ResponseAddLesson> response) {
+  @Override public void createLesson(RequestCreateLesson request,
+      StreamObserver<ResponseCreateLesson> response)
+  {
 
     String classId = request.getClassId();
-    LessonEntity lesson = new LessonEntity(
-        request.getLesson().getDate(),
-        request.getLesson().getTopic(),
-        request.getLesson().getDescription()
-
-    );
-
-    try {
+    LessonEntity lesson = new LessonEntity(request.getLesson().getDate(),
+        request.getLesson().getTopic(), request.getLesson().getDescription());
+    try
+    {
 
       Optional<ClassEntity> existingClass = classRepository.findById(classId);
       if (existingClass.isEmpty())
-        throw new IllegalStateException("Class with given id does not exist.");
+        throw new NoSuchElementException(
+            "No existing class with id " + classId);
 
       LessonEntity savedLesson = lessonRepository.save(lesson);
       existingClass.get().addLesson(savedLesson);
       classRepository.save(existingClass.get());
 
-      try {
+      response.onNext(ResponseCreateLesson.newBuilder().setLesson(
+          LessonData.newBuilder().setId(savedLesson.getId())
+              .setDate(savedLesson.getDate())
+              .setDescription(savedLesson.getDescription())
+              .setTopic(savedLesson.getTopic())).build());
+      response.onCompleted();
 
-        response.onNext(
-            ResponseAddLesson.newBuilder()
-                .setLesson(
-                    LessonData.newBuilder()
-                        .setId(savedLesson.getId())
-                        .setDate(savedLesson.getDate())
-                        .setDescription(savedLesson.getDescription())
-                        .setTopic(savedLesson.getTopic()))
-                .build());
-
-        response.onCompleted();
-
-        response.onCompleted();
-      } catch (Exception e) {
-        System.out.println("HERE: " + e.getMessage());
-      }
-
-    } catch (Exception e) {
-      response.onError(
-          new Throwable(e.getMessage()));
+    }
+    catch (Exception e)
+    {
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
   }
 
-  @Override
-  public void updateLesson(RequestUpdateLesson request, StreamObserver<ResponseUpdateLesson> response) {
+  @Override public void updateLesson(RequestUpdateLesson request,
+      StreamObserver<ResponseUpdateLesson> response)
+  {
     String lessonId = request.getId();
+    try
+    {
+      Optional<LessonEntity> currentLesson = lessonRepository.findById(
+          lessonId);
+      if (currentLesson.isEmpty())
+        throw new NoSuchElementException(
+            "No existing lesson with id " + lessonId);
 
-    Optional<LessonEntity> currentLesson = lessonRepository.findById(lessonId);
-    if (currentLesson.isEmpty()) {
-      throw new IllegalStateException("No existing lesson with ID of: " + lessonId);
-    }
+      currentLesson.get().setDate(request.getLesson().getDate());
+      currentLesson.get().setTopic(request.getLesson().getTopic());
+      currentLesson.get().setDescription(request.getLesson().getDescription());
 
-    LessonEntity currentLessonUpdated = currentLesson.get();
+      lessonRepository.save(currentLesson.get());
 
-
-    currentLessonUpdated.setDate(request.getLesson().getDate());
-    currentLessonUpdated.setTopic(request.getLesson().getTopic());
-    currentLessonUpdated.setDescription(request.getLesson().getDescription());
-
-    lessonRepository.save(currentLessonUpdated);
-
-    try {
-      response.onNext(
-              ResponseUpdateLesson.newBuilder()
-                      .setStatus(ResponseUpdateLesson.Status.OK)
-                      .setMessage("Lesson deleted successfully")
-                      .build());
+      response.onNext(ResponseUpdateLesson.newBuilder()
+          .setStatus(ResponseUpdateLesson.Status.OK)
+          .setMessage("Lesson deleted successfully").build());
       response.onCompleted();
-    } catch (Exception e) {
-      System.out.println("Error updating lesson: " + e.getMessage());
+    }
+    catch (Exception e)
+    {
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
 
   }
 }
-
-  
-  
-
-    
-    
-        
-        
-        
-
-    
-
-     
-
-      
-       
-        
-
-       
-      
-      
-
-       
-
-        
-            
-                
-                    
-                        
-                        
-                        
-                        
-                
-
-        
-
-        
-        
-        
-      
-
-      
-      
-          
-    
-  
-
-  
-  
-    
-
-    
-    
-      
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-          
-              
-              
-              
-      
-    
-      
-    
-  
-
-   
-
-
-
-

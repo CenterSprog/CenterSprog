@@ -18,13 +18,11 @@ public class HandInHomeworkHttpClient : IHandInHomeworkService
     public async Task<HandInHomework> HandInHomework(HomeworkHandInDTO dto)
     {
         HttpResponseMessage response = await _client.PostAsJsonAsync("/handIns", dto);
-        Console.WriteLine($"Response status code: {response.StatusCode}");
         string responseContent = await response.Content.ReadAsStringAsync();
-        Console.WriteLine($"Response content: {responseContent}");
         
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception($"Failed to hand in homework. Status code: {response.StatusCode}");
+            throw new Exception(responseContent);
         }
 
         HandInHomework? handedInHomework = await response.Content.ReadFromJsonAsync<HandInHomework>();
@@ -44,7 +42,7 @@ public class HandInHomeworkHttpClient : IHandInHomeworkService
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception($"Failed to get hand ins for homework with ID: {homeworkId}. Status code: {response.StatusCode}");
+            throw new Exception(result);
         }
 
         List<HandInHomework> foundHandIns = JsonSerializer.Deserialize<List<HandInHomework>>(result, new JsonSerializerOptions()
@@ -62,12 +60,12 @@ public class HandInHomeworkHttpClient : IHandInHomeworkService
 
     public async Task<HandInHomework> GetHandInByHomeworkIdAndStudentUsernameAsync(string homeworkId, string studentUsername)
     {
-        HttpResponseMessage response = await _client.GetAsync($"handIns/{homeworkId}/{studentUsername}");
+        HttpResponseMessage response = await _client.GetAsync($"handIns/{homeworkId}/student/{studentUsername}");
         var result = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception($"Failed to get hand-in for homework ID: {homeworkId} and student username: {studentUsername}. Status code: {response.StatusCode}");
+            throw new Exception(result);
         }
 
         HandInHomework? handIn = JsonSerializer.Deserialize<HandInHomework>(result, new JsonSerializerOptions()

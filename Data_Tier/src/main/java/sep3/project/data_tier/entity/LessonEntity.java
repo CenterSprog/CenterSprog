@@ -1,6 +1,7 @@
 package sep3.project.data_tier.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.HashSet;
@@ -28,6 +29,9 @@ public class LessonEntity {
 	@JoinTable(name = "attendance", joinColumns = @JoinColumn(name = "lessonId"), inverseJoinColumns = @JoinColumn(name = "studentUsername"))
 	private Set<UserEntity> attendance = new HashSet<>();
 
+	@ManyToOne
+	@JoinTable(name = "class_lesson", joinColumns = @JoinColumn(name = "lesson_id"), inverseJoinColumns = @JoinColumn(name = "class_id"))
+	private ClassEntity classEntity;
 	public LessonEntity() {
 	}
 

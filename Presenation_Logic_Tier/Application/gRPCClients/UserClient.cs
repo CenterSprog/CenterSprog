@@ -1,7 +1,7 @@
 ﻿using Application.ClientInterfaces;
 using Domain.DTOs.UserDTO;
 using Domain.Models;
-using Grpc.Net.Client; 
+using Grpc.Net.Client;
 using gRPCClient;
 
 namespace Application.gRPCClients;
@@ -12,24 +12,16 @@ public class UserClient : IUserClient
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new UserService.UserServiceClient(channel);
-        
+
         var request = new RequestUserGetByUsername
         {
             Username = username
         };
-        Console.WriteLine("LOGGING IN....");
         var reply = new ResponseUserGetByUsername();
-        try
-        {
-            reply = await client.getUserByUsernameAsync(request);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
 
-        User? exisingUser = new User(
+        reply = await client.getUserByUsernameAsync(request);
+
+        var exisingUser = new User(
             reply.User.Username,
             reply.User.Password,
             reply.User.FirstName,
@@ -55,18 +47,9 @@ public class UserClient : IUserClient
             }
         };
 
-        var reply = new ResponseCreateUser();
-        try
-        {
-            reply = await client.createUserAsync(request);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-        
-        User? createdUser = new User(
+        var reply =  await client.createUserAsync(request);
+
+        User createdUser = new User(
             reply.User.Username,
             reply.User.Password,
             reply.User.FirstName,
@@ -82,24 +65,17 @@ public class UserClient : IUserClient
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new UserService.UserServiceClient(channel);
         var request = new Google.Protobuf.WellKnownTypes.Empty();
-        var reply = new ResponseUserGetAllUsers();
-
-        try
-        {
-            reply = await client.getAllUsersAsync(request);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-
-        List<User> retrivedUsers = new List<User>();
+        
+        var reply = await client.getAllUsersAsync(request);
+        
+        List<User> retrievedUsers = new List<User>();
         foreach (var userData in reply.Users)
         {
-            retrivedUsers.Add(new User(
-                userData.Username,userData.Password,userData.FirstName,userData.LastName,userData.Email,userData.Role));
+            retrievedUsers.Add(new User(
+                userData.Username, userData.Password, userData.FirstName, userData.LastName, userData.Email,
+                userData.Role));
         }
-        return await Task.FromResult(retrivedUsers);
+
+        return await Task.FromResult(retrievedUsers);
     }
 }

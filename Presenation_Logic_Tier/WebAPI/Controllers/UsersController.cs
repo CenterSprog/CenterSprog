@@ -1,6 +1,7 @@
 ﻿using Application.LogicInterfaces;
 using Domain.DTOs.UserDTO;
 using Domain.Models;
+using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,17 +22,19 @@ public class UsersController : ControllerBase
     [Authorize("MustBeAdmin")]
     public async Task<ActionResult<User>> RegisterUser(UserCreationDTO dto)
     {
-        Console.WriteLine("REGISTERING THE USER");
         try
         {
             
             User createdUser = await _userLogic.CreateUserAsync(dto);
             return Created($"users/{createdUser.Username}",createdUser);
         }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
+        }
         catch (Exception e)
         {
-            
-            return StatusCode(500, e.Message);
+            return BadRequest(e.Message);
         }
     }
 
@@ -39,11 +42,14 @@ public class UsersController : ControllerBase
     [Authorize("MustBeAdmin")]
     public async Task<ActionResult<User>> GetByUsernameAsync([FromRoute] string username)
     {   
-        Console.WriteLine("getting user details");
         try
         {
             User existingUser = await _userLogic.GetUserByUsernameAsync(username);
             return Ok(existingUser);
+        }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
         }
         catch (Exception e)
         {
@@ -59,9 +65,13 @@ public class UsersController : ControllerBase
             IEnumerable<User> users = await _userLogic.GetAllAsync();
             return Ok(users);
         }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
+        }
         catch (Exception e)
         {
-            return StatusCode(500, e.Message + e.StackTrace);
+            return StatusCode(500, e.Message);
         }
     }
 

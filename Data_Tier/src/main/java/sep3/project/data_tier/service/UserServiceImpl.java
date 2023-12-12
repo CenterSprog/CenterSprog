@@ -1,5 +1,6 @@
 package sep3.project.data_tier.service;
 
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import sep3.project.data_tier.repository.IUserRepository;
 import sep3.project.protobuf.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Random;
 
@@ -26,45 +28,63 @@ import java.util.Random;
   @Override public void createUser(RequestCreateUser request,
       StreamObserver<ResponseCreateUser> response)
   {
-    String username =
-        request.getUser().getFirstName() + generateRandomPassword(2);
-    String password = generateRandomPassword(8);
+    try
+    {
+      String username =
+          request.getUser().getFirstName() + generateRandomString(2);
+      String password = generateRandomString(8);
+      Optional<UserEntity> user = userRepository.getByUsername(username);
+      if (user.isPresent())
+        throw new NoSuchElementException(
+            "User with given username already exists. Please try again.");
 
-    UserEntity newUser = new UserEntity(username, password,
-        request.getUser().getFirstName(), request.getUser().getLastName(),
-        request.getUser().getEmail(), request.getUser().getRole());
+      UserEntity newUser = new UserEntity(username, password,
+          request.getUser().getFirstName(), request.getUser().getLastName(),
+          request.getUser().getEmail(), request.getUser().getRole());
 
-    userRepository.save(newUser);
-    response.onNext(ResponseCreateUser.newBuilder().setUser(
-        UserData.newBuilder().setUsername(newUser.getUsername())
-            .setPassword(newUser.getPassword()).setEmail(newUser.getEmail())
-            .setFirstName(newUser.getFirstName())
-            .setLastName(newUser.getLastName()).setRole(newUser.getRole())
-            .build()).build());
-    response.onCompleted();
+      userRepository.save(newUser);
+      response.onNext(ResponseCreateUser.newBuilder().setUser(
+          UserData.newBuilder().setUsername(newUser.getUsername())
+              .setPassword(newUser.getPassword()).setEmail(newUser.getEmail())
+              .setFirstName(newUser.getFirstName())
+              .setLastName(newUser.getLastName()).setRole(newUser.getRole())
+              .build()).build());
+      response.onCompleted();
+    }
+    catch (Exception e)
+    {
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
+    }
   }
 
   @Override public void getUserByUsername(RequestUserGetByUsername request,
       StreamObserver<ResponseUserGetByUsername> response)
   {
     String username = request.getUsername();
+    try
+    {
+      Optional<UserEntity> existingUser = userRepository.getByUsername(
+          username);
 
-    System.out.println(username);
-    Optional<UserEntity> existingUser = userRepository.getByUsername(username);
-
-    if (existingUser.isEmpty())
-      response.onNext(ResponseUserGetByUsername.newBuilder().setUser(
-              UserData.newBuilder().getDefaultInstanceForType().toBuilder().build())
-          .build());
-    else
-      response.onNext(ResponseUserGetByUsername.newBuilder().setUser(
-          UserData.newBuilder().setUsername(existingUser.get().getUsername())
-              .setPassword(existingUser.get().getPassword())
-              .setEmail(existingUser.get().getEmail())
-              .setFirstName(existingUser.get().getFirstName())
-              .setLastName(existingUser.get().getLastName())
-              .setRole(existingUser.get().getRole()).build()).build());
-    response.onCompleted();
+      if (existingUser.isEmpty())
+        throw new NoSuchElementException(
+            "No existing user with username " + username);
+      else
+        response.onNext(ResponseUserGetByUsername.newBuilder().setUser(
+            UserData.newBuilder().setUsername(existingUser.get().getUsername())
+                .setPassword(existingUser.get().getPassword())
+                .setEmail(existingUser.get().getEmail())
+                .setFirstName(existingUser.get().getFirstName())
+                .setLastName(existingUser.get().getLastName())
+                .setRole(existingUser.get().getRole()).build()).build());
+      response.onCompleted();
+    }
+    catch (Exception e)
+    {
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
+    }
   }
 
   @Override public void getAllUsers(com.google.protobuf.Empty request,
@@ -72,7 +92,6 @@ import java.util.Random;
   {
     List<UserEntity> users = userRepository.findAll();
 
-    System.out.println("Number of users: " + users.size());
     ResponseUserGetAllUsers responseData = ResponseUserGetAllUsers.newBuilder()
         .buildPartial();
     for (UserEntity user : users)
@@ -86,7 +105,7 @@ import java.util.Random;
     response.onCompleted();
   }
 
-  private static String generateRandomPassword(int len)
+  private static String generateRandomString(int len)
   {
     String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi"
         + "jklmnopqrstuvwxyz!@#$%&";

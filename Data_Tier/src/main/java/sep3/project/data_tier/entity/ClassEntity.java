@@ -23,7 +23,7 @@ public class ClassEntity {
 	@JoinTable(name = "user_class", joinColumns = @JoinColumn(name = "class_id"), inverseJoinColumns = @JoinColumn(name = "username"))
 	private Set<UserEntity> users = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@JoinTable(name = "class_lesson", joinColumns = @JoinColumn(name = "class_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
 	private Set<LessonEntity> lessons = new HashSet<>();
 

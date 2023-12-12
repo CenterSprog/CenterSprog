@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Application.ClientInterfaces;
+﻿using Application.ClientInterfaces;
 using Application.LogicInterfaces;
 using Domain.DTOs.ClassDTO;
 using Domain.DTOs.LessonDTO;
@@ -29,6 +28,7 @@ public class ClassLogic : IClassLogic
     
     public async Task<IEnumerable<User>> GetAllParticipantsAsync(SearchClassParticipantsDTO dto)
     {
+        // Validate the role
         return await _classClient.GetAllParticipantsAsync(dto);
     }
 
@@ -36,6 +36,7 @@ public class ClassLogic : IClassLogic
     {
         try
         {
+            // Validate fields
             ClassEntity createdClass = await _classClient.CreateAsync(dto);
             return await Task.FromResult(createdClass);
         }
@@ -48,24 +49,21 @@ public class ClassLogic : IClassLogic
     }
 
     public async Task<bool> UpdateAsync(ClassUpdateDTO dto)
-    {   
-        //here in the logic in the future you may want to update the class based on other params like id, title, room or participants
+    {
+        // Here in the logic in the future you may want to update the class based on other params like title or room
         if (dto.Participants != null)
         {
             bool result = await _classClient.UpdateParticipants(dto);
             return await Task.FromResult(result);
+        }
 
-        }
-        else
-        {
-            throw new Exception("It's me Damian:) .Endpoint doesnt server path with given requests data");
-        }
+        return false;
     }
 
     public async Task<IEnumerable<LessonAttendanceDTO>> GetClassAttendanceByUsernameAsync(SearchClassAttendanceDTO dto)
     {
         var lessonsAttended = await _classClient.GetClassAttendanceByUsernameAsync(dto);
-        var lessons = (await _classClient.GetByIdAsync(dto.Id)).Lessons; // replace with get lessons?
+        var lessons = (await _classClient.GetByIdAsync(dto.Id)).Lessons;
         var lessonAttendance = lessons
             .Select(lesson => new LessonAttendanceDTO
             {
@@ -80,7 +78,7 @@ public class ClassLogic : IClassLogic
     {
         var participants = await _classClient.GetAllParticipantsAsync(new SearchClassParticipantsDTO(id, "student"));
         var lessonAttendance = await _classClient.GetClassAttendanceAsync(id);
-        var lessons = (await _classClient.GetByIdAsync(id)).Lessons; // get lessons
+        var lessons = (await _classClient.GetByIdAsync(id)).Lessons;
         var participantsWithAttendance = new List<UserAttendanceDTO>();
 
         foreach (var participant in participants)

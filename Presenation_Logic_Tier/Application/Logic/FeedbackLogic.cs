@@ -16,6 +16,7 @@ public class FeedbackLogic : IFeedbackLogic
 
     public async Task<Feedback> AddFeedbackAsync(AddFeedbackDTO addFeedbackDto)
     {
+        // Grade in range and comment required
         return await _feedbackClient.AddFeedbackAsync(addFeedbackDto);
     }
 

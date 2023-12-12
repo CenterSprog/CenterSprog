@@ -46,7 +46,7 @@
         {
             ValidateClass();
             ClassEntity createdClass = await ClassService.CreateAsync(Dto);
-            NavManager.NavigateTo($"/classes/{createdClass.Id}");
+            NavManager.NavigateTo($"/my-classes/{createdClass.Id}");
         }
         catch (Exception e)
         {
@@ -62,8 +62,4 @@
         if (Dto.Room.Trim() == "")
             throw new Exception("Room is required");
     }
-
-
-
-
 }

@@ -11,6 +11,7 @@ import sep3.project.data_tier.repository.IFeedbackRepository;
 import sep3.project.data_tier.repository.IHandInHomeworkRepository;
 import sep3.project.protobuf.*;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @GrpcService public class FeedbackServiceImpl
@@ -34,8 +35,7 @@ import java.util.Optional;
   {
     String handInId = request.getHandInId();
     String studentUsername = request.getStudentUsername();
-    FeedbackEntity feedback = new FeedbackEntity(request.getFeedback().getId(),
-        request.getFeedback().getGrade(), request.getFeedback().getComment());
+    FeedbackEntity feedback = new FeedbackEntity(request.getFeedback().getGrade(), request.getFeedback().getComment());
     try
     {
       Optional<HandInHomeworkEntity> optionalHandInHomework = handInHomeworkRepository.findByIdAndUser_Username(
@@ -62,19 +62,14 @@ import java.util.Optional;
       }
       else
       {
-        throw new IllegalArgumentException(
-            "Hand in homework not found for the given IDs.");
+        throw new NoSuchElementException(
+            "No existing hand in with id " + handInId + " submitted by user with username " + studentUsername);
       }
-    }
-    catch (IllegalArgumentException e)
-    {
-      response.onError(Status.INVALID_ARGUMENT.withDescription(e.getMessage())
-          .asRuntimeException());
     }
     catch (Exception e)
     {
-      response.onError(Status.INTERNAL.withDescription(
-          "An error occurred: " + e.getMessage()).asRuntimeException());
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
   }
 
@@ -103,15 +98,14 @@ import java.util.Optional;
       }
       else
       {
-        response.onError(Status.NOT_FOUND.withDescription(
-                "Hand-in homework not found for the given IDs.")
-            .asRuntimeException());
+        throw new NoSuchElementException(
+            "No existing hand in with id " + handInId + " submitted by user with username " + studentUsername);
       }
     }
     catch (Exception e)
     {
-      response.onError(Status.INTERNAL.withDescription(
-          "An error occurred: " + e.getMessage()).asRuntimeException());
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
   }
 }

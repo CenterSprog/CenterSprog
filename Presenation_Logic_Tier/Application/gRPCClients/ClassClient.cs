@@ -16,29 +16,17 @@ public class ClassClient : IClassClient
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new ClassEntityService.ClassEntityServiceClient(channel);
 
-        var request = new RequestGetClassEntity()
+        var request = new RequestGetClassEntity
         {
             ClassId = id
         };
-
-        var reply = new ResponseGetClassEntity();
-
-        try
-        {
-            reply =  await client.getClassEntityByIdAsync(request);
-        }
-        catch (RpcException e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-
+        
+        var reply = await client.getClassEntityByIdAsync(request);
 
         ClassEntity retrievedClassEntity = new(reply.ClassEntity.Id, reply.ClassEntity.Title, reply.ClassEntity.Room);
 
         if (reply.ClassEntity.Lessons.Any())
         {
-
             foreach (var lesson in reply.ClassEntity.Lessons)
             {
                 retrievedClassEntity.Lessons.Add(new Lesson(lesson.Id, lesson.Date, lesson.Description, lesson.Topic));
@@ -55,21 +43,21 @@ public class ClassClient : IClassClient
         var request = new RequestGetClassEntities();
         if (dto.Username != null)
             request.Username = dto.Username;
-        
-        
+
         var reply = await client.getClassEntitiesAsync(request);
 
         var classes = new List<ClassEntity>();
-        
+
         foreach (var classData in reply.ClassEntities)
         {
             ClassEntity newClass = new ClassEntity(classData.Id, classData.Title, classData.Room);
 
             foreach (var userParticipant in classData.Participants)
             {
-                newClass.Participants.Add( new User(userParticipant.Username,userParticipant.FirstName,userParticipant.LastName,userParticipant.Role));
+                newClass.Participants.Add(new User(userParticipant.Username, userParticipant.FirstName,
+                    userParticipant.LastName, userParticipant.Role));
             }
-            
+
             classes.Add(newClass);
         }
 
@@ -86,14 +74,15 @@ public class ClassClient : IClassClient
         };
         if (dto.Role != null)
             request.Role = dto.Role;
-        
+
         var reply = await client.getClassParticipantsAsync(request);
 
         var participants = new List<User>();
-        
+
         foreach (var participant in reply.Participants)
         {
-            participants.Add( new User(participant.Username, participant.FirstName, participant.LastName, participant.Role, participant.Email));
+            participants.Add(new User(participant.Username, participant.FirstName, participant.LastName,
+                participant.Role, participant.Email));
         }
 
         return await Task.FromResult(participants);
@@ -111,17 +100,11 @@ public class ClassClient : IClassClient
                 Title = dto.Room
             }
         };
-        var reply = new ResponseCreateClassEntity();
-        try
-        {
-            reply = await client.createClassEntityAsync(request);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
+        var reply = await client.createClassEntityAsync(request);
 
-        ClassEntity createdClass = new ClassEntity(reply.ClassEntity.Id, reply.ClassEntity.Title, reply.ClassEntity.Room);
+        ClassEntity createdClass =
+            new ClassEntity(reply.ClassEntity.Id, reply.ClassEntity.Title, reply.ClassEntity.Room);
+
         return await Task.FromResult(createdClass);
     }
 
@@ -132,25 +115,16 @@ public class ClassClient : IClassClient
         var participantsData = new RepeatedField<string>();
         foreach (string username in dto.Participants)
         {
-            participantsData.Add( username );
+            participantsData.Add(username);
         }
 
         var request = new RequestUpdateClassParticipants
         {
             Id = dto.Id,
-            ParticipantsUsernames = {  participantsData }
+            ParticipantsUsernames = { participantsData }
         };
-        var reply = new ResponseUpdateClassParticipants();
 
-        try
-        {
-            reply = await client.updateParticipantsAsync(request);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message + e.StackTrace);
-            return await Task.FromResult(false);
-        }
+        var reply = await client.updateParticipantsAsync(request);
 
         return await Task.FromResult(reply.Result);
     }
@@ -160,13 +134,13 @@ public class ClassClient : IClassClient
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new ClassEntityService.ClassEntityServiceClient(channel);
 
-        var request = new RequestGetClassAttendanceByUsername()
+        var request = new RequestGetClassAttendanceByUsername
         {
             ClassId = dto.Id,
             Username = dto.Username
         };
-        
-        var reply =  await client.getClassAttendanceByUsernameAsync(request);
+
+        var reply = await client.getClassAttendanceByUsernameAsync(request);
 
         var lessons = new List<Lesson>();
 
@@ -174,7 +148,7 @@ public class ClassClient : IClassClient
         {
             foreach (var lesson in reply.Lessons)
             {
-                lessons.Add(new Lesson{Id =lesson.Id, Topic = lesson.Topic, Date = lesson.Date});
+                lessons.Add(new Lesson { Id = lesson.Id, Topic = lesson.Topic, Date = lesson.Date });
             }
         }
 
@@ -186,18 +160,17 @@ public class ClassClient : IClassClient
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new ClassEntityService.ClassEntityServiceClient(channel);
 
-        var request = new RequestGetClassAttendance()
+        var request = new RequestGetClassAttendance
         {
             ClassId = id
         };
 
         var reply = new ResponseGetClassAttendance();
-        
-        reply =  await client.getClassAttendanceAsync(request);
 
+        reply = await client.getClassAttendanceAsync(request);
 
         var lessons = new List<Lesson>();
-        
+
         if (reply.LessonsAttendance.Any())
         {
             foreach (var lesson in reply.LessonsAttendance)
@@ -205,9 +178,10 @@ public class ClassClient : IClassClient
                 var participants = new List<User>();
                 foreach (var userParticipant in lesson.Participants)
                 {
-                    participants.Add( new User{Username = userParticipant.Username});
+                    participants.Add(new User { Username = userParticipant.Username });
                 }
-                lessons.Add(new Lesson{Id =lesson.Id, Attendees = participants});
+
+                lessons.Add(new Lesson { Id = lesson.Id, Attendees = participants });
             }
         }
 

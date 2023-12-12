@@ -36,12 +36,12 @@
 
 @code {
     public string Msg;
-    public UserCreationDto Dto;
+        public UserCreationDTO Dto;
 
     protected override async Task OnInitializedAsync()
     {
         Msg = null;
-        Dto = new UserCreationDto();
+        Dto = new UserCreationDTO();
         Dto.Role = "student";
 
         await base.OnInitializedAsync();

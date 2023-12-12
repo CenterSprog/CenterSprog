@@ -1,7 +1,6 @@
-﻿@page "/classes/{classId}"
+﻿@page "/my-classes/{ClassId}"
 @using Domain.Models
 @using HttpClients.ClientInterfaces
-@using Domain.DTOs.LessonDTO
 @inject ILessonService lessonService
 @inject IClassService classService
 @inject NavigationManager navMgr
@@ -15,26 +14,23 @@ else
     <div class="class-container">
         <div class="class-card">
             <h2>@SelectedClass.Title @SelectedClass.Room</h2>
+
             <div class="d-flex">
                 <AuthorizeView Policy="MustBeTeacher">
-                    <Authorized Context="teacherAuthorized">
-                        <ClassAttendanceComponent ClassId="@ClassId"/>
-                    </Authorized>
+                    <ClassAttendanceComponent ClassId=@ClassId />
                 </AuthorizeView>
                 <AuthorizeView Policy="MustBeStudent">
-                    <Authorized Context="studentAuthorized">
-                        <SingleUserAttendanceComponent ClassId="@ClassId"/>
-                    </Authorized>
+                    <SingleUserAttendanceComponent ClassId=@ClassId />
                 </AuthorizeView>
-                <ParticipantsComponent ClassId="@ClassId"/>
+                <ParticipantsComponent ClassId=@ClassId />
             </div>
         </div>
     </div>
 
     <div class="lessons-container">
         <AuthorizeView Policy="MustBeTeacher">
-            <div class="add-icon-container d-flex align-items-center justify-content-center w-100" @onclick="AddLesson">
-                <img src="/add.png" alt="Add Icon" style="width: 30px;"/>
+            <div class="add-icon-container w-full d-flex align-items-center justify-content-center" @onclick="CreateLesson">
+                <img src="/add.png" alt="Add Icon" style="width: 30px"/>
             </div>
         </AuthorizeView>
         @if (SelectedClass.Lessons == null)
@@ -47,18 +43,23 @@ else
         }
         else
         {
-            @foreach (Lesson lesson in SelectedClass.Lessons.OrderByDescending(l => l.Date))
+            @foreach (var lesson in SelectedClass.Lessons)
             {
-                Console.WriteLine($"Lesson ID: {lesson.Id}");
-                <div class="lesson-card">
-                    <div class="icon-container">
-                        <img src="/notebook.png" alt="Lesson Icon"/>
+                <div class="lesson-card d-flex justify-content-between align-items-center">
+                    <div @onclick="() => ViewLesson(lesson.Id)" class="d-flex">
+                        <div class="icon-container">
+                            <img src="/notebook.png" alt="Lesson Icon"/>
+                        </div>
+                        <h4 class="ms-3 mb-0 align-self-center">@lesson.Topic. @lesson.Date</h4>
                     </div>
-                    <div class="lesson-content">
-                        <h4 @onclick="() => ViewLesson(lesson)">@lesson.Topic. @lesson.Date </h4>
+
+                    <div class="d-flex">
                         <AuthorizeView Policy="MustBeTeacher">
-                            <button @onclick:stopPropagation="true" @onclick:preventDefault="true"
-                                    @onclick="@(() => DeleteLessonByIdAsync(lesson.Id))" type="button" class="btn btn-danger">
+                            <button @onclick="@(() => UpdateLesson(lesson.Id))"
+                                    type="button" class="btn btn-primary mx-3">
+                                Update
+                            </button>
+                            <button @onclick="@(() => DeleteLessonById(lesson.Id))" type="button" class="btn btn-danger">
                                 Delete
                             </button>
                         </AuthorizeView>
@@ -73,14 +74,11 @@ else
 
     [Parameter]
     public string ClassId { get; set; }
-    
-    public LessonUpdateDTO Updatedto { get; set; }
-    public ClassEntity SelectedClass;
 
+    private ClassEntity SelectedClass { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Updatedto = null!;
         try
         {
             SelectedClass = await classService.GetByIdAsync(ClassId);
@@ -89,52 +87,34 @@ else
         {
             Console.WriteLine(e);
         }
-
-        await base.OnInitializedAsync();
     }
 
-    private void ViewLesson(Lesson lesson)
+    private void ViewLesson(string lessonId)
     {
-        var lessonId = lesson.Id;
-        Console.WriteLine($"Getting lesson overview for the lesson with id: {lessonId}");
-        navMgr.NavigateTo($"{ClassId}/Lessons/{lessonId}");
-        Console.WriteLine($"Navigating to the lesson overview page with the id: {lessonId}");
+        navMgr.NavigateTo($"my-classes/{ClassId}/lessons/{lessonId}");
     }
 
+    private void CreateLesson()
+    {
+        navMgr.NavigateTo($"my-classes/{ClassId}/create-lesson");
+    }
 
-    private async Task DeleteLessonByIdAsync(string lessonId)
+    private void UpdateLesson(string lessonId)
+    {
+        navMgr.NavigateTo($"my-classes/{ClassId}/update-lesson/{lessonId}");
+    }
+
+    private async Task DeleteLessonById(string lessonId)
     {
         try
         {
             await lessonService.DeleteAsync(lessonId);
-
-            var list = new List<Lesson>(SelectedClass.Lessons!);
-            list.RemoveAll(lesson => lesson.Id == lessonId);
-            SelectedClass.Lessons = list;
+            await OnInitializedAsync();
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
         }
-    }
-
-    /*
-    private async Task UpdateAsync()
-    {
-        try
-        {
-            await lessonService.UpdateAsync(updatedto);
-            navMgr.NavigateTo("/ViewUpdateLesson");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-           
-        }
-    }*/
-
-    private void AddLesson()
-    {
     }
 
 }

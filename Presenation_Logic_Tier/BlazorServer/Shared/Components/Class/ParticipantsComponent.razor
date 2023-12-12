@@ -3,7 +3,7 @@
 @using Domain.DTOs.ClassDTO
 @inject IClassService classService
 
-<button type="button" class="btn btn-primary fw-bold ms-3" @onclick="@SeeParticipantsAsync">Participants <span class="oi oi-people"></span></button>
+<button type="button" class="btn btn-secondary fw-bold ms-3" @onclick="@SeeParticipantsAsync">Participants <span class="oi oi-people"></span></button>
 <Modal ShowModal="ShowModal">
         @if (Participants == null)
         {
@@ -65,7 +65,8 @@
         }
         catch (Exception e)
         {
-            Msg = $"Failed to fetch participants: {e.Message} {e.StackTrace}";
+            Console.WriteLine(e.Message);
+            Msg = "Failed to fetch participants.";
         }
         
     }

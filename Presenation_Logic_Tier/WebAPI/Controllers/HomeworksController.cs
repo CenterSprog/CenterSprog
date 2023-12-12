@@ -18,7 +18,7 @@ public class HomeworksController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Homework>> CreateHomework(HomeworkCreationDTO dto)
+    public async Task<ActionResult<Homework>> CreateHomework([FromBody] HomeworkCreationDTO dto)
     {
         try
         {
@@ -27,7 +27,7 @@ public class HomeworksController : ControllerBase
         }
         catch (RpcException e)
         {
-            return NotFound(e.Message);
+            return NotFound(e.Status.Detail);
         }
         catch (Exception e)
         {

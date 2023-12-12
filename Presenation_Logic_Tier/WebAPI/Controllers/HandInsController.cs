@@ -20,7 +20,7 @@ public class HandInsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<HandInHomework>> HandInHomework(HomeworkHandInDTO dto)
+    public async Task<ActionResult<HandInHomework>> HandInHomework([FromBody] HomeworkHandInDTO dto)
     {
         try
         {
@@ -29,7 +29,7 @@ public class HandInsController : ControllerBase
         }
         catch (RpcException e)
         {
-            return NotFound(e.Message);
+            return NotFound(e.Status.Detail);
         }
         catch (Exception e)
         {
@@ -38,7 +38,7 @@ public class HandInsController : ControllerBase
     }
 
     [HttpGet("{homeworkId}", Name = "GetHandInsByHomeworkIdAsync")]
-    public async Task<ActionResult<IEnumerable<HandInHomework>>> GetHandInsByHomeworkIdAsync(string homeworkId)
+    public async Task<ActionResult<IEnumerable<HandInHomework>>> GetHandInsByHomeworkIdAsync([FromRoute] string homeworkId)
     {
         try
         {
@@ -47,7 +47,7 @@ public class HandInsController : ControllerBase
         }
         catch (RpcException e)
         {
-            return NotFound(e.Message);
+            return NotFound(e.Status.Detail);
         }
         catch (Exception e)
         {
@@ -55,29 +55,23 @@ public class HandInsController : ControllerBase
         }
     }
 
-    [HttpGet("{homeworkId}/{studentUsername}", Name = "GetHandInByHomeworkIdAndStudentUsernameAsync")]
-    public async Task<ActionResult<HandInHomework>> GetHandInByHomeworkIdAndStudentUsernameAsync(string homeworkId,
-        string studentUsername)
+    [HttpGet("{homeworkId}/student/{username}", Name = "GetHandInByHomeworkIdAndStudentUsernameAsync")]
+    public async Task<ActionResult<HandInHomework>> GetHandInByHomeworkIdAndStudentUsernameAsync([FromRoute] string homeworkId,
+        [FromRoute] string username)
     {
         try
         {
-            HandInHomework handIn = await _handInHomeworkLogic.GetHandInByHomeworkIdAndStudentUsernameAsync(homeworkId, studentUsername);
-
-            if (handIn == null)
-            {
-                return NotFound();
-            }
+            HandInHomework handIn = await _handInHomeworkLogic.GetHandInByHomeworkIdAndStudentUsernameAsync(homeworkId, username);
 
             return Ok(handIn);
         }
         catch (RpcException e)
         {
-            return NotFound(e.Message);
+            return NotFound(e.Status.Detail);
         }
         catch (Exception e)
         {
             return StatusCode(500, e.Message);
         }
     }
-
 }

@@ -4,6 +4,7 @@ using System.Text;
 using Application.LogicInterfaces;
 using Domain.DTOs.UserDTO;
 using Domain.Models;
+using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
@@ -72,10 +73,13 @@ public class AuthController : ControllerBase
     
             return Ok(token);
         }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
+        }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return StatusCode(500, e.Message);
         }
     }
-    
 }

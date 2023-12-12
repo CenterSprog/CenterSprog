@@ -6,7 +6,6 @@ public class HandInHomework
     public string Answer { get; set; }
     public string StudentUsername { get; set; }
 
-
     public HandInHomework(string id, string answer)
     {
         Id = id;

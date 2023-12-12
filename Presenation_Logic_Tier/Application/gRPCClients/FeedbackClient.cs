@@ -1,6 +1,5 @@
 ﻿using Application.ClientInterfaces;
 using Domain.DTOs.FeedbackDTO;
-using Grpc.Core;
 using Grpc.Net.Client;
 using gRPCClient;
 using Feedback = Domain.Models.Feedback;
@@ -14,33 +13,18 @@ public class FeedbackClient : IFeedbackClient
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new FeedbackService.FeedbackServiceClient(channel);
 
-        var request = new RequestAddFeedback()
+        var request = new RequestAddFeedback
         {
             HandInId = addFeedbackDto.HandInId,
             StudentUsername = addFeedbackDto.StudentUsername,
             Feedback = new gRPCClient.Feedback
             {
-                Id = addFeedbackDto.Feedback.Id,
-                Grade = addFeedbackDto.Feedback.Grade,
-                Comment = addFeedbackDto.Feedback.Comment
+                Grade = addFeedbackDto.Grade,
+                Comment = addFeedbackDto.Comment
             }
         };
 
-        var reply = new gRPCClient.Feedback();
-        try
-        {
-            reply = await client.addFeedbackAsync(request);
-            Console.WriteLine($"Feedback was successfully added!");
-        }
-        catch (Grpc.Core.RpcException e) when (e.StatusCode == Grpc.Core.StatusCode.AlreadyExists)
-        {
-            Console.WriteLine($"Feedback already provided for this hand-in.");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error: {e.Message}");
-            throw;
-        }
+        var reply = await client.addFeedbackAsync(request);
 
         Feedback createdFeedback = new Feedback(reply.Id, reply.Grade, reply.Comment);
         return await Task.FromResult(createdFeedback);
@@ -50,36 +34,16 @@ public class FeedbackClient : IFeedbackClient
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new FeedbackService.FeedbackServiceClient(channel);
-            
+
         var request = new RequestGetFeedbackByHandInIdAndStudentUsername
         {
             HandInId = handInId,
             StudentUsername = studentUsername
         };
-            
-        try
-        {
-            var response = await client.getFeedbackByHandInIdAndStudentUsernameAsync(request);
-                
-            if (response != null && response.Feedback != null)
-            {
-                var feedback = response.Feedback;
-                return new Feedback(feedback.Id, feedback.Grade, feedback.Comment);
-            }
-            else
-            {
-                return null; 
-            }
-        }
-        catch (RpcException ex) when (ex.StatusCode == StatusCode.NotFound)
-        {
-            throw new RpcException(new Status(StatusCode.Internal, "Internal Server Error"), ex.Message);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-    }
 
+        var response = await client.getFeedbackByHandInIdAndStudentUsernameAsync(request);
+
+        var feedback = new Feedback(response.Feedback.Id, response.Feedback.Grade, response.Feedback.Comment);
+        return await Task.FromResult(feedback);
+    }
 }

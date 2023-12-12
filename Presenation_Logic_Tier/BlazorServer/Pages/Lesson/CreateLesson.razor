@@ -1,132 +1,95 @@
-@page "/CreateLesson/{ClassId}"
-
+@page "/my-classes/{ClassId}/create-lesson"
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.LessonDTO
 @using Microsoft.AspNetCore.Components
-
 @inject ILessonService lessonService
 @inject NavigationManager navMgr
 
-<div  xmlns="http://www.w3.org/1999/html" >
-    
+<div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
         <h3>Create Lesson</h3>
+        <button type="button" class="btn btn-light align-self-end" @onclick="@Close"><span class="oi oi-x"></span></button>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" @bind="lessonDto.Topic">
+        <label for="floatingInput">Topic:</label>
+    </div>
     <br/>
-    
-
-    <div>
-        
-    <h5 class="text-sm-center">If you are a teacher create lesson here  @ClassId</h5></div>
-   
-        
-    
-  <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="floatingInput" @bind="lessonDto.Topic">
-      <label for="floatingInput">Topic:</label>
-  </div>
-  <br/>
-  <div class="form-floating mb-3">
-         <input type="date" class="form-control" id="floatingInput" @bind="Date">
-         <label for="floatingInput">Date</label>
-     </div>
-   <br/>
-   <div class="form-floating">
-       <textarea class="form-control" id="floatingTextarea" @bind="lessonDto.Description"></textarea>
-       <label for="floatingTextarea">Description:</label>
-   </div>
-  <br/>
-  
-        <div class="button-row">
-          @*  @if (!string.IsNullOrEmpty(msg))
-            {
-                <label style="color: red">@msg</label>
-            }*@
-            <button @onclick="Create" type="button" class="btn btn-primary">Create Lesson</button>
-        </div>
+    <div class="form-floating mb-3">
+        <input type="date" class="form-control" id="floatingInput" @bind="Date">
+        <label for="floatingInput">Date</label>
     </div>
-@if (msg is not null)
-{
-    <div>
-        @msg
+    <br/>
+    <div class="form-floating">
+        <textarea class="form-control" id="floatingTextarea" @bind="lessonDto.Description"></textarea>
+        <label for="floatingTextarea">Description:</label>
     </div>
-}
-@*
-<Modal ShowModal="showModal">
-    <p>You have successfully created a new lesson!</p>
-    <button @onclick="@Proceed">Wonderful</button>
-</Modal>*@
+    <br/>
+        <br/>
+        @if (Msg is not null)
+        {
+            <div>
+                <p class="text-danger">@Msg</p>
+            </div>
+            <br/>
+        }
+    <div class="button-row">
+        <button @onclick="CreateAsync" type="button" class="btn btn-success">Create Lesson</button>
+    </div>
+</div>
 
 
 @code {
-   
-    
-    //private bool showModal;
-    public LessonCreationDTO lessonDto;
-    public DateTime Date { get; set; }
-    private string msg = "";
-    private string Topic = "";
-    private string Description = "";
-    
+
     [Parameter]
     public string ClassId { get; set; }
-    
-    
-    protected override void OnInitialized()
+
+    public LessonCreationDTO lessonDto;
+    public DateTime Date { get; set; }
+    private string? Msg;
+
+    protected override async Task OnInitializedAsync()
     {
-        
         Date = DateTime.Now;
+        Msg = null;
         lessonDto = new LessonCreationDTO(ClassId);
-        base.OnInitialized();
+        base.OnInitializedAsync();
     }
 
-
-    public async Task Create()
+    public async Task CreateAsync()
     {
-       try
+        try
         {
+            Msg = null;
             lessonDto.Date = Date.ToFileTimeUtc();
-            
-           // ValidateLesson();
-           
-          
-            var createdLesson = await lessonService.CreateAsync(lessonDto);
-            navMgr.NavigateTo($"/lessons/{createdLesson.Id}");
-            msg = "Lesson created successfully!";
-            //showModal = true;
+            ValidateLesson();
+            if (Msg==null)
+            {
+                var createdLesson = await lessonService.CreateAsync(lessonDto);
+                navMgr.NavigateTo($"/my-classes/{ClassId}/lessons/{createdLesson.Id}");
+                Msg = "Lesson created successfully!";
+            }
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            msg = e.Message;
+            Msg = e.Message;
         }
     }
-    
-    
-   
- 
-   // private void ValidateLesson()
-   // {
-       /* if (string.IsNullOrEmpty(lessonTopic))
-        {
-            msg = "Topic cannot be empty!";
-            return;
-        }
-        if (string.IsNullOrEmpty(Description))
-        {
-            msg = "Description cannot be empty!";
-            return;
-        } DOESNT WORK*/
-      
-       /* if (lessonDto.Topic == "")
-            throw new Exception("Topic is required");
-        if(lessonDto.Description == "")
-            throw new Exception("Description is required");
-       // if (Date == "")
-          //  throw new Exception("The date is required"); Error
-    }*/
-    /*
-    private void Proceed()
+    private void ValidateLesson()
     {
-        //showModal = false;
-       navMgr.NavigateTo("/ViewLessons");
-    }*/
+        if (string.IsNullOrEmpty(lessonDto.Topic))
+            Msg = "Topic is required";
+
+        if (string.IsNullOrEmpty(lessonDto.Description))
+            Msg = "Description is required";
+
+        if (lessonDto.Date == null)
+            Msg = "The date is required";
+    }
+    private void Close()
+    {
+        navMgr.NavigateTo($"/my-classes/{ClassId}");
+    }
+
 }

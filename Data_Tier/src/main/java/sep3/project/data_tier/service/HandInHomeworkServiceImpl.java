@@ -14,6 +14,7 @@ import sep3.project.protobuf.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @GrpcService public class HandInHomeworkServiceImpl
@@ -37,41 +38,39 @@ import java.util.Optional;
   {
     String homeworkId = request.getHomeworkId();
     String studentUsername = request.getStudentUsername();
-    HandInHomework grpcs = request.getHandInHomework();
 
     try
     {
       HandInHomeworkEntity handInHomework = new HandInHomeworkEntity();
-      handInHomework.setId(grpcs.getId());
-      handInHomework.setAnswer(grpcs.getAnswer());
 
-      UserEntity user = userRepository.findById(studentUsername).orElse(null);
-      HomeworkEntity homework = homeworkRepository.findById(homeworkId)
-          .orElse(null);
+      Optional<UserEntity> user = userRepository.findById(studentUsername);
+      if (user.isEmpty())
+        throw new NoSuchElementException(
+            "No existing user with username " + studentUsername);
 
-      handInHomework.setUser(user);
-      handInHomework.setHomework(homework);
+      Optional<HomeworkEntity> homework = homeworkRepository.findById(homeworkId);
+      if (homework.isEmpty())
+        throw new NoSuchElementException(
+            "No existing homework with id " + homeworkId);
+
+      handInHomework.setAnswer(request.getAnswer());
+      handInHomework.setUser(user.get());
+      handInHomework.setHomework(homework.get());
 
       HandInHomeworkEntity savedHandInHomework = handInHomeworkRepository.save(
           handInHomework);
 
-      String savedStudentUsername = savedHandInHomework.getUser().getUsername();
-
-      ResponseGetHandInHomework responseGetHandInHomework = ResponseGetHandInHomework.newBuilder()
+      response.onNext(ResponseGetHandInHomework.newBuilder()
           .setHandInHomework(
               HandInHomework.newBuilder().setId(savedHandInHomework.getId())
                   .setAnswer(savedHandInHomework.getAnswer())
-                  .setStudentUsername(savedStudentUsername).build()).build();
-
-      response.onNext(responseGetHandInHomework);
+                  .setStudentUsername(user.get().getUsername()).build()).build());
       response.onCompleted();
-
     }
     catch (Exception e)
     {
-      response.onError(Status.INTERNAL.withDescription(
-              "Error handling HandInHomework: " + e.getMessage())
-          .asRuntimeException());
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
   }
 
@@ -80,16 +79,19 @@ import java.util.Optional;
       StreamObserver<ResponseGetHandInsByHomeworkId> response)
   {
     String homeworkId = request.getHomeworkId();
-
     try
     {
+      Optional<HomeworkEntity> homework = homeworkRepository.findById(homeworkId);
+      if (homework.isEmpty())
+        throw new NoSuchElementException(
+            "No existing homework with id " + homeworkId);
+
       List<HandInHomeworkEntity> handIns = handInHomeworkRepository.findByHomeworkId(
           homeworkId);
       List<HandInHomework> handInMessages = new ArrayList<>();
 
       for (HandInHomeworkEntity entity : handIns)
       {
-
         UserEntity user = entity.getUser();
         String studentUsername = user.getUsername();
 
@@ -99,17 +101,14 @@ import java.util.Optional;
         handInMessages.add(message);
       }
 
-      ResponseGetHandInsByHomeworkId responseGetHandInsByHomeworkId = ResponseGetHandInsByHomeworkId.newBuilder()
-          .addAllHandIns(handInMessages).build();
-
-      response.onNext(responseGetHandInsByHomeworkId);
+      response.onNext(ResponseGetHandInsByHomeworkId.newBuilder()
+          .addAllHandIns(handInMessages).build());
       response.onCompleted();
     }
     catch (Exception e)
     {
-      response.onError(Status.INTERNAL.withDescription(
-              "Error getting Hand Ins by HomeworkId: " + e.getMessage())
-          .asRuntimeException());
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
   }
 
@@ -122,36 +121,41 @@ import java.util.Optional;
 
     try
     {
+      Optional<UserEntity> user = userRepository.findById(studentUsername);
+      if (user.isEmpty())
+        throw new NoSuchElementException(
+            "No existing user with username " + studentUsername);
+
+      Optional<HomeworkEntity> homework = homeworkRepository.findById(homeworkId);
+      if (homework.isEmpty())
+        throw new NoSuchElementException(
+            "No existing homework with id " + homeworkId);
+
       Optional<HandInHomeworkEntity> handInHomework = handInHomeworkRepository.findByHomework_IdAndUser_Username(
           homeworkId, studentUsername);
 
       if (handInHomework.isPresent())
       {
         HandInHomeworkEntity entity = handInHomework.get();
-        UserEntity user = entity.getUser();
-        String savedStudentUsername = user.getUsername();
 
         HandInHomework handInMessage = HandInHomework.newBuilder()
             .setId(entity.getId()).setAnswer(entity.getAnswer())
-            .setStudentUsername(savedStudentUsername).build();
+            .setStudentUsername(user.get().getUsername()).build();
 
-        ResponseGetHandInHomework responseGetHandInHomework = ResponseGetHandInHomework.newBuilder()
-            .setHandInHomework(handInMessage).build();
-
-        response.onNext(responseGetHandInHomework);
+        response.onNext(ResponseGetHandInHomework.newBuilder()
+            .setHandInHomework(handInMessage).build());
         response.onCompleted();
       }
       else
       {
-        response.onError(Status.NOT_FOUND.withDescription("Hand-in not found")
-            .asRuntimeException());
+        throw new NoSuchElementException(
+            "No existing hand in with homework id " + homeworkId + " submitted by user with username " + studentUsername);
       }
     }
     catch (Exception e)
     {
-      response.onError(Status.INTERNAL.withDescription(
-          "Error getting Hand-in by HomeworkId and StudentUsername: "
-              + e.getMessage()).asRuntimeException());
+      Status status = Status.INTERNAL.withDescription(e.getMessage());
+      response.onError(status.asRuntimeException());
     }
   }
 }
