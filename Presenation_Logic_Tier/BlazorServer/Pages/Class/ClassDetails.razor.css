@@ -51,11 +51,16 @@
 .add-icon-container{
     cursor: pointer;
 }
-.remove-icon-container img {
+
+.icons-container img.delete-button {
     width: 35px;
     height: 35px;
 }
-.remove-icon-container{
+.icons-container img.update-button {
+    width: 30px;
+    height: 30px;
+}
+.icons-container{
     position: absolute;
     bottom: 25px;
     right: 20px;
