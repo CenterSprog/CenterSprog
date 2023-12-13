@@ -27,13 +27,13 @@ public class ModelConfig {
 
 
 
-            LessonEntity l1 = new LessonEntity(133454545665594012l,"Grpc","Grpc lesson");
-            LessonEntity l2 = new LessonEntity(133454545665594012l,"Rabbit-mq","What da hell is going on");
+            LessonEntity l1 = new LessonEntity(133454545665594012l,"Danish traditions","Some of the most beautiful danish tradtions");
+            LessonEntity l2 = new LessonEntity(133454545665594012l,"Danish verbs","Verbs in their past present and future forms. So how to speak fluently as a foreigner.");
 
 
-            ClassEntity c1 = new ClassEntity("sdj1","c05.16b");
-            ClassEntity c2 = new ClassEntity("sep3","c05.14b");
-            ClassEntity c3 = new ClassEntity("gym","kamtjatka");
+            ClassEntity c1 = new ClassEntity("danish-module-3","c05.16b");
+            ClassEntity c2 = new ClassEntity("danish-module-2","c05.14b");
+            ClassEntity c3 = new ClassEntity("danish-module-4","kamtjatka");
 
 
             c1.addUser(s1);

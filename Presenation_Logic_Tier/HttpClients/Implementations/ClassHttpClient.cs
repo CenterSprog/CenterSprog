@@ -108,8 +108,9 @@ public class ClassHttpClient : IClassService
     public async Task<bool> UpdateClass(string jwt, ClassUpdateDTO dto)
     {
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
-        HttpResponseMessage response = await _client.PatchAsJsonAsync($"/classes", dto);
+        HttpResponseMessage response = await _client.PatchAsJsonAsync($"/classes/{dto.Id}", dto);
         string responseBody = await response.Content.ReadAsStringAsync();
+        
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(responseBody);
@@ -120,6 +121,7 @@ public class ClassHttpClient : IClassService
             {
                 PropertyNameCaseInsensitive = true
             })!;
+        
         return updated;
     }
 
