@@ -1,2 +1,24 @@
 ﻿@page "/"
-<h3>Landing page</h3>
+<div class="d-flex align-items-center w-100">
+    <div class="w-50 d-flex justify-content-center p-5">
+        <img src="img/logo.png" alt="Logo" class="w-100"/>
+    </div>
+    <AuthorizeView>
+        <NotAuthorized>
+            <div class="d-flex flex-column align-items-start justify-content-center p-5">
+                <h1>Become new member!</h1>
+                <h5>email@email.dk</h5>
+                <h5>+45 00 00 00 00</h5>
+                <h5>Already a member? Please log in!</h5>
+            </div>
+        </NotAuthorized>
+        <Authorized>
+            <div class="d-flex flex-column align-items-start justify-content-center p-5">
+                <h1>Contact us!</h1>
+                <h5>email@email.dk</h5>
+                <h5>+45 00 00 00 00</h5>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+
+</div>
