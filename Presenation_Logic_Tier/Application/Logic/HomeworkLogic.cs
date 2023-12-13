@@ -23,7 +23,7 @@ public class HomeworkLogic : IHomeworkLogic
         return await Task.FromResult(createdHomework);
     }
 
-    private void ValidateHomeworkCreation(HomeworkCreationDTO dto)
+    public void ValidateHomeworkCreation(HomeworkCreationDTO dto)
     {
         if (string.IsNullOrWhiteSpace(dto.LessonId))
             throw new Exception("Lesson Id is required.");

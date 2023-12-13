@@ -96,7 +96,7 @@ public class ClassLogic : IClassLogic
         return participantsWithAttendance;
     }
 
-    private void ValidateClassCreation(ClassCreationDTO dto)
+    public void ValidateClassCreation(ClassCreationDTO dto)
     {
         if (string.IsNullOrEmpty(dto.Title))
             throw new Exception("Title is required");

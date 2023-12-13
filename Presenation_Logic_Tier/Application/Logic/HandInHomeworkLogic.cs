@@ -32,7 +32,7 @@ public class HandInHomeworkLogic : IHandInHomeworkLogic
         return await _handInHomeworkClient.GetHandInByHomeworkIdAndStudentUsernameAsync(homeworkId, studentUsername);
     }
 
-    private void ValidateHandInCreation(HomeworkHandInDTO dto)
+    public void ValidateHandInCreation(HomeworkHandInDTO dto)
     {
         if (string.IsNullOrEmpty(dto.StudentUsername))
             throw new Exception("Student Username is required");

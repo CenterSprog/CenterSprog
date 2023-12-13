@@ -25,7 +25,7 @@ public class FeedbackLogic : IFeedbackLogic
         return await _feedbackClient.GetFeedbackByHandInIdAndStudentUsernameAsync(handInId, studentUsername);
     }
 
-    private void ValidateFeedbackCreation(AddFeedbackDTO addFeedbackDto)
+    public void ValidateFeedbackCreation(AddFeedbackDTO addFeedbackDto)
     {
         int[] allowedGrades = { -3, 0, 2, 4, 7, 10, 12 };
 

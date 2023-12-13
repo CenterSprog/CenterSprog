@@ -34,7 +34,8 @@ public class LessonLogic : ILessonLogic
 
     public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
     {
-        ValidateLessonCreationAndUpdate(lessonCreationDto.Topic, lessonCreationDto.Description, lessonCreationDto.Date, lessonCreationDto.ClassId);
+        ValidateLessonCreationAndUpdate(lessonCreationDto.Topic, lessonCreationDto.Description, lessonCreationDto.Date,
+            lessonCreationDto.ClassId);
         var createdLesson = await _lessonClient.CreateAsync(lessonCreationDto);
 
         return createdLesson;
@@ -47,11 +48,12 @@ public class LessonLogic : ILessonLogic
 
     public async Task<Boolean> UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto)
     {
-        ValidateLessonCreationAndUpdate(lessonUpdateDto.Topic, lessonUpdateDto.Description, lessonUpdateDto.Date, lessonUpdateDto.Id);
+        ValidateLessonCreationAndUpdate(lessonUpdateDto.Topic, lessonUpdateDto.Description, lessonUpdateDto.Date,
+            lessonUpdateDto.Id);
         return await _lessonClient.UpdateLessonAsync(lessonUpdateDto);
     }
 
-    private void ValidateLessonCreationAndUpdate(string topic, string description, long date, string id)
+    public void ValidateLessonCreationAndUpdate(string topic, string description, long date, string id)
     {
         if (string.IsNullOrWhiteSpace(id))
             throw new Exception("Id is required.");
@@ -59,7 +61,7 @@ public class LessonLogic : ILessonLogic
             throw new Exception("Topic must be at least 3 characters long.");
         if (string.IsNullOrWhiteSpace(description) || description.Length < 10)
             throw new Exception("Description must be at least 10 characters long.");
-        if (date == null)
+        if (date == 0)
             throw new Exception("Date is required.");
     }
 }
