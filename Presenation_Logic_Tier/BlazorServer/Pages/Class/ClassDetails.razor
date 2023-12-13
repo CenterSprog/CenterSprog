@@ -22,12 +22,12 @@ else
 
             <div class="d-flex">
                 <AuthorizeView Policy="MustBeTeacher">
-                    <ClassAttendanceComponent ClassId=@ClassId />
+                    <ClassAttendanceComponent ClassId=@ClassId/>
                 </AuthorizeView>
                 <AuthorizeView Policy="MustBeStudent">
-                    <SingleUserAttendanceComponent ClassId=@ClassId />
+                    <SingleUserAttendanceComponent ClassId=@ClassId/>
                 </AuthorizeView>
-                <ParticipantsComponent ClassId=@ClassId />
+                <ParticipantsComponent ClassId=@ClassId/>
             </div>
         </div>
     </div>
@@ -60,20 +60,16 @@ else
 
                     <div class="d-flex">
                         <AuthorizeView Policy="MustBeTeacher">
-                            <button @onclick="@(() => UpdateLesson(lesson.Id))"
-                                    type="button" class="btn btn-primary mx-3">
-                                Update
-                            </button>
-                            <button @onclick="@(() => DeleteLessonById(lesson.Id))" type="button" class="btn btn-danger">
-                                Delete
-                            </button>
+                            <div class="icons-container" >
+                                <img class="update-button" src="/pen.png" alt="Update Icon" @onclick="@(() => UpdateLesson(lesson.Id))"/>
+                                <img class="delete-button" src="/bin.png" alt="Delete Icon" @onclick="@(() => DeleteLessonById(lesson.Id))"/>
+                            </div>
                         </AuthorizeView>
                     </div>
                 </div>
             }
         }
     </div>
-
 }
 
 @code {

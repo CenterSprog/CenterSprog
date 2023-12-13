@@ -1,5 +1,5 @@
 ﻿.class-card {
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 2px solid #CAF0F8;
     margin: 25px;
     border-radius: 10px;
     width: 200px;
@@ -8,12 +8,13 @@
     align-items: center;
     cursor: pointer;
     flex-direction: column;
+    background-color: white;
 
 }
 .class-header {
     width: 200px;
     height: 70px;
-    background-color: #6666ff;
+    background-color: #0077B6;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }

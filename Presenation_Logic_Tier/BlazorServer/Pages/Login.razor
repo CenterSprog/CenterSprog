@@ -1,22 +1,25 @@
 ﻿@page "/login"
 @using HttpClients.ClientInterfaces
+@using Domain.Models
+@using Domain.Auth
 @inject IUserService userService
 @inject NavigationManager navMgr
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <AuthorizeView>
     <NotAuthorized>
         <div class="card">
-            <h3>Center Sprog</h3>
+            <h2>Center Sprog</h2>
             <div class="field">
                 <label>Username:</label>
-                <input type="text" @bind="Username"/>
+                <input type="text" placeholder="Username" @bind="Username"/>
             </div>
             <div class="field">
                 <label style="text-align: center">Password:</label>
-                <input type="password" @bind="Password"/>
+                <input type="password" placeholder="Password" @bind="Password"/>
             </div>
             <div class="field">
-                <button class="loginbtn" @onclick="LoginAsync">Log In</button>
+                <button class="loginbtn" @onclick="LoginAsync">Login</button>
             </div>
             @if (Msg != null)
             {
@@ -26,11 +29,11 @@
             }
         </div>
     </NotAuthorized>
-    <Authorized>
-        <div class="card">
-            <h3>Hello, @context.User.Identity.Name</h3>
-        </div>
-    </Authorized>
+<Authorized>
+    <div class="card">
+        <h3>Hello, @context.User.Identity.Name</h3>
+    </div>
+</Authorized>
 </AuthorizeView>
 
 @code {
@@ -44,7 +47,17 @@
         try
         {
             await userService.LoginAsync(Username, Password);
-            navMgr.NavigateTo("/my-classes");
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            if (user.IsInRole("admin"))
+            {
+                navMgr.NavigateTo("/admin");
+            }
+            else
+            {
+                navMgr.NavigateTo("/my-classes");
+            }
         }
         catch (Exception e)
         {
