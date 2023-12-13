@@ -19,8 +19,9 @@ public class ClassHttpClient : IClassService
         _client = client;
     }
 
-    public async Task<ClassEntity> GetByIdAsync(string id)
+    public async Task<ClassEntity> GetByIdAsync(string jwt, string id)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/{id}");
 
         string responseBody = await responseMessage.Content.ReadAsStringAsync();
@@ -38,8 +39,9 @@ public class ClassHttpClient : IClassService
         return classEntity;
     }
 
-    public async Task<IEnumerable<ClassEntity>> GetAllAsync(SearchClassDTO dto)
+    public async Task<IEnumerable<ClassEntity>> GetAllAsync(string jwt, SearchClassDTO dto)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         String username = dto.Username;
         String url = "/classes";
         if (username != null)
@@ -65,8 +67,9 @@ public class ClassHttpClient : IClassService
         return classes;
     }
 
-    public async Task<IEnumerable<User>> GetAllParticipantsAsync(SearchClassParticipantsDTO dto)
+    public async Task<IEnumerable<User>> GetAllParticipantsAsync(string jwt, SearchClassParticipantsDTO dto)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         string query = "";
         if (!string.IsNullOrEmpty(dto.Role))
             query += $"?role={dto.Role}";
@@ -87,8 +90,9 @@ public class ClassHttpClient : IClassService
         return participants;
     }
 
-    public async Task<ClassEntity> CreateAsync(ClassCreationDTO dto)
+    public async Task<ClassEntity> CreateAsync(string jwt, ClassCreationDTO dto)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _client.PostAsJsonAsync("/classes/", dto);
         string responseBody = await response.Content.ReadAsStringAsync();
 
@@ -123,8 +127,9 @@ public class ClassHttpClient : IClassService
         return updated;
     }
 
-    public async Task<IEnumerable<UserAttendanceDTO>> GetClassAttendanceAsync(string id)
+    public async Task<IEnumerable<UserAttendanceDTO>> GetClassAttendanceAsync(string jwt, string id)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/{id}/attendances");
 
         string responseBody = await responseMessage.Content.ReadAsStringAsync();
@@ -143,8 +148,9 @@ public class ClassHttpClient : IClassService
         return attendees;
     }
 
-    public async Task<IEnumerable<LessonAttendanceDTO>> GetClassAttendanceByUsernameAsync(SearchClassAttendanceDTO dto)
+    public async Task<IEnumerable<LessonAttendanceDTO>> GetClassAttendanceByUsernameAsync(string jwt, SearchClassAttendanceDTO dto)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage responseMessage =
             await _client.GetAsync($"/classes/{dto.Id}/attendances?username={dto.Username}");
         string responseBody = await responseMessage.Content.ReadAsStringAsync();

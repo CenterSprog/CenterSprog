@@ -1,6 +1,7 @@
 ﻿@page "/my-classes/{ClassId}"
 @using Domain.Models
 @using HttpClients.ClientInterfaces
+@using HttpClients.Implementations
 @inject ILessonService lessonService
 @inject IClassService classService
 @inject NavigationManager navMgr
@@ -84,7 +85,7 @@ else
     {
         try
         {
-            SelectedClass = await classService.GetByIdAsync(ClassId);
+            SelectedClass = await classService.GetByIdAsync(UserHttpClient.Jwt, ClassId);
         }
         catch (Exception e)
         {
@@ -111,7 +112,7 @@ else
     {
         try
         {
-            await lessonService.DeleteAsync(lessonId);
+            await lessonService.DeleteAsync(UserHttpClient.Jwt, lessonId);
             await OnInitializedAsync();
         }
         catch (Exception e)

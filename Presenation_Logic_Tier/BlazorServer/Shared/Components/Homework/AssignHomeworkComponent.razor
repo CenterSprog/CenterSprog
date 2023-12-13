@@ -1,5 +1,6 @@
 ﻿@using Domain.DTOs.HomeworkDTO
 @using HttpClients.ClientInterfaces
+@using HttpClients.Implementations
 @inject IHomeworkService HomeworkService 
 @inject NavigationManager navMgr
 
@@ -76,7 +77,7 @@
         try
         {
             Dto.Deadline = Date.ToFileTimeUtc();
-            await HomeworkService.CreateAsync(Dto);
+            await HomeworkService.CreateAsync(UserHttpClient.Jwt, Dto);
             navMgr.NavigateTo(navMgr.Uri, forceLoad: true);
         }
         catch (Exception e)

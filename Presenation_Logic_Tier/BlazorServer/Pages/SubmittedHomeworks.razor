@@ -2,6 +2,7 @@
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.FeedbackDTO
+@using HttpClients.Implementations
 @inject IHandInHomeworkService HandInService
 @inject IFeedbackService FeedbackService
 
@@ -100,7 +101,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         Homework = new Homework();
-        HandIns = await HandInService.GetHandInsByHomeworkIdAsync(HomeworkId);
+        HandIns = await HandInService.GetHandInsByHomeworkIdAsync(UserHttpClient.Jwt, HomeworkId);
         HandIn = new HandInHomework();
         ShowModal = false;
         StudentUsername = null;
@@ -128,7 +129,7 @@ else
     {
         try
         {
-            await FeedbackService.AddFeedbackAsync(new AddFeedbackDTO{HandInId = HandIn.Id, StudentUsername = HandIn.StudentUsername, Grade = FeedbackGrade, Comment = FeedbackComment});
+            await FeedbackService.AddFeedbackAsync(UserHttpClient.Jwt, new AddFeedbackDTO{HandInId = HandIn.Id, StudentUsername = HandIn.StudentUsername, Grade = FeedbackGrade, Comment = FeedbackComment});
             Msg = "Feedback was successfully added";
             StateHasChanged();
         }

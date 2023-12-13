@@ -2,6 +2,7 @@
 using Domain.DTOs.LessonDTO;
 using Domain.Models;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -18,6 +19,7 @@ public class LessonsController : ControllerBase
     }
 
     [HttpGet("{lessonId}", Name = "GetLessonByIdAsync")]
+    [Authorize]
     public async Task<ActionResult<Lesson>> GetByIdAsync([FromRoute] string lessonId)
     {
         try
@@ -36,6 +38,7 @@ public class LessonsController : ControllerBase
     }
 
     [HttpPost("{lessonId}/attendance", Name = "MarkAttendanceAsync")]
+    [Authorize("MustBeTeacher")]
     public async Task<ActionResult<int>> MarkAttendanceAsync([FromRoute] string lessonId,
         [FromBody] List<String> studentUsernames)
     {
@@ -56,6 +59,7 @@ public class LessonsController : ControllerBase
     }
 
     [HttpGet("{lessonId}/attendance", Name = "GetAttendanceAsync")]
+    [Authorize("MustBeTeacher")]
     public async Task<ActionResult<IEnumerable<User>>> GetAttendanceAsync([FromRoute] string lessonId)
     {
         try
@@ -75,6 +79,7 @@ public class LessonsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize("MustBeTeacher")]
     public async Task<ActionResult<Lesson>> CreateAsync([FromBody] LessonCreationDTO lessonCreationDto)
     {
         try
@@ -94,6 +99,7 @@ public class LessonsController : ControllerBase
     }
 
     [HttpDelete("{lessonId}")]
+    [Authorize("MustBeTeacher")]
     public async Task<ActionResult<Boolean>> DeleteAsync([FromRoute] string lessonId)
     {
         try
@@ -113,6 +119,7 @@ public class LessonsController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize("MustBeTeacher")]
     public async Task<ActionResult<Boolean>> UpdateLessonAsync([FromBody] LessonUpdateDTO lessonUpdateDto)
     {
         try

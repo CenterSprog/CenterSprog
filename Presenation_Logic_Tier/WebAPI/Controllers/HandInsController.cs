@@ -3,6 +3,7 @@ using IHandInHomeworkLogic = Application.LogicInterfaces.IHandInHomeworkLogic;
 using Domain.DTOs.HomeworkDTO;
 using Domain.Models;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -22,6 +23,7 @@ public class HandInsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize("MustBeStudent")]
     public async Task<ActionResult<HandInHomework>> HandInHomework([FromBody] HomeworkHandInDTO dto)
     {
         try
@@ -40,6 +42,7 @@ public class HandInsController : ControllerBase
     }
 
     [HttpGet("{handInId}/feedback", Name = "GetFeedbackByHomeworkIdAndStudentUsernameAsync")]
+    [Authorize("MustBeStudent")]
     public async Task<ActionResult<Feedback>> GetFeedbackByHandInIdAndStudentUsernameAsync([FromRoute] string handInId,
         [FromQuery] string username)
     {
