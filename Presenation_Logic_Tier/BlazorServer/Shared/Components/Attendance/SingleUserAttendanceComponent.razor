@@ -29,7 +29,7 @@
             @foreach (var lesson in Lessons.OrderByDescending(l => l.Date))
             {
                 <tr>
-                    <td>@lesson.Date</td>
+                    <td><DateDisplayComponent Date=@lesson.Date/> </td>
                     <td>@lesson.Topic</td>
                     @if (lesson.HasAttended)
                     {

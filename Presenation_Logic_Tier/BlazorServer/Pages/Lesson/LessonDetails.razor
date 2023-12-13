@@ -18,13 +18,13 @@
                         <img src="/homework.png" alt="Homework Icon"/>
                     </div>
                     <div class="homework-header-content">
-                        <h3>Homework. @Lesson.Date @Lesson.Homework.Title</h3>
+                        <h3>Homework. <DateDisplayComponent Date=@Lesson.Date/> @Lesson.Homework.Title</h3>
                     </div>
                 </div>
                 <div class="homework-description">
                     <p>@Lesson.Homework.Description</p>
                     <p>
-                        <strong>Deadline:</strong> @Lesson.Homework.Deadline
+                        <strong>Deadline:</strong> <DateDisplayComponent Date=@Lesson.Homework.Deadline/>
                     </p>
                 </div>
                 <AuthorizeView Policy="MustBeTeacher">
