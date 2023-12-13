@@ -11,10 +11,12 @@ namespace WebAPI.Controllers;
 public class HomeworksController : ControllerBase
 {
     private readonly IHomeworkLogic _homeworkLogic;
+    private readonly IHandInHomeworkLogic _handInHomeworkLogic;
 
-    public HomeworksController(IHomeworkLogic homeworkLogic)
+    public HomeworksController(IHomeworkLogic homeworkLogic, IHandInHomeworkLogic handInHomeworkLogic)
     {
         _homeworkLogic = homeworkLogic;
+        _handInHomeworkLogic = handInHomeworkLogic;
     }
 
     [HttpPost]
@@ -24,6 +26,47 @@ public class HomeworksController : ControllerBase
         {
             Homework createdHomework = await _homeworkLogic.CreateAsync(dto);
             return Created($"/homeworks/{createdHomework.Id}", createdHomework);
+        }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpGet("{homeworkId}/handIns", Name = "GetHandInsByHomeworkIdAsync")]
+    public async Task<ActionResult<IEnumerable<HandInHomework>>> GetHandInsByHomeworkIdAsync(
+        [FromRoute] string homeworkId)
+    {
+        try
+        {
+            IEnumerable<HandInHomework> handIns = await _handInHomeworkLogic.GetHandInsByHomeworkIdAsync(homeworkId);
+            return new OkObjectResult(handIns);
+        }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpGet("{homeworkId}/handIn", Name = "GetHandInByHomeworkIdAndStudentUsernameAsync")]
+    public async Task<ActionResult<HandInHomework>> GetHandInByHomeworkIdAndStudentUsernameAsync(
+        [FromRoute] string homeworkId,
+        [FromQuery] string username)
+    {
+        try
+        {
+            HandInHomework handIn =
+                await _handInHomeworkLogic.GetHandInByHomeworkIdAndStudentUsernameAsync(homeworkId, username);
+
+            return Ok(handIn);
         }
         catch (RpcException e)
         {

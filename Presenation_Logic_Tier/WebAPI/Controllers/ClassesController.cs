@@ -21,12 +21,12 @@ public class ClassesController : ControllerBase
         _classLogic = classLogic;
     }
 
-    [HttpGet("{id}", Name = "GetClassByIdAsync")]
-    public async Task<ActionResult<ClassEntity>> GetByIdAsync([FromRoute] string id)
+    [HttpGet("{classId}", Name = "GetClassByIdAsync")]
+    public async Task<ActionResult<ClassEntity>> GetByIdAsync([FromRoute] string classId)
     {
         try
         {
-            ClassEntity classEntity = await _classLogic.GetByIdAsync(id);
+            ClassEntity classEntity = await _classLogic.GetByIdAsync(classId);
             return Ok(classEntity);
         }
         catch (RpcException e)
@@ -44,7 +44,10 @@ public class ClassesController : ControllerBase
     {
         try
         {   
-            SearchClassDTO dto = new SearchClassDTO(username);
+            SearchClassDTO dto = new SearchClassDTO
+            {
+                Username = username
+            };
             IEnumerable<ClassEntity> classes = await _classLogic.GetAllAsync(dto);
 
             return Ok(classes);
@@ -59,12 +62,16 @@ public class ClassesController : ControllerBase
         }
     }
 
-    [HttpGet("{id}/participants", Name = "GetAllParticipantsAsync")]
-    public async Task<ActionResult<IEnumerable<User>>> GetAllParticipantsAsync([FromRoute] string id, [FromQuery] string? role)
+    [HttpGet("{classId}/participants", Name = "GetAllParticipantsAsync")]
+    public async Task<ActionResult<IEnumerable<User>>> GetAllParticipantsAsync([FromRoute] string classId, [FromQuery] string? role)
     {
         try
         {
-            SearchClassParticipantsDTO dto = new SearchClassParticipantsDTO(id, role);
+            SearchClassParticipantsDTO dto = new SearchClassParticipantsDTO
+            {
+                Id = classId,
+                Role = role
+            };
             IEnumerable<User> participants = await _classLogic.GetAllParticipantsAsync(dto);
 
             return Ok(participants);
@@ -97,7 +104,7 @@ public class ClassesController : ControllerBase
         }
     }
 
-    [HttpPatch("{id}", Name = "UpdateAsync")]
+    [HttpPatch("{classId}", Name = "UpdateAsync")]
     [Authorize("MustBeAdmin")]
     public async Task<ActionResult<Boolean>> UpdateAsync([FromBody] ClassUpdateDTO dto)
     {
@@ -118,14 +125,18 @@ public class ClassesController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-    [HttpGet("{id}/attendances", Name = "GetClassAttendanceAsync")]
-    public async Task<ActionResult<IEnumerable<UserAttendanceDTO>>> GetClassAttendanceAsync([FromRoute] string id, [FromQuery] string? username)
+    [HttpGet("{classId}/attendances", Name = "GetClassAttendanceAsync")]
+    public async Task<ActionResult<IEnumerable<UserAttendanceDTO>>> GetClassAttendanceAsync([FromRoute] string classId, [FromQuery] string? username)
     {
         try
         {
             if (!string.IsNullOrEmpty(username))
             {
-                var dto = new SearchClassAttendanceDTO(id, username);
+                var dto = new SearchClassAttendanceDTO
+                {
+                    Id = classId,
+                    Username = username
+                };
                 var lessons = await _classLogic.GetClassAttendanceByUsernameAsync(dto);
 
                 if (lessons == null)
@@ -133,7 +144,7 @@ public class ClassesController : ControllerBase
 
                 return Ok(lessons);
             }
-            var attendees = await _classLogic.GetClassAttendanceAsync(id);
+            var attendees = await _classLogic.GetClassAttendanceAsync(classId);
 
             return Ok(attendees);
         }

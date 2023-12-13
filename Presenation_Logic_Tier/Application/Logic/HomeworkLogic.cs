@@ -18,8 +18,18 @@ public class HomeworkLogic : IHomeworkLogic
 
     public async Task<Homework> CreateAsync(HomeworkCreationDTO dto)
     {
-        // Deadline before lesson, title and description required
-            Homework createdHomework = await _homeworkClient.CreateAsync(dto);
-            return await Task.FromResult(createdHomework);
+        ValidateHomeworkCreation(dto);
+        Homework createdHomework = await _homeworkClient.CreateAsync(dto);
+        return await Task.FromResult(createdHomework);
+    }
+
+    private void ValidateHomeworkCreation(HomeworkCreationDTO dto)
+    {
+        if (string.IsNullOrWhiteSpace(dto.LessonId))
+            throw new Exception("Lesson Id is required.");
+        if (string.IsNullOrWhiteSpace(dto.Title))
+            throw new Exception("Title is required.");
+        if (string.IsNullOrWhiteSpace(dto.Description) || dto.Description.Length < 10)
+            throw new Exception("Description must be at least 10 characters long");
     }
 }

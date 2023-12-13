@@ -2,10 +2,5 @@
 
 public class SearchClassDTO
 {
-    public string? Username { get; set; }
-    
-    public SearchClassDTO(string? username)
-    {
-        Username = username;
-    }
+    public string? Username { get; init; }
 }

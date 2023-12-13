@@ -64,11 +64,11 @@
             catch (Exception e)
             {
                 HomeworkSubmitted = false;
+                Msg = e.Message;
             }
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             Msg = e.Message;
         }
     }

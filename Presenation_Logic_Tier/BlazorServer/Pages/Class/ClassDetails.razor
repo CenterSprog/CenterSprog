@@ -7,7 +7,12 @@
 
 @if (SelectedClass == null)
 {
-    <span>Loading class details...</span>
+    @if (Msg != null)
+    {
+        <div class="alert-danger alert mt-5">
+            @Msg
+        </div>
+    }
 }
 else
 {
@@ -35,11 +40,11 @@ else
         </AuthorizeView>
         @if (SelectedClass.Lessons == null)
         {
-            <span>Loading lessons...</span>
+            <span class="mt-3">Loading lessons...</span>
         }
         else if (!SelectedClass.Lessons.Any())
         {
-            <p>No lessons available for this class</p>
+            <p class="mt-3">No lessons available for this class</p>
         }
         else
         {
@@ -68,6 +73,7 @@ else
             }
         }
     </div>
+
 }
 
 @code {
@@ -76,6 +82,7 @@ else
     public string ClassId { get; set; }
 
     private ClassEntity SelectedClass { get; set; }
+    private string? Msg = null;
 
     protected override async Task OnInitializedAsync()
     {
@@ -85,7 +92,7 @@ else
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            Msg = e.Message;
         }
     }
 
@@ -113,7 +120,7 @@ else
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            Msg = e.Message;
         }
     }
 

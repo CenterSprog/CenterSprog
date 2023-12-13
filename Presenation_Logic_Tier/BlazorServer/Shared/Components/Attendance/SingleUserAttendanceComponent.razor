@@ -79,7 +79,7 @@
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
             var username = user.Identity?.Name;
-            var searchParameter = new SearchClassAttendanceDTO(ClassId, username);
+            var searchParameter = new SearchClassAttendanceDTO{Id = ClassId, Username = username};
             Lessons = await ClassService.GetClassAttendanceByUsernameAsync(searchParameter);
             
             int absenceCount  = Lessons.Count(obj => !obj.HasAttended);
@@ -87,7 +87,7 @@
         }
         catch (Exception e)
         {
-            Msg = e.Message + e.StackTrace;
+            Msg = e.Message;
         }
     }
 

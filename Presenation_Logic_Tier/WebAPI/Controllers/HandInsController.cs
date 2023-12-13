@@ -1,4 +1,5 @@
-﻿using IHandInHomeworkLogic = Application.LogicInterfaces.IHandInHomeworkLogic;
+﻿using Application.LogicInterfaces;
+using IHandInHomeworkLogic = Application.LogicInterfaces.IHandInHomeworkLogic;
 using Domain.DTOs.HomeworkDTO;
 using Domain.Models;
 using Grpc.Core;
@@ -9,13 +10,14 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-
 public class HandInsController : ControllerBase
 {
     private readonly IHandInHomeworkLogic _handInHomeworkLogic;
+    private readonly IFeedbackLogic _feedbackLogic;
 
-    public HandInsController(IHandInHomeworkLogic handInHomeworkLogic)
+    public HandInsController(IHandInHomeworkLogic handInHomeworkLogic, IFeedbackLogic feedbackLogic)
     {
+        _feedbackLogic = feedbackLogic;
         _handInHomeworkLogic = handInHomeworkLogic;
     }
 
@@ -37,33 +39,15 @@ public class HandInsController : ControllerBase
         }
     }
 
-    [HttpGet("{homeworkId}", Name = "GetHandInsByHomeworkIdAsync")]
-    public async Task<ActionResult<IEnumerable<HandInHomework>>> GetHandInsByHomeworkIdAsync([FromRoute] string homeworkId)
+    [HttpGet("{handInId}/feedback", Name = "GetFeedbackByHomeworkIdAndStudentUsernameAsync")]
+    public async Task<ActionResult<Feedback>> GetFeedbackByHandInIdAndStudentUsernameAsync([FromRoute] string handInId,
+        [FromQuery] string username)
     {
         try
         {
-            IEnumerable<HandInHomework> handIns = await _handInHomeworkLogic.GetHandInsByHomeworkIdAsync(homeworkId);
-            return new OkObjectResult(handIns);
-        }
-        catch (RpcException e)
-        {
-            return NotFound(e.Status.Detail);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.Message);
-        }
-    }
+            Feedback feedback = await _feedbackLogic.GetFeedbackByHandInIdAndStudentUsernameAsync(handInId, username);
 
-    [HttpGet("{homeworkId}/student/{username}", Name = "GetHandInByHomeworkIdAndStudentUsernameAsync")]
-    public async Task<ActionResult<HandInHomework>> GetHandInByHomeworkIdAndStudentUsernameAsync([FromRoute] string homeworkId,
-        [FromRoute] string username)
-    {
-        try
-        {
-            HandInHomework handIn = await _handInHomeworkLogic.GetHandInByHomeworkIdAndStudentUsernameAsync(homeworkId, username);
-
-            return Ok(handIn);
+            return Ok(feedback);
         }
         catch (RpcException e)
         {

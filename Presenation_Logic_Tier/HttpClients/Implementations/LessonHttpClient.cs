@@ -70,36 +70,41 @@ public class LessonHttpClient : ILessonService
 
     public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
     {
-
         HttpResponseMessage response = await client.PostAsJsonAsync("/lessons", lessonCreationDto);
-        Lesson? createdLesson = await response.Content.ReadFromJsonAsync<Lesson>();
+        string responseBody = await response.Content.ReadAsStringAsync();
+
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception("Failed to create a new lesson ");
+            throw new Exception(responseBody);
         }
 
-        return createdLesson;
+        Lesson lesson = JsonSerializer.Deserialize<Lesson>(responseBody,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+        return lesson;
     }
+
     public async Task UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto)
     {
-
         HttpResponseMessage response = await client.PutAsJsonAsync("/lessons", lessonUpdateDto);
-        string responseContent = await response.Content.ReadAsStringAsync();
+        string responseBody = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception(responseContent);
+            throw new Exception(responseBody);
         }
     }
 
     public async Task DeleteAsync(string lessonId)
     {
         HttpResponseMessage response = await client.DeleteAsync($"lessons/{lessonId}");
-            string responseContent = await response.Content.ReadAsStringAsync();
+        string responseContent = await response.Content.ReadAsStringAsync();
 
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception(responseContent);
-            }
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(responseContent);
+        }
     }
 }

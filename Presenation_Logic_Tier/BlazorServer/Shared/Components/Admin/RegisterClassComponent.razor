@@ -29,7 +29,7 @@
 </section>
 
 @code {
-    public string Msg;
+    public string? Msg;
     public ClassCreationDTO Dto;
     
     protected override async Task OnInitializedAsync()
@@ -44,22 +44,12 @@
     {
         try
         {
-            ValidateClass();
             ClassEntity createdClass = await ClassService.CreateAsync(Dto);
             NavManager.NavigateTo($"/my-classes/{createdClass.Id}");
         }
         catch (Exception e)
         {
-            
             Msg = e.Message;
         }
-    }
-
-    private void ValidateClass()
-    {
-        if (Dto.Title.Trim() == "")
-            throw new Exception("Title is required");
-        if (Dto.Room.Trim() == "")
-            throw new Exception("Room is required");
     }
 }

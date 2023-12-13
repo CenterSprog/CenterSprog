@@ -5,7 +5,7 @@
 @inject IUserService UserService
 
 <section class="d-flex flex-column">
-    
+
     <p>Register user</p>
     <div class="mb-3">
         <label for="firstNameInput" class="form-label">First name</label>
@@ -17,14 +17,14 @@
     </div>
     <div class="mb-3">
         <label for="emailInput" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="emailInput" placeholder="name@example.com" @bind="Dto.Email">
+        <input type="text" class="form-control" id="emailInput" placeholder="name@example.com" @bind="Dto.Email">
     </div>
     <select @bind="Dto.Role" class="form-select" aria-label="Role selection">
-        <option value="student">Student</option> 
-        <option value="teacher">Teacher</option> 
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
     </select>
 
-    <button class="mt-5 btn btn-outline-success" type="submit" @onclick="RegisterUserAsync" >Register</button>
+    <button class="mt-5 btn btn-outline-success" type="submit" @onclick="RegisterUserAsync">Register</button>
 
     @if (Msg is not null && Msg != "")
     {
@@ -35,15 +35,14 @@
 </section>
 
 @code {
-    public string Msg;
-        public UserCreationDTO Dto;
+    public string? Msg;
+    public UserCreationDTO Dto;
 
     protected override async Task OnInitializedAsync()
     {
         Msg = null;
         Dto = new UserCreationDTO();
         Dto.Role = "student";
-
         await base.OnInitializedAsync();
     }
 
@@ -51,38 +50,12 @@
     {
         try
         {
-            ValidateUser();
             User createdUser = await UserService.CreateUserAsync(Dto);
             NavManager.NavigateTo($"admin/users/{createdUser.Username}");
         }
         catch (Exception e)
         {
-            
             Msg = e.Message;
-        }
-    }
-
-    private void ValidateUser()
-    {
-        if (Dto.FirstName.Trim() == "")
-            throw new Exception("First name is required");
-        if( Dto.LastName.Trim() == "")
-            throw new Exception("Last name is required");
-        if (!IsValidEmail(Dto.Email))
-            throw new Exception("Invalid email address");
-        if(Dto.Role.Trim() == "")
-            throw new Exception("Role need to be selected");
-
-    }
-
-    private bool IsValidEmail(string email)
-    {
-        try {
-            var addr = new System.Net.Mail.MailAddress(email);
-            return addr.Address == email;
-        }
-        catch {
-            return false;
         }
     }
 }
