@@ -46,12 +46,7 @@ import java.util.Optional;
         HandInHomeworkEntity handInHomework = optionalHandInHomework.get();
 
         if (handInHomework.getFeedback() != null)
-        {
-          response.onError(Status.ALREADY_EXISTS.withDescription(
-                  "Feedback was already provided for this hand-in.")
-              .asRuntimeException());
-          return;
-        }
+          throw new Exception("Feedback for this homework has already been submitted.");
 
         FeedbackEntity savedFeedback = feedbackRepository.save(feedback);
         handInHomework.setFeedback(savedFeedback);

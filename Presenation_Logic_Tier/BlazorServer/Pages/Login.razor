@@ -6,26 +6,24 @@
 <AuthorizeView>
     <NotAuthorized>
         <div class="card">
-            <h3>Please login</h3>
+            <h3>Center Sprog</h3>
             <div class="field">
-                <label>User name:</label>
+                <label>Username:</label>
                 <input type="text" @bind="Username"/>
             </div>
             <div class="field">
                 <label style="text-align: center">Password:</label>
                 <input type="password" @bind="Password"/>
             </div>
-            @if (!string.IsNullOrEmpty(Msg))
+            <div class="field">
+                <button class="loginbtn" @onclick="LoginAsync">Log In</button>
+            </div>
+            @if (Msg != null)
             {
-                <div class="field">
-                    <label style="color: red">
-                        @Msg
-                    </label>
+                <div class="alert-danger alert mt-5">
+                    @Msg
                 </div>
             }
-            <div class="field">
-                <button class="loginbtn" @onclick="LoginAsync">Log in</button>
-            </div>
         </div>
     </NotAuthorized>
     <Authorized>
@@ -38,11 +36,11 @@
 @code {
     public string Username;
     public string Password;
-    public string Msg;
-    
+    public string? Msg;
+
     private async Task LoginAsync()
     {
-        Msg = "";
+        Msg = null;
         try
         {
             await userService.LoginAsync(Username, Password);
@@ -53,4 +51,5 @@
             Msg = e.Message;
         }
     }
+
 }

@@ -2,12 +2,7 @@
 
 public class SearchClassParticipantsDTO
 {
-    public string Id { get; set; }
-    public string? Role { get; set; }
+    public string Id { get; init; }
+    public string? Role { get; init; }
     
-    public SearchClassParticipantsDTO(string id, string? role)
-    {
-        Id = id;
-        Role = role;
-    }
 }

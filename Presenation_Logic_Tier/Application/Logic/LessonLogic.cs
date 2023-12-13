@@ -34,7 +34,7 @@ public class LessonLogic : ILessonLogic
 
     public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
     {
-        // Validate
+        ValidateLessonCreationAndUpdate(lessonCreationDto.Topic, lessonCreationDto.Description, lessonCreationDto.Date, lessonCreationDto.ClassId);
         var createdLesson = await _lessonClient.CreateAsync(lessonCreationDto);
 
         return createdLesson;
@@ -47,7 +47,19 @@ public class LessonLogic : ILessonLogic
 
     public async Task<Boolean> UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto)
     {
-        // Validate
+        ValidateLessonCreationAndUpdate(lessonUpdateDto.Topic, lessonUpdateDto.Description, lessonUpdateDto.Date, lessonUpdateDto.Id);
         return await _lessonClient.UpdateLessonAsync(lessonUpdateDto);
+    }
+
+    private void ValidateLessonCreationAndUpdate(string topic, string description, long date, string id)
+    {
+        if (string.IsNullOrWhiteSpace(id))
+            throw new Exception("Id is required.");
+        if (string.IsNullOrWhiteSpace(topic) || topic.Length < 3)
+            throw new Exception("Topic must be at least 3 characters long.");
+        if (string.IsNullOrWhiteSpace(description) || description.Length < 10)
+            throw new Exception("Description must be at least 10 characters long.");
+        if (date == null)
+            throw new Exception("Date is required.");
     }
 }

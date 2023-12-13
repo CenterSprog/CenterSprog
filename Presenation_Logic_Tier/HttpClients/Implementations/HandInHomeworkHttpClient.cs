@@ -25,19 +25,17 @@ public class HandInHomeworkHttpClient : IHandInHomeworkService
             throw new Exception(responseContent);
         }
 
-        HandInHomework? handedInHomework = await response.Content.ReadFromJsonAsync<HandInHomework>();
-        if (handedInHomework is null)
-        {
-            throw new Exception("Received invalid homework data from the server.");
-        }
-         
-
-        return handedInHomework;
+        HandInHomework handInHomework = JsonSerializer.Deserialize<HandInHomework>(responseContent,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+        return handInHomework;
     }
 
     public async Task<IEnumerable<HandInHomework>> GetHandInsByHomeworkIdAsync(string homeworkId)
     {
-        HttpResponseMessage response = await _client.GetAsync($"handIns/{homeworkId}");
+        HttpResponseMessage response = await _client.GetAsync($"homeworks/{homeworkId}/handIns");
         var result = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -45,22 +43,17 @@ public class HandInHomeworkHttpClient : IHandInHomeworkService
             throw new Exception(result);
         }
 
-        List<HandInHomework> foundHandIns = JsonSerializer.Deserialize<List<HandInHomework>>(result, new JsonSerializerOptions()
+        ICollection<HandInHomework> foundHandIns = JsonSerializer.Deserialize<ICollection<HandInHomework>>(result, new JsonSerializerOptions()
         {
             PropertyNameCaseInsensitive = true
         })!;
-
-        if (foundHandIns == null)
-        {
-            throw new Exception($"Failed to get hand ins for homework with ID: {homeworkId}. Empty response.");
-        }
 
         return foundHandIns;
     }
 
     public async Task<HandInHomework> GetHandInByHomeworkIdAndStudentUsernameAsync(string homeworkId, string studentUsername)
     {
-        HttpResponseMessage response = await _client.GetAsync($"handIns/{homeworkId}/student/{studentUsername}");
+        HttpResponseMessage response = await _client.GetAsync($"homeworks/{homeworkId}/handIn?username={studentUsername}");
         var result = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -72,12 +65,7 @@ public class HandInHomeworkHttpClient : IHandInHomeworkService
         {
             PropertyNameCaseInsensitive = true
         });
-
-        if (handIn == null)
-        {
-            throw new Exception($"Failed to deserialize hand-in data for homework ID: {homeworkId} and student username: {studentUsername}.");
-        }
-
+        
         return handIn;
     }
 }

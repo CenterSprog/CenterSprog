@@ -17,12 +17,12 @@ public class LessonsController : ControllerBase
         _lessonLogic = lessonLogic;
     }
 
-    [HttpGet("{id}", Name = "GetLessonByIdAsync")]
-    public async Task<ActionResult<Lesson>> GetByIdAsync([FromRoute] string id)
+    [HttpGet("{lessonId}", Name = "GetLessonByIdAsync")]
+    public async Task<ActionResult<Lesson>> GetByIdAsync([FromRoute] string lessonId)
     {
         try
         {
-            Lesson lesson = await _lessonLogic.GetByIdAsync(id);
+            Lesson lesson = await _lessonLogic.GetByIdAsync(lessonId);
             return Ok(lesson);
         }
         catch (RpcException e)
@@ -35,12 +35,13 @@ public class LessonsController : ControllerBase
         }
     }
 
-    [HttpPost("{id}/attendance", Name = "MarkAttendanceAsync")]
-    public async Task<ActionResult<int>> MarkAttendanceAsync([FromRoute] string id, [FromBody] List<String> studentUsernames)
+    [HttpPost("{lessonId}/attendance", Name = "MarkAttendanceAsync")]
+    public async Task<ActionResult<int>> MarkAttendanceAsync([FromRoute] string lessonId,
+        [FromBody] List<String> studentUsernames)
     {
         try
         {
-            MarkAttendanceDTO markAttendanceDto = new(id, studentUsernames);
+            var markAttendanceDto = new MarkAttendanceDTO { LessonId = lessonId, StudentUsernames = studentUsernames };
             int amountOfParticipants = await _lessonLogic.MarkAttendanceAsync(markAttendanceDto);
             return Ok(amountOfParticipants.ToString());
         }
@@ -53,12 +54,13 @@ public class LessonsController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-    [HttpGet("{id}/attendance", Name = "GetAttendanceAsync")]
-    public async Task<ActionResult<IEnumerable<User>>> GetAttendanceAsync([FromRoute] string id)
+
+    [HttpGet("{lessonId}/attendance", Name = "GetAttendanceAsync")]
+    public async Task<ActionResult<IEnumerable<User>>> GetAttendanceAsync([FromRoute] string lessonId)
     {
         try
         {
-            IEnumerable<User> attendees = await _lessonLogic.GetAttendanceAsync(id);
+            IEnumerable<User> attendees = await _lessonLogic.GetAttendanceAsync(lessonId);
 
             return Ok(attendees);
         }
@@ -95,10 +97,10 @@ public class LessonsController : ControllerBase
     public async Task<ActionResult<Boolean>> DeleteAsync([FromRoute] string lessonId)
     {
         try
-        { 
-          var deleted = await _lessonLogic.DeleteAsync(lessonId);
-           
-          return Ok(deleted);
+        {
+            var deleted = await _lessonLogic.DeleteAsync(lessonId);
+
+            return Ok(deleted);
         }
         catch (RpcException e)
         {
@@ -109,13 +111,14 @@ public class LessonsController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+
     [HttpPut]
-    public async Task<ActionResult> UpdateLessonAsync([FromBody] LessonUpdateDTO lessonUpdateDto)
+    public async Task<ActionResult<Boolean>> UpdateLessonAsync([FromBody] LessonUpdateDTO lessonUpdateDto)
     {
         try
         {
-            await _lessonLogic.UpdateLessonAsync(lessonUpdateDto);
-            return Ok();
+            var updated = await _lessonLogic.UpdateLessonAsync(lessonUpdateDto);
+            return Ok(updated);
         }
         catch (RpcException e)
         {

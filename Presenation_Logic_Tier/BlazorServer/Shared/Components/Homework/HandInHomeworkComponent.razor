@@ -18,12 +18,12 @@
         <SeeFeedbackComponent LessonId="@lessonId" ClassId="@classId" HandInHomework="@handInHomework"/>
     }
     <div class="msg-container">
-        @if (Msg is not null)
-        {
-            <div>
-                @Msg
-            </div>
-        }
+            @if (Msg != null)
+            {
+                <div class="alert-danger alert mt-5">
+                    @Msg
+                </div>
+            }
     </div>
 </div>
 
@@ -81,11 +81,11 @@
             catch (Exception e)
             {
                 HomeworkSubmitted = false;
+                Msg = e.Message;
             }
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             Msg = e.Message;
         }
     }
@@ -101,20 +101,18 @@
                 return;
             }
 
-
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
             var username = user.Identity?.Name;
             
-            Dto = new HomeworkHandInDTO(Homework.Id, username, Answer);
-            await HandInHomeworkService.HandInHomework(Dto);
+            await HandInHomeworkService.HandInHomework(new HomeworkHandInDTO{HomeworkId = Homework.Id, StudentUsername = username, Answer = Answer});
 
             HomeworkSubmitted = true;
             Msg = null;
         }
         catch (Exception ex)
         {
-            Msg = $"Error submitting homework: {ex.Message}";
+            Msg = ex.Message;
         }
     }
 }

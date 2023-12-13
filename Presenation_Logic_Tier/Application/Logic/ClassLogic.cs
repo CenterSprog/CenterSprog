@@ -25,7 +25,7 @@ public class ClassLogic : IClassLogic
     {
         return await _classClient.GetAllAsync(dto);
     }
-    
+
     public async Task<IEnumerable<User>> GetAllParticipantsAsync(SearchClassParticipantsDTO dto)
     {
         // Validate the role
@@ -34,18 +34,9 @@ public class ClassLogic : IClassLogic
 
     public async Task<ClassEntity> CreateAsync(ClassCreationDTO dto)
     {
-        try
-        {
-            // Validate fields
-            ClassEntity createdClass = await _classClient.CreateAsync(dto);
-            return await Task.FromResult(createdClass);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Failed to create class entity {e.Message}");
-            // SOME ERROR HANDLING ???      
-            return await Task.FromException<ClassEntity>(null);
-        }
+        ValidateClassCreation(dto);
+        ClassEntity createdClass = await _classClient.CreateAsync(dto);
+        return await Task.FromResult(createdClass);
     }
 
     public async Task<bool> UpdateAsync(ClassUpdateDTO dto)
@@ -76,7 +67,7 @@ public class ClassLogic : IClassLogic
 
     public async Task<IEnumerable<UserAttendanceDTO>> GetClassAttendanceAsync(string id)
     {
-        var participants = await _classClient.GetAllParticipantsAsync(new SearchClassParticipantsDTO(id, "student"));
+        var participants = await _classClient.GetAllParticipantsAsync(new SearchClassParticipantsDTO{Id = id, Role = "student"});
         var lessonAttendance = await _classClient.GetClassAttendanceAsync(id);
         var lessons = (await _classClient.GetByIdAsync(id)).Lessons;
         var participantsWithAttendance = new List<UserAttendanceDTO>();
@@ -86,7 +77,7 @@ public class ClassLogic : IClassLogic
             var userAttendanceDto = new UserAttendanceDTO
             {
                 FirstName = participant.FirstName,
-                LastName = participant.LastName, 
+                LastName = participant.LastName,
                 Email = participant.Email
             };
 
@@ -98,10 +89,18 @@ public class ClassLogic : IClassLogic
             var totalAbsence = totalLessons == 0 ? 0 : (double)lessonsMissed / totalLessons * 100;
 
             userAttendanceDto.TotalAbsence = totalAbsence;
-            
+
             participantsWithAttendance.Add(userAttendanceDto);
         }
 
         return participantsWithAttendance;
+    }
+
+    private void ValidateClassCreation(ClassCreationDTO dto)
+    {
+        if (string.IsNullOrEmpty(dto.Title))
+            throw new Exception("Title is required");
+        if (string.IsNullOrEmpty(dto.Room))
+            throw new Exception("Room is required");
     }
 }

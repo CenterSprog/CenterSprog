@@ -8,7 +8,12 @@
 
 @if (HandIns == null)
 {
-    <span>Loading submitted homeworks...</span>
+    @if (Msg != null)
+    {
+        <div class="alert-danger alert mt-5">
+            @Msg
+        </div>
+    }
 }
 else if (!HandIns.Any())
 {
@@ -25,10 +30,10 @@ else
                     <p>@handIn.Answer</p>
                 </div>
             </div>
-            @if (Msg is not null)
+            @if (Msg != null)
             {
-                <div>
-                    <p class="text-danger">@Msg</p>
+                <div class="alert-danger alert mt-5">
+                    @Msg
                 </div>
             }
         }
@@ -40,7 +45,7 @@ else
         <div class="modal-header">
             <h4 class="fw-bold">Give feedback</h4>
         </div>
- 
+
         <div class="modal-body">
             <p>
                 <strong>Student:</strong> @StudentUsername
@@ -62,14 +67,12 @@ else
                 <button class="btn btn-primary" @onclick="SendFeedbackAsync">Send Feedback</button>
             </div>
 
-            <div class="msg-container">
-                @if (Msg is not null)
-                {
-                    <div style="text-align: center;">
-                        @Msg
-                    </div>
-                }
-            </div>
+            @if (Msg != null)
+            {
+                <div class="alert-danger alert mt-5">
+                    @Msg
+                </div>
+            }
         </div>
     </div>
 
@@ -116,46 +119,22 @@ else
         ShowModal = true;
         StudentUsername = username;
         StudentAnswer = answer;
- 
+
 
         HandIn = HandIns.FirstOrDefault(h => h.StudentUsername == StudentUsername && h.Answer == StudentAnswer);
     }
 
     private async Task SendFeedbackAsync()
     {
-        if (string.IsNullOrWhiteSpace(FeedbackComment))
-        {
-            Msg = "Please provide both grade and feedback";
-            StateHasChanged();
-            return;
-        }
         try
         {
-            var existingFeedback = await FeedbackService.GetFeedbackByHandInIdAndStudentUsernameAsync(HandIn.Id, HandIn.StudentUsername);
-            if (existingFeedback != null)
-            {
-                Msg = "Feedback already provided for this hand-in";
-                StateHasChanged();
-                return;
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error fetching existing feedback: {ex.Message}");
-        }
-
-        Dto = new AddFeedbackDTO(HandIn.Id, HandIn.StudentUsername, FeedbackGrade, FeedbackComment);
-        try
-        {
-            await FeedbackService.AddFeedbackAsync(Dto);
+            await FeedbackService.AddFeedbackAsync(new AddFeedbackDTO{HandInId = HandIn.Id, StudentUsername = HandIn.StudentUsername, Grade = FeedbackGrade, Comment = FeedbackComment});
             Msg = "Feedback was successfully added";
             StateHasChanged();
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error: {ex.Message}");
-            Msg = $"Error: {ex.Message}";
-            StateHasChanged();
+            Msg = ex.Message;
         }
     }
 

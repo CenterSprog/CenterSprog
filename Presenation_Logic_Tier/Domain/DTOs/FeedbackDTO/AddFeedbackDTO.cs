@@ -2,16 +2,9 @@
 
 public class AddFeedbackDTO
 {
-    public string HandInId { get; set; }
-    public string StudentUsername { get; set; }
-    public int Grade { get; set; }
-    public string Comment { get; set; }
-
-    public AddFeedbackDTO(string handInId, string studentUsername, int grade, string comment)
-    {
-        HandInId = handInId;
-        StudentUsername = studentUsername;
-        Grade = grade;
-        Comment = comment;
-    }
+    public string? HandInId { get; init; }
+    public string? StudentUsername { get; init; }
+    public int Grade { get; init; }
+    public string? Comment { get; init; }
+    
 }

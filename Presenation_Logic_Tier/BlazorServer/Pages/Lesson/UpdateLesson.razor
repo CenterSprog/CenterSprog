@@ -31,13 +31,12 @@
             <label for="floatingTextarea">Description</label>
         </div>
         <br/>
-        @if (Msg is not null)
-        {
-            <div>
-                <p class="text-danger">@Msg</p>
-            </div>
-            <br/>
-        }
+@if (Msg != null)
+{
+    <div class="alert-danger alert mt-5">
+        @Msg
+    </div>
+}
 
         <div class="button-row">
             <button @onclick="UpdateAsync" type="button" class="btn btn-primary">Update Lesson</button>
@@ -71,8 +70,7 @@
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            Msg = $"{e.Message}";
+            Msg = e.Message;
         }
     }
 
@@ -81,33 +79,16 @@
     {
         try
         {
-            Msg = null;
-            ValidateLesson();
-            if (Msg == null)
-            {
-                await lessonService.UpdateLessonAsync(new LessonUpdateDTO(Date.ToFileTimeUtc(), LessonId, Lesson.Topic, Lesson.Description));
-                Msg = "Lesson updated successfully!";
-                navMgr.NavigateTo($"/my-classes/{ClassId}");
-            }
+            await lessonService.UpdateLessonAsync(new LessonUpdateDTO{ Id = Lesson.Id, Date = Date.ToFileTimeUtc(), Description = Lesson.Description, Topic = Lesson.Topic});
+            Msg = "Lesson updated successfully!";
+            navMgr.NavigateTo($"/my-classes/{ClassId}");
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             Msg = e.Message;
         }
     }
 
-    private void ValidateLesson()
-    {
-        if (string.IsNullOrEmpty(Lesson.Topic))
-            Msg = "Topic is required";
-
-        if (string.IsNullOrEmpty(Lesson.Description))
-            Msg = "Description is required";
-
-        if (Date == null)
-            Msg = "The date is required";
-    }
 
     private void Close()
     {
@@ -115,4 +96,3 @@
     }
 
 }
-

@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
 using Domain.DTOs.HomeworkDTO;
 using Domain.Models;
 using HttpClients.ClientInterfaces;
@@ -17,12 +18,18 @@ public class HomeworkHttpClient: IHomeworkService
     public async Task<Homework> CreateAsync(HomeworkCreationDTO dto)
     {
         HttpResponseMessage response = await _client.PostAsJsonAsync("/homeworks", dto);
-        Homework? createdHomework = await response.Content.ReadFromJsonAsync<Homework>();
-        if (!response.IsSuccessStatusCode || createdHomework is null)
+        string responseBody = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
         {
-            throw new Exception("Failed to create a new homework from blazer");
+            throw new Exception(responseBody);
         }
-        
-        return createdHomework;
+
+        Homework homework = JsonSerializer.Deserialize<Homework>(responseBody,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+        return homework;
     }
 }

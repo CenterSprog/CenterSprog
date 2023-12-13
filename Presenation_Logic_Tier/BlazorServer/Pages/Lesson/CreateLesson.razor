@@ -8,7 +8,9 @@
 <div>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3>Create Lesson</h3>
-        <button type="button" class="btn btn-light align-self-end" @onclick="@Close"><span class="oi oi-x"></span></button>
+        <button type="button" class="btn btn-light align-self-end" @onclick="@Close">
+            <span class="oi oi-x"></span>
+        </button>
     </div>
     <div class="form-floating mb-3">
         <input type="text" class="form-control" id="floatingInput" @bind="lessonDto.Topic">
@@ -25,14 +27,13 @@
         <label for="floatingTextarea">Description:</label>
     </div>
     <br/>
-        <br/>
-        @if (Msg is not null)
+       @if (Msg != null)
         {
-            <div>
-                <p class="text-danger">@Msg</p>
+            <div class="alert-danger alert mt-5">
+                @Msg
             </div>
-            <br/>
         }
+    <br/>
     <div class="button-row">
         <button @onclick="CreateAsync" type="button" class="btn btn-success">Create Lesson</button>
     </div>
@@ -52,7 +53,7 @@
     {
         Date = DateTime.Now;
         Msg = null;
-        lessonDto = new LessonCreationDTO(ClassId);
+        lessonDto = new LessonCreationDTO {ClassId = ClassId};
         base.OnInitializedAsync();
     }
 
@@ -60,33 +61,17 @@
     {
         try
         {
-            Msg = null;
             lessonDto.Date = Date.ToFileTimeUtc();
-            ValidateLesson();
-            if (Msg==null)
-            {
-                var createdLesson = await lessonService.CreateAsync(lessonDto);
-                navMgr.NavigateTo($"/my-classes/{ClassId}/lessons/{createdLesson.Id}");
-                Msg = "Lesson created successfully!";
-            }
+            var createdLesson = await lessonService.CreateAsync(lessonDto);
+            navMgr.NavigateTo($"/my-classes/{ClassId}/lessons/{createdLesson.Id}");
+            Msg = "Lesson created successfully!";
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             Msg = e.Message;
         }
     }
-    private void ValidateLesson()
-    {
-        if (string.IsNullOrEmpty(lessonDto.Topic))
-            Msg = "Topic is required";
 
-        if (string.IsNullOrEmpty(lessonDto.Description))
-            Msg = "Description is required";
-
-        if (lessonDto.Date == null)
-            Msg = "The date is required";
-    }
     private void Close()
     {
         navMgr.NavigateTo($"/my-classes/{ClassId}");

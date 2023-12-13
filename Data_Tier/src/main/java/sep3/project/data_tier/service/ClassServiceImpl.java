@@ -17,6 +17,7 @@ import sep3.project.data_tier.repository.IUserRepository;
 import sep3.project.protobuf.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @GrpcService public class ClassServiceImpl
     extends ClassEntityServiceGrpc.ClassEntityServiceImplBase
@@ -283,21 +284,14 @@ import java.util.*;
     List<String> participantsUsernames = request.getParticipantsUsernamesList();
     try
     {
-      ArrayList<UserEntity> newParticipants = new ArrayList<>();
       Optional<ClassEntity> existingClass = classRepository.findById(classId);
       if (existingClass.isEmpty())
         throw new NoSuchElementException(
             "No existing class with id " + classId);
 
-      for (String username : participantsUsernames)
-      {
-        Optional<UserEntity> existingUser = userRepository.getByUsername(
-            username);
-        if (existingUser.isPresent())
-        {
-          newParticipants.add(existingUser.get());
-        }
-      }
+      Set<UserEntity> newParticipants = userRepository.findAll().stream()
+          .filter(user -> participantsUsernames.contains(user.getUsername()))
+          .collect(Collectors.toSet());
 
       existingClass.get().setUsers(newParticipants);
       classRepository.save(existingClass.get());
@@ -305,7 +299,6 @@ import java.util.*;
       response.onNext(
           ResponseUpdateClassParticipants.newBuilder().setResult(true).build());
       response.onCompleted();
-
     }
     catch (Exception e)
     {

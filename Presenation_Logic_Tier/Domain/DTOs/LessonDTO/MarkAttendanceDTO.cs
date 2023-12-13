@@ -2,12 +2,6 @@
 
 public class MarkAttendanceDTO
 {
-    public string LessonId { get; set; }
-    public List<String> StudentUsernames { get; set; }
-
-    public MarkAttendanceDTO(string lessonId, List<String> studentUsernames)
-    {
-        LessonId = lessonId;
-        StudentUsernames = studentUsernames;
-    }
+    public string LessonId { get; init; }
+    public List<String> StudentUsernames { get; init; }
 }

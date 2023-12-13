@@ -35,24 +35,4 @@ public class FeedbacksController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-
-    [HttpGet ("{handInId}/student/{username}", Name = "GetFeedbackByHomeworkIdAndStudentUsernameAsync")]
-    public async Task<ActionResult<Feedback>> GetFeedbackByHandInIdAndStudentUsernameAsync([FromRoute] string handInId,
-        [FromRoute] string username)
-    {
-        try
-        {
-            Feedback feedback = await _feedbackLogic.GetFeedbackByHandInIdAndStudentUsernameAsync(handInId, username);
-
-            return Ok(feedback);
-        }
-        catch (RpcException e)
-        {
-            return NotFound(e.Status.Detail);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.Message);
-        }
-    }
 }

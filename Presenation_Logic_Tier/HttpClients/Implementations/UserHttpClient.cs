@@ -105,38 +105,56 @@ public class UserHttpClient : IUserService
     {
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Jwt);
         HttpResponseMessage response = await _client.PostAsJsonAsync("/users", dto);
-        User? createdUser = await response.Content.ReadFromJsonAsync<User>();
-        if (!response.IsSuccessStatusCode || createdUser is null)
+        string responseBody = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
         {
-            throw new Exception("Failed to create a new user from blazer");
+            throw new Exception(responseBody);
         }
-        
-        return createdUser;
+
+        User user = JsonSerializer.Deserialize<User>(responseBody,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+        return user;
     }
 
     public async Task<User> GetAsync(string username)
     {
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Jwt);
         HttpResponseMessage response = await _client.GetAsync($"/users/{username}");
-        User? existingUser = await response.Content.ReadFromJsonAsync<User>();
-        if (!response.IsSuccessStatusCode || existingUser==null)
+        string responseBody = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
         {
-            throw new Exception("Failed to get the user details");
+            throw new Exception(responseBody);
         }
 
-        return existingUser;
+        User user = JsonSerializer.Deserialize<User>(responseBody,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+        return user;
     }
 
     public async Task<IEnumerable<User>> GetAllAsync()
     {
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Jwt);
         HttpResponseMessage response = await _client.GetAsync($"/users");
-        IEnumerable<User> users = await response.Content.ReadFromJsonAsync<IEnumerable<User>>();
-        if (!response.IsSuccessStatusCode || users==null)
+        string responseBody = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
         {
-            throw new Exception("Failed to get the user details");
+            throw new Exception(responseBody);
         }
 
+        ICollection<User> users = JsonSerializer.Deserialize<ICollection<User>>(responseBody,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
         return users;
 
     }

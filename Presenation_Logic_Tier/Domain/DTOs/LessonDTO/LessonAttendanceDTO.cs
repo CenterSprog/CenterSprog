@@ -2,11 +2,8 @@
 
 public class LessonAttendanceDTO
 {
-    public long Date { get; set; }
-    public string Topic { get; set; }
-    public bool HasAttended { get; set; }
+    public long Date { get; init; }
+    public string Topic { get; init; }
+    public bool HasAttended { get; init; }
 
-    public LessonAttendanceDTO()
-    {
-    }
 }

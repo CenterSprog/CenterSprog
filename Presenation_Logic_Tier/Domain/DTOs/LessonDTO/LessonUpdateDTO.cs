@@ -1,35 +1,13 @@
-using Domain.Models;
-
 namespace Domain.DTOs.LessonDTO;
 
 public class LessonUpdateDTO
 {
-   public string Id { get; set; }
+   public string? Id { get; init; }
     
-    public long Date{ get; set; }
+    public long Date{ get; init; }
    
-    public string Topic{ get; set; }
+    public string? Topic{ get; init; }
     
-    public string Description{ get; set; }
+    public string? Description{ get; init; }
     
-    
-   
-
-    public LessonUpdateDTO( long date, string id,string topic, 
-        string description)
-    {
-        Id = id;
-        Date = date;
-        Topic = topic;
-        Description = description;
-       
-    }
-   public LessonUpdateDTO(string id)
-    {
-       Id = id;
-    }
-
-    public LessonUpdateDTO()
-    {
-    }
 }

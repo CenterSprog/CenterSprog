@@ -51,11 +51,8 @@ public class ClassEntity {
 		users.removeIf(user -> user.getUsername().equals(username));
 	}
 
-	public void setUsers(ArrayList<UserEntity> users) {
-		this.users = new HashSet<>();
-		for (UserEntity user : users) {
-			this.users.add(user);
-		}
+	public void setUsers(Set<UserEntity> users) {
+		this.users = users;
 	}
 
 	public String getId() {

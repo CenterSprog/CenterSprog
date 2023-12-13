@@ -8,7 +8,12 @@
 
 @if (Classes == null)
 {
-    <span>Loading classes...</span>
+    @if (Msg != null)
+    {
+        <div class="alert-danger alert mt-5">
+            @Msg
+        </div>
+    }
 }
 else if (!Classes.Any())
 {
@@ -38,20 +43,14 @@ else
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
-        string? username = null;
-
-        if (!user.IsInRole("admin"))
-        {
-            username = user.Identity?.Name;
-        }
-        Msg = "";
+        string username = user.Identity?.Name;
+        Msg = null;
         try
         {
-            Classes = await classService.GetAllAsync(new SearchClassDTO(username));
+            Classes = await classService.GetAllAsync(new SearchClassDTO{Username = username});
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             Msg = e.Message;
         }
         await base.OnInitializedAsync();

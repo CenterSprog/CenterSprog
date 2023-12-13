@@ -35,7 +35,7 @@ import java.util.Random;
       String password = generateRandomString(8);
       Optional<UserEntity> user = userRepository.getByUsername(username);
       if (user.isPresent())
-        throw new NoSuchElementException(
+        throw new Exception(
             "User with given username already exists. Please try again.");
 
       UserEntity newUser = new UserEntity(username, password,
@@ -68,7 +68,7 @@ import java.util.Random;
           username);
 
       if (existingUser.isEmpty())
-        throw new NoSuchElementException(
+        throw new Exception(
             "No existing user with username " + username);
       else
         response.onNext(ResponseUserGetByUsername.newBuilder().setUser(

@@ -23,13 +23,19 @@ public class ClassHttpClient : IClassService
     {
         HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/{id}");
 
-        ClassEntity? foundClass = await responseMessage.Content.ReadFromJsonAsync<ClassEntity>();
-        if (!responseMessage.IsSuccessStatusCode || foundClass is null)
+        string responseBody = await responseMessage.Content.ReadAsStringAsync();
+
+        if (!responseMessage.IsSuccessStatusCode)
         {
-            throw new Exception($"Failed to find a class with this ID + {id}");
+            throw new Exception(responseBody);
         }
 
-        return foundClass;
+        ClassEntity classEntity = JsonSerializer.Deserialize<ClassEntity>(responseBody,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+        return classEntity;
     }
 
     public async Task<IEnumerable<ClassEntity>> GetAllAsync(SearchClassDTO dto)
@@ -40,17 +46,14 @@ public class ClassHttpClient : IClassService
         {
             url += $"?username={username}";
         }
+
         HttpResponseMessage responseMessage = await _client.GetAsync(url);
+        string responseBody = await responseMessage.Content.ReadAsStringAsync();
 
         if (!responseMessage.IsSuccessStatusCode)
         {
             throw new Exception(
-                $"Failed to fetch classes for username '{username}'. Status code: {responseMessage.StatusCode}");
-        }
-        string responseBody = await responseMessage.Content.ReadAsStringAsync();
-        if (string.IsNullOrEmpty(responseBody))
-        {
-            throw new Exception("Empty response received while fetching classes.");
+                responseBody);
         }
 
         ICollection<ClassEntity> classes = JsonSerializer.Deserialize<ICollection<ClassEntity>>(responseBody,
@@ -66,13 +69,13 @@ public class ClassHttpClient : IClassService
     {
         string query = "";
         if (!string.IsNullOrEmpty(dto.Role))
-           query += $"?role={dto.Role}";
-        HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/{dto.Id}/participants"+ query);
+            query += $"?role={dto.Role}";
+        HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/{dto.Id}/participants" + query);
 
         string responseBody = await responseMessage.Content.ReadAsStringAsync();
-        if (string.IsNullOrEmpty(responseBody))
+        if (!responseMessage.IsSuccessStatusCode)
         {
-            throw new Exception("Empty response received while fetching participants.");
+            throw new Exception(responseBody);
         }
 
         ICollection<User> participants = JsonSerializer.Deserialize<ICollection<User>>(responseBody,
@@ -87,26 +90,37 @@ public class ClassHttpClient : IClassService
     public async Task<ClassEntity> CreateAsync(ClassCreationDTO dto)
     {
         HttpResponseMessage response = await _client.PostAsJsonAsync("/classes/", dto);
-        ClassEntity? createdClassEntity = await response.Content.ReadFromJsonAsync<ClassEntity>();
-        if (!response.IsSuccessStatusCode || createdClassEntity is null)
+        string responseBody = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
         {
-            throw new Exception("Failed to create a new class from blazer");
+            throw new Exception(responseBody);
         }
 
-        return createdClassEntity;
+        ClassEntity classEntity = JsonSerializer.Deserialize<ClassEntity>(responseBody,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+        return classEntity;
     }
 
     public async Task<bool> UpdateClass(string jwt, ClassUpdateDTO dto)
     {
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _client.PatchAsJsonAsync($"/classes", dto);
-        Boolean result = await response.Content.ReadFromJsonAsync<Boolean>();
-        if (!response.IsSuccessStatusCode || result == false)
+        string responseBody = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
         {
-            throw new Exception("Failed to updated a class, http blazor client");
+            throw new Exception(responseBody);
         }
 
-        return result;
+        bool updated = JsonSerializer.Deserialize<Boolean>(responseBody,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+        return updated;
     }
 
     public async Task<IEnumerable<UserAttendanceDTO>> GetClassAttendanceAsync(string id)
@@ -114,12 +128,13 @@ public class ClassHttpClient : IClassService
         HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/{id}/attendances");
 
         string responseBody = await responseMessage.Content.ReadAsStringAsync();
-        if (string.IsNullOrEmpty(responseBody))
+        if (!responseMessage.IsSuccessStatusCode)
         {
-            throw new Exception("Empty response received while fetching attendees.");
+            throw new Exception(responseBody);
         }
 
-        ICollection<UserAttendanceDTO> attendees = JsonSerializer.Deserialize<ICollection<UserAttendanceDTO>>(responseBody,
+        ICollection<UserAttendanceDTO> attendees = JsonSerializer.Deserialize<ICollection<UserAttendanceDTO>>(
+            responseBody,
             new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
@@ -130,15 +145,17 @@ public class ClassHttpClient : IClassService
 
     public async Task<IEnumerable<LessonAttendanceDTO>> GetClassAttendanceByUsernameAsync(SearchClassAttendanceDTO dto)
     {
-        HttpResponseMessage responseMessage = await _client.GetAsync($"/classes/{dto.Id}/attendances?username={dto.Username}");
-
+        HttpResponseMessage responseMessage =
+            await _client.GetAsync($"/classes/{dto.Id}/attendances?username={dto.Username}");
         string responseBody = await responseMessage.Content.ReadAsStringAsync();
-        if (string.IsNullOrEmpty(responseBody))
+
+        if (!responseMessage.IsSuccessStatusCode)
         {
-            throw new Exception("Empty response received while fetching lessons.");
+            throw new Exception(responseBody);
         }
 
-        ICollection<LessonAttendanceDTO> lessons = JsonSerializer.Deserialize<ICollection<LessonAttendanceDTO>>(responseBody,
+        ICollection<LessonAttendanceDTO> lessons = JsonSerializer.Deserialize<ICollection<LessonAttendanceDTO>>(
+            responseBody,
             new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true

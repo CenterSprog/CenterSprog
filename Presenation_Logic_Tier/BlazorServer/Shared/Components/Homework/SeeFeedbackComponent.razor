@@ -16,12 +16,12 @@
     </button>
 </div>
 <div class="msg-container">
-    @if (Msg is not null)
-    {
-        <div>
-            @Msg
-        </div>
-    }
+            @if (Msg != null)
+            {
+                <div class="alert-danger alert mt-5">
+                    @Msg
+                </div>
+            }
 </div>
 
 <Modal ShowModal="@ShowModal">
@@ -106,14 +106,14 @@
                 }
                 else
                 {
-                    Console.WriteLine("No feedback available for this hand-in.");
+                    Msg = "No feedback available for this hand-in.";
                 }
             }
         }
 
         catch (Exception ex)
         {
-            Msg = "No feedback is available at the moment";
+            Msg = ex.Message;
         }
     }
     

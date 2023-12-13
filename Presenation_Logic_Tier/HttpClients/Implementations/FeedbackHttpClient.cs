@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
 using Domain.DTOs.FeedbackDTO;
 using Domain.Models;
 using HttpClients.ClientInterfaces;
@@ -17,31 +18,35 @@ public class FeedbackHttpClient : IFeedbackService
     public async Task<Feedback> AddFeedbackAsync(AddFeedbackDTO addFeedbackDto)
     {
         HttpResponseMessage responseMessage = await _client.PostAsJsonAsync("/feedbacks", addFeedbackDto);
-        Feedback? createdFeedback = await responseMessage.Content.ReadFromJsonAsync<Feedback>();
-        if (!responseMessage.IsSuccessStatusCode || createdFeedback is null)
-        {
-            throw new Exception("Failed to give feedback from blazer");
-        }
+        string responseBody = await responseMessage.Content.ReadAsStringAsync();
 
-        return createdFeedback;
+        if (!responseMessage.IsSuccessStatusCode)
+        {
+            throw new Exception(responseBody);
+        }
+        Feedback feedback = JsonSerializer.Deserialize<Feedback>(responseBody,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+        return feedback;
     }
 
     public async Task<Feedback> GetFeedbackByHandInIdAndStudentUsernameAsync(string handInId, string studentUsername)
     {
-        HttpResponseMessage responseMessage = await _client.GetAsync($"/feedbacks/{handInId}/student/{studentUsername}");
+        HttpResponseMessage responseMessage = await _client.GetAsync($"/handIns/{handInId}/feedback?username={studentUsername}");
+
+        string responseBody = await responseMessage.Content.ReadAsStringAsync();
 
         if (!responseMessage.IsSuccessStatusCode)
         {
-            throw new Exception($"Failed to get feedback. Status code: {responseMessage.StatusCode}");
+            throw new Exception(responseBody);
         }
-        
-        Feedback? createdFeedback = await responseMessage.Content.ReadFromJsonAsync<Feedback>();
-        
-        if (!responseMessage.IsSuccessStatusCode || createdFeedback is null)
-        {
-            throw new Exception("Failed to give feedback from blazer");
-        }
-
-        return createdFeedback;
+        Feedback feedback = JsonSerializer.Deserialize<Feedback>(responseBody,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+        return feedback;
     }
 }

@@ -29,17 +29,15 @@
                 <button class="btn btn-primary" @onclick="AddHomeworkAsync">Add homework</button>
             </div>
             <div class="msg-container">
-                @if (Msg is not null)
-                {
-                    <div>
-                        <p class="text-danger">@Msg</p>
-                    </div>
-                }
+            @if (Msg != null)
+            {
+                <div class="alert-danger alert mt-5">
+                    @Msg
+                </div>
+            }
             </div>
         </div>
     </div>
-
-
 </Modal>
 
 
@@ -50,8 +48,8 @@
 
     [Parameter]
     public long LessonDate { get; set; }
-    
-    public string Msg { get; set; }
+
+    public string? Msg { get; set; }
     public HomeworkCreationDTO Dto { get; set; }
     public DateTime Date { get; set; }
     public bool ShowModal { get; set; }
@@ -59,7 +57,7 @@
     protected override async Task OnInitializedAsync()
     {
         Msg = null;
-        Dto = new HomeworkCreationDTO(LessonId);
+        Dto = new HomeworkCreationDTO{LessonId = LessonId};
         Date = DateTime.Now;
         ShowModal = false;
 
@@ -78,12 +76,8 @@
         try
         {
             Dto.Deadline = Date.ToFileTimeUtc();
-            ValidateHomework();
-            if (Msg == null)
-            {
-                await HomeworkService.CreateAsync(Dto);
-                navMgr.NavigateTo(navMgr.Uri, forceLoad: true);
-            }
+            await HomeworkService.CreateAsync(Dto);
+            navMgr.NavigateTo(navMgr.Uri, forceLoad: true);
         }
         catch (Exception e)
         {
@@ -91,13 +85,4 @@
         }
     }
 
-    private void ValidateHomework()
-    {
-        if (string.IsNullOrEmpty(Dto.Title))
-            Msg = "Title is required";
-        if (string.IsNullOrEmpty(Dto.Description))
-            Msg = "Description is required";
-        if (Dto.Deadline < LessonDate)
-            Msg = "The deadline of the homework cannot be before the lesson's date";
-    }
 }
