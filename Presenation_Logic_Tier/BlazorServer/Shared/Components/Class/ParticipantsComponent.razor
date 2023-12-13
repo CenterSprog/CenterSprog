@@ -1,6 +1,7 @@
 ﻿@using Domain.Models
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.ClassDTO
+@using HttpClients.Implementations
 @inject IClassService classService
 
 <button type="button" class="btn btn-secondary fw-bold ms-3" @onclick="@SeeParticipantsAsync">Participants <span class="oi oi-people"></span></button>
@@ -80,7 +81,7 @@
     {
         try
         {
-            Participants = await classService.GetAllParticipantsAsync(new SearchClassParticipantsDTO { Id = ClassId });
+            Participants = await classService.GetAllParticipantsAsync(UserHttpClient.Jwt, new SearchClassParticipantsDTO { Id = ClassId });
         }
         catch (Exception e)
         {

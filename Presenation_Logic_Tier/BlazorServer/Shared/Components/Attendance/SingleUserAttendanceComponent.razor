@@ -2,6 +2,7 @@
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.LessonDTO
 @using Domain.DTOs.ClassDTO
+@using HttpClients.Implementations
 @inject IClassService ClassService;
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
@@ -80,7 +81,7 @@
             var user = authState.User;
             var username = user.Identity?.Name;
             var searchParameter = new SearchClassAttendanceDTO{Id = ClassId, Username = username};
-            Lessons = await ClassService.GetClassAttendanceByUsernameAsync(searchParameter);
+            Lessons = await ClassService.GetClassAttendanceByUsernameAsync(UserHttpClient.Jwt, searchParameter);
             
             int absenceCount  = Lessons.Count(obj => !obj.HasAttended);
             TotalAbsence = ((double)absenceCount / Lessons.Count() * 100).ToString();

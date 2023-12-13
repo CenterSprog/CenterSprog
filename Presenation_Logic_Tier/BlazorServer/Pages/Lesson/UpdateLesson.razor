@@ -4,6 +4,7 @@
 @using Domain.DTOs.LessonDTO
 @using Domain.Models
 @using HttpClients.ClientInterfaces
+@using HttpClients.Implementations
 @inject ILessonService lessonService
 @inject NavigationManager navMgr
 @if (Lesson != null)
@@ -66,7 +67,7 @@
         Msg = null;
         try
         {
-            Lesson = await lessonService.GetByIdAsync(LessonId);
+            Lesson = await lessonService.GetByIdAsync(UserHttpClient.Jwt, LessonId);
         }
         catch (Exception e)
         {
@@ -79,7 +80,7 @@
     {
         try
         {
-            await lessonService.UpdateLessonAsync(new LessonUpdateDTO{ Id = Lesson.Id, Date = Date.ToFileTimeUtc(), Description = Lesson.Description, Topic = Lesson.Topic});
+            await lessonService.UpdateLessonAsync(UserHttpClient.Jwt, new LessonUpdateDTO{ Id = Lesson.Id, Date = Date.ToFileTimeUtc(), Description = Lesson.Description, Topic = Lesson.Topic});
             Msg = "Lesson updated successfully!";
             navMgr.NavigateTo($"/my-classes/{ClassId}");
         }

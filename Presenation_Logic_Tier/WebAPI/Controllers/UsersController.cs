@@ -58,6 +58,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize("MustBeAdmin")]
     public async Task<ActionResult<IEnumerable<User>>> GetAllAsync()
     {
         try

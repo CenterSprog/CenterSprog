@@ -1,6 +1,7 @@
 ﻿@using Domain.Models
 @using Domain.DTOs.HomeworkDTO
 @using HttpClients.ClientInterfaces
+@using HttpClients.Implementations
 @inject ILessonService lessonService
 @inject IHandInHomeworkService HandInHomeworkService
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -64,7 +65,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Lesson = await lessonService.GetByIdAsync(lessonId);
+        Lesson = await lessonService.GetByIdAsync(UserHttpClient.Jwt, lessonId);
         Msg = null;
         Answer = null;
         Feedback = new Feedback();
@@ -86,11 +87,11 @@
             var user = authState.User;
             var username = user.Identity?.Name;
             
-            handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync(Homework.Id, username);
+            handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync(UserHttpClient.Jwt, Homework.Id, username);
             
             if (handInHomework != null && username != null)
             {
-                var feedback = await FeedbackService.GetFeedbackByHandInIdAndStudentUsernameAsync(handInHomework.Id, username);
+                var feedback = await FeedbackService.GetFeedbackByHandInIdAndStudentUsernameAsync(UserHttpClient.Jwt, handInHomework.Id, username);
 
                 if (feedback != null)
                 {

@@ -2,6 +2,7 @@
 using Domain.DTOs.FeedbackDTO;
 using Domain.Models;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -18,6 +19,7 @@ public class FeedbacksController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize("MustBeTeacher")]
     public async Task<ActionResult<Feedback>> AddFeedback([FromBody] AddFeedbackDTO addFeedbackDto)
     {
         try

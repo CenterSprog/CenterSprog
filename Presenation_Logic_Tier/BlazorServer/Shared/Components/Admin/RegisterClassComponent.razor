@@ -2,6 +2,7 @@
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.ClassDTO
+@using HttpClients.Implementations
 @inject NavigationManager NavManager
 @inject IClassService ClassService
 
@@ -44,7 +45,7 @@
     {
         try
         {
-            ClassEntity createdClass = await ClassService.CreateAsync(Dto);
+            ClassEntity createdClass = await ClassService.CreateAsync(UserHttpClient.Jwt, Dto);
             NavManager.NavigateTo($"/my-classes/{createdClass.Id}");
         }
         catch (Exception e)

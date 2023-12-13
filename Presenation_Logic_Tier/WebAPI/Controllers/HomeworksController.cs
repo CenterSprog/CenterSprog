@@ -2,6 +2,7 @@
 using Domain.DTOs.HomeworkDTO;
 using Domain.Models;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -20,6 +21,7 @@ public class HomeworksController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize("MustBeTeacher")]
     public async Task<ActionResult<Homework>> CreateHomework([FromBody] HomeworkCreationDTO dto)
     {
         try
@@ -38,6 +40,7 @@ public class HomeworksController : ControllerBase
     }
 
     [HttpGet("{homeworkId}/handIns", Name = "GetHandInsByHomeworkIdAsync")]
+    [Authorize("MustBeTeacher")]
     public async Task<ActionResult<IEnumerable<HandInHomework>>> GetHandInsByHomeworkIdAsync(
         [FromRoute] string homeworkId)
     {
@@ -57,6 +60,7 @@ public class HomeworksController : ControllerBase
     }
 
     [HttpGet("{homeworkId}/handIn", Name = "GetHandInByHomeworkIdAndStudentUsernameAsync")]
+    [Authorize("MustBeUser")]
     public async Task<ActionResult<HandInHomework>> GetHandInByHomeworkIdAndStudentUsernameAsync(
         [FromRoute] string homeworkId,
         [FromQuery] string username)

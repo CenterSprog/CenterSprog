@@ -5,5 +5,5 @@ namespace HttpClients.ClientInterfaces;
 
 public interface IHomeworkService
 {
-    Task<Homework> CreateAsync(HomeworkCreationDTO dto);
+    Task<Homework> CreateAsync(string jwt, HomeworkCreationDTO dto);
 }

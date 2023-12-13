@@ -22,6 +22,7 @@ public class ClassesController : ControllerBase
     }
 
     [HttpGet("{classId}", Name = "GetClassByIdAsync")]
+    [Authorize]
     public async Task<ActionResult<ClassEntity>> GetByIdAsync([FromRoute] string classId)
     {
         try
@@ -40,6 +41,7 @@ public class ClassesController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<ClassEntity>>> GetAllAsync([FromQuery] string? username)
     {
         try
@@ -63,6 +65,7 @@ public class ClassesController : ControllerBase
     }
 
     [HttpGet("{classId}/participants", Name = "GetAllParticipantsAsync")]
+    [Authorize("MustBeUser")]
     public async Task<ActionResult<IEnumerable<User>>> GetAllParticipantsAsync([FromRoute] string classId, [FromQuery] string? role)
     {
         try
@@ -87,6 +90,7 @@ public class ClassesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize("MustBeAdmin")]
     public async Task<ActionResult<ClassEntity>> CreateAsync([FromBody] ClassCreationDTO dto)
     {
         try
@@ -111,10 +115,7 @@ public class ClassesController : ControllerBase
         try
         {
             Boolean result = await _classLogic.UpdateAsync(dto);
-            if (result == false)
-                throw new Exception("Failed to update from webapi");
             return Ok(result);
-
         }
         catch (RpcException e)
         {
@@ -126,6 +127,7 @@ public class ClassesController : ControllerBase
         }
     }
     [HttpGet("{classId}/attendances", Name = "GetClassAttendanceAsync")]
+    [Authorize("MustBeTeacher")]
     public async Task<ActionResult<IEnumerable<UserAttendanceDTO>>> GetClassAttendanceAsync([FromRoute] string classId, [FromQuery] string? username)
     {
         try
