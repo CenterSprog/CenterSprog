@@ -299,7 +299,7 @@ import java.util.stream.Collectors;
       response.onNext(
           ResponseUpdateClassParticipants.newBuilder().setResult(true).build());
       response.onCompleted();
-    }
+    } 
     catch (Exception e)
     {
       Status status = Status.INTERNAL.withDescription(e.getMessage());
