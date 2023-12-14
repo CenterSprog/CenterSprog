@@ -15,7 +15,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
- * * Service class that handles the grpc communication.
+ * Service class that handles the grpc communication.
  * 
  * 
  * @author Team_3
