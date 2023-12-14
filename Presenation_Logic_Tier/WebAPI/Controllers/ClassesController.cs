@@ -45,6 +45,7 @@ public class ClassesController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize("MustBeAdmin")]
     public async Task<ActionResult<ClassEntity>> CreateAsync([FromBody] ClassCreationDTO dto)
     {
         try

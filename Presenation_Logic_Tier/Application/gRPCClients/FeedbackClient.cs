@@ -40,9 +40,23 @@ public class FeedbackClient : IFeedbackClient
             HandInId = handInId,
             StudentUsername = studentUsername
         };
+        var response = new ResponseGetFeedback();
+        try
+        {
 
-        var response = await client.getFeedbackByHandInIdAndStudentUsernameAsync(request);
+            Console.WriteLine("HERE LOOKING FOR FEEDBACK");
+            response = await client.getFeedbackByHandInIdAndStudentUsernameAsync(request);
 
+            if (response.Feedback == null)
+                throw new Exception("No feedback exists yet.");
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message + e.StackTrace);
+            throw e;
+        }
+        
         var feedback = new Feedback(response.Feedback.Id, response.Feedback.Grade, response.Feedback.Comment);
         return await Task.FromResult(feedback);
     }

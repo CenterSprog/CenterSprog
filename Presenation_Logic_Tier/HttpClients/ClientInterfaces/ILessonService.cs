@@ -6,10 +6,10 @@ namespace HttpClients.ClientInterfaces;
 public interface ILessonService
 {
     Task<Lesson> GetByIdAsync(string id);
-    Task<string> MarkAttendanceAsync(MarkAttendanceDTO markAttendanceDto);
+    Task<string> MarkAttendanceAsync(MarkAttendanceDTO markAttendanceDto, string token);
     Task<IEnumerable<User>> GetAttendanceAsync(string id);
-    Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto);
-    Task UpdateLessonAsync(LessonUpdateDTO updateDto);
-    Task DeleteAsync(string lessonId);
+    Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto, string token);
+    Task UpdateLessonAsync(LessonUpdateDTO updateDto, string token);
+    Task DeleteAsync(string lessonId, string token);
     
 }

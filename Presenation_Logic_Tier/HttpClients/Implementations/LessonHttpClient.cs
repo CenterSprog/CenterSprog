@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using Domain.DTOs.LessonDTO;
@@ -35,8 +36,9 @@ public class LessonHttpClient : ILessonService
         return foundLesson;
     }
 
-    public async Task<string> MarkAttendanceAsync(MarkAttendanceDTO markAttendanceDto)
+    public async Task<string> MarkAttendanceAsync(MarkAttendanceDTO markAttendanceDto,string token)
     {
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         HttpResponseMessage response = await client.PostAsJsonAsync($"/lessons/{markAttendanceDto.LessonId}/attendance",
             markAttendanceDto.StudentUsernames);
         string responseContent = await response.Content.ReadAsStringAsync();
@@ -68,8 +70,9 @@ public class LessonHttpClient : ILessonService
     }
 
 
-    public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
+    public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto,string token)
     {
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         HttpResponseMessage response = await client.PostAsJsonAsync("/lessons", lessonCreationDto);
         string responseBody = await response.Content.ReadAsStringAsync();
 
@@ -86,8 +89,9 @@ public class LessonHttpClient : ILessonService
         return lesson;
     }
 
-    public async Task UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto)
+    public async Task UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto,string token)
     {
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         HttpResponseMessage response = await client.PutAsJsonAsync("/lessons", lessonUpdateDto);
         string responseBody = await response.Content.ReadAsStringAsync();
 
@@ -97,8 +101,9 @@ public class LessonHttpClient : ILessonService
         }
     }
 
-    public async Task DeleteAsync(string lessonId)
+    public async Task DeleteAsync(string lessonId,string token)
     {
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         HttpResponseMessage response = await client.DeleteAsync($"lessons/{lessonId}");
         string responseContent = await response.Content.ReadAsStringAsync();
 

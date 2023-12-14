@@ -15,5 +15,8 @@ public class Feedback
 
     public Feedback()
     {
+        Id = "No id";
+        Grade = -1;
+        Comment = "No comment";
     }
 }

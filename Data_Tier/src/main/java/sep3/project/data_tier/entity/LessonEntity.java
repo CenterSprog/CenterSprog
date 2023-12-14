@@ -49,7 +49,7 @@ public class LessonEntity {
 
 
 	public void addHomework(HomeworkEntity homework) {
-
+		this.homework = homework;
 	}
 
 	public String getId() {

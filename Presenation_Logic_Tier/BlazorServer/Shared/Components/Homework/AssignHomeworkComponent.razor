@@ -1,5 +1,6 @@
 ﻿@using Domain.DTOs.HomeworkDTO
 @using HttpClients.ClientInterfaces
+@using HttpClients.Implementations
 @inject IHomeworkService HomeworkService 
 @inject NavigationManager navMgr
 
@@ -74,9 +75,11 @@
     {
         Msg = null;
         try
-        {
+        {   
             Dto.Deadline = Date.ToFileTimeUtc();
-            await HomeworkService.CreateAsync(Dto);
+            if (Dto.Deadline < LessonDate)
+                throw new Exception("Homework deadline must be after the lesson's date");
+            await HomeworkService.CreateAsync(Dto,UserHttpClient.Jwt);
             navMgr.NavigateTo(navMgr.Uri, forceLoad: true);
         }
         catch (Exception e)

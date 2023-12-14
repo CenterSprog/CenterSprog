@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import sep3.project.data_tier.entity.ClassEntity;
+import sep3.project.data_tier.entity.HomeworkEntity;
 import sep3.project.data_tier.entity.LessonEntity;
 import sep3.project.data_tier.entity.UserEntity;
 import sep3.project.data_tier.repository.*;
@@ -14,12 +15,13 @@ public class ModelConfig {
     CommandLineRunner productCommandLineRunner(
             IClassRepository classRepository,
             IUserRepository userRepository,
-            ILessonRepository lessonRepository
+            ILessonRepository lessonRepository,
+            IHomeworkRepository homeworkRepository
     ){
         return args -> {
 //            set up model here
             UserEntity a1 = new UserEntity("admin","admin","Bob","Builder","bob.builder@gmail.com","admin");
-            UserEntity s1 = new UserEntity("damian","damian","Damian","Trafialek","damian.trafialek@gmail.com","student");
+            UserEntity s1 = new UserEntity("damian","supersecurepassworddamian","Damian","Trafialek","damian.trafialek@gmail.com","student");
             UserEntity t1 = new UserEntity("steffan","steffan","Steffan","Visenberg","sva@via.dk","teacher");
             UserEntity s2 = new UserEntity("julija","julija","Julija","Gramovica","julijagr@gmail.com","student");
             UserEntity t2 = new UserEntity("joseph","steffan","Joseph","Okika","joseph@via.dk","teacher");
@@ -35,6 +37,10 @@ public class ModelConfig {
             ClassEntity c2 = new ClassEntity("danish-module-2","c05.14b");
             ClassEntity c3 = new ClassEntity("danish-module-4","kamtjatka");
 
+            HomeworkEntity h1 = new HomeworkEntity(133454945665594012l,"dsada","sadsadasdsadasdasdasd");
+
+
+            l1.addHomework(h1);
 
             c1.addUser(s1);
             c1.addUser(t1);
@@ -51,14 +57,13 @@ public class ModelConfig {
             c1.addLesson(l2);
 
             userRepository.save(a1);
-
-            userRepository.save(s1);
             userRepository.save(t1);
-
-            userRepository.save(s2);
             userRepository.save(t2);
-
             userRepository.save(t3);
+            userRepository.save(s1);
+            userRepository.save(s2);
+
+            homeworkRepository.save(h1);
 
             lessonRepository.save(l1);
             lessonRepository.save(l2);

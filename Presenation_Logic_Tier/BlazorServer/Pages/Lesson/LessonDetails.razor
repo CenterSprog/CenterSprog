@@ -18,7 +18,7 @@
                         <img src="/homework.png" alt="Homework Icon"/>
                     </div>
                     <div class="homework-header-content">
-                        <h3>Homework. <DateDisplayComponent Date=@Lesson.Date/> @Lesson.Homework.Title</h3>
+                        <h3>Homework.  @Lesson.Homework.Title</h3>
                     </div>
                 </div>
                 <div class="homework-description">
@@ -33,7 +33,7 @@
 
 
                 <AuthorizeView Policy="MustBeStudent">
-                        <HandInHomeworkComponent LessonId="@LessonId" ClassId="@ClassId"/>
+                        <HandInHomeworkComponent MyLesson="@Lesson" ClassId="@ClassId"/>
                 </AuthorizeView>
             </div>
         </div>
@@ -81,7 +81,6 @@
 
     Lesson Lesson { get; set; }
     Homework Homework { get; set; }
-    HandInHomework handInHomework { get; set; }
     User User { get; set; }
     Feedback Feedback { get; set; }
 
@@ -100,10 +99,8 @@
         Feedback = new Feedback();
         User = new User();
         Homework = Lesson.Homework;
-        handInHomework = new HandInHomework();
         studentUsername = null;
 
-        await FetchHandinsAsync();
         await base.OnInitializedAsync();
     }
 
@@ -115,33 +112,9 @@
         }
         catch (Exception e)
         {
-            Msg = e.Message;
+            Msg = "MAYBE? " +e.Message;
         }
     }
 
-    private async Task FetchHandinsAsync()
-    {
-        try
-        {
-            Msg = null;
-
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var user = authState.User;
-            var username = user.Identity?.Name;
-
-            try
-            {
-                handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync(Homework.Id, username);
-                HomeworkSubmitted = handInHomework != null;
-            }
-            catch (Exception e)
-            {
-                HomeworkSubmitted = false;
-            }
-        }
-        catch (Exception e)
-        {
-            Msg = e.Message;
-        }
-    }
+  
 }

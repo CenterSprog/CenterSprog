@@ -85,6 +85,11 @@ import java.util.Optional;
         HandInHomeworkEntity handInHomework = optionalHandInHomework.get();
         FeedbackEntity feedback = handInHomework.getFeedback();
 
+        if(feedback == null )
+          throw new NoSuchElementException(
+                  "No existing hand in with id " + handInId + " submitted by user with username " + studentUsername);
+        System.out.println(feedback);
+
         ResponseGetFeedback responseMessage = ResponseGetFeedback.newBuilder()
             .setFeedback(feedbackMapper.toProto(feedback)).build();
 
@@ -99,6 +104,7 @@ import java.util.Optional;
     }
     catch (Exception e)
     {
+      System.out.println(e.getMessage() + " " + e.getStackTrace());
       Status status = Status.INTERNAL.withDescription(e.getMessage());
       response.onError(status.asRuntimeException());
     }

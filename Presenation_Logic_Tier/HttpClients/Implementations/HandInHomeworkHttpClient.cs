@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text.Json;
 using Domain.DTOs.HomeworkDTO;
 using Domain.Models;
@@ -15,8 +16,9 @@ public class HandInHomeworkHttpClient : IHandInHomeworkService
         _client = client;
     }
 
-    public async Task<HandInHomework> HandInHomework(HomeworkHandInDTO dto)
+    public async Task<HandInHomework> HandInHomework(HomeworkHandInDTO dto, string token)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         HttpResponseMessage response = await _client.PostAsJsonAsync("/handIns", dto);
         string responseContent = await response.Content.ReadAsStringAsync();
         
@@ -33,8 +35,9 @@ public class HandInHomeworkHttpClient : IHandInHomeworkService
         return handInHomework;
     }
 
-    public async Task<IEnumerable<HandInHomework>> GetHandInsByHomeworkIdAsync(string homeworkId)
+    public async Task<IEnumerable<HandInHomework>> GetHandInsByHomeworkIdAsync(string homeworkId, string token)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         HttpResponseMessage response = await _client.GetAsync($"homeworks/{homeworkId}/handIns");
         var result = await response.Content.ReadAsStringAsync();
 

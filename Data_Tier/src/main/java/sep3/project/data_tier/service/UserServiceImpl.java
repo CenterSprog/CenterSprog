@@ -30,9 +30,8 @@ import java.util.Random;
   {
     try
     {
-      String username =
-          request.getUser().getFirstName() + generateRandomString(2);
-      String password = generateRandomString(8);
+      String username = request.getUser().getUsername();
+      String password = request.getUser().getPassword();
       Optional<UserEntity> user = userRepository.getByUsername(username);
       if (user.isPresent())
         throw new Exception(
@@ -105,14 +104,5 @@ import java.util.Random;
     response.onCompleted();
   }
 
-  private static String generateRandomString(int len)
-  {
-    String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi"
-        + "jklmnopqrstuvwxyz!@#$%&";
-    Random rnd = new Random();
-    StringBuilder sb = new StringBuilder(len);
-    for (int i = 0; i < len; i++)
-      sb.append(chars.charAt(rnd.nextInt(chars.length())));
-    return sb.toString();
-  }
+
 }

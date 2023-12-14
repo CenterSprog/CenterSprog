@@ -4,6 +4,7 @@
 @using Domain.DTOs.LessonDTO
 @using Domain.Models
 @using HttpClients.ClientInterfaces
+@using HttpClients.Implementations
 @inject ILessonService lessonService
 @inject NavigationManager navMgr
 @if (Lesson != null)
@@ -79,7 +80,9 @@
     {
         try
         {
-            await lessonService.UpdateLessonAsync(new LessonUpdateDTO{ Id = Lesson.Id, Date = Date.ToFileTimeUtc(), Description = Lesson.Description, Topic = Lesson.Topic});
+            await lessonService.UpdateLessonAsync(
+                new LessonUpdateDTO{ Id = Lesson.Id, Date = Date.ToFileTimeUtc(), Description = Lesson.Description, Topic = Lesson.Topic},
+                UserHttpClient.Jwt);
             Msg = "Lesson updated successfully!";
             navMgr.NavigateTo($"/my-classes/{ClassId}");
         }

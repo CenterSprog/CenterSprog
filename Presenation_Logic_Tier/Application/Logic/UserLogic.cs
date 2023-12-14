@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text;
+using System.Text.RegularExpressions;
 using Application.ClientInterfaces;
 using Application.LogicInterfaces;
 using Domain.DTOs.UserDTO;
@@ -31,9 +32,22 @@ public class UserLogic : IUserLogic
 
     public async Task<User> CreateUserAsync(UserCreationDTO dto)
     {
-        ValidateUserCreation(dto);
-        return await _userClient.CreateUserAsync(dto);
+        ValidateUserCreation(dto); 
+        Tuple<string, string> userCreationCredentials = GenerateUserCreationCredentials(dto);
+        
+        return await _userClient.CreateUserAsync(dto, userCreationCredentials.Item1, userCreationCredentials.Item2);
     }
+
+    private Tuple<string, string> GenerateUserCreationCredentials(UserCreationDTO dto)
+    {
+        
+        string username = $"{dto.FirstName}{GenerateRandomPassword(2)}";
+        string password = GenerateRandomPassword(8);
+
+        return new Tuple<string, string>(username, password);
+    }
+
+  
 
     public async Task<User> GetUserByUsernameAsync(string username)
     {
@@ -47,10 +61,12 @@ public class UserLogic : IUserLogic
 
     private void ValidateCredentials(string username, string password)
     {
+        
         if (string.IsNullOrWhiteSpace(username))
             throw new Exception("Username is required.");
         if (string.IsNullOrWhiteSpace(password))
             throw new Exception("Password is required.");
+        
     }
 
     private void ValidateUserCreation(UserCreationDTO dto)
@@ -61,6 +77,10 @@ public class UserLogic : IUserLogic
             throw new Exception("Last name is required.");
         if (string.IsNullOrWhiteSpace(dto.Role))
             throw new Exception("Role is required.");
+        if (!dto.FirstName.Trim().Equals(dto.FirstName))
+            throw new Exception("Incorrectly formatted first name. Forbidden spaces on edges.");
+        if (!dto.LastName.Trim().Equals(dto.LastName))
+            throw new Exception("Incorrectly formatted last name. Forbidden spaces on edges.");
         ValidateEmail(dto.Email);
     }
 
@@ -77,5 +97,20 @@ public class UserLogic : IUserLogic
 
         if (!Regex.IsMatch(email, emailPattern))
             throw new Exception("Invalid email format. Please use format name@example.com");
+    }
+    
+    static string GenerateRandomPassword(int length)
+    {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+";
+        StringBuilder password = new StringBuilder();
+
+        Random random = new Random();
+        for (int i = 0; i < length; i++)
+        {
+            int index = random.Next(chars.Length);
+            password.Append(chars[index]);
+        }
+
+        return password.ToString();
     }
 }

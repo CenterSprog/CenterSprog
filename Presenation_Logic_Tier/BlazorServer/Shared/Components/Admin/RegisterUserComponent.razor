@@ -1,6 +1,7 @@
 ﻿@using Domain.DTOs.UserDTO
 @using Domain.Models
 @using HttpClients.ClientInterfaces
+@using HttpClients.Implementations
 @inject NavigationManager NavManager
 @inject IUserService UserService
 
@@ -50,7 +51,7 @@
     {
         try
         {
-            User createdUser = await UserService.CreateUserAsync(Dto);
+            User createdUser = await UserService.CreateUserAsync(Dto, UserHttpClient.Jwt);
             NavManager.NavigateTo($"admin/users/{createdUser.Username}");
         }
         catch (Exception e)

@@ -12,13 +12,6 @@ message UserData{
   string role = 6;
 }
 
-message UserCreationData{
-  string firstName = 1;
-  string lastName = 2;
-  string email = 3;
-  string role = 4;
-}
-
 message UserParticipant{
   string firstName = 1;
   string lastName = 2;
@@ -28,7 +21,7 @@ message UserParticipant{
 }
 
 message RequestCreateUser{
-  UserCreationData user = 1;
+  UserData user = 1;
 }
 message ResponseCreateUser{
   UserData user = 1;

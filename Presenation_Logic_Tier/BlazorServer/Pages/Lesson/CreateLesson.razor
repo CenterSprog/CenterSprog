@@ -1,6 +1,7 @@
 @page "/my-classes/{ClassId}/create-lesson"
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.LessonDTO
+@using HttpClients.Implementations
 @using Microsoft.AspNetCore.Components
 @inject ILessonService lessonService
 @inject NavigationManager navMgr
@@ -62,7 +63,7 @@
         try
         {
             lessonDto.Date = Date.ToFileTimeUtc();
-            var createdLesson = await lessonService.CreateAsync(lessonDto);
+            var createdLesson = await lessonService.CreateAsync(lessonDto,UserHttpClient.Jwt);
             navMgr.NavigateTo($"/my-classes/{ClassId}/lessons/{createdLesson.Id}");
             Msg = "Lesson created successfully!";
         }

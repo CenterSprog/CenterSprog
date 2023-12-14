@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text.Json;
 using Domain.DTOs.FeedbackDTO;
 using Domain.Models;
@@ -15,8 +16,9 @@ public class FeedbackHttpClient : IFeedbackService
         _client = client;
     }
 
-    public async Task<Feedback> AddFeedbackAsync(AddFeedbackDTO addFeedbackDto)
+    public async Task<Feedback> AddFeedbackAsync(AddFeedbackDTO addFeedbackDto, string token)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         HttpResponseMessage responseMessage = await _client.PostAsJsonAsync("/feedbacks", addFeedbackDto);
         string responseBody = await responseMessage.Content.ReadAsStringAsync();
 

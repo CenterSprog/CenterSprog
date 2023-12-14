@@ -1,6 +1,7 @@
 ﻿@page "/admin/users/{username}"
 @using Domain.Models
 @using HttpClients.ClientInterfaces
+@using HttpClients.Implementations
 @attribute [Authorize("MustBeAdmin")]
 @inject IUserService UserService
  
@@ -41,7 +42,7 @@
         DetailedUser = null;
         try
         {
-            DetailedUser = await UserService.GetAsync(Username);
+            DetailedUser = await UserService.GetAsync(Username, UserHttpClient.Jwt);
         }
         catch (Exception e)
         {

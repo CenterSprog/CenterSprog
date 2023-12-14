@@ -87,8 +87,9 @@ public class ClassHttpClient : IClassService
         return participants;
     }
 
-    public async Task<ClassEntity> CreateAsync(ClassCreationDTO dto)
+    public async Task<ClassEntity> CreateAsync(ClassCreationDTO dto,string token)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         HttpResponseMessage response = await _client.PostAsJsonAsync("/classes/", dto);
         string responseBody = await response.Content.ReadAsStringAsync();
 

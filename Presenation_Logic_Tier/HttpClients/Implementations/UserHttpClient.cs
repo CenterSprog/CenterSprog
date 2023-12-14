@@ -101,9 +101,9 @@ public class UserHttpClient : IUserService
         return Task.CompletedTask;
     }
     
-    public async Task<User> CreateUserAsync(UserCreationDTO dto)
+    public async Task<User> CreateUserAsync(UserCreationDTO dto, string token)
     {
-        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Jwt);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         HttpResponseMessage response = await _client.PostAsJsonAsync("/users", dto);
         string responseBody = await response.Content.ReadAsStringAsync();
 
@@ -120,9 +120,9 @@ public class UserHttpClient : IUserService
         return user;
     }
 
-    public async Task<User> GetAsync(string username)
+    public async Task<User> GetAsync(string username,string token)
     {
-        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Jwt);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         HttpResponseMessage response = await _client.GetAsync($"/users/{username}");
         string responseBody = await response.Content.ReadAsStringAsync();
 
@@ -139,9 +139,9 @@ public class UserHttpClient : IUserService
         return user;
     }
 
-    public async Task<IEnumerable<User>> GetAllAsync()
+    public async Task<IEnumerable<User>> GetAllAsync(string token)
     {
-        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Jwt);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         HttpResponseMessage response = await _client.GetAsync($"/users");
         string responseBody = await response.Content.ReadAsStringAsync();
 

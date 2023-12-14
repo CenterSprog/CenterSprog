@@ -2,6 +2,7 @@
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.LessonDTO
 @using Domain.DTOs.ClassDTO
+@using HttpClients.Implementations
 @inject ILessonService lessonService;
 @inject IClassService classService
 
@@ -113,7 +114,7 @@
         SelectedUserList = SelectedUsers.Where(kvp => kvp.Value).Select(kvp => kvp.Key).ToList();
         try
         {
-            var amountOfAttendees = await lessonService.MarkAttendanceAsync(new MarkAttendanceDTO{LessonId = LessonId, StudentUsernames = SelectedUserList});
+            var amountOfAttendees = await lessonService.MarkAttendanceAsync(new MarkAttendanceDTO{LessonId = LessonId, StudentUsernames = SelectedUserList}, UserHttpClient.Jwt);
             Success = $"Attendance was successfully marked. {amountOfAttendees}/{Attendees.Count()} attendees";
             ShowModal = false;
         }

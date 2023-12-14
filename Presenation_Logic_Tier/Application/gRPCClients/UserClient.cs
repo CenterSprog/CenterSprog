@@ -32,18 +32,20 @@ public class UserClient : IUserClient
         return await Task.FromResult(exisingUser);
     }
 
-    public async Task<User> CreateUserAsync(UserCreationDTO dto)
+    public async Task<User> CreateUserAsync(UserCreationDTO dto, string username, string password)
     {
         using var channel = GrpcChannel.ForAddress("http://localhost:1111");
         var client = new UserService.UserServiceClient(channel);
         var request = new RequestCreateUser
         {
-            User = new UserCreationData
+            User = new UserData
             {
                 Email = dto.Email,
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
-                Role = dto.Role
+                Role = dto.Role,
+                Username = username,
+                Password = password
             }
         };
 

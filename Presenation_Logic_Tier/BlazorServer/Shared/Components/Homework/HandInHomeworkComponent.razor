@@ -1,6 +1,7 @@
 ﻿@using Domain.Models
 @using Domain.DTOs.HomeworkDTO
 @using HttpClients.ClientInterfaces
+@using HttpClients.Implementations
 @inject ILessonService lessonService
 @inject IHandInHomeworkService HandInHomeworkService
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -15,7 +16,7 @@
     }
     else
     {
-        <SeeFeedbackComponent LessonId="@lessonId" ClassId="@classId" HandInHomework="@handInHomework"/>
+        <SeeFeedbackComponent HandInId="@handInHomework.Id"/>
     }
     <div class="msg-container">
             @if (Msg != null)
@@ -30,15 +31,15 @@
 @code {
 
     [Parameter]
-    public string lessonId { get; set; }
+    public Lesson MyLesson { get; set; }
 
     [Parameter]
-    public string classId { get; set; }
+    public string ClassId { get; set; }
 
-    Lesson Lesson { get; set; }
-    Homework Homework { get; set; }
     HandInHomework handInHomework { get; set; }
+    
     HomeworkHandInDTO Dto { get; set; }
+    
     Feedback Feedback { get; set; }
 
     public bool HomeworkSubmitted { get; set; }
@@ -47,47 +48,38 @@
 
 
     protected override async Task OnInitializedAsync()
-    {
-        Lesson = await lessonService.GetByIdAsync(lessonId);
+    { 
         Msg = null;
         Answer = null;
         HomeworkSubmitted = false;
         Feedback = new Feedback();
-        Homework = new Homework();
         handInHomework = new HandInHomework();
 
-        await FetchHandinsAsync();
+        await FetchHandInAsync();
 
         await base.OnInitializedAsync();
     }
 
-    private async Task FetchHandinsAsync()
+    private async Task FetchHandInAsync()
     {
+         
+        Msg = null;
+
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var username = user.Identity?.Name;
+        
         try
         {
-            Msg = null;
-            Homework = Lesson.Homework;
-                    
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var user = authState.User;
-            var username = user.Identity?.Name;
-            
-            try
-            {
-                handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync(Homework.Id, username);
-
-                HomeworkSubmitted = handInHomework != null;
-            }
-            catch (Exception e)
-            {
-                HomeworkSubmitted = false;
-                Msg = e.Message;
-            }
+            handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync(MyLesson.Homework.Id, username);
+        
+            HomeworkSubmitted = handInHomework != null;
         }
         catch (Exception e)
         {
-            Msg = e.Message;
+            HomeworkSubmitted = false;
         }
+        
     }
 
     private async Task HandInHomeworkAsync()
@@ -100,13 +92,16 @@
                 StateHasChanged();
                 return;
             }
-
+    
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
             var username = user.Identity?.Name;
             
-            await HandInHomeworkService.HandInHomework(new HomeworkHandInDTO{HomeworkId = Homework.Id, StudentUsername = username, Answer = Answer});
-
+            await HandInHomeworkService.HandInHomework(
+                new HomeworkHandInDTO{HomeworkId = MyLesson.Homework.Id, StudentUsername = username, Answer = Answer},
+                UserHttpClient.Jwt
+            );
+    
             HomeworkSubmitted = true;
             Msg = null;
         }
