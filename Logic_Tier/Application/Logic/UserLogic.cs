@@ -26,10 +26,11 @@ public class UserLogic : IUserLogic
     private readonly IUserClient _userClient;
 
     /**
-    * Purpose: Constructor of the class
-    * Arguments:
-    *   IUserClient userClient -> Client used to handle the user requests
+    * 1-arg constructor containing IUserClient
+    * Purpose: Used for client injection
+    * @param IUserClient userClient
     */
+
     public UserLogic(IUserClient userClient)
     {
         _userClient = userClient;
@@ -37,13 +38,10 @@ public class UserLogic : IUserLogic
 
     /**
     * Purpose: Method used to authenticate a user
-    * Arguments:
-    *   string username -> Username of the user
-    *   string password -> Password of the user
-    * Return:
-    *   Task<User> -> User object
+    * @param string username -> Username of the user
+    * @param string password -> Password of the user
+    * @return Task<User> -> User object
     */
-
     public async Task<User> AuthenticateUserAsync(string username, string password)
     {
         ValidateCredentials(username, password);
@@ -58,12 +56,11 @@ public class UserLogic : IUserLogic
         return await Task.FromResult(authenticatedUser);
     }
 
+
     /**
     * Purpose: Method used to create a user
-    * Arguments:
-    *   UserCreationDTO dto -> DTO used to create a user
-    * Return:
-    *   Task<User> -> User object
+    * @param UserCreationDTO dto -> DTO used to create a user
+    * @return Task<User> -> User object
     */
 
     public async Task<User> CreateUserAsync(UserCreationDTO dto)
@@ -74,15 +71,13 @@ public class UserLogic : IUserLogic
         return await _userClient.CreateUserAsync(dto, userCreationCredentials.Item1, userCreationCredentials.Item2);
     }
 
+
     /**
     * Purpose: Method used to generate user creation credentials
-    * Arguments:
-    *   string firstName -> First name of the user
-    *   int passwordLength -> Length of the password
-    * Return:
-    *   Tuple<string, string> -> Tuple of strings
+    * @param string firstName -> First name of the user
+    * @param int passwordLength -> Length of the password
+    * @return Tuple<string, string> -> Tuple containing the username and password
     */
-
     public Tuple<string, string> GenerateUserCreationCredentials(string firstName, int passwordLength)
     {
 
@@ -96,12 +91,9 @@ public class UserLogic : IUserLogic
 
     /**
     * Purpose: Method used to get a user by username
-    * Arguments:
-    *   string username -> Username of the user
-    * Return:
-    *   Task<User> -> User object
+    * @param string username -> Username of the user
+    * @return Task<User> -> User object
     */
-
     public async Task<User> GetUserByUsernameAsync(string username)
     {
         return await _userClient.GetUserByUsernameAsync(username);
@@ -109,10 +101,7 @@ public class UserLogic : IUserLogic
 
     /**
     * Purpose: Method used to get all users
-    * Arguments:
-    *   void -> void
-    * Return:
-    *   Task<IEnumerable<User>> -> List of User objects
+    * @return Task<IEnumerable<User>> -> List of User objects
     */
 
     public async Task<IEnumerable<User>> GetAllAsync()
@@ -120,13 +109,13 @@ public class UserLogic : IUserLogic
         return await _userClient.GetAllAsync();
     }
 
-    /**
+
+    /** 
     * Purpose: Method used to validate the credentials of a user
-    * Arguments:
-    *   string username -> Username of the user
-    *   string password -> Password of the user
-    * Return:
-    *   void -> void
+    * @param string username -> Username of the user
+    * @param string password -> Password of the user
+    * @throws Exception -> if the username or password is null or empty
+    * @return void -> void
     */
 
     public void ValidateCredentials(string username, string password)
@@ -141,10 +130,10 @@ public class UserLogic : IUserLogic
 
     /**
     * Purpose: Method used to validate the creation of a user
-    * Arguments:
-    *   UserCreationDTO dto -> DTO used to create a user
-    * Return:
-    *   void -> void
+    * Checks if the first name, last name, role and email are valid (not null or empty) and if the first name and last name don't contain spaces on the edges
+    * @param UserCreationDTO dto -> DTO used to create a user
+    * @throws Exception -> if the validation fails
+    * @return void -> void
     */
 
     public void ValidateUserCreation(UserCreationDTO dto)
@@ -162,8 +151,11 @@ public class UserLogic : IUserLogic
         ValidateEmail(dto.Email);
     }
 
+
+
     /**
     * Purpose: Method used to validate the email of a user
+    * Checks if the email is valid (not null or empty) and if the email matches the email pattern
     *     ^: Asserts the start of the string.
     *     [a-zA-Z0-9._-]+: Matches one or more characters that are either letters (both uppercase and lowercase), digits, dots (periods), underscores, or hyphens. This represents the username part of the email.
     *     @: Matches the at symbol, which is a required character in an email address./n\n
@@ -171,10 +163,9 @@ public class UserLogic : IUserLogic
     *     \.: Escapes the dot (period) to match it literally. The dot is a special character in regular expressions, so it needs to be escaped to represent an actual dot.
     *     [a-zA-Z]{2,4}: Matches two to four characters that are either letters (both uppercase and lowercase). This represents the top-level domain (TLD) part of the email.
     *     $: Asserts the end of the string.
-    * Arguments:
-    *   string email -> Email of the user
-    * Return:
-    *   void -> void
+    * @param string email -> Email of the user
+    * @throws Exception -> if the validation fails
+    * @return void -> void
     */
 
     public void ValidateEmail(string email)
@@ -190,11 +181,10 @@ public class UserLogic : IUserLogic
     /**
     * Purpose: Method used to generate a random password
     * Description: Creates a password that contains uppercase and lowercase letters, numbers and special characters
-    * Arguments:
-    *   int length -> Length of the password
-    * Return:
-    *   string -> String
+    * @param int length -> Length of the password
+    * @return string -> String containing the password
     */
+
     static string GenerateRandomPassword(int length)
     {
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+";

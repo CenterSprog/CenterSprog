@@ -18,10 +18,11 @@ public class HomeworkLogic : IHomeworkLogic
     private readonly IHomeworkClient _homeworkClient;
 
     /**
-    * Purpose: Constructor of the class
-    * Arguments:
-    *   IHomeworkClient homeworkClient -> Client used to handle the homework requests
+    * 1-arg constructor containing IHomeworkClient
+    * Purpose: Used for client injection
+    * @param IHomeworkClient homeworkClient
     */
+
 
     public HomeworkLogic(IHomeworkClient homeworkClient)
     {
@@ -30,10 +31,8 @@ public class HomeworkLogic : IHomeworkLogic
 
     /**
     * Purpose: Method used to create a homework
-    * Arguments:
-    *   HomeworkCreationDTO dto -> DTO used to create a homework
-    * Return:
-    *   Task<Homework> -> Homework object
+    * @param HomeworkCreationDTO dto -> DTO used to create a homework
+    * @return Task<Homework> -> Homework object
     */
 
     public async Task<Homework> CreateAsync(HomeworkCreationDTO dto)
@@ -43,12 +42,15 @@ public class HomeworkLogic : IHomeworkLogic
         return await Task.FromResult(createdHomework);
     }
 
+
     /**
-    * Purpose: Method used to validate the creation of a homework
+    * Purpose: Method used to validate the creation of a homework.
     * Checks if the lesson id, title and description are valid (not null or empty) and if the description is at least 10 characters long
-    * Arguments:
-    *   HomeworkCreationDTO dto -> DTO used to create a homework
+    * @param HomeworkCreationDTO dto -> DTO used to create a homework
+    * @throws Exception - if the lesson id is null or empty
+    * @return void
     */
+
     public void ValidateHomeworkCreation(HomeworkCreationDTO dto)
     {
         if (string.IsNullOrWhiteSpace(dto.LessonId))

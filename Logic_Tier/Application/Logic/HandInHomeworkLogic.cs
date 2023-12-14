@@ -20,9 +20,9 @@ public class HandInHomeworkLogic : IHandInHomeworkLogic
     private readonly IHandInHomeworkClient _handInHomeworkClient;
 
     /**
-    * Purpose: Constructor of the class
-    * Arguments:
-    *   IHandInHomeworkClient handInHomeworkClient -> Client used to handle the hand in homework requests
+    * 1-arg constructor containing IHandInHomeworkClient
+    * Purpose: Used for client injection
+    * @param IHandInHomeworkClient handInHomeworkClient
     */
 
     public HandInHomeworkLogic(IHandInHomeworkClient handInHomeworkClient)
@@ -32,10 +32,8 @@ public class HandInHomeworkLogic : IHandInHomeworkLogic
 
     /**
     * Purpose: Method used to hand in a homework
-    * Arguments:
-    *   HomeworkHandInDTO dto -> DTO used to hand in a homework
-    * Return:
-    *   Task<HandInHomework> -> HandInHomework object
+    * @param HomeworkHandInDTO dto -> DTO used to hand in a homework
+    * @return Task<HandInHomework> -> HandInHomework object
     */
     public async Task<HandInHomework> HandInHomework(HomeworkHandInDTO dto)
     {
@@ -46,11 +44,10 @@ public class HandInHomeworkLogic : IHandInHomeworkLogic
 
     /**
     * Purpose: Method used to get all hand ins by homework id
-    * Arguments:
-    *   string homeworkId -> Id of the homework
-    * Return:
-    *   Task<IEnumerable<HandInHomework>> -> List of HandInHomework objects
+    * @param string homeworkId -> Id of the homework
+    * @return Task<IEnumerable<HandInHomework>> -> List of HandInHomework objects
     */
+
 
     public async Task<IEnumerable<HandInHomework>> GetHandInsByHomeworkIdAsync(string homeworkId)
     {
@@ -59,11 +56,9 @@ public class HandInHomeworkLogic : IHandInHomeworkLogic
 
     /**
     * Purpose: Method used to get a hand in by homework id and student username
-    * Arguments:
-    *   string homeworkId -> Id of the homework
-    *   string studentUsername -> Username of the student
-    * Return:
-    *   Task<HandInHomework> -> HandInHomework object
+    * @param string homeworkId -> Id of the homework
+    * @param string studentUsername -> Username of the student
+    * @return Task<HandInHomework> -> HandInHomework object
     */
 
     public async Task<HandInHomework> GetHandInByHomeworkIdAndStudentUsernameAsync(string homeworkId,
@@ -73,14 +68,13 @@ public class HandInHomeworkLogic : IHandInHomeworkLogic
     }
 
     /**
-    * Purpose: Method used to validate the creation of a hand in
-    * Checks if the student username, homework id and answer are valid (not null or empty) and if the answer is not white space
-    * Arguments:
-    *   HomeworkHandInDTO dto -> DTO used to hand in a homework
-    * Return:
-    *   void -> void
+    * Purpose: Method used to validate the creation of a hand in.
+    * Checks if the student username, homework id and answer are valid (not null or empty)
+    * @param HomeworkHandInDTO dto -> DTO used to hand in a homework
+    * @throws Exception - if the student username is null or empty
+    
+    * @return void
     */
-
     public void ValidateHandInCreation(HomeworkHandInDTO dto)
     {
         if (string.IsNullOrEmpty(dto.StudentUsername))

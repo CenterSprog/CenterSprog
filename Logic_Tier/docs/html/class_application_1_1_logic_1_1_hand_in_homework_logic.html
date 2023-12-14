@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Logic_Tier: Application.Logic.HandInHomeworkLogic Class Reference</title>
+<title>Logic_tier: Application.Logic.HandInHomeworkLogic Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Logic_Tier
+   <div id="projectname">Logic_tier
    </div>
   </td>
  </tr>
@@ -138,7 +138,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Constructor of the class Arguments: IHandInHomeworkClient handInHomeworkClient -&gt; Client used to handle the hand in homework requests </p>
+<p>1-arg constructor containing IHandInHomeworkClient Purpose: Used for client injection </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">IHandInHomeworkClient</td><td>handInHomeworkClient </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="_hand_in_homework_logic_8cs_source.html#l00028">28</a> of file <a class="el" href="_hand_in_homework_logic_8cs_source.html">HandInHomeworkLogic.cs</a>.</p>
 
@@ -170,11 +175,18 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to get a hand in by homework id and student username Arguments: string homeworkId -&gt; Id of the homework string studentUsername -&gt; Username of the student Return: Task&lt;HandInHomework&gt; -&gt; HandInHomework object </p>
+<p>Purpose: Method used to get a hand in by homework id and student username </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>homeworkId -&gt; Id of the homework </td></tr>
+    <tr><td class="paramname">string</td><td>studentUsername -&gt; Username of the student </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;HandInHomework&gt; -&gt; HandInHomework object </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_hand_in_homework_logic.html#aa20d0025845d7414a4d566a3bb737ce7">Application.LogicInterfaces.IHandInHomeworkLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_hand_in_homework_logic_8cs_source.html#l00069">69</a> of file <a class="el" href="_hand_in_homework_logic_8cs_source.html">HandInHomeworkLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_hand_in_homework_logic_8cs_source.html#l00064">64</a> of file <a class="el" href="_hand_in_homework_logic_8cs_source.html">HandInHomeworkLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -193,11 +205,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to get all hand ins by homework id Arguments: string homeworkId -&gt; Id of the homework Return: Task&lt;IEnumerable&lt;HandInHomework&gt;&gt; -&gt; List of HandInHomework objects </p>
+<p>Purpose: Method used to get all hand ins by homework id </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>homeworkId -&gt; Id of the homework </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;IEnumerable&lt;HandInHomework&gt;&gt; -&gt; List of HandInHomework objects </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_hand_in_homework_logic.html#a766493c50999e22b1a45124a3690f81b">Application.LogicInterfaces.IHandInHomeworkLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_hand_in_homework_logic_8cs_source.html#l00055">55</a> of file <a class="el" href="_hand_in_homework_logic_8cs_source.html">HandInHomeworkLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_hand_in_homework_logic_8cs_source.html#l00052">52</a> of file <a class="el" href="_hand_in_homework_logic_8cs_source.html">HandInHomeworkLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -216,11 +234,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to hand in a homework Arguments: HomeworkHandInDTO dto -&gt; DTO used to hand in a homework Return: Task&lt;HandInHomework&gt; -&gt; HandInHomework object </p>
+<p>Purpose: Method used to hand in a homework </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">HomeworkHandInDTO</td><td>dto -&gt; DTO used to hand in a homework </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;HandInHomework&gt; -&gt; HandInHomework object </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_hand_in_homework_logic.html#ac648091b3da14619a65a6743d2cf81a8">Application.LogicInterfaces.IHandInHomeworkLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_hand_in_homework_logic_8cs_source.html#l00040">40</a> of file <a class="el" href="_hand_in_homework_logic_8cs_source.html">HandInHomeworkLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_hand_in_homework_logic_8cs_source.html#l00038">38</a> of file <a class="el" href="_hand_in_homework_logic_8cs_source.html">HandInHomeworkLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -239,9 +263,21 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to validate the creation of a hand in Checks if the student username, homework id and answer are valid (not null or empty) and if the answer is not white space Arguments: HomeworkHandInDTO dto -&gt; DTO used to hand in a homework Return: void -&gt; void </p>
+<p>Purpose: Method used to validate the creation of a hand in. Checks if the student username, homework id and answer are valid (not null or empty) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">HomeworkHandInDTO</td><td>dto -&gt; DTO used to hand in a homework </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>- if the student username is null or empty</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_hand_in_homework_logic_8cs_source.html#l00084">84</a> of file <a class="el" href="_hand_in_homework_logic_8cs_source.html">HandInHomeworkLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_hand_in_homework_logic_8cs_source.html#l00078">78</a> of file <a class="el" href="_hand_in_homework_logic_8cs_source.html">HandInHomeworkLogic.cs</a>.</p>
 
 </div>
 </div>

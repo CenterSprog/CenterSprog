@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Logic_Tier: Application.Logic.ClassLogic Class Reference</title>
+<title>Logic_tier: Application.Logic.ClassLogic Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Logic_Tier
+   <div id="projectname">Logic_tier
    </div>
   </td>
  </tr>
@@ -146,7 +146,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Constructor of the class Arguments: IClassClient classClient -&gt; Client used to handle the class requests </p>
+<p>1-arg constructor containing IClassClient Purpose: Used for client injection </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">IClassClient</td><td>classClient </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00035">35</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
 
@@ -168,11 +173,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to create a class Arguments: ClassCreationDTO dto -&gt; DTO used to create a class Return: Task&lt;ClassEntity&gt; -&gt; ClassEntity object </p>
+<p>Purpose: Method used to create a class </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ClassCreationDTO</td><td>dto -&gt; DTO used to create a class </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;ClassEntity&gt; -&gt; ClassEntity object </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_class_logic.html#acb435d5d95c6061665a45d426ac4af1d">Application.LogicInterfaces.IClassLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00088">88</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00080">80</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -191,11 +202,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to get all classes Arguments: SearchClassDTO dto -&gt; DTO used to search for classes Return: Task&lt;IEnumerable&lt;ClassEntity&gt;&gt; -&gt; List of ClassEntity objects </p>
+<p>Purpose: Method used to get all classes </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">SearchClassDTO</td><td>dto -&gt; DTO used to search for classes </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;IEnumerable&lt;ClassEntity&gt;&gt; -&gt; List of ClassEntity objects </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_class_logic.html#a98a5390b92dea8627fada31598364cc3">Application.LogicInterfaces.IClassLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00061">61</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00057">57</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -214,11 +231,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to get all participants of a class Arguments: SearchClassParticipantsDTO dto -&gt; DTO used to search for participants Return: Task&lt;IEnumerable&lt;User&gt;&gt; -&gt; List of User objects </p>
+<p>Purpose: Method used to get all participants of a class </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">SearchClassParticipantsDTO</td><td>dto -&gt; DTO used to search for participants </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;IEnumerable&lt;User&gt;&gt; -&gt; List of User objects </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_class_logic.html#a5f00a7114f783ae4b6f8727a25f4acca">Application.LogicInterfaces.IClassLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00074">74</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00068">68</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -237,11 +260,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to get a class by id Arguments: string id -&gt; Id of the class Return: Task&lt;ClassEntity&gt; -&gt; ClassEntity object </p>
+<p>Purpose: Method used to get a class by id </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>id -&gt; Id of the class </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;ClassEntity&gt; -&gt; ClassEntity object </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_class_logic.html#a6bf2bf3b73ee58920ed1188165ae21d5">Application.LogicInterfaces.IClassLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00048">48</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00046">46</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -260,11 +289,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to get the attendance of a class Arguments: string id -&gt; Id of the class Return: Task&lt;IEnumerable&lt;UserAttendanceDTO&gt;&gt; -&gt; List of UserAttendanceDTO objects </p>
+<p>Purpose: Method used to get the attendance of a class </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>id -&gt; Id of the class </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;IEnumerable&lt;UserAttendanceDTO&gt;&gt; -&gt; List of UserAttendanceDTO objects </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_class_logic.html#a5d76b8ac992d184ef74baa82f4a9abde">Application.LogicInterfaces.IClassLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00143">143</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00130">130</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -283,11 +318,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to get the attendance of a class by username Arguments: SearchClassAttendanceDTO dto -&gt; DTO used to search for the attendance Return: Task&lt;IEnumerable&lt;LessonAttendanceDTO&gt;&gt; -&gt; List of LessonAttendanceDTO objects </p>
+<p>Purpose: Method used to get the attendance of a class by username </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">SearchClassAttendanceDTO</td><td>dto -&gt; DTO used to search for the attendance of a class </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;IEnumerable&lt;LessonAttendanceDTO&gt;&gt; -&gt; List of LessonAttendanceDTO objects </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_class_logic.html#a53d83640d84f5daa5ea87975587ad8c7">Application.LogicInterfaces.IClassLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00122">122</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00110">110</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -306,11 +347,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to update a class Arguments: ClassUpdateDTO dto -&gt; DTO used to update a class Return: Task&lt;bool&gt; -&gt; Boolean value </p>
+<p>Purpose: Method used to update a class </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ClassUpdateDTO</td><td>dto -&gt; DTO used to update a class </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;bool&gt; -&gt; Boolean value </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_class_logic.html#affb1c49efce451065d2aca12332447be">Application.LogicInterfaces.IClassLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00103">103</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00092">92</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -329,9 +376,25 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to validate the creation of a class Checks it the title and room are not null or empty Arguments: ClassCreationDTO dto -&gt; DTO used to create a class Return: void </p>
+<p>Purpose: Method used to validate the creation of a class Validation:</p><ul>
+<li>Title is required</li>
+<li>Room is required <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ClassCreationDTO</td><td>dto -&gt; DTO used to create a class </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>-&gt; If the title or room is null or empty </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+</li>
+</ul>
 
-<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00183">183</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_logic_8cs_source.html#l00171">171</a> of file <a class="el" href="_class_logic_8cs_source.html">ClassLogic.cs</a>.</p>
 
 </div>
 </div>

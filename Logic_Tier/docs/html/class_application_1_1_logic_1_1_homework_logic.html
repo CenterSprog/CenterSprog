@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Logic_Tier: Application.Logic.HomeworkLogic Class Reference</title>
+<title>Logic_tier: Application.Logic.HomeworkLogic Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Logic_Tier
+   <div id="projectname">Logic_tier
    </div>
   </td>
  </tr>
@@ -134,9 +134,14 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Constructor of the class Arguments: IHomeworkClient homeworkClient -&gt; Client used to handle the homework requests </p>
+<p>1-arg constructor containing IHomeworkClient Purpose: Used for client injection </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">IHomeworkClient</td><td>homeworkClient </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="_homework_logic_8cs_source.html#l00026">26</a> of file <a class="el" href="_homework_logic_8cs_source.html">HomeworkLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_homework_logic_8cs_source.html#l00027">27</a> of file <a class="el" href="_homework_logic_8cs_source.html">HomeworkLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -156,11 +161,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to create a homework Arguments: HomeworkCreationDTO dto -&gt; DTO used to create a homework Return: Task&lt;Homework&gt; -&gt; Homework object </p>
+<p>Purpose: Method used to create a homework </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">HomeworkCreationDTO</td><td>dto -&gt; DTO used to create a homework </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;Homework&gt; -&gt; Homework object </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_homework_logic.html#a47be0ebb32428cc72e29182f2309b2fc">Application.LogicInterfaces.IHomeworkLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_homework_logic_8cs_source.html#l00039">39</a> of file <a class="el" href="_homework_logic_8cs_source.html">HomeworkLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_homework_logic_8cs_source.html#l00038">38</a> of file <a class="el" href="_homework_logic_8cs_source.html">HomeworkLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -179,9 +190,21 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to validate the creation of a homework Checks if the lesson id, title and description are valid (not null or empty) and if the description is at least 10 characters long Arguments: HomeworkCreationDTO dto -&gt; DTO used to create a homework </p>
+<p>Purpose: Method used to validate the creation of a homework. Checks if the lesson id, title and description are valid (not null or empty) and if the description is at least 10 characters long </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">HomeworkCreationDTO</td><td>dto -&gt; DTO used to create a homework </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>- if the lesson id is null or empty </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_homework_logic_8cs_source.html#l00052">52</a> of file <a class="el" href="_homework_logic_8cs_source.html">HomeworkLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_homework_logic_8cs_source.html#l00054">54</a> of file <a class="el" href="_homework_logic_8cs_source.html">HomeworkLogic.cs</a>.</p>
 
 </div>
 </div>
