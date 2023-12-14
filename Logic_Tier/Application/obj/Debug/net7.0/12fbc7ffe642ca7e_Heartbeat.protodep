@@ -1,0 +1,3 @@
+obj\Debug\net7.0\Protos/Heartbeat.cs \
+obj\Debug\net7.0\Protos/HeartbeatGrpc.cs: C:/Users/Damian/.nuget/packages/grpc.tools/2.58.0/build/native/include/google/protobuf/empty.proto\
+ Protos/Heartbeat.proto

@@ -1,0 +1,59 @@
+.add-icon-container[b-2e45fvily7] {
+    position: absolute;
+    top: 40px; 
+    right: 60px;
+    cursor: pointer;
+}
+.modal-container[b-2e45fvily7] {
+    position: relative;
+}
+.modal-header[b-2e45fvily7] {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 15px;
+    border: none;
+}
+
+.close-button[b-2e45fvily7] {
+    position: absolute;
+    right: 10px;
+    font-size: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: grey;
+}
+.button-container[b-2e45fvily7] {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.msg-container[b-2e45fvily7]{
+    margin-top: 10px;
+    color: red;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+button[b-2e45fvily7] {
+    border: none;
+    border-radius: 15px;
+}
+.modal-body[b-2e45fvily7] {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group[b-2e45fvily7] {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label[b-2e45fvily7] {
+    margin-bottom: 0.5rem;
+}

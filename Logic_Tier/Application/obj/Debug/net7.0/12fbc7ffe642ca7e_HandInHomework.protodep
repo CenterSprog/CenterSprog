@@ -1,0 +1,3 @@
+obj\Debug\net7.0\Protos/HandInHomework.cs \
+obj\Debug\net7.0\Protos/HandInHomeworkGrpc.cs: Protos/Feedback.proto\
+ Protos/HandInHomework.proto

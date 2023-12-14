@@ -23,7 +23,7 @@ public class HandInHomeworkEntity {
 		)
 	private HomeworkEntity homework;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn
 			(
 					name = "feedbackId"

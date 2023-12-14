@@ -98,6 +98,13 @@ import java.util.Optional;
         HandInHomework message = HandInHomework.newBuilder()
             .setId(entity.getId()).setAnswer(entity.getAnswer())
             .setStudentUsername(studentUsername).build();
+
+        if(entity.getFeedback()!=null)
+          message = message.toBuilder().setFeedback(
+                  Feedback.newBuilder().setComment(entity.getFeedback().getComment())
+                          .setGrade(entity.getFeedback().getGrade()).build()
+          ).build();
+
         handInMessages.add(message);
       }
 
@@ -138,9 +145,17 @@ import java.util.Optional;
       {
         HandInHomeworkEntity entity = handInHomework.get();
 
+
         HandInHomework handInMessage = HandInHomework.newBuilder()
             .setId(entity.getId()).setAnswer(entity.getAnswer())
-            .setStudentUsername(user.get().getUsername()).build();
+            .setStudentUsername(user.get().getUsername()).buildPartial();
+
+        if(entity.getFeedback() != null)
+          handInMessage = handInMessage.toBuilder().setFeedback(
+                  Feedback.newBuilder().setGrade(entity.getFeedback().getGrade())
+                          .setComment(entity.getFeedback().getComment())
+                          .build()
+          ).build();
 
         response.onNext(ResponseGetHandInHomework.newBuilder()
             .setHandInHomework(handInMessage).build());

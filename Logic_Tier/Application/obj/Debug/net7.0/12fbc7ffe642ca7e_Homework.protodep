@@ -1,0 +1,2 @@
+obj\Debug\net7.0\Protos/Homework.cs \
+obj\Debug\net7.0\Protos/HomeworkGrpc.cs: Protos/Homework.proto

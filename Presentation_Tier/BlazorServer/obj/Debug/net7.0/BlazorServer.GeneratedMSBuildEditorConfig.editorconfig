@@ -1,0 +1,179 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = BlazorServer
+build_property.RootNamespace = BlazorServer
+build_property.ProjectDir = C:\Users\Damian\Desktop\SOFTWARE ENGINEERING\CenterSprog\Presentation_Tier\BlazorServer\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Damian\Desktop\SOFTWARE ENGINEERING\CenterSprog\Presentation_Tier\BlazorServer
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Pages/Admin/AdminOverviewUsers.razor]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQWRtaW5PdmVydmlld1VzZXJzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Pages/Admin/AdminRegister.razor]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQWRtaW5SZWdpc3Rlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Pages/Admin/AdminUserDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQWRtaW5Vc2VyRGV0YWlscy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Pages/Class/ClassDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xhc3NcQ2xhc3NEZXRhaWxzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = b-qy9jyf0u68
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/Components/Admin/RegisterClassComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcQWRtaW5cUmVnaXN0ZXJDbGFzc0NvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/Components/Admin/RegisterUserComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcQWRtaW5cUmVnaXN0ZXJVc2VyQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/Components/Attendance/ClassAttendanceComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcQXR0ZW5kYW5jZVxDbGFzc0F0dGVuZGFuY2VDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/Components/Attendance/MarkAttendanceComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcQXR0ZW5kYW5jZVxNYXJrQXR0ZW5kYW5jZUNvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/Components/Attendance/SingleUserAttendanceComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcQXR0ZW5kYW5jZVxTaW5nbGVVc2VyQXR0ZW5kYW5jZUNvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/Components/Class/ParticipantsComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcQ2xhc3NcUGFydGljaXBhbnRzQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/Components/Homework/AssignHomeworkComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcSG9tZXdvcmtcQXNzaWduSG9tZXdvcmtDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = b-2e45fvily7
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/Components/Homework/HandInHomeworkComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcSG9tZXdvcmtcSGFuZEluSG9tZXdvcmtDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = b-26yr4wnsz7
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/Components/Homework/SeeFeedbackComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcSG9tZXdvcmtcU2VlRmVlZGJhY2tDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = b-8yb9yf7wmk
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/Components/Homework/ViewSubmittedHomeworksComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcSG9tZXdvcmtcVmlld1N1Ym1pdHRlZEhvbWV3b3Jrc0NvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = b-9ww936yajf
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/Components/Lesson/LessonDetailComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcTGVzc29uXExlc3NvbkRldGFpbENvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = b-sjlqnu15x3
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Pages/Admin/AdminAssignClass.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQWRtaW5Bc3NpZ25DbGFzcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Pages/Admin/AdminMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQWRtaW5NZW51LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Pages/Lesson/CreateLesson.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVzc29uXENyZWF0ZUxlc3Nvbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Pages/Lesson/UpdateLesson.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVzc29uXFVwZGF0ZUxlc3Nvbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/Components/DateDisplayComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcRGF0ZURpc3BsYXlDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Pages/Class/ClassesOverview.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xhc3NcQ2xhc3Nlc092ZXJ2aWV3LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-gxr29iq2ru
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-x8xvoqa0o7
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Pages/Lesson/LessonDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVzc29uXExlc3NvbkRldGFpbHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-lnhfxm1mn0
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Pages/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-7rls8y6kev
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Pages/SubmittedHomeworks.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VibWl0dGVkSG9tZXdvcmtzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-s3j8p09d4e
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/Components/LoginButtons.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcTG9naW5CdXR0b25zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-7lptbih2cw
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/Components/Modal.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-1n0osy5mk8
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-mxoy4q7bj7
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-9s0xq2xzhp
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Damian/Desktop/SOFTWARE ENGINEERING/CenterSprog/Presentation_Tier/BlazorServer/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 

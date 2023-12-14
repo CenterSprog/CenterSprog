@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "eHKhhfjC0vR4ZWQlEephN9/1600yNC7UP8xH5/7NG+HHfNLPiWWR2r3IPnrka3wsSfCmqXo386wNvOls08hkgg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Damian\\Desktop\\SOFTWARE ENGINEERING\\CenterSprog\\Presentation_Tier\\HttpClients\\HttpClients.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Damian\\.nuget\\packages\\microsoft.aspnetcore.authorization\\7.0.14\\microsoft.aspnetcore.authorization.7.0.14.nupkg.sha512",
+    "C:\\Users\\Damian\\.nuget\\packages\\microsoft.aspnetcore.metadata\\7.0.14\\microsoft.aspnetcore.metadata.7.0.14.nupkg.sha512",
+    "C:\\Users\\Damian\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
+    "C:\\Users\\Damian\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\Damian\\.nuget\\packages\\microsoft.extensions.logging\\8.0.0\\microsoft.extensions.logging.8.0.0.nupkg.sha512",
+    "C:\\Users\\Damian\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\Damian\\.nuget\\packages\\microsoft.extensions.options\\8.0.0\\microsoft.extensions.options.8.0.0.nupkg.sha512",
+    "C:\\Users\\Damian\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
