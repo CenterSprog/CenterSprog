@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "Logic_Tier", "index.html", [
+  [ "Logic_tier", "index.html", [
     [ "Packages", "namespaces.html", [
       [ "Package List", "namespaces.html", "namespaces_dup" ]
     ] ],

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Logic_Tier: Application.Logic.UserLogic Class Reference</title>
+<title>Logic_tier: Application.Logic.UserLogic Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Logic_Tier
+   <div id="projectname">Logic_tier
    </div>
   </td>
  </tr>
@@ -146,9 +146,14 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Constructor of the class Arguments: IUserClient userClient -&gt; Client used to handle the user requests </p>
+<p>1-arg constructor containing IUserClient Purpose: Used for client injection </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">IUserClient</td><td>userClient </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00033">33</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00034">34</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -178,11 +183,18 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to authenticate a user Arguments: string username -&gt; Username of the user string password -&gt; Password of the user Return: Task&lt;User&gt; -&gt; User object </p>
+<p>Purpose: Method used to authenticate a user </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>username -&gt; Username of the user </td></tr>
+    <tr><td class="paramname">string</td><td>password -&gt; Password of the user </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;User&gt; -&gt; User object </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_user_logic.html#aad87d5feb5cdee7dcea858aacb4be711">Application.LogicInterfaces.IUserLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00047">47</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00045">45</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -201,11 +213,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to create a user Arguments: UserCreationDTO dto -&gt; DTO used to create a user Return: Task&lt;User&gt; -&gt; User object </p>
+<p>Purpose: Method used to create a user </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">UserCreationDTO</td><td>dto -&gt; DTO used to create a user </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;User&gt; -&gt; User object </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_user_logic.html#a8c3cef4f2c0bb7d0ff5ad6d003491b16">Application.LogicInterfaces.IUserLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00069">69</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00066">66</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -234,9 +252,16 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to generate user creation credentials Arguments: string firstName -&gt; First name of the user int passwordLength -&gt; Length of the password Return: Tuple&lt;string, string&gt; -&gt; Tuple of strings </p>
+<p>Purpose: Method used to generate user creation credentials </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>firstName -&gt; First name of the user </td></tr>
+    <tr><td class="paramname">int</td><td>passwordLength -&gt; Length of the password </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Tuple&lt;string, string&gt; -&gt; Tuple containing the username and password </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00086">86</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00081">81</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -254,11 +279,11 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to get all users Arguments: void -&gt; void Return: Task&lt;IEnumerable&lt;User&gt;&gt; -&gt; List of User objects </p>
+<p>Purpose: Method used to get all users </p><dl class="section return"><dt>Returns</dt><dd>Task&lt;IEnumerable&lt;User&gt;&gt; -&gt; List of User objects </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_user_logic.html#a807338cf1ebbf4b3e944266e19a27725">Application.LogicInterfaces.IUserLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00118">118</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00107">107</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -277,11 +302,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to get a user by username Arguments: string username -&gt; Username of the user Return: Task&lt;User&gt; -&gt; User object </p>
+<p>Purpose: Method used to get a user by username </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>username -&gt; Username of the user </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;User&gt; -&gt; User object </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_user_logic.html#ac84514f2da57352ab35463cedc3b8f5b">Application.LogicInterfaces.IUserLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00105">105</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00097">97</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -310,9 +341,22 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to validate the credentials of a user Arguments: string username -&gt; Username of the user string password -&gt; Password of the user Return: void -&gt; void </p>
+<p>Purpose: Method used to validate the credentials of a user </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>username -&gt; Username of the user </td></tr>
+    <tr><td class="paramname">string</td><td>password -&gt; Password of the user </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>-&gt; if the username or password is null or empty </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void -&gt; void </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00132">132</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00121">121</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -331,10 +375,22 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to validate the email of a user ^: Asserts the start of the string. [a-zA-Z0-9._-]+: Matches one or more characters that are either letters (both uppercase and lowercase), digits, dots (periods), underscores, or hyphens. This represents the username part of the email. @: Matches the at symbol, which is a required character in an email address./n<br  />
- [a-zA-Z0-9.-]+: Matches one or more characters that are either letters (both uppercase and lowercase), digits, dots (periods), or hyphens. This represents the domain name part of the email. .: Escapes the dot (period) to match it literally. The dot is a special character in regular expressions, so it needs to be escaped to represent an actual dot. [a-zA-Z]{2,4}: Matches two to four characters that are either letters (both uppercase and lowercase). This represents the top-level domain (TLD) part of the email. $: Asserts the end of the string. Arguments: string email -&gt; Email of the user Return: void -&gt; void </p>
+<p>Purpose: Method used to validate the email of a user Checks if the email is valid (not null or empty) and if the email matches the email pattern ^: Asserts the start of the string. [a-zA-Z0-9._-]+: Matches one or more characters that are either letters (both uppercase and lowercase), digits, dots (periods), underscores, or hyphens. This represents the username part of the email. @: Matches the at symbol, which is a required character in an email address./n<br  />
+ [a-zA-Z0-9.-]+: Matches one or more characters that are either letters (both uppercase and lowercase), digits, dots (periods), or hyphens. This represents the domain name part of the email. .: Escapes the dot (period) to match it literally. The dot is a special character in regular expressions, so it needs to be escaped to represent an actual dot. [a-zA-Z]{2,4}: Matches two to four characters that are either letters (both uppercase and lowercase). This represents the top-level domain (TLD) part of the email. $: Asserts the end of the string. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>email -&gt; Email of the user </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>-&gt; if the validation fails </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void -&gt; void </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00180">180</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00171">171</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -353,9 +409,21 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to validate the creation of a user Arguments: UserCreationDTO dto -&gt; DTO used to create a user Return: void -&gt; void </p>
+<p>Purpose: Method used to validate the creation of a user Checks if the first name, last name, role and email are valid (not null or empty) and if the first name and last name don't contain spaces on the edges </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">UserCreationDTO</td><td>dto -&gt; DTO used to create a user </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>-&gt; if the validation fails </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void -&gt; void </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00150">150</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_user_logic_8cs_source.html#l00139">139</a> of file <a class="el" href="_user_logic_8cs_source.html">UserLogic.cs</a>.</p>
 
 </div>
 </div>

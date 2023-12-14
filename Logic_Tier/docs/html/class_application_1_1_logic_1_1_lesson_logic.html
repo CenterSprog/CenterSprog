@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Logic_Tier: Application.Logic.LessonLogic Class Reference</title>
+<title>Logic_tier: Application.Logic.LessonLogic Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Logic_Tier
+   <div id="projectname">Logic_tier
    </div>
   </td>
  </tr>
@@ -144,9 +144,14 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Constructor of the class Arguments: ILessonClient lessonClient -&gt; Client used to handle the lesson requests </p>
+<p>1-arg constructor containing ILessonClient Purpose: Used for client injection </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ILessonClient</td><td>lessonClient </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00032">32</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00033">33</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -166,11 +171,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to create a lesson Arguments: LessonCreationDTO lessonCreationDto -&gt; DTO used to create a lesson Return: Task&lt;Lesson&gt; -&gt; Lesson object </p>
+<p>Purpose: Method used to create a lesson </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">LessonCreationDTO</td><td>lessonCreationDto -&gt; DTO used to create a lesson </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;Lesson&gt; -&gt; Lesson object </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_lesson_logic.html#a8635e5039909b80e0190ebc75f2f2132">Application.LogicInterfaces.ILessonLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00085">85</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00078">78</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -189,11 +200,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to delete a lesson Arguments: string lessonId -&gt; Id of the lesson Return: Task&lt;Boolean&gt; -&gt; Boolean value </p>
+<p>Purpose: Method used to delete a lesson </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>lessonId -&gt; Id of the lesson </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;Boolean&gt; -&gt; Boolean value </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_lesson_logic.html#ab747049131d6ba79267a81455754420f">Application.LogicInterfaces.ILessonLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00102">102</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00092">92</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -212,11 +229,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to get attendance Arguments: string id -&gt; Id of the lesson Return: Task&lt;IEnumerable&lt;User&gt;&gt; -&gt; List of User objects </p>
+<p>Purpose: Method used to get attendance </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>id -&gt; Id of the lesson </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;IEnumerable&lt;User&gt;&gt; -&gt; List of User objects </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_lesson_logic.html#ad3375029330b4b393f4310a021ef8788">Application.LogicInterfaces.ILessonLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00071">71</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00067">67</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -235,11 +258,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to get a lesson by id Arguments: string id -&gt; Id of the lesson Return: Task&lt;Lesson&gt; -&gt; Lesson object </p>
+<p>Purpose: Method used to get a lesson by id </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>id -&gt; Id of the lesson </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;Lesson&gt; -&gt; Lesson object </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_lesson_logic.html#acb50ae482592dc0c5bf5cd6b3c3f0b34">Application.LogicInterfaces.ILessonLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00045">45</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00044">44</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -258,11 +287,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to mark attendance Arguments: MarkAttendanceDTO markAttendanceDto -&gt; DTO used to mark attendance Return: Task&lt;int&gt; -&gt; Number of students that were marked as present </p>
+<p>Purpose: Method used to mark attendance </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">MarkAttendanceDTO</td><td>markAttendanceDto -&gt; DTO used to mark attendance </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;int&gt; -&gt; int value </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_lesson_logic.html#ac2922492db6594f84fcfce2376fa043f">Application.LogicInterfaces.ILessonLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00058">58</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00056">56</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -281,11 +316,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to update a lesson Arguments: LessonUpdateDTO lessonUpdateDto -&gt; DTO used to update a lesson Return: Task&lt;Boolean&gt; -&gt; Boolean value </p>
+<p>Purpose: Method used to update a lesson </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">LessonUpdateDTO</td><td>lessonUpdateDto -&gt; DTO used to update a lesson </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Task&lt;Boolean&gt; -&gt; Boolean value </dd></dl>
 
 <p>Implements <a class="el" href="interface_application_1_1_logic_interfaces_1_1_i_lesson_logic.html#aa825df0f0a629bc720b540a764bc8920">Application.LogicInterfaces.ILessonLogic</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00115">115</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00102">102</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
 
 </div>
 </div>
@@ -326,9 +367,24 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Purpose: Method used to validate the creation and update of a lesson Checks if the lesson id, topic, description and date are valid (not null or empty) and if the topic is at least 3 characters long and the description is at least 10 characters long Arguments: string topic -&gt; Topic of the lesson string description -&gt; Description of the lesson long date -&gt; Date of the lesson string id -&gt; Id of the lesson Return: void -&gt; void </p>
+<p>Purpose: Method used to validate the creation and update of a lesson Checks if the lesson id, topic, description and date are valid (not null or empty) and if the topic is at least 3 characters long and the description is at least 10 characters long </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>topic -&gt; Topic of the lesson </td></tr>
+    <tr><td class="paramname">string</td><td>description -&gt; Description of the lesson </td></tr>
+    <tr><td class="paramname">long</td><td>date -&gt; Date of the lesson </td></tr>
+    <tr><td class="paramname">string</td><td>id -&gt; Id of the lesson </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>-&gt; Exception if the validation fails </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00133">133</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_lesson_logic_8cs_source.html#l00121">121</a> of file <a class="el" href="_lesson_logic_8cs_source.html">LessonLogic.cs</a>.</p>
 
 </div>
 </div>

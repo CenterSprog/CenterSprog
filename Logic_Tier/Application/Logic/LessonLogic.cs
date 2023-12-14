@@ -25,10 +25,11 @@ public class LessonLogic : ILessonLogic
     private readonly ILessonClient _lessonClient;
 
     /**
-    * Purpose: Constructor of the class
-    * Arguments:
-    *   ILessonClient lessonClient -> Client used to handle the lesson requests
+    * 1-arg constructor containing ILessonClient
+    * Purpose: Used for client injection
+    * @param ILessonClient lessonClient
     */
+
     public LessonLogic(ILessonClient lessonClient)
     {
         _lessonClient = lessonClient;
@@ -36,10 +37,8 @@ public class LessonLogic : ILessonLogic
 
     /**
     * Purpose: Method used to get a lesson by id
-    * Arguments:
-    *   string id -> Id of the lesson
-    * Return:
-    *   Task<Lesson> -> Lesson object
+    * @param string id -> Id of the lesson
+    * @return Task<Lesson> -> Lesson object
     */
 
     public async Task<Lesson> GetByIdAsync(string id)
@@ -49,11 +48,10 @@ public class LessonLogic : ILessonLogic
 
     /**
     * Purpose: Method used to mark attendance
-    * Arguments:
-    *   MarkAttendanceDTO markAttendanceDto -> DTO used to mark attendance
-    * Return:
-    *   Task<int> -> Number of students that were marked as present
+    * @param MarkAttendanceDTO markAttendanceDto -> DTO used to mark attendance
+    * @return Task<int> -> int value
     */
+
 
     public async Task<int> MarkAttendanceAsync(MarkAttendanceDTO markAttendanceDto)
     {
@@ -62,10 +60,8 @@ public class LessonLogic : ILessonLogic
 
     /**
     * Purpose: Method used to get attendance
-    * Arguments:
-    *   string id -> Id of the lesson
-    * Return:
-    *   Task<IEnumerable<User>> -> List of User objects
+    * @param string id -> Id of the lesson
+    * @return Task<IEnumerable<User>> -> List of User objects
     */
 
     public async Task<IEnumerable<User>> GetAttendanceAsync(string id)
@@ -76,12 +72,9 @@ public class LessonLogic : ILessonLogic
 
     /**
     * Purpose: Method used to create a lesson
-    * Arguments:
-    *   LessonCreationDTO lessonCreationDto -> DTO used to create a lesson
-    * Return:
-    *   Task<Lesson> -> Lesson object
+    * @param LessonCreationDTO lessonCreationDto -> DTO used to create a lesson
+    * @return Task<Lesson> -> Lesson object
     */
-
     public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto)
     {
         ValidateLessonCreationAndUpdate(lessonCreationDto.Topic, lessonCreationDto.Description, lessonCreationDto.Date,
@@ -93,12 +86,9 @@ public class LessonLogic : ILessonLogic
 
     /**
     * Purpose: Method used to delete a lesson
-    * Arguments:
-    *   string lessonId -> Id of the lesson
-    * Return:
-    *   Task<Boolean> -> Boolean value
+    * @param string lessonId -> Id of the lesson
+    * @return Task<Boolean> -> Boolean value
     */
-
     public async Task<Boolean> DeleteAsync(string lessonId)
     {
         return await _lessonClient.DeleteAsync(lessonId);
@@ -106,12 +96,9 @@ public class LessonLogic : ILessonLogic
 
     /**
     * Purpose: Method used to update a lesson
-    * Arguments:
-    *   LessonUpdateDTO lessonUpdateDto -> DTO used to update a lesson
-    * Return:
-    *   Task<Boolean> -> Boolean value
+    * @param LessonUpdateDTO lessonUpdateDto -> DTO used to update a lesson
+    * @return Task<Boolean> -> Boolean value
     */
-
     public async Task<Boolean> UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto)
     {
         ValidateLessonCreationAndUpdate(lessonUpdateDto.Topic, lessonUpdateDto.Description, lessonUpdateDto.Date,
@@ -119,17 +106,18 @@ public class LessonLogic : ILessonLogic
         return await _lessonClient.UpdateLessonAsync(lessonUpdateDto);
     }
 
+
     /**
     * Purpose: Method used to validate the creation and update of a lesson
     * Checks if the lesson id, topic, description and date are valid (not null or empty) and if the topic is at least 3 characters long and the description is at least 10 characters long
-    * Arguments:
-    *   string topic -> Topic of the lesson
-    *   string description -> Description of the lesson
-    *   long date -> Date of the lesson
-    *   string id -> Id of the lesson
-    * Return:
-    *   void -> void
+    * @param string topic -> Topic of the lesson
+    * @param string description -> Description of the lesson
+    * @param long date -> Date of the lesson
+    * @param string id -> Id of the lesson
+    * @throws Exception -> Exception if the validation fails
+    * @return void
     */
+
     public void ValidateLessonCreationAndUpdate(string topic, string description, long date, string id)
     {
         if (string.IsNullOrWhiteSpace(id))

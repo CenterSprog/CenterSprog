@@ -19,9 +19,9 @@ public class FeedbackLogic : IFeedbackLogic
     private readonly IFeedbackClient _feedbackClient;
 
     /**
-    * Purpose: Constructor of the class
-    * Arguments:
-    *   IFeedbackClient feedbackClient -> Client used to handle the feedback requests
+    * 1-arg constructor containing IFeedbackClient
+    * Purpose: Used for client injection
+    * @param IFeedbackClient feedbackClient
     */
 
     public FeedbackLogic(IFeedbackClient feedbackClient)
@@ -31,10 +31,8 @@ public class FeedbackLogic : IFeedbackLogic
 
     /**
     * Purpose: Method used to add a feedback
-    * Arguments:
-    *   AddFeedbackDTO addFeedbackDto -> DTO used to add a feedback
-    * Return:
-    *   Task<Feedback> -> Feedback object
+    * @param AddFeedbackDTO addFeedbackDto -> DTO used to add a feedback
+    * @return Task<Feedback> -> Feedback object
     */
     public async Task<Feedback> AddFeedbackAsync(AddFeedbackDTO addFeedbackDto)
     {
@@ -44,11 +42,9 @@ public class FeedbackLogic : IFeedbackLogic
 
     /**
     * Purpose: Method used to get a feedback by hand in id and student username
-    * Arguments:
-    *   string handInId -> Id of the hand in
-    *   string studentUsername -> Username of the student
-    * Return:
-    *   Task<Feedback> -> Feedback object
+    * @param string handInId -> Id of the hand in
+    * @param string studentUsername -> Username of the student
+    * @return Task<Feedback> -> Feedback object
     */
     public async Task<Feedback> GetFeedbackByHandInIdAndStudentUsernameAsync(string handInId, string studentUsername)
     {
@@ -56,12 +52,11 @@ public class FeedbackLogic : IFeedbackLogic
     }
 
     /**
-    * Purpose: Method used to validate the creation of a feedback
+    * Purpose: Method used to validate the creation of a feedback. 
     * Checks if the student username, hand in id, grade and comment are valid (not null or empty) and if the grade is one of the allowed grades (-3, 0, 2, 4, 7, 10, 12)
-    * Arguments:
-    *   AddFeedbackDTO addFeedbackDto -> DTO used to add a feedback
-    * Return:
-    *   void -> void
+    * @param AddFeedbackDTO addFeedbackDto -> DTO used to add a feedback
+    * @throws Exception - if the student username is null or empty
+    * @return void
     */
 
     public void ValidateFeedbackCreation(AddFeedbackDTO addFeedbackDto)
