@@ -8,6 +8,21 @@ namespace xUnit.Tests;
 
 public class UserLogicTests
 {
+
+    [Fact]
+    public void GenerateUserCreationCredentials_ConfirmLength_NoException()
+    {
+        var userClientMock = new Mock<IUserClient>();
+        var userLogic = new UserLogic(userClientMock.Object);
+
+        string name = "namename";
+        var results = userLogic.GenerateUserCreationCredentials(name,8);
+        
+        Assert.True(results.Item2.Length == 8);
+        Assert.True(results.Item1.Length == name.Length+2 );
+        
+    }
+
     [Theory]
     [InlineData("", "password123")] // Empty Username
     [InlineData("user123", "")] // Empty Password

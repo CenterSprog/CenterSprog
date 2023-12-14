@@ -79,8 +79,7 @@
 
         try
         {
-            handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync(MyLesson.Homework.Id,
-            username);
+            handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync( UserHttpClient.Jwt, MyLesson.Homework.Id, username);
             MyFeedback = handInHomework.Feedback;
             HomeworkSubmitted = handInHomework != null;
         }
@@ -108,7 +107,7 @@
 
             await HandInHomeworkService.HandInHomework(UserHttpClient.Jwt, new HomeworkHandInDTO
                 {
-                    HomeworkId = Homework.Id,
+                    HomeworkId = MyLesson.Homework.Id,
                     StudentUsername = username,
                     Answer = Answer
                 });

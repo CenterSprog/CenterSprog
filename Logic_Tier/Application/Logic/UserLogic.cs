@@ -33,16 +33,16 @@ public class UserLogic : IUserLogic
     public async Task<User> CreateUserAsync(UserCreationDTO dto)
     {
         ValidateUserCreation(dto); 
-        Tuple<string, string> userCreationCredentials = GenerateUserCreationCredentials(dto);
+        Tuple<string, string> userCreationCredentials = GenerateUserCreationCredentials(dto.FirstName,8);
         
         return await _userClient.CreateUserAsync(dto, userCreationCredentials.Item1, userCreationCredentials.Item2);
     }
 
-    private Tuple<string, string> GenerateUserCreationCredentials(UserCreationDTO dto)
+    public Tuple<string, string> GenerateUserCreationCredentials(string firstName,int passwordLength)
     {
         
-        string username = $"{dto.FirstName}{GenerateRandomPassword(2)}";
-        string password = GenerateRandomPassword(8);
+        string username = $"{firstName}{GenerateRandomPassword(2)}";
+        string password = GenerateRandomPassword(passwordLength);
 
         return new Tuple<string, string>(username, password);
     }
