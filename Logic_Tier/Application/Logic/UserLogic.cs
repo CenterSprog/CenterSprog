@@ -59,7 +59,7 @@ public class UserLogic : IUserLogic
         return await _userClient.GetAllAsync();
     }
 
-    private void ValidateCredentials(string username, string password)
+    public void ValidateCredentials(string username, string password)
     {
         
         if (string.IsNullOrWhiteSpace(username))
@@ -69,7 +69,7 @@ public class UserLogic : IUserLogic
         
     }
 
-    private void ValidateUserCreation(UserCreationDTO dto)
+    public void ValidateUserCreation(UserCreationDTO dto)
     {
         if (string.IsNullOrWhiteSpace(dto.FirstName))
             throw new Exception("First name is required.");
@@ -91,12 +91,14 @@ public class UserLogic : IUserLogic
     //     \.: Escapes the dot (period) to match it literally. The dot is a special character in regular expressions, so it needs to be escaped to represent an actual dot.
     //     [a-zA-Z]{2,4}: Matches two to four characters that are either letters (both uppercase and lowercase). This represents the top-level domain (TLD) part of the email.
     //     $: Asserts the end of the string.
-    static void ValidateEmail(string email)
+    public void ValidateEmail(string email)
     {
         string emailPattern = @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
 
         if (!Regex.IsMatch(email, emailPattern))
             throw new Exception("Invalid email format. Please use format name@example.com");
+        if (string.IsNullOrWhiteSpace(email))
+            throw new Exception("Email is required");
     }
     
     static string GenerateRandomPassword(int length)

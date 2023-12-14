@@ -17,24 +17,24 @@
         <input type="text" class="form-control" id="floatingInput" @bind="lessonDto.Topic">
         <label for="floatingInput">Topic:</label>
     </div>
-    <br/>
+    <br />
     <div class="form-floating mb-3">
         <input type="date" class="form-control" id="floatingInput" @bind="Date">
         <label for="floatingInput">Date</label>
     </div>
-    <br/>
+    <br />
     <div class="form-floating">
         <textarea class="form-control" id="floatingTextarea" @bind="lessonDto.Description"></textarea>
         <label for="floatingTextarea">Description:</label>
     </div>
-    <br/>
-       @if (Msg != null)
-        {
-            <div class="alert-danger alert mt-5">
-                @Msg
-            </div>
-        }
-    <br/>
+    <br />
+    @if (Msg != null)
+    {
+        <div class="alert-danger alert mt-5">
+            @Msg
+        </div>
+    }
+    <br />
     <div class="button-row">
         <button @onclick="CreateAsync" type="button" class="btn btn-success">Create Lesson</button>
     </div>
@@ -54,7 +54,7 @@
     {
         Date = DateTime.Now;
         Msg = null;
-        lessonDto = new LessonCreationDTO {ClassId = ClassId};
+        lessonDto = new LessonCreationDTO { ClassId = ClassId };
         base.OnInitializedAsync();
     }
 
@@ -63,7 +63,7 @@
         try
         {
             lessonDto.Date = Date.ToFileTimeUtc();
-            var createdLesson = await lessonService.CreateAsync(lessonDto,UserHttpClient.Jwt);
+            var createdLesson = await lessonService.CreateAsync(UserHttpClient.Jwt, lessonDto);
             navMgr.NavigateTo($"/my-classes/{ClassId}/lessons/{createdLesson.Id}");
             Msg = "Lesson created successfully!";
         }

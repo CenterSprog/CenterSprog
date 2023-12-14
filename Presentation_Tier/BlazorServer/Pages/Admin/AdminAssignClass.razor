@@ -99,7 +99,7 @@
     { 
         try
         {
-            MyClasses = await ClassService.GetAllAsync(new SearchClassDTO{Username = null});
+            MyClasses = await ClassService.GetAllAsync(UserHttpClient.Jwt, new SearchClassDTO{Username = null});
         }
         catch (Exception e)
         {

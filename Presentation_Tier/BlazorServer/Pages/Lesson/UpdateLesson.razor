@@ -67,7 +67,7 @@
         Msg = null;
         try
         {
-            Lesson = await lessonService.GetByIdAsync(LessonId);
+            Lesson = await lessonService.GetByIdAsync(UserHttpClient.Jwt, LessonId);
         }
         catch (Exception e)
         {
@@ -80,9 +80,7 @@
     {
         try
         {
-            await lessonService.UpdateLessonAsync(
-                new LessonUpdateDTO{ Id = Lesson.Id, Date = Date.ToFileTimeUtc(), Description = Lesson.Description, Topic = Lesson.Topic},
-                UserHttpClient.Jwt);
+            await lessonService.UpdateLessonAsync(UserHttpClient.Jwt, new LessonUpdateDTO{ Id = Lesson.Id, Date = Date.ToFileTimeUtc(), Description = Lesson.Description, Topic = Lesson.Topic});
             Msg = "Lesson updated successfully!";
             navMgr.NavigateTo($"/my-classes/{ClassId}");
         }

@@ -16,12 +16,12 @@ public class HandInHomeworkHttpClient : IHandInHomeworkService
         _client = client;
     }
 
-    public async Task<HandInHomework> HandInHomework(HomeworkHandInDTO dto, string token)
+    public async Task<HandInHomework> HandInHomework(string jwt, HomeworkHandInDTO dto)
     {
-        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _client.PostAsJsonAsync("/handIns", dto);
         string responseContent = await response.Content.ReadAsStringAsync();
-        
+
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(responseContent);
@@ -35,9 +35,9 @@ public class HandInHomeworkHttpClient : IHandInHomeworkService
         return handInHomework;
     }
 
-    public async Task<IEnumerable<HandInHomework>> GetHandInsByHomeworkIdAsync(string homeworkId, string token)
+    public async Task<IEnumerable<HandInHomework>> GetHandInsByHomeworkIdAsync(string jwt, string homeworkId)
     {
-        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _client.GetAsync($"homeworks/{homeworkId}/handIns");
         var result = await response.Content.ReadAsStringAsync();
 
@@ -54,8 +54,9 @@ public class HandInHomeworkHttpClient : IHandInHomeworkService
         return foundHandIns;
     }
 
-    public async Task<HandInHomework> GetHandInByHomeworkIdAndStudentUsernameAsync(string homeworkId, string studentUsername)
+    public async Task<HandInHomework> GetHandInByHomeworkIdAndStudentUsernameAsync(string jwt, string homeworkId, string studentUsername)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _client.GetAsync($"homeworks/{homeworkId}/handIn?username={studentUsername}");
         var result = await response.Content.ReadAsStringAsync();
 
@@ -68,7 +69,7 @@ public class HandInHomeworkHttpClient : IHandInHomeworkService
         {
             PropertyNameCaseInsensitive = true
         });
-        
+
         return handIn;
     }
 }

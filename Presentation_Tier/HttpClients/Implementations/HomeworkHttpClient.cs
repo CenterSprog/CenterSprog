@@ -7,7 +7,7 @@ using HttpClients.ClientInterfaces;
 
 namespace HttpClients.Implementations;
 
-public class HomeworkHttpClient: IHomeworkService
+public class HomeworkHttpClient : IHomeworkService
 {
     private readonly HttpClient _client;
 
@@ -16,9 +16,9 @@ public class HomeworkHttpClient: IHomeworkService
         _client = client;
     }
 
-    public async Task<Homework> CreateAsync(HomeworkCreationDTO dto,string token)
+    public async Task<Homework> CreateAsync(string jwt, HomeworkCreationDTO dto)
     {
-        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _client.PostAsJsonAsync("/homeworks", dto);
         string responseBody = await response.Content.ReadAsStringAsync();
 

@@ -5,6 +5,6 @@ namespace HttpClients.ClientInterfaces;
 
 public interface IFeedbackService
 {
-    Task<Feedback> AddFeedbackAsync(AddFeedbackDTO addFeedbackDto, string token);
-    Task<Feedback> GetFeedbackByHandInIdAndStudentUsernameAsync(string handInId, string studentUsername);
+    Task<Feedback> AddFeedbackAsync(string jwt, AddFeedbackDTO addFeedbackDto);
+    Task<Feedback> GetFeedbackByHandInIdAndStudentUsernameAsync(string jwt, string handInId, string studentUsername);
 }

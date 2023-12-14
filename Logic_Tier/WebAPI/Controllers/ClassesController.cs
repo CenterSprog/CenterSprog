@@ -20,12 +20,32 @@ public class ClassesController : ControllerBase
     {
         _classLogic = classLogic;
     }
-    
+
+    [HttpGet("{classId}", Name = "GetClassByIdAsync")]
+    [Authorize]
+    public async Task<ActionResult<ClassEntity>> GetByIdAsync([FromRoute] string classId)
+    {
+        try
+        {
+            ClassEntity classEntity = await _classLogic.GetByIdAsync(classId);
+            return Ok(classEntity);
+        }
+        catch (RpcException e)
+        {
+            return NotFound(e.Status.Detail);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<ClassEntity>>> GetAllAsync([FromQuery] string? username)
     {
         try
-        {   
+        {
             SearchClassDTO dto = new SearchClassDTO
             {
                 Username = username
@@ -43,7 +63,7 @@ public class ClassesController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-    
+
     [HttpPost]
     [Authorize("MustBeAdmin")]
     public async Task<ActionResult<ClassEntity>> CreateAsync([FromBody] ClassCreationDTO dto)
@@ -63,26 +83,11 @@ public class ClassesController : ControllerBase
         }
     }
 
-    [HttpGet("{classId}", Name = "GetClassByIdAsync")]
-    public async Task<ActionResult<ClassEntity>> GetByIdAsync([FromRoute] string classId)
-    {
-        try
-        {
-            ClassEntity classEntity = await _classLogic.GetByIdAsync(classId);
-            return Ok(classEntity);
-        }
-        catch (RpcException e)
-        {
-            return NotFound(e.Status.Detail);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.Message);
-        }
-    }
 
- 
+
+
     [HttpGet("{classId}/participants", Name = "GetAllParticipantsAsync")]
+    [Authorize("MustBeUser")]
     public async Task<ActionResult<IEnumerable<User>>> GetAllParticipantsAsync([FromRoute] string classId, [FromQuery] string? role)
     {
         try
@@ -114,11 +119,7 @@ public class ClassesController : ControllerBase
         try
         {
             Boolean result = await _classLogic.UpdateAsync(dto);
-            if (result == false)
-                throw new Exception("Failed to update from webapi");
-            Console.WriteLine("Updated :)");
             return Ok(result);
-
         }
         catch (RpcException e)
         {
@@ -130,6 +131,7 @@ public class ClassesController : ControllerBase
         }
     }
     [HttpGet("{classId}/attendances", Name = "GetClassAttendanceAsync")]
+    [Authorize("MustBeTeacher")]
     public async Task<ActionResult<IEnumerable<UserAttendanceDTO>>> GetClassAttendanceAsync([FromRoute] string classId, [FromQuery] string? username)
     {
         try

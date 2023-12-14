@@ -1,4 +1,4 @@
-﻿@page "/homeworks/{HomeworkId}"  
+﻿@page "/homeworks/{HomeworkId}"
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs.FeedbackDTO
@@ -57,7 +57,7 @@ else
 
             <div class="mb-3">
                 <label for="gradeInput" class="form-label">Grade</label>
-                <input type="number" class="form-control" id="gradeInput" @bind="FeedbackGrade"/>
+                <input type="number" class="form-control" id="gradeInput" @bind="FeedbackGrade" />
             </div>
             <div class="mb-3">
                 <label for="feedbackInput" class="form-label">Feedback</label>
@@ -101,7 +101,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         Homework = new Homework();
-        HandIns = await HandInService.GetHandInsByHomeworkIdAsync(HomeworkId, UserHttpClient.Jwt);
+        HandIns = await HandInService.GetHandInsByHomeworkIdAsync(UserHttpClient.Jwt, HomeworkId);
         HandIn = new HandInHomework();
         ShowModal = false;
         StudentUsername = null;
@@ -129,9 +129,14 @@ else
     {
         try
         {
-            await FeedbackService.AddFeedbackAsync(
-                new AddFeedbackDTO{HandInId = HandIn.Id, StudentUsername = HandIn.StudentUsername, Grade = FeedbackGrade, Comment = FeedbackComment},
-                UserHttpClient.Jwt);
+            await FeedbackService.AddFeedbackAsync(UserHttpClient.Jwt, new AddFeedbackDTO
+                {
+                    HandInId = HandIn.Id,
+                    StudentUsername =
+                HandIn.StudentUsername,
+                    Grade = FeedbackGrade,
+                    Comment = FeedbackComment
+                });
             Msg = "Feedback was successfully added";
             StateHasChanged();
         }

@@ -60,6 +60,7 @@ public class HomeworksController : ControllerBase
     }
 
     [HttpGet("{homeworkId}/handIn", Name = "GetHandInByHomeworkIdAndStudentUsernameAsync")]
+    [Authorize("MustBeUser")]
     public async Task<ActionResult<HandInHomework>> GetHandInByHomeworkIdAndStudentUsernameAsync(
         [FromRoute] string homeworkId,
         [FromQuery] string username)

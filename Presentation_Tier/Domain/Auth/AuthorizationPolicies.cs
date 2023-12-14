@@ -9,17 +9,21 @@ public static class AuthorizationPolicies
     {
         services.AddAuthorizationCore(options =>
         {
-            options.AddPolicy("MustBeStudent", a=>
+            options.AddPolicy("MustBeStudent", a =>
                 a.RequireAuthenticatedUser().RequireAssertion(context => context.User.IsInRole("student")
-            ));
-            
-            options.AddPolicy("MustBeTeacher", a=>
-                a.RequireAuthenticatedUser().RequireAssertion(context =>context.User.IsInRole("teacher")
-            ));
-            
-            options.AddPolicy("MustBeAdmin", a=>
-                a.RequireAuthenticatedUser().RequireAssertion(context =>context.User.IsInRole("admin")
-            ));
+                ));
+
+            options.AddPolicy("MustBeTeacher", a =>
+                a.RequireAuthenticatedUser().RequireAssertion(context => context.User.IsInRole("teacher")
+                ));
+
+            options.AddPolicy("MustBeUser", policy =>
+                policy.RequireRole("teacher", "student")
+                );
+
+            options.AddPolicy("MustBeAdmin", a =>
+                a.RequireAuthenticatedUser().RequireAssertion(context => context.User.IsInRole("admin")
+                ));
         });
     }
 }

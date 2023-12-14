@@ -8,7 +8,8 @@
 
 
 <div class="d-flex align-items-center">
-    <button type="button" class="btn btn-warning fw-bold w-auto" @onclick="@SeeAttendeesAsync">Mark Attendance <span class="oi oi-calendar"></span></button>
+    <button type="button" class="btn btn-warning fw-bold w-auto" @onclick="@SeeAttendeesAsync">Mark Attendance <span
+            class="oi oi-calendar"></span></button>
     @if (Success is not null)
     {
         <div class="alert-success alert ms-3 mb-0">
@@ -26,21 +27,21 @@
     {
         <table class="table">
             <thead>
-            <tr>
-                <th>Student</th>
-                <th>Attendance</th>
-            </tr>
+                <tr>
+                    <th>Student</th>
+                    <th>Attendance</th>
+                </tr>
             </thead>
             <tbody>
-            @foreach (var attendee in Attendees.OrderBy(a => a.FirstName))
-            {
-                <tr>
-                    <td>@attendee.FirstName @attendee.LastName</td>
-                    <td>
-                        <input type="checkbox" @bind="SelectedUsers[attendee.Username]"/>
-                    </td>
-                </tr>
-            }
+                @foreach (var attendee in Attendees.OrderBy(a => a.FirstName))
+                {
+                    <tr>
+                        <td>@attendee.FirstName @attendee.LastName</td>
+                        <td>
+                            <input type="checkbox" @bind="SelectedUsers[attendee.Username]" />
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
 
@@ -59,7 +60,7 @@
     public string LessonId { get; set; }
     [Parameter]
     public string ClassId { get; set; }
-    
+
     public bool ShowModal { get; set; }
     public string? Msg { get; set; }
     public string? Success { get; set; }
@@ -78,15 +79,19 @@
         MarkedAttendees = new List<User>();
         Attendees = new List<User>();
 
-       await base.OnInitializedAsync();
+        await base.OnInitializedAsync();
     }
 
     private async Task FetchMarkedAttendeesAsync()
     {
         try
         {
-            MarkedAttendees = await lessonService.GetAttendanceAsync(LessonId);
-            Attendees = await classService.GetAllParticipantsAsync(new SearchClassParticipantsDTO{Id = ClassId, Role = "student"});
+            MarkedAttendees = await lessonService.GetAttendanceAsync(UserHttpClient.Jwt, LessonId);
+            Attendees = await classService.GetAllParticipantsAsync(UserHttpClient.Jwt, new SearchClassParticipantsDTO
+                {
+                    Id = ClassId,
+                    Role = "student"
+                });
         }
         catch (Exception e)
         {
@@ -102,7 +107,8 @@
         {
             foreach (var attendee in Attendees)
             {
-                var isSelected = MarkedAttendees.Any(markedAttendee => string.Equals(markedAttendee.Username, attendee.Username, StringComparison.OrdinalIgnoreCase));
+                var isSelected = MarkedAttendees.Any(markedAttendee => string.Equals(markedAttendee.Username, attendee.Username,
+                StringComparison.OrdinalIgnoreCase));
                 SelectedUsers[attendee.Username] = isSelected;
             }
         }
@@ -114,7 +120,12 @@
         SelectedUserList = SelectedUsers.Where(kvp => kvp.Value).Select(kvp => kvp.Key).ToList();
         try
         {
-            var amountOfAttendees = await lessonService.MarkAttendanceAsync(new MarkAttendanceDTO{LessonId = LessonId, StudentUsernames = SelectedUserList}, UserHttpClient.Jwt);
+            var amountOfAttendees = await lessonService.MarkAttendanceAsync(UserHttpClient.Jwt, new MarkAttendanceDTO
+                {
+                    LessonId =
+                LessonId,
+                    StudentUsernames = SelectedUserList
+                });
             Success = $"Attendance was successfully marked. {amountOfAttendees}/{Attendees.Count()} attendees";
             ShowModal = false;
         }

@@ -42,6 +42,7 @@ public class HandInsController : ControllerBase
     }
 
     [HttpGet("{handInId}/feedback", Name = "GetFeedbackByHomeworkIdAndStudentUsernameAsync")]
+    [Authorize("MustBeStudent")]
     public async Task<ActionResult<Feedback>> GetFeedbackByHandInIdAndStudentUsernameAsync([FromRoute] string handInId,
         [FromQuery] string username)
     {

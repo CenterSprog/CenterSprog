@@ -1,13 +1,14 @@
-﻿@page "/my-classes/{ClassId}/lessons/{LessonId}"  
+﻿@page "/my-classes/{ClassId}/lessons/{LessonId}"
 @using Domain.Models
 @using HttpClients.ClientInterfaces
+@using HttpClients.Implementations
 @inject ILessonService lessonService
 @inject IHandInHomeworkService HandInHomeworkService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 @if (Lesson != null)
 {
-    <LessonDetailComponent Lesson=@Lesson ClassId="@ClassId"/>
+    <LessonDetailComponent Lesson=@Lesson ClassId="@ClassId" />
 
     @if (Lesson.Homework != null)
     {
@@ -15,25 +16,26 @@
             <div class="homework-card">
                 <div class="homework-header">
                     <div class="icon-container">
-                        <img src="/homework.png" alt="Homework Icon"/>
+                        <img src="/homework.png" alt="Homework Icon" />
                     </div>
                     <div class="homework-header-content">
-                        <h3>Homework.  @Lesson.Homework.Title</h3>
+                        <h3>Homework. @Lesson.Homework.Title</h3>
                     </div>
                 </div>
                 <div class="homework-description">
                     <p>@Lesson.Homework.Description</p>
                     <p>
-                        <strong>Deadline:</strong> <DateDisplayComponent Date=@Lesson.Homework.Deadline/>
+                        <strong>Deadline:</strong>
+                        <DateDisplayComponent Date=@Lesson.Homework.Deadline />
                     </p>
                 </div>
                 <AuthorizeView Policy="MustBeTeacher">
-                        <ViewSubmittedHomeworksComponent LessonId="@LessonId" ClassId="@ClassId"/>
+                    <ViewSubmittedHomeworksComponent LessonId="@LessonId" ClassId="@ClassId" />
                 </AuthorizeView>
 
 
                 <AuthorizeView Policy="MustBeStudent">
-                        <HandInHomeworkComponent MyLesson="@Lesson" ClassId="@ClassId"/>
+                    <HandInHomeworkComponent MyLesson="@Lesson" ClassId="@ClassId" />
                 </AuthorizeView>
             </div>
         </div>
@@ -44,16 +46,16 @@
             <div class="homework-card">
                 <div class="homework-header">
                     <div class="icon-container">
-                        <img src="/homework.png" alt="Homework Icon"/>
+                        <img src="/homework.png" alt="Homework Icon" />
                     </div>
                     <div class="homework-header-content">
                         <h3>Homework. </h3>
                     </div>
                     <AuthorizeView Policy="MustBeTeacher">
-                            @if (Lesson.Homework == null)
-                            {
-                                <AssignHomeworkComponent LessonId=@LessonId LessonDate=@Lesson.Date />
-                            }
+                        @if (Lesson.Homework == null)
+                        {
+                            <AssignHomeworkComponent LessonId=@LessonId LessonDate=@Lesson.Date />
+                        }
                     </AuthorizeView>
 
                 </div>
@@ -108,13 +110,13 @@
     {
         try
         {
-            Lesson = await lessonService.GetByIdAsync(LessonId);
+            Lesson = await lessonService.GetByIdAsync(UserHttpClient.Jwt, LessonId);
         }
         catch (Exception e)
         {
-            Msg = "MAYBE? " +e.Message;
+            Msg = "MAYBE? " + e.Message;
         }
     }
 
-  
+
 }

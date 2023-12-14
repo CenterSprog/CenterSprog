@@ -1,0 +1,227 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\xUnit.Tests\\xUnit.Tests.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\Application\\Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\Application\\Application.csproj",
+        "projectName": "Application",
+        "projectPath": "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\Application\\Application.csproj",
+        "packagesPath": "C:\\Users\\julij\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\julij\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\Domain\\Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Google.Protobuf": {
+              "target": "Package",
+              "version": "[3.18.0, )"
+            },
+            "Grpc.AspNetCore": {
+              "target": "Package",
+              "version": "[2.32.0, )"
+            },
+            "Grpc.Net.Client": {
+              "target": "Package",
+              "version": "[2.52.0, )"
+            },
+            "Grpc.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.58.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\Domain\\Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\Domain\\Domain.csproj",
+        "projectName": "Domain",
+        "projectPath": "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\julij\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\julij\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authorization": {
+              "target": "Package",
+              "version": "[7.0.14, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\xUnit.Tests\\xUnit.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\xUnit.Tests\\xUnit.Tests.csproj",
+        "projectName": "xUnit.Tests",
+        "projectPath": "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\xUnit.Tests\\xUnit.Tests.csproj",
+        "packagesPath": "C:\\Users\\julij\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\xUnit.Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\julij\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\julij\\OneDrive\\Desktop\\VIA\\SEP3_CenterSprog\\CenterSprog\\Presenation_Logic_Tier\\Application\\Application.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.6.0, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.70, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.2.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.4.2, )"
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.4.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

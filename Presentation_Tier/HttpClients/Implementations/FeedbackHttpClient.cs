@@ -16,9 +16,9 @@ public class FeedbackHttpClient : IFeedbackService
         _client = client;
     }
 
-    public async Task<Feedback> AddFeedbackAsync(AddFeedbackDTO addFeedbackDto, string token)
+    public async Task<Feedback> AddFeedbackAsync(string jwt, AddFeedbackDTO addFeedbackDto)
     {
-        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage responseMessage = await _client.PostAsJsonAsync("/feedbacks", addFeedbackDto);
         string responseBody = await responseMessage.Content.ReadAsStringAsync();
 
@@ -34,8 +34,9 @@ public class FeedbackHttpClient : IFeedbackService
         return feedback;
     }
 
-    public async Task<Feedback> GetFeedbackByHandInIdAndStudentUsernameAsync(string handInId, string studentUsername)
+    public async Task<Feedback> GetFeedbackByHandInIdAndStudentUsernameAsync(string jwt, string handInId, string studentUsername)
     {
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage responseMessage = await _client.GetAsync($"/handIns/{handInId}/feedback?username={studentUsername}");
 
         string responseBody = await responseMessage.Content.ReadAsStringAsync();

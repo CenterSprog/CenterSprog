@@ -10,18 +10,16 @@ namespace HttpClients.Implementations;
 
 public class LessonHttpClient : ILessonService
 {
-    private readonly HttpClient client;
-    private readonly ILogger<LessonHttpClient> logger;
-
-    public LessonHttpClient(HttpClient client, ILogger<LessonHttpClient> logger)
+    private readonly HttpClient _client;
+    public LessonHttpClient(HttpClient client)
     {
-        this.client = client;
-        this.logger = logger;
+        _client = client;
     }
 
-    public async Task<Lesson> GetByIdAsync(string id)
+    public async Task<Lesson> GetByIdAsync(string jwt, string id)
     {
-        HttpResponseMessage response = await client.GetAsync($"/lessons/{id}");
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
+        HttpResponseMessage response = await _client.GetAsync($"/lessons/{id}");
         string responseContent = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -36,10 +34,10 @@ public class LessonHttpClient : ILessonService
         return foundLesson;
     }
 
-    public async Task<string> MarkAttendanceAsync(MarkAttendanceDTO markAttendanceDto,string token)
+    public async Task<string> MarkAttendanceAsync(string jwt, MarkAttendanceDTO markAttendanceDto)
     {
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        HttpResponseMessage response = await client.PostAsJsonAsync($"/lessons/{markAttendanceDto.LessonId}/attendance",
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
+        HttpResponseMessage response = await _client.PostAsJsonAsync($"/lessons/{markAttendanceDto.LessonId}/attendance",
             markAttendanceDto.StudentUsernames);
         string responseContent = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
@@ -50,9 +48,10 @@ public class LessonHttpClient : ILessonService
         return responseContent;
     }
 
-    public async Task<IEnumerable<User>> GetAttendanceAsync(string id)
+    public async Task<IEnumerable<User>> GetAttendanceAsync(string jwt, string id)
     {
-        HttpResponseMessage response = await client.GetAsync($"/lessons/{id}/attendance");
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
+        HttpResponseMessage response = await _client.GetAsync($"/lessons/{id}/attendance");
 
         string responseContent = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
@@ -70,10 +69,10 @@ public class LessonHttpClient : ILessonService
     }
 
 
-    public async Task<Lesson> CreateAsync(LessonCreationDTO lessonCreationDto,string token)
+    public async Task<Lesson> CreateAsync(string jwt, LessonCreationDTO lessonCreationDto)
     {
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        HttpResponseMessage response = await client.PostAsJsonAsync("/lessons", lessonCreationDto);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
+        HttpResponseMessage response = await _client.PostAsJsonAsync("/lessons", lessonCreationDto);
         string responseBody = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -89,10 +88,10 @@ public class LessonHttpClient : ILessonService
         return lesson;
     }
 
-    public async Task UpdateLessonAsync(LessonUpdateDTO lessonUpdateDto,string token)
+    public async Task UpdateLessonAsync(string jwt, LessonUpdateDTO lessonUpdateDto)
     {
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        HttpResponseMessage response = await client.PutAsJsonAsync("/lessons", lessonUpdateDto);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
+        HttpResponseMessage response = await _client.PutAsJsonAsync("/lessons", lessonUpdateDto);
         string responseBody = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -101,10 +100,10 @@ public class LessonHttpClient : ILessonService
         }
     }
 
-    public async Task DeleteAsync(string lessonId,string token)
+    public async Task DeleteAsync(string jwt, string lessonId)
     {
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        HttpResponseMessage response = await client.DeleteAsync($"lessons/{lessonId}");
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
+        HttpResponseMessage response = await _client.DeleteAsync($"lessons/{lessonId}");
         string responseContent = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

@@ -19,6 +19,7 @@ public class LessonsController : ControllerBase
     }
 
     [HttpGet("{lessonId}", Name = "GetLessonByIdAsync")]
+    [Authorize]
     public async Task<ActionResult<Lesson>> GetByIdAsync([FromRoute] string lessonId)
     {
         try
@@ -58,6 +59,7 @@ public class LessonsController : ControllerBase
     }
 
     [HttpGet("{lessonId}/attendance", Name = "GetAttendanceAsync")]
+    [Authorize("MustBeTeacher")]
     public async Task<ActionResult<IEnumerable<User>>> GetAttendanceAsync([FromRoute] string lessonId)
     {
         try

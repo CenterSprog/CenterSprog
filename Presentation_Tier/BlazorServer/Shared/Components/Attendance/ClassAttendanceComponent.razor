@@ -1,5 +1,6 @@
 ﻿@using HttpClients.ClientInterfaces
 @using Domain.DTOs.UserDTO
+@using HttpClients.Implementations
 @inject IClassService ClassService;
 
 <div class="d-flex align-items-center">
@@ -63,7 +64,7 @@
     {
         try
         {
-            Users = await ClassService.GetClassAttendanceAsync(ClassId);
+            Users = await ClassService.GetClassAttendanceAsync(UserHttpClient.Jwt, ClassId);
         }
         catch (Exception e)
         {
