@@ -9,22 +9,28 @@
 <div class="input-container">
     @if (!HomeworkSubmitted)
     {
-        <input @bind="Answer" type="text" placeholder="Paste your answer here" />
+        <input @bind="Answer" type="text" placeholder="Paste your answer here"/>
         <button @onclick="HandInHomeworkAsync" type="button">
             <strong>Hand in</strong>
         </button>
     }
     else
     {
-
+        <div class="feedback-container">
+        <button class="submitted-button" disabled>
+            <strong>Submitted</strong>
+        </button>
+        
         @if (MyFeedback != null)
         {
-            <SeeFeedbackComponent MyFeedback="@MyFeedback" />
+            <SeeFeedbackComponent MyFeedback="@MyFeedback"/>
         }
         else
         {
             <p>No feedback was uploaded yet</p>
+
         }
+        </div>
     }
     <div class="msg-container">
         @if (Msg != null)
@@ -70,7 +76,6 @@
 
     private async Task FetchHandInAsync()
     {
-
         Msg = null;
 
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -79,7 +84,7 @@
 
         try
         {
-            handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync( UserHttpClient.Jwt, MyLesson.Homework.Id, username);
+            handInHomework = await HandInHomeworkService.GetHandInByHomeworkIdAndStudentUsernameAsync(UserHttpClient.Jwt, MyLesson.Homework.Id, username);
             MyFeedback = handInHomework.Feedback;
             HomeworkSubmitted = handInHomework != null;
         }
@@ -87,7 +92,6 @@
         {
             HomeworkSubmitted = false;
         }
-
     }
 
     private async Task HandInHomeworkAsync()
@@ -106,11 +110,11 @@
             var username = user.Identity?.Name;
 
             await HandInHomeworkService.HandInHomework(UserHttpClient.Jwt, new HomeworkHandInDTO
-                {
-                    HomeworkId = MyLesson.Homework.Id,
-                    StudentUsername = username,
-                    Answer = Answer
-                });
+            {
+                HomeworkId = MyLesson.Homework.Id,
+                StudentUsername = username,
+                Answer = Answer
+            });
 
             HomeworkSubmitted = true;
             Msg = null;
@@ -120,4 +124,5 @@
             Msg = ex.Message;
         }
     }
+
 }

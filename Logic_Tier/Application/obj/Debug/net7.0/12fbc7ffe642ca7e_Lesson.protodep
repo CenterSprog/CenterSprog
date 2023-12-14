@@ -1,5 +1,5 @@
 obj\Debug\net7.0\Protos/Lesson.cs \
 obj\Debug\net7.0\Protos/LessonGrpc.cs: Protos/Homework.proto\
- C:/Users/Damian/.nuget/packages/grpc.tools/2.58.0/build/native/include/google/protobuf/empty.proto\
+ C:/Users/julij/.nuget/packages/grpc.tools/2.58.0/build/native/include/google/protobuf/empty.proto\
  Protos/User.proto\
  Protos/Lesson.proto

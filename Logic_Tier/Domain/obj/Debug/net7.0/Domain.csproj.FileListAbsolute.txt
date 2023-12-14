@@ -22,3 +22,15 @@ C:\Users\Damian\Desktop\SOFTWARE ENGINEERING\CenterSprog\Logic_Tier\Domain\obj\D
 C:\Users\Damian\Desktop\SOFTWARE ENGINEERING\CenterSprog\Logic_Tier\Domain\obj\Debug\net7.0\refint\Domain.dll
 C:\Users\Damian\Desktop\SOFTWARE ENGINEERING\CenterSprog\Logic_Tier\Domain\obj\Debug\net7.0\Domain.pdb
 C:\Users\Damian\Desktop\SOFTWARE ENGINEERING\CenterSprog\Logic_Tier\Domain\obj\Debug\net7.0\ref\Domain.dll
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Logic_Tier\Domain\bin\Debug\net7.0\Domain.deps.json
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Logic_Tier\Domain\bin\Debug\net7.0\Domain.dll
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Logic_Tier\Domain\bin\Debug\net7.0\Domain.pdb
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Logic_Tier\Domain\obj\Debug\net7.0\Domain.csproj.AssemblyReference.cache
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Logic_Tier\Domain\obj\Debug\net7.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Logic_Tier\Domain\obj\Debug\net7.0\Domain.AssemblyInfoInputs.cache
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Logic_Tier\Domain\obj\Debug\net7.0\Domain.AssemblyInfo.cs
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Logic_Tier\Domain\obj\Debug\net7.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Logic_Tier\Domain\obj\Debug\net7.0\Domain.dll
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Logic_Tier\Domain\obj\Debug\net7.0\refint\Domain.dll
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Logic_Tier\Domain\obj\Debug\net7.0\Domain.pdb
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Logic_Tier\Domain\obj\Debug\net7.0\ref\Domain.dll

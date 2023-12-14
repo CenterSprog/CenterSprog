@@ -28,3 +28,18 @@ C:\Users\Damian\Desktop\SOFTWARE ENGINEERING\CenterSprog\Presentation_Tier\HttpC
 C:\Users\Damian\Desktop\SOFTWARE ENGINEERING\CenterSprog\Presentation_Tier\HttpClients\obj\Debug\net7.0\refint\HttpClients.dll
 C:\Users\Damian\Desktop\SOFTWARE ENGINEERING\CenterSprog\Presentation_Tier\HttpClients\obj\Debug\net7.0\HttpClients.pdb
 C:\Users\Damian\Desktop\SOFTWARE ENGINEERING\CenterSprog\Presentation_Tier\HttpClients\obj\Debug\net7.0\ref\HttpClients.dll
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Presentation_Tier\HttpClients\bin\Debug\net7.0\HttpClients.deps.json
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Presentation_Tier\HttpClients\bin\Debug\net7.0\HttpClients.dll
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Presentation_Tier\HttpClients\bin\Debug\net7.0\HttpClients.pdb
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Presentation_Tier\HttpClients\bin\Debug\net7.0\Domain.dll
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Presentation_Tier\HttpClients\bin\Debug\net7.0\Domain.pdb
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Presentation_Tier\HttpClients\obj\Debug\net7.0\HttpClients.csproj.AssemblyReference.cache
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Presentation_Tier\HttpClients\obj\Debug\net7.0\HttpClients.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Presentation_Tier\HttpClients\obj\Debug\net7.0\HttpClients.AssemblyInfoInputs.cache
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Presentation_Tier\HttpClients\obj\Debug\net7.0\HttpClients.AssemblyInfo.cs
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Presentation_Tier\HttpClients\obj\Debug\net7.0\HttpClients.csproj.CoreCompileInputs.cache
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Presentation_Tier\HttpClients\obj\Debug\net7.0\HttpClients.csproj.CopyComplete
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Presentation_Tier\HttpClients\obj\Debug\net7.0\HttpClients.dll
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Presentation_Tier\HttpClients\obj\Debug\net7.0\refint\HttpClients.dll
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Presentation_Tier\HttpClients\obj\Debug\net7.0\HttpClients.pdb
+C:\Users\julij\OneDrive\Desktop\VIA\SEP3_CenterSprog\CenterSprog\Presentation_Tier\HttpClients\obj\Debug\net7.0\ref\HttpClients.dll
