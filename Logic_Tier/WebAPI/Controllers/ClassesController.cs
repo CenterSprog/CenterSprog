@@ -131,7 +131,7 @@ public class ClassesController : ControllerBase
         }
     }
     [HttpGet("{classId}/attendances", Name = "GetClassAttendanceAsync")]
-    [Authorize("MustBeTeacher")]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<UserAttendanceDTO>>> GetClassAttendanceAsync([FromRoute] string classId, [FromQuery] string? username)
     {
         try

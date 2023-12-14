@@ -103,6 +103,9 @@
 
 }
 /* _content/BlazorServer/Pages/Index.razor.rz.scp.css */
+.button[b-x8xvoqa0o7]{
+    cursor: pointer;
+}
 /* _content/BlazorServer/Pages/Lesson/LessonDetails.razor.rz.scp.css */
 h1[b-lnhfxm1mn0], h2[b-lnhfxm1mn0], h3[b-lnhfxm1mn0], h4[b-lnhfxm1mn0], h5[b-lnhfxm1mn0], h6[b-lnhfxm1mn0]{
     font-weight: bold;

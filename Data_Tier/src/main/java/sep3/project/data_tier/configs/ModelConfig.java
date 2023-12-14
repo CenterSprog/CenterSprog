@@ -20,6 +20,7 @@ public class ModelConfig {
     ){
         return args -> {
 //            set up model here
+            UserEntity s0 = new UserEntity("string","string","string","string","string","student");
             UserEntity a1 = new UserEntity("admin","admin","Bob","Builder","bob.builder@gmail.com","admin");
             UserEntity s1 = new UserEntity("damian","supersecurepassworddamian","Damian","Trafialek","damian.trafialek@gmail.com","student");
             UserEntity t1 = new UserEntity("steffan","steffan","Steffan","Visenberg","sva@via.dk","teacher");
@@ -42,10 +43,12 @@ public class ModelConfig {
 
             l1.addHomework(h1);
 
+            c1.addUser(s0);
             c1.addUser(s1);
             c1.addUser(t1);
             c1.addUser(t2);
 
+            c2.addUser(s0);
             c2.addUser(s2);
             c2.addUser(t2);
             c2.addUser(t3);
@@ -56,6 +59,8 @@ public class ModelConfig {
             c1.addLesson(l1);
             c1.addLesson(l2);
 
+
+            userRepository.save(s0);
             userRepository.save(a1);
             userRepository.save(t1);
             userRepository.save(t2);

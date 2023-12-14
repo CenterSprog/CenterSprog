@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace Domain.Auth;
 
@@ -17,9 +16,9 @@ public static class AuthorizationPolicies
                 a.RequireAuthenticatedUser().RequireAssertion(context => context.User.IsInRole("teacher")
                 ));
 
-            options.AddPolicy("MustBeUser", policy =>
-                policy.RequireRole("teacher", "student")
-                );
+            options.AddPolicy("MustBeUser", a =>
+                a.RequireAuthenticatedUser().RequireAssertion(context => context.User.IsInRole("teacher") || context.User.IsInRole("student")
+                ));
 
             options.AddPolicy("MustBeAdmin", a =>
                 a.RequireAuthenticatedUser().RequireAssertion(context => context.User.IsInRole("admin")
