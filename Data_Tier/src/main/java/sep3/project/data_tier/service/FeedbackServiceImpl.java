@@ -14,35 +14,53 @@ import sep3.project.protobuf.*;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-@GrpcService public class FeedbackServiceImpl
-    extends FeedbackServiceGrpc.FeedbackServiceImplBase
-{
+/**
+ * Service class that handles the grpc communication.
+ * 
+ * 
+ * @author Team_3
+ * @version 1.0
+ */
+@GrpcService
+public class FeedbackServiceImpl
+    extends FeedbackServiceGrpc.FeedbackServiceImplBase {
   private IFeedbackRepository feedbackRepository;
 
   private IHandInHomeworkRepository handInHomeworkRepository;
   private FeedbackMapper feedbackMapper = FeedbackMapper.INSTANCE;
 
-  @Autowired public FeedbackServiceImpl(IFeedbackRepository feedbackRepository,
-      IHandInHomeworkRepository handInHomeworkRepository)
-  {
+  /**
+   * 2-argument constructor for FeedbackServiceImpl
+   * 
+   * @param feedbackRepository       - repository for feedback
+   * @param handInHomeworkRepository - repository for hand in homework
+   */
+  @Autowired
+  public FeedbackServiceImpl(IFeedbackRepository feedbackRepository,
+      IHandInHomeworkRepository handInHomeworkRepository) {
     this.feedbackRepository = feedbackRepository;
 
     this.handInHomeworkRepository = handInHomeworkRepository;
   }
 
-  @Override public void addFeedback(RequestAddFeedback request,
-      StreamObserver<Feedback> response)
-  {
+  /**
+   * Method that adds feedback to the database
+   * 
+   * @param request  - request from client
+   * @param response - response from server
+   * @throws NoSuchElementException - if no element is found
+   */
+  @Override
+  public void addFeedback(RequestAddFeedback request,
+      StreamObserver<Feedback> response) {
     String handInId = request.getHandInId();
     String studentUsername = request.getStudentUsername();
     FeedbackEntity feedback = new FeedbackEntity(request.getFeedback().getGrade(), request.getFeedback().getComment());
-    try
-    {
+    try {
       Optional<HandInHomeworkEntity> optionalHandInHomework = handInHomeworkRepository.findByIdAndUser_Username(
           handInId, studentUsername);
 
-      if (optionalHandInHomework.isPresent())
-      {
+      if (optionalHandInHomework.isPresent()) {
         HandInHomeworkEntity handInHomework = optionalHandInHomework.get();
 
         if (handInHomework.getFeedback() != null)
@@ -54,51 +72,54 @@ import java.util.Optional;
 
         response.onNext(feedbackMapper.toProto(feedback).toBuilder().build());
         response.onCompleted();
-      }
-      else
-      {
+      } else {
         throw new NoSuchElementException(
             "No existing hand in with id " + handInId + " submitted by user with username " + studentUsername);
       }
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       Status status = Status.INTERNAL.withDescription(e.getMessage());
       response.onError(status.asRuntimeException());
     }
   }
 
-  @Override public void getFeedbackByHandInIdAndStudentUsername(
+  /**
+   * Method that gets feedback by hand in id and student username
+   * 
+   * @param request  - request from client
+   * @param response - response from server
+   * @throws NoSuchElementException - if no element is found
+   */
+  @Override
+  public void getFeedbackByHandInIdAndStudentUsername(
       RequestGetFeedbackByHandInIdAndStudentUsername request,
-      StreamObserver<ResponseGetFeedback> response)
-  {
-    try
-    {
+      StreamObserver<ResponseGetFeedback> response) {
+    try {
       String handInId = request.getHandInId();
       String studentUsername = request.getStudentUsername();
 
       Optional<HandInHomeworkEntity> optionalHandInHomework = handInHomeworkRepository.findByIdAndUser_Username(
           handInId, studentUsername);
 
-      if (optionalHandInHomework.isPresent())
-      {
+      if (optionalHandInHomework.isPresent()) {
         HandInHomeworkEntity handInHomework = optionalHandInHomework.get();
         FeedbackEntity feedback = handInHomework.getFeedback();
+
+        if (feedback == null)
+          throw new NoSuchElementException(
+              "No existing hand in with id " + handInId + " submitted by user with username " + studentUsername);
+        System.out.println(feedback);
 
         ResponseGetFeedback responseMessage = ResponseGetFeedback.newBuilder()
             .setFeedback(feedbackMapper.toProto(feedback)).build();
 
         response.onNext(responseMessage);
         response.onCompleted();
-      }
-      else
-      {
+      } else {
         throw new NoSuchElementException(
             "No existing hand in with id " + handInId + " submitted by user with username " + studentUsername);
       }
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
+      System.out.println(e.getMessage() + " " + e.getStackTrace());
       Status status = Status.INTERNAL.withDescription(e.getMessage());
       response.onError(status.asRuntimeException());
     }

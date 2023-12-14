@@ -1,4 +1,5 @@
 syntax = "proto3";
+import "Feedback.proto";
 
 option java_multiple_files = true;
 option java_package = "sep3.project.protobuf";
@@ -8,7 +9,7 @@ message HandInHomework{
   optional string id = 1;
   string answer = 2;
   string studentUsername = 3;
-
+  optional Feedback feedback= 4;
 }
 message RequestCreateHandInHomework{
   string homeworkId = 1;

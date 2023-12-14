@@ -20,29 +20,50 @@ import sep3.project.protobuf.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@GrpcService public class LessonServiceImpl
-    extends LessonServiceGrpc.LessonServiceImplBase
-{
+/**
+ * Service class that handles the grpc communication.
+ * 
+ * 
+ * @author Team_3
+ * @version 1.0
+ */
+@GrpcService
+public class LessonServiceImpl
+    extends LessonServiceGrpc.LessonServiceImplBase {
 
   private ILessonRepository lessonRepository;
   private IUserRepository userRepository;
   private IClassRepository classRepository;
   private HomeworkMapper homeworkMapper = HomeworkMapper.INSTANCE;
 
-  @Autowired public LessonServiceImpl(IUserRepository userRepository,
-      ILessonRepository lessonRepository, IClassRepository classRepository)
-  {
+  /**
+   * 3-argument constructor for LessonServiceImpl
+   * 
+   * @param userRepository   - repository for user
+   * @param lessonRepository - repository for lesson
+   * @param classRepository  - repository for class
+   */
+  @Autowired
+  public LessonServiceImpl(IUserRepository userRepository,
+      ILessonRepository lessonRepository, IClassRepository classRepository) {
     this.userRepository = userRepository;
     this.lessonRepository = lessonRepository;
     this.classRepository = classRepository;
   }
 
-  @Override @Transactional public void getLessonById(
+  /**
+   * Method that gets all lessons from the database
+   * 
+   * @param request  - request from client
+   * @param response - response from server
+   * @throws NoSuchElementException - if no element is found
+   */
+  @Override
+  @Transactional
+  public void getLessonById(
       RequestGetLessonById request,
-      StreamObserver<ResponseGetLessonById> response)
-  {
-    try
-    {
+      StreamObserver<ResponseGetLessonById> response) {
+    try {
       String id = request.getLessonId();
       Optional<LessonEntity> existingLesson = lessonRepository.findById(id);
       if (existingLesson.isEmpty())
@@ -58,7 +79,7 @@ import java.util.stream.Collectors;
 
       if (existingLesson.get().getHomework() != null)
         grpcLesson = grpcLesson.toBuilder().setHomework(
-                homeworkMapper.toProto(existingLesson.get().getHomework()))
+            homeworkMapper.toProto(existingLesson.get().getHomework()))
             .buildPartial();
 
       grpcLesson.toBuilder().build();
@@ -67,20 +88,25 @@ import java.util.stream.Collectors;
           ResponseGetLessonById.newBuilder().setLesson(grpcLesson).build());
       response.onCompleted();
 
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       Status status = Status.INTERNAL.withDescription(e.getMessage());
       response.onError(status.asRuntimeException());
     }
   }
 
-  @Override @Transactional public void getAttendance(
+  /**
+   * Method that gets all lessons from the database
+   * 
+   * @param request  - request from client
+   * @param response - response from server
+   * @throws NoSuchElementException - if no element is found
+   */
+  @Override
+  @Transactional
+  public void getAttendance(
       RequestGetAttendance request,
-      StreamObserver<ResponseGetAttendance> response)
-  {
-    try
-    {
+      StreamObserver<ResponseGetAttendance> response) {
+    try {
       String id = request.getLessonId();
       Optional<LessonEntity> existingLesson = lessonRepository.findById(id);
       if (existingLesson.isEmpty())
@@ -90,8 +116,7 @@ import java.util.stream.Collectors;
 
       List<UserParticipant> grpcUsers = new ArrayList<>();
       if (!existingLesson.get().getAttendance().isEmpty())
-        for (UserEntity userEntity : existingLesson.get().getAttendance())
-        {
+        for (UserEntity userEntity : existingLesson.get().getAttendance()) {
           UserParticipant grpcUser = UserParticipant.newBuilder()
               .setUsername(userEntity.getUsername())
               .setFirstName(userEntity.getFirstName())
@@ -103,21 +128,25 @@ import java.util.stream.Collectors;
           ResponseGetAttendance.newBuilder().addAllParticipants(grpcUsers)
               .build());
       response.onCompleted();
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       Status status = Status.INTERNAL.withDescription(e.getMessage());
       response.onError(status.asRuntimeException());
     }
 
   }
 
-  @Override public void markAttendance(RequestMarkAttendance request,
-      StreamObserver<ResponseMarkAttendance> response)
-  {
+  /**
+   * Method that gets all lessons from the database
+   * 
+   * @param request  - request from client
+   * @param response - response from server
+   * @throws NoSuchElementException - if no element is found
+   */
+  @Override
+  public void markAttendance(RequestMarkAttendance request,
+      StreamObserver<ResponseMarkAttendance> response) {
     String id = request.getLessonId();
-    try
-    {
+    try {
       Optional<LessonEntity> existingLesson = lessonRepository.findById(id);
 
       if (existingLesson.isEmpty())
@@ -134,19 +163,24 @@ import java.util.stream.Collectors;
       response.onNext(ResponseMarkAttendance.newBuilder()
           .setAmountOfParticipants(students.size()).build());
       response.onCompleted();
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       Status status = Status.INTERNAL.withDescription(e.getMessage());
       response.onError(status.asRuntimeException());
     }
   }
 
-  @Override @Transactional public void deleteLesson(RequestDeleteLesson request,
-      StreamObserver<ResponseDeleteLesson> response)
-  {
-    try
-    {
+  /**
+   * Method that gets all lessons from the database
+   * 
+   * @param request  - request from client
+   * @param response - response from server
+   * @throws NoSuchElementException - if no element is found
+   */
+  @Override
+  @Transactional
+  public void deleteLesson(RequestDeleteLesson request,
+      StreamObserver<ResponseDeleteLesson> response) {
+    try {
       String lessonId = request.getLessonId();
       Optional<LessonEntity> lesson = lessonRepository.findById(lessonId);
       if (lesson.isEmpty())
@@ -159,23 +193,27 @@ import java.util.stream.Collectors;
           .setStatus(ResponseDeleteLesson.Status.OK)
           .setMessage("Lesson deleted successfully").build());
       response.onCompleted();
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       Status status = Status.INTERNAL.withDescription(e.getMessage());
       response.onError(status.asRuntimeException());
     }
   }
 
-  @Override public void createLesson(RequestCreateLesson request,
-      StreamObserver<ResponseCreateLesson> response)
-  {
+  /**
+   * Method that gets all lessons from the database
+   * 
+   * @param request  - request from client
+   * @param response - response from server
+   * @throws NoSuchElementException - if no element is found
+   */
+  @Override
+  public void createLesson(RequestCreateLesson request,
+      StreamObserver<ResponseCreateLesson> response) {
 
     String classId = request.getClassId();
     LessonEntity lesson = new LessonEntity(request.getLesson().getDate(),
         request.getLesson().getTopic(), request.getLesson().getDescription());
-    try
-    {
+    try {
 
       Optional<ClassEntity> existingClass = classRepository.findById(classId);
       if (existingClass.isEmpty())
@@ -190,23 +228,28 @@ import java.util.stream.Collectors;
           LessonData.newBuilder().setId(savedLesson.getId())
               .setDate(savedLesson.getDate())
               .setDescription(savedLesson.getDescription())
-              .setTopic(savedLesson.getTopic())).build());
+              .setTopic(savedLesson.getTopic()))
+          .build());
       response.onCompleted();
 
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       Status status = Status.INTERNAL.withDescription(e.getMessage());
       response.onError(status.asRuntimeException());
     }
   }
 
-  @Override public void updateLesson(RequestUpdateLesson request,
-      StreamObserver<ResponseUpdateLesson> response)
-  {
+  /**
+   * Method that gets all lessons from the database
+   * 
+   * @param request  - request from client
+   * @param response - response from server
+   * @throws NoSuchElementException - if no element is found
+   */
+  @Override
+  public void updateLesson(RequestUpdateLesson request,
+      StreamObserver<ResponseUpdateLesson> response) {
     String lessonId = request.getId();
-    try
-    {
+    try {
       Optional<LessonEntity> currentLesson = lessonRepository.findById(
           lessonId);
       if (currentLesson.isEmpty())
@@ -223,9 +266,7 @@ import java.util.stream.Collectors;
           .setStatus(ResponseUpdateLesson.Status.OK)
           .setMessage("Lesson deleted successfully").build());
       response.onCompleted();
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       Status status = Status.INTERNAL.withDescription(e.getMessage());
       response.onError(status.asRuntimeException());
     }

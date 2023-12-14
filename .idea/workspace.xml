@@ -4,7 +4,121 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbecce9e-7f7d-4c07-9ecb-5484121f1f74" name="Changes" comment="" />
+    <list default="true" id="cbecce9e-7f7d-4c07-9ecb-5484121f1f74" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/.idea/.idea.Logic_Tier/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Application.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Application.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Application.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Application.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/12fbc7ffe642ca7e_ClassEntity.protodep" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/12fbc7ffe642ca7e_ClassEntity.protodep" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/12fbc7ffe642ca7e_Feedback.protodep" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/12fbc7ffe642ca7e_Feedback.protodep" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/12fbc7ffe642ca7e_HandInHomework.protodep" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/12fbc7ffe642ca7e_HandInHomework.protodep" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/12fbc7ffe642ca7e_Homework.protodep" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/12fbc7ffe642ca7e_Homework.protodep" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/12fbc7ffe642ca7e_Lesson.protodep" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/12fbc7ffe642ca7e_Lesson.protodep" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/12fbc7ffe642ca7e_User.protodep" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/12fbc7ffe642ca7e_User.protodep" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Application.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Application.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Application.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Application.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Application.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Application.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Application.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Application.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Application.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Application.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Application.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Application.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/ClassEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/ClassEntity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/ClassEntityGrpc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/ClassEntityGrpc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/Feedback.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/Feedback.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/FeedbackGrpc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/FeedbackGrpc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/HandInHomework.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/HandInHomework.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/HandInHomeworkGrpc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/HandInHomeworkGrpc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/Homework.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/Homework.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/HomeworkGrpc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/HomeworkGrpc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/Lesson.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/Lesson.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/LessonGrpc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/LessonGrpc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/UserGrpc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/Debug/net7.0/Protos/UserGrpc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Application/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Application/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Debug/net7.0/Domain.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Debug/net7.0/Domain.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Debug/net7.0/Domain.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Debug/net7.0/Domain.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Debug/net7.0/Domain.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Debug/net7.0/Domain.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Debug/net7.0/Domain.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Debug/net7.0/Domain.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Debug/net7.0/Domain.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Debug/net7.0/Domain.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Debug/net7.0/Domain.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Debug/net7.0/Domain.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Debug/net7.0/Domain.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Debug/net7.0/Domain.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Domain.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Domain.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Domain.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Domain/obj/Domain.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Domain/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Domain/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Domain/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Domain/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Domain/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Domain/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/Domain/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/Domain/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.genruntimeconfig.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/WebAPI.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/Debug/net7.0/apphost.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/WebAPI.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/WebAPI.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/WebAPI.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/WebAPI.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Logic_Tier/WebAPI/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/.idea/.idea.Presentation_Tier/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/.idea/.idea.Presentation_Tier/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/Pages/SubmittedHomeworks.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/Pages/SubmittedHomeworks.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/Shared/Components/Homework/HandInHomeworkComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/Shared/Components/Homework/HandInHomeworkComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/Shared/Components/Homework/HandInHomeworkComponent.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/Shared/Components/Homework/HandInHomeworkComponent.razor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/Shared/Components/Homework/SeeFeedbackComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/Shared/Components/Homework/SeeFeedbackComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/BlazorServer.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/BlazorServer.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/BlazorServer.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/BlazorServer.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.genruntimeconfig.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/BlazorServer.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/apphost.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/scopedcss/Shared/Components/Homework/HandInHomeworkComponent.razor.rz.scp.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/scopedcss/Shared/Components/Homework/HandInHomeworkComponent.razor.rz.scp.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/scopedcss/bundle/BlazorServer.styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/scopedcss/bundle/BlazorServer.styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/scopedcss/projectbundle/BlazorServer.bundle.scp.css" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/scopedcss/projectbundle/BlazorServer.bundle.scp.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/staticwebassets.build.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/staticwebassets.build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/staticwebassets.development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/staticwebassets.development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/staticwebassets.pack.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/Debug/net7.0/staticwebassets.pack.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/BlazorServer/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Debug/net7.0/Domain.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Debug/net7.0/Domain.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Debug/net7.0/Domain.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Debug/net7.0/Domain.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Debug/net7.0/Domain.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Debug/net7.0/Domain.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Debug/net7.0/Domain.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Debug/net7.0/Domain.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Debug/net7.0/Domain.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Debug/net7.0/Domain.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Debug/net7.0/Domain.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Debug/net7.0/Domain.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Debug/net7.0/Domain.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Debug/net7.0/Domain.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Domain.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Domain.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Domain.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/Domain.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/Domain/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/Debug/net7.0/HttpClients.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/Debug/net7.0/HttpClients.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/Debug/net7.0/HttpClients.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/Debug/net7.0/HttpClients.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/Debug/net7.0/HttpClients.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/Debug/net7.0/HttpClients.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/Debug/net7.0/HttpClients.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/Debug/net7.0/HttpClients.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/Debug/net7.0/HttpClients.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/Debug/net7.0/HttpClients.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/Debug/net7.0/HttpClients.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/Debug/net7.0/HttpClients.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/Debug/net7.0/HttpClients.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/Debug/net7.0/HttpClients.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/HttpClients.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/HttpClients.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/HttpClients.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/HttpClients.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation_Tier/HttpClients/obj/rider.project.restore.info" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,7 +170,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "test/xUnit-testing",
+    "git-widget-placeholder": "cleanup/final-preparation",
     "last_opened_file_path": "C:/Program Files/Java",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -66,6 +180,7 @@
     "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "spring.configuration.checksum": "79548d7d87d920c30a56612adb0880bc",
     "vue.rearranger.settings.migration": "true"
   },
@@ -105,6 +220,9 @@
       <workItem from="1702033300109" duration="8030000" />
       <workItem from="1702231144430" duration="8178000" />
       <workItem from="1702282605966" duration="9324000" />
+      <workItem from="1702551850701" duration="1131000" />
+      <workItem from="1702553049326" duration="152000" />
+      <workItem from="1702553220929" duration="4794000" />
     </task>
     <servers />
   </component>
