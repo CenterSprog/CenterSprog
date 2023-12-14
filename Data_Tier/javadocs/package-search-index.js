@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"sep3.project.data_tier.service"}];updateSearchResults();

@@ -7,30 +7,83 @@ using Domain.Models;
 
 namespace Application.Logic;
 
+
+/**
+* Class: ClassLogic
+* Purpose: Class used to handle the logic of the class
+* Methods:
+*   GetByIdAsync(string id) -> Task<ClassEntity>
+*   GetAllAsync(SearchClassDTO dto) -> Task<IEnumerable<ClassEntity>>
+*   GetAllParticipantsAsync(SearchClassParticipantsDTO dto) -> Task<IEnumerable<User>>
+*   CreateAsync(ClassCreationDTO dto) -> Task<ClassEntity>
+*   UpdateAsync(ClassUpdateDTO dto) -> Task<bool>
+*   GetClassAttendanceByUsernameAsync(SearchClassAttendanceDTO dto) -> Task<IEnumerable<LessonAttendanceDTO>>
+*   GetClassAttendanceAsync(string id) -> Task<IEnumerable<UserAttendanceDTO>>
+*   ValidateClassCreation(ClassCreationDTO dto) -> void
+*/
+
 public class ClassLogic : IClassLogic
 {
     private readonly IClassClient _classClient;
+
+    /**
+    * Purpose: Constructor of the class
+    * Arguments:
+    *   IClassClient classClient -> Client used to handle the class requests
+    */
 
     public ClassLogic(IClassClient classClient)
     {
         _classClient = classClient;
     }
 
+    /**
+    * Purpose: Method used to get a class by id
+    * Arguments:
+    *   string id -> Id of the class
+    * Return:
+    *   Task<ClassEntity> -> ClassEntity object
+    */
+
     public async Task<ClassEntity> GetByIdAsync(string id)
     {
         return await _classClient.GetByIdAsync(id);
     }
+
+    /**
+    * Purpose: Method used to get all classes
+    * Arguments:
+    *   SearchClassDTO dto -> DTO used to search for classes
+    * Return:
+    *   Task<IEnumerable<ClassEntity>> -> List of ClassEntity objects
+    */
 
     public async Task<IEnumerable<ClassEntity>> GetAllAsync(SearchClassDTO dto)
     {
         return await _classClient.GetAllAsync(dto);
     }
 
+    /**
+    * Purpose: Method used to get all participants of a class
+    * Arguments:
+    *   SearchClassParticipantsDTO dto -> DTO used to search for participants
+    * Return:
+    *   Task<IEnumerable<User>> -> List of User objects
+    */
+
     public async Task<IEnumerable<User>> GetAllParticipantsAsync(SearchClassParticipantsDTO dto)
     {
         // Validate the role
         return await _classClient.GetAllParticipantsAsync(dto);
     }
+
+    /**
+    * Purpose: Method used to create a class
+    * Arguments:
+    *   ClassCreationDTO dto -> DTO used to create a class
+    * Return:
+    *   Task<ClassEntity> -> ClassEntity object
+    */
 
     public async Task<ClassEntity> CreateAsync(ClassCreationDTO dto)
     {
@@ -39,6 +92,14 @@ public class ClassLogic : IClassLogic
         return await Task.FromResult(createdClass);
     }
 
+
+    /**
+    * Purpose: Method used to update a class
+    * Arguments:
+    *   ClassUpdateDTO dto -> DTO used to update a class
+    * Return:
+    *   Task<bool> -> Boolean value
+    */
     public async Task<bool> UpdateAsync(ClassUpdateDTO dto)
     {
         // Here in the logic in the future you may want to update the class based on other params like title or room
@@ -51,6 +112,13 @@ public class ClassLogic : IClassLogic
         return false;
     }
 
+    /**
+    * Purpose: Method used to get the attendance of a class by username
+    * Arguments:
+    *   SearchClassAttendanceDTO dto -> DTO used to search for the attendance
+    * Return:
+    *   Task<IEnumerable<LessonAttendanceDTO>> -> List of LessonAttendanceDTO objects
+    */
     public async Task<IEnumerable<LessonAttendanceDTO>> GetClassAttendanceByUsernameAsync(SearchClassAttendanceDTO dto)
     {
         var lessonsAttended = await _classClient.GetClassAttendanceByUsernameAsync(dto);
@@ -65,9 +133,16 @@ public class ClassLogic : IClassLogic
         return lessonAttendance;
     }
 
+    /**
+    * Purpose: Method used to get the attendance of a class
+    * Arguments:
+    *   string id -> Id of the class
+    * Return:
+    *   Task<IEnumerable<UserAttendanceDTO>> -> List of UserAttendanceDTO objects
+    */
     public async Task<IEnumerable<UserAttendanceDTO>> GetClassAttendanceAsync(string id)
     {
-        var participants = await _classClient.GetAllParticipantsAsync(new SearchClassParticipantsDTO{Id = id, Role = "student"});
+        var participants = await _classClient.GetAllParticipantsAsync(new SearchClassParticipantsDTO { Id = id, Role = "student" });
         var lessonAttendance = await _classClient.GetClassAttendanceAsync(id);
         var lessons = (await _classClient.GetByIdAsync(id)).Lessons;
         var participantsWithAttendance = new List<UserAttendanceDTO>();
@@ -95,6 +170,15 @@ public class ClassLogic : IClassLogic
 
         return participantsWithAttendance;
     }
+
+    /**
+    * Purpose: Method used to validate the creation of a class
+    * Checks it the title and room are not null or empty
+    * Arguments:
+    *   ClassCreationDTO dto -> DTO used to create a class
+    * Return:
+    *   void
+    */
 
     public void ValidateClassCreation(ClassCreationDTO dto)
     {

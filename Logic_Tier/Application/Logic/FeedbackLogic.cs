@@ -5,25 +5,64 @@ using Domain.Models;
 
 namespace Application.Logic;
 
+/**
+* Class: FeedbackLogic
+* Purpose: Class used to handle the logic of the feedback
+* Methods:
+*   AddFeedbackAsync(AddFeedbackDTO addFeedbackDto) -> Task<Feedback>
+*   GetFeedbackByHandInIdAndStudentUsernameAsync(string handInId, string studentUsername) -> Task<Feedback>
+*   ValidateFeedbackCreation(AddFeedbackDTO addFeedbackDto) -> void
+*/
+
 public class FeedbackLogic : IFeedbackLogic
 {
     private readonly IFeedbackClient _feedbackClient;
+
+    /**
+    * Purpose: Constructor of the class
+    * Arguments:
+    *   IFeedbackClient feedbackClient -> Client used to handle the feedback requests
+    */
 
     public FeedbackLogic(IFeedbackClient feedbackClient)
     {
         _feedbackClient = feedbackClient;
     }
 
+    /**
+    * Purpose: Method used to add a feedback
+    * Arguments:
+    *   AddFeedbackDTO addFeedbackDto -> DTO used to add a feedback
+    * Return:
+    *   Task<Feedback> -> Feedback object
+    */
     public async Task<Feedback> AddFeedbackAsync(AddFeedbackDTO addFeedbackDto)
     {
         ValidateFeedbackCreation(addFeedbackDto);
         return await _feedbackClient.AddFeedbackAsync(addFeedbackDto);
     }
 
+    /**
+    * Purpose: Method used to get a feedback by hand in id and student username
+    * Arguments:
+    *   string handInId -> Id of the hand in
+    *   string studentUsername -> Username of the student
+    * Return:
+    *   Task<Feedback> -> Feedback object
+    */
     public async Task<Feedback> GetFeedbackByHandInIdAndStudentUsernameAsync(string handInId, string studentUsername)
     {
         return await _feedbackClient.GetFeedbackByHandInIdAndStudentUsernameAsync(handInId, studentUsername);
     }
+
+    /**
+    * Purpose: Method used to validate the creation of a feedback
+    * Checks if the student username, hand in id, grade and comment are valid (not null or empty) and if the grade is one of the allowed grades (-3, 0, 2, 4, 7, 10, 12)
+    * Arguments:
+    *   AddFeedbackDTO addFeedbackDto -> DTO used to add a feedback
+    * Return:
+    *   void -> void
+    */
 
     public void ValidateFeedbackCreation(AddFeedbackDTO addFeedbackDto)
     {
