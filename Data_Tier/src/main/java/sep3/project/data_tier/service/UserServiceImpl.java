@@ -14,22 +14,42 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Random;
 
-@GrpcService public class UserServiceImpl
-    extends UserServiceGrpc.UserServiceImplBase
-{
+/**
+ * Service class that handles the grpc communication.
+ * 
+ * 
+ * @author Team_3
+ * @version 1.0
+ */
+@GrpcService
+public class UserServiceImpl
+    extends UserServiceGrpc.UserServiceImplBase {
   private UserMapper userMapper = UserMapper.INSTANCE;
   private IUserRepository userRepository;
 
-  @Autowired public UserServiceImpl(IUserRepository userRepository)
-  {
+  /**
+   * 1-argument constructor for UserServiceImpl
+   * 
+   * 
+   * @param userRepository - repository for user
+   * 
+   */
+  @Autowired
+  public UserServiceImpl(IUserRepository userRepository) {
     this.userRepository = userRepository;
   }
 
-  @Override public void createUser(RequestCreateUser request,
-      StreamObserver<ResponseCreateUser> response)
-  {
-    try
-    {
+  /**
+   * Method that creates a user in the database
+   * 
+   * @param request  - request from client
+   * @param response - response from server
+   * @throws NoSuchElementException - if no element is found
+   */
+  @Override
+  public void createUser(RequestCreateUser request,
+      StreamObserver<ResponseCreateUser> response) {
+    try {
       String username = request.getUser().getUsername();
       String password = request.getUser().getPassword();
       Optional<UserEntity> user = userRepository.getByUsername(username);
@@ -47,22 +67,27 @@ import java.util.Random;
               .setPassword(newUser.getPassword()).setEmail(newUser.getEmail())
               .setFirstName(newUser.getFirstName())
               .setLastName(newUser.getLastName()).setRole(newUser.getRole())
-              .build()).build());
+              .build())
+          .build());
       response.onCompleted();
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       Status status = Status.INTERNAL.withDescription(e.getMessage());
       response.onError(status.asRuntimeException());
     }
   }
 
-  @Override public void getUserByUsername(RequestUserGetByUsername request,
-      StreamObserver<ResponseUserGetByUsername> response)
-  {
+  /**
+   * Method that gets a user by username from the database
+   * 
+   * @param request  - request from client
+   * @param response - response from server
+   * @throws NoSuchElementException - if no element is found
+   */
+  @Override
+  public void getUserByUsername(RequestUserGetByUsername request,
+      StreamObserver<ResponseUserGetByUsername> response) {
     String username = request.getUsername();
-    try
-    {
+    try {
       Optional<UserEntity> existingUser = userRepository.getByUsername(
           username);
 
@@ -76,25 +101,30 @@ import java.util.Random;
                 .setEmail(existingUser.get().getEmail())
                 .setFirstName(existingUser.get().getFirstName())
                 .setLastName(existingUser.get().getLastName())
-                .setRole(existingUser.get().getRole()).build()).build());
+                .setRole(existingUser.get().getRole()).build())
+            .build());
       response.onCompleted();
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       Status status = Status.INTERNAL.withDescription(e.getMessage());
       response.onError(status.asRuntimeException());
     }
   }
 
-  @Override public void getAllUsers(com.google.protobuf.Empty request,
-      StreamObserver<ResponseUserGetAllUsers> response)
-  {
+  /**
+   * Method that gets a user by username and password from the database
+   * 
+   * @param request  - request from client
+   * @param response - response from server
+   * @throws NoSuchElementException - if no element is found
+   */
+  @Override
+  public void getAllUsers(com.google.protobuf.Empty request,
+      StreamObserver<ResponseUserGetAllUsers> response) {
     List<UserEntity> users = userRepository.findAll();
 
     ResponseUserGetAllUsers responseData = ResponseUserGetAllUsers.newBuilder()
         .buildPartial();
-    for (UserEntity user : users)
-    {
+    for (UserEntity user : users) {
       if (!user.getRole().equals("admin"))
         responseData = responseData.toBuilder()
             .addUsers(userMapper.toProto(user)).buildPartial();
@@ -103,6 +133,5 @@ import java.util.Random;
     response.onNext(responseData.toBuilder().build());
     response.onCompleted();
   }
-
 
 }

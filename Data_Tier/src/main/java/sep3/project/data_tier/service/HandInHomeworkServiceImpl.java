@@ -17,30 +17,50 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-@GrpcService public class HandInHomeworkServiceImpl
-    extends HandInHomeworkServiceGrpc.HandInHomeworkServiceImplBase
-{
+/**
+ * Service class that handles the grpc communication.
+ * 
+ * 
+ * @author Team_3
+ * @version 1.0
+ */
+@GrpcService
+public class HandInHomeworkServiceImpl
+    extends HandInHomeworkServiceGrpc.HandInHomeworkServiceImplBase {
   private IHandInHomeworkRepository handInHomeworkRepository;
   private IUserRepository userRepository;
   private IHomeworkRepository homeworkRepository;
 
-  @Autowired public HandInHomeworkServiceImpl(
+  /**
+   * 3-argument constructor for HandInHomeworkServiceImpl
+   * 
+   * @param handInHomeworkRepository - repository for hand in homework
+   * @param userRepository           - repository for user
+   * @param homeworkRepository       - repository for homework
+   */
+  @Autowired
+  public HandInHomeworkServiceImpl(
       IHandInHomeworkRepository handInHomeworkRepository,
-      IUserRepository userRepository, IHomeworkRepository homeworkRepository)
-  {
+      IUserRepository userRepository, IHomeworkRepository homeworkRepository) {
     this.handInHomeworkRepository = handInHomeworkRepository;
     this.userRepository = userRepository;
     this.homeworkRepository = homeworkRepository;
   }
 
-  @Override public void handInHomework(RequestCreateHandInHomework request,
-      StreamObserver<ResponseGetHandInHomework> response)
-  {
+  /**
+   * Method that adds hand in homework to the database
+   * 
+   * @param request  - request from client
+   * @param response - response from server
+   * @throws NoSuchElementException - if no element is found
+   */
+  @Override
+  public void handInHomework(RequestCreateHandInHomework request,
+      StreamObserver<ResponseGetHandInHomework> response) {
     String homeworkId = request.getHomeworkId();
     String studentUsername = request.getStudentUsername();
 
-    try
-    {
+    try {
       HandInHomeworkEntity handInHomework = new HandInHomeworkEntity();
 
       Optional<UserEntity> user = userRepository.findById(studentUsername);
@@ -64,23 +84,28 @@ import java.util.Optional;
           .setHandInHomework(
               HandInHomework.newBuilder().setId(savedHandInHomework.getId())
                   .setAnswer(savedHandInHomework.getAnswer())
-                  .setStudentUsername(user.get().getUsername()).build()).build());
+                  .setStudentUsername(user.get().getUsername()).build())
+          .build());
       response.onCompleted();
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       Status status = Status.INTERNAL.withDescription(e.getMessage());
       response.onError(status.asRuntimeException());
     }
   }
 
-  @Override public void getHandInsByHomeworkId(
+  /**
+   * Method that gets hand ins by homework id
+   * 
+   * @param request  - request from client
+   * @param response - response from server
+   * @throws NoSuchElementException - if no element is found
+   */
+  @Override
+  public void getHandInsByHomeworkId(
       RequestGetHandInsByHomeworkId request,
-      StreamObserver<ResponseGetHandInsByHomeworkId> response)
-  {
+      StreamObserver<ResponseGetHandInsByHomeworkId> response) {
     String homeworkId = request.getHomeworkId();
-    try
-    {
+    try {
       Optional<HomeworkEntity> homework = homeworkRepository.findById(homeworkId);
       if (homework.isEmpty())
         throw new NoSuchElementException(
@@ -90,8 +115,7 @@ import java.util.Optional;
           homeworkId);
       List<HandInHomework> handInMessages = new ArrayList<>();
 
-      for (HandInHomeworkEntity entity : handIns)
-      {
+      for (HandInHomeworkEntity entity : handIns) {
         UserEntity user = entity.getUser();
         String studentUsername = user.getUsername();
 
@@ -99,11 +123,11 @@ import java.util.Optional;
             .setId(entity.getId()).setAnswer(entity.getAnswer())
             .setStudentUsername(studentUsername).build();
 
-        if(entity.getFeedback()!=null)
+        if (entity.getFeedback() != null)
           message = message.toBuilder().setFeedback(
-                  Feedback.newBuilder().setComment(entity.getFeedback().getComment())
-                          .setGrade(entity.getFeedback().getGrade()).build()
-          ).build();
+              Feedback.newBuilder().setComment(entity.getFeedback().getComment())
+                  .setGrade(entity.getFeedback().getGrade()).build())
+              .build();
 
         handInMessages.add(message);
       }
@@ -111,23 +135,27 @@ import java.util.Optional;
       response.onNext(ResponseGetHandInsByHomeworkId.newBuilder()
           .addAllHandIns(handInMessages).build());
       response.onCompleted();
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       Status status = Status.INTERNAL.withDescription(e.getMessage());
       response.onError(status.asRuntimeException());
     }
   }
 
-  @Override public void getHandInByHomeworkIdAndStudentUsername(
+  /**
+   * Method that gets hand in by homework id and student username
+   * 
+   * @param request  - request from client
+   * @param response - response from server
+   * @throws NoSuchElementException - if no element is found
+   */
+  @Override
+  public void getHandInByHomeworkIdAndStudentUsername(
       RequestGetHandInByHomeworkIdAndStudentUsername request,
-      StreamObserver<ResponseGetHandInHomework> response)
-  {
+      StreamObserver<ResponseGetHandInHomework> response) {
     String homeworkId = request.getHomeworkId();
     String studentUsername = request.getStudentUsername();
 
-    try
-    {
+    try {
       Optional<UserEntity> user = userRepository.findById(studentUsername);
       if (user.isEmpty())
         throw new NoSuchElementException(
@@ -141,34 +169,29 @@ import java.util.Optional;
       Optional<HandInHomeworkEntity> handInHomework = handInHomeworkRepository.findByHomework_IdAndUser_Username(
           homeworkId, studentUsername);
 
-      if (handInHomework.isPresent())
-      {
+      if (handInHomework.isPresent()) {
         HandInHomeworkEntity entity = handInHomework.get();
-
 
         HandInHomework handInMessage = HandInHomework.newBuilder()
             .setId(entity.getId()).setAnswer(entity.getAnswer())
             .setStudentUsername(user.get().getUsername()).buildPartial();
 
-        if(entity.getFeedback() != null)
+        if (entity.getFeedback() != null)
           handInMessage = handInMessage.toBuilder().setFeedback(
-                  Feedback.newBuilder().setGrade(entity.getFeedback().getGrade())
-                          .setComment(entity.getFeedback().getComment())
-                          .build()
-          ).build();
+              Feedback.newBuilder().setGrade(entity.getFeedback().getGrade())
+                  .setComment(entity.getFeedback().getComment())
+                  .build())
+              .build();
 
         response.onNext(ResponseGetHandInHomework.newBuilder()
             .setHandInHomework(handInMessage).build());
         response.onCompleted();
-      }
-      else
-      {
+      } else {
         throw new NoSuchElementException(
-            "No existing hand in with homework id " + homeworkId + " submitted by user with username " + studentUsername);
+            "No existing hand in with homework id " + homeworkId + " submitted by user with username "
+                + studentUsername);
       }
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       Status status = Status.INTERNAL.withDescription(e.getMessage());
       response.onError(status.asRuntimeException());
     }

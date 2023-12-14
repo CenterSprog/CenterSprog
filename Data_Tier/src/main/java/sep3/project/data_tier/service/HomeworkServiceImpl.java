@@ -14,31 +14,50 @@ import sep3.project.protobuf.*;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-@GrpcService public class HomeworkServiceImpl
-    extends HomeworkServiceGrpc.HomeworkServiceImplBase
-{
+/**
+ * Service class that handles the grpc communication.
+ * 
+ * 
+ * @author Team_3
+ * @version 1.0
+ */
+@GrpcService
+public class HomeworkServiceImpl
+    extends HomeworkServiceGrpc.HomeworkServiceImplBase {
 
   private HomeworkMapper homeworkMapper = HomeworkMapper.INSTANCE;
   private ILessonRepository lessonRepository;
   private IHomeworkRepository homeworkRepository;
 
-  @Autowired public HomeworkServiceImpl(IHomeworkRepository homeworkRepository,
-      ILessonRepository lessonRepository)
-  {
+  /**
+   * 2-argument constructor for HomeworkServiceImpl
+   * 
+   * @param homeworkRepository - repository for homework
+   * @param lessonRepository   - repository for lesson
+   */
+  @Autowired
+  public HomeworkServiceImpl(IHomeworkRepository homeworkRepository,
+      ILessonRepository lessonRepository) {
     this.homeworkRepository = homeworkRepository;
     this.lessonRepository = lessonRepository;
   }
 
-  @Override public void addHomework(RequestAddHomework request,
-      StreamObserver<Homework> response)
-  {
+  /**
+   * Method that adds homework to the database
+   * 
+   * @param request  - request from client
+   * @param response - response from server
+   * @throws NoSuchElementException - if no element is found
+   */
+  @Override
+  public void addHomework(RequestAddHomework request,
+      StreamObserver<Homework> response) {
     String lessonId = request.getLessonId();
     HomeworkEntity homework = new HomeworkEntity(
         request.getHomework().getDeadline(), request.getHomework().getTitle(),
         request.getHomework().getDescription());
 
-    try
-    {
+    try {
 
       Optional<LessonEntity> existingLesson = lessonRepository.findById(
           lessonId);
@@ -51,9 +70,7 @@ import java.util.Optional;
 
       response.onNext(homeworkMapper.toProto(homework).toBuilder().build());
       response.onCompleted();
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       Status status = Status.INTERNAL.withDescription(e.getMessage());
       response.onError(status.asRuntimeException());
     }
