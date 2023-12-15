@@ -20,7 +20,6 @@ public class ModelConfig {
     ){
         return args -> {
 //            set up model here
-            UserEntity s0 = new UserEntity("string","string","string","string","string","student");
             UserEntity a1 = new UserEntity("admin","admin","Bob","Builder","bob.builder@gmail.com","admin");
             UserEntity s1 = new UserEntity("damian","damian","Damian","Trafialek","damian.trafialek@gmail.com","student");
             UserEntity t1 = new UserEntity("steffan","steffan","Steffan","Visenberg","sva@via.dk","teacher");
@@ -32,23 +31,22 @@ public class ModelConfig {
 
             LessonEntity l1 = new LessonEntity(133454545665594012l,"Danish traditions","Some of the most beautiful danish tradtions");
             LessonEntity l2 = new LessonEntity(133454545665594012l,"Danish verbs","Verbs in their past present and future forms. So how to speak fluently as a foreigner.");
+            LessonEntity l3 = new LessonEntity(133454545665594012l,"Danish curicullum","How to preapare yourself for the exam.");
 
 
             ClassEntity c1 = new ClassEntity("danish-module-3","c05.16b");
             ClassEntity c2 = new ClassEntity("danish-module-2","c05.14b");
             ClassEntity c3 = new ClassEntity("danish-module-4","kamtjatka");
 
-            HomeworkEntity h1 = new HomeworkEntity(133454945665594012l,"dsada","sadsadasdsadasdasdasd");
+            HomeworkEntity h1 = new HomeworkEntity(133454945665594012l,"How long are you learning Danish , Q&A .","Try to give a short answer.");
 
 
             l1.addHomework(h1);
 
-            c1.addUser(s0);
             c1.addUser(s1);
             c1.addUser(t1);
             c1.addUser(t2);
 
-            c2.addUser(s0);
             c2.addUser(s2);
             c2.addUser(t2);
             c2.addUser(t3);
@@ -60,7 +58,6 @@ public class ModelConfig {
             c1.addLesson(l2);
 
 
-            userRepository.save(s0);
             userRepository.save(a1);
             userRepository.save(t1);
             userRepository.save(t2);
