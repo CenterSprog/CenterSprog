@@ -69,7 +69,7 @@ public class ClassesController : ControllerBase
     public async Task<ActionResult<ClassEntity>> CreateAsync([FromBody] ClassCreationDTO dto)
     {
         try
-        {
+        {   
             ClassEntity? createdClass = await _classLogic.CreateAsync(dto);
             return Created($"classes/{createdClass.Id}", createdClass);
         }

@@ -22,7 +22,7 @@ public class ModelConfig {
 //            set up model here
             UserEntity s0 = new UserEntity("string","string","string","string","string","student");
             UserEntity a1 = new UserEntity("admin","admin","Bob","Builder","bob.builder@gmail.com","admin");
-            UserEntity s1 = new UserEntity("damian","supersecurepassworddamian","Damian","Trafialek","damian.trafialek@gmail.com","student");
+            UserEntity s1 = new UserEntity("damian","damian","Damian","Trafialek","damian.trafialek@gmail.com","student");
             UserEntity t1 = new UserEntity("steffan","steffan","Steffan","Visenberg","sva@via.dk","teacher");
             UserEntity s2 = new UserEntity("julija","julija","Julija","Gramovica","julijagr@gmail.com","student");
             UserEntity t2 = new UserEntity("joseph","steffan","Joseph","Okika","joseph@via.dk","teacher");

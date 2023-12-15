@@ -97,7 +97,7 @@ public class ClassClient : IClassClient
             ClassEntityCreation = new ClassEntityCreation
             {
                 Room = dto.Room,
-                Title = dto.Room
+                Title = dto.Title
             }
         };
         var reply = await client.createClassEntityAsync(request);
